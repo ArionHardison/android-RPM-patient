@@ -1,0 +1,33 @@
+package com.midokter.app.data
+
+object PreferenceKey {
+
+    const val ACCESS_TOKEN = "access_token"
+    const val PHONE = "phone"
+    const val COUNTRY_CODE = "country_code"
+    const val BASE_CONFIG_RESPONSE = "BASE_CONFIG_RESPONSE"
+    const val CURRENCY = "CURRENCY"
+    const val WALLET_BALANCE = "WALLET_BALANCE"
+    const val CITY_ID = "city_id"
+    const val TRANSPORT_REQ_ID = "transport_req_id"
+    const val SERVICE_REQ_ID = "service_req_id"
+    const val ORDER_REQ_ID = "order_req_id"
+    const val STRIPE_KEY = "stripe_key"
+    const val GOOGLE_API_KEY = "google_api_key"
+
+    const val BASE_URL = "base_url"
+    const val TRANSPORT_URL = "taxi_url"
+    const val SERVICE_URL = "service_url"
+    const val ORDER_URL = "order_url"
+    const val OTP_VERIFY = "otp_verify"
+    const val DEVICE_TOKEN = "device_token"
+    const val PRIVACY_URL = "privacy_url"
+    const val TERMS_CONDITION = "terms_condition"
+    const val PAYMENTLIST = "paymenttypes"
+    const val COUNTRY_FLAG = "countryflag"
+    const val DEMO_MODE = "demo_mode"
+    const val REFERRAL = "referral"
+    const val SOCIAL_LOGIN = "social_login"
+    const val PROVIDER_NEGATIVE_BALANCE = "provider_negative_balance"
+
+}

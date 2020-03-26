@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.activity.main.ui.faq.FaqFragment">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.midokter.app.ui.activity.main.ui.medical_records.MedicalRecordsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorwhiteGrey">
+
+        <TextView
+            android:id="@+id/text_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorwhiteGrey"
+            android:gravity="start"
+            android:padding="@dimen/_8sdp"
+            android:text="You can download your Medical Records that you have consulted before with the Doctor"
+            android:textAlignment="center"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/colorDarkGrey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_medical_records"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingBottom="@dimen/_8sdp"
+            app:layout_constraintTop_toBottomOf="@+id/text_info"
+            app:layout_constraintEnd_toEndOf="@+id/text_info"
+            app:layout_constraintStart_toStartOf="@+id/text_info" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
