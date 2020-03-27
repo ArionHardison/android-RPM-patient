@@ -16,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.activity.profile.ProfileActivity"></activity>
+        <activity android:name=".ui.activity.visitedDoctor.VisitedDoctorsDetailActivity"></activity>
+        <activity android:name=".ui.activity.visitedDoctor.VisitedDoctorsActivity" />
+        <activity android:name=".ui.activity.profile.ProfileActivity" />
         <activity
             android:name=".ui.activity.main.MainActivity"
             android:label="@string/title_activity_main"
