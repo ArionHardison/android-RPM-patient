@@ -16,7 +16,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.activity.visitedDoctor.VisitedDoctorsDetailActivity"></activity>
+        <activity android:name=".ui.activity.success.SuccessActivity"></activity>
+        <activity android:name=".ui.activity.payment.PaymentActivity" />
+        <activity android:name=".ui.activity.findDoctors.FindDoctorPatientDetailsActivity" />
+        <activity android:name=".ui.activity.findDoctors.FindDoctorBookingActivity" />
+        <activity android:name=".ui.activity.findDoctors.FindDoctorsListActivity" />
+        <activity android:name=".ui.activity.findDoctors.FindDoctorCategoriesActivity" />
+        <activity android:name=".ui.activity.thankyou.ThankyouActivity" />
+        <activity android:name=".ui.activity.visitedDoctor.VisitedDoctorsDetailActivity" />
         <activity android:name=".ui.activity.visitedDoctor.VisitedDoctorsActivity" />
         <activity android:name=".ui.activity.profile.ProfileActivity" />
         <activity
