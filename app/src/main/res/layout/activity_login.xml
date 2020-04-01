@@ -53,6 +53,7 @@
                 android:layout_marginEnd="24dp"
                 android:background="@drawable/rectangular_box"
                 android:ems="10"
+                android:focusable="false"
                 android:inputType="textPersonName"
                 android:padding="@dimen/_8sdp"
                 app:layout_constraintEnd_toEndOf="parent"

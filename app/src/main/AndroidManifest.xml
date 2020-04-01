@@ -16,7 +16,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.activity.success.SuccessActivity"></activity>
+        <activity android:name=".ui.activity.chat.ChatSummaryActivity"></activity>
+        <activity android:name=".ui.activity.chat.ChatProblemAreaActivity" />
+        <activity
+            android:name=".ui.activity.chat.ChatActivity"
+            android:label="@string/title_activity_chat"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.activity.success.SuccessActivity" />
         <activity android:name=".ui.activity.payment.PaymentActivity" />
         <activity android:name=".ui.activity.findDoctors.FindDoctorPatientDetailsActivity" />
         <activity android:name=".ui.activity.findDoctors.FindDoctorBookingActivity" />

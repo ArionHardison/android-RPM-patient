@@ -3,6 +3,7 @@ package com.midokter.app.ui.activity.findDoctors
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.midokter.app.R
@@ -21,6 +22,14 @@ class FindDoctorCategoriesActivity : BaseActivity<ActivityFindDoctorCategoriesBi
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         categoriesList()
         rv_categories.layoutManager = GridLayoutManager(applicationContext,2)
+       /* rv_categories.addItemDecoration(
+            DividerItemDecoration(applicationContext,
+                DividerItemDecoration.HORIZONTAL)
+        )
+        rv_categories.addItemDecoration(
+            DividerItemDecoration(applicationContext,
+                DividerItemDecoration.VERTICAL)
+        )*/
         rv_categories.adapter = applicationContext?.let { CategoriesListAdapter(categories, it) }
     }
 

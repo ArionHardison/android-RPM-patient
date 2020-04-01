@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.midokter.app.R
+import com.midokter.app.ui.activity.chat.ChatActivity
 import com.midokter.app.ui.activity.findDoctors.FindDoctorCategoriesActivity
 import com.midokter.app.ui.activity.visitedDoctor.VisitedDoctorsActivity
 import kotlinx.android.synthetic.main.home_list_item.view.*
@@ -29,6 +30,10 @@ class MenuAdapter(val items: ArrayList<String>, val context: Context) :
         holder.itemView.setOnClickListener {
             if (holder.tvMenuName.text.toString().equals("Find Doctors")){
                 val intent = Intent(context, FindDoctorCategoriesActivity::class.java)
+                context.startActivity(intent);
+            }
+            if (holder.tvMenuName.text.toString().equals("Chat")){
+                val intent = Intent(context, ChatActivity::class.java)
                 context.startActivity(intent);
             }
             if (holder.tvMenuName.text.toString().equals("Visited Doctors")){
