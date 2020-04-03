@@ -13,15 +13,15 @@
 
     <fragment
         android:id="@+id/nav_appointments"
-        android:name="com.midokter.app.ui.activity.main.ui.online_appointments.OnlineAppointmentsFragment"
+        android:name="com.midokter.app.ui.activity.main.ui.appointment.AppointmentFragment"
         android:label="@string/menu_appointments"
-        tools:layout="@layout/fragment_online_appointments" />
+        tools:layout="@layout/fragment_appointment" />
 
     <fragment
         android:id="@+id/nav_online_consultation"
-        android:name="com.midokter.app.ui.activity.main.ui.online_appointments.OnlineAppointmentsFragment"
+        android:name="com.midokter.app.ui.activity.main.ui.online_consultation.OnlineConsultationFragment"
         android:label="@string/menu_online_consultation"
-        tools:layout="@layout/fragment_online_appointments" />
+        tools:layout="@layout/fragment_online_consultation" />
 
     <fragment
         android:id="@+id/nav_fav_doctor"

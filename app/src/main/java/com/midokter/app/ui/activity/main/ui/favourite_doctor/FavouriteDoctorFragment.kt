@@ -15,7 +15,7 @@ import com.midokter.app.databinding.FragmentFavouriteDoctorBinding
 import com.midokter.app.ui.adapter.FavDoctorListAdapter
 import com.midokter.app.ui.adapter.OnlineAppointmentListAdapter
 import kotlinx.android.synthetic.main.fragment_favourite_doctor.*
-import kotlinx.android.synthetic.main.fragment_online_appointments.*
+import kotlinx.android.synthetic.main.fragment_online_consultation.*
 
 /**
  * A simple [Fragment] subclass.

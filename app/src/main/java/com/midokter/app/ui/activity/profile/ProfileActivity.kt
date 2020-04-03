@@ -15,9 +15,6 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>() {
     override fun getLayoutId(): Int = R.layout.activity_profile
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-
         button11.setOnClickListener {
             cutomColorButton(button11)
             cutomWhiteColorButton(button12)

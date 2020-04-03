@@ -8,7 +8,7 @@ import com.midokter.app.base.BaseFragment
 import com.midokter.app.databinding.FragmentMedicalRecordsBinding
 import com.midokter.app.ui.adapter.OnlineAppointmentListAdapter
 import kotlinx.android.synthetic.main.fragment_medical_records.*
-import kotlinx.android.synthetic.main.fragment_online_appointments.*
+import kotlinx.android.synthetic.main.fragment_online_consultation.*
 
 class MedicalRecordsFragment : BaseFragment<FragmentMedicalRecordsBinding>() {
 

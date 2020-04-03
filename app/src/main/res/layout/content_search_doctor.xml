@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/layout_circle_corner"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".ui.activity.searchDoctor.SearchDoctorActivity"
+    tools:showIn="@layout/activity_search_doctor">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/editText13"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/search_bg"
+            android:drawableEnd="@drawable/ic_search"
+            android:ems="10"
+            android:hint="Search hospital or doctor name"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView88"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Search results for Miot"
+            android:textColor="@color/colorBlack"
+            app:layout_constraintStart_toStartOf="@+id/editText13"
+            app:layout_constraintTop_toBottomOf="@+id/editText13" />
+
+        <TextView
+            android:id="@+id/textView89"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" (6 results found)"
+            android:textColor="@color/colorButton"
+            app:layout_constraintBottom_toBottomOf="@+id/textView88"
+            app:layout_constraintStart_toEndOf="@+id/textView88"
+            app:layout_constraintTop_toTopOf="@+id/textView88" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_serach_doctors"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView88"
+            app:layout_constraintTop_toBottomOf="@+id/textView89" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

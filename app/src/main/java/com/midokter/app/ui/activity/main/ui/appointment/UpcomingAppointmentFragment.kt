@@ -1,0 +1,38 @@
+package com.midokter.app.ui.activity.main.ui.appointment
+
+
+import android.view.View
+import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.midokter.app.R
+import com.midokter.app.base.BaseFragment
+import com.midokter.app.databinding.FragmentUpcomingAppointmentBinding
+import com.midokter.app.ui.adapter.UpcomingAppointmentsListAdapter
+import kotlinx.android.synthetic.main.fragment_upcoming_appointment.*
+
+/**
+ * A simple [Fragment] subclass.
+ */
+class UpcomingAppointmentFragment : BaseFragment<FragmentUpcomingAppointmentBinding>() {
+
+    val upcomingAppmts: ArrayList<String> = ArrayList()
+
+    override fun getLayoutId(): Int = R.layout.fragment_upcoming_appointment
+
+    override fun initView(mRootView: View?, mViewDataBinding: ViewDataBinding?) {
+        addMenus()
+        // Creates a vertical Layout Manager
+        rv_upcoming_appointments.layoutManager = LinearLayoutManager(context)
+
+        // You can use GridLayoutManager if you want multiple columns. Enter the number of columns as a parameter.
+//        rv_animal_list.layoutManager = GridLayoutManager(this, 2)
+
+        // Access the RecyclerView Adapter and load the data into it
+        rv_upcoming_appointments.adapter = context?.let { UpcomingAppointmentsListAdapter(upcomingAppmts, it) }
+    }
+
+    private fun addMenus() {
+        upcomingAppmts.add("Dr.Bretto")
+    }
+}

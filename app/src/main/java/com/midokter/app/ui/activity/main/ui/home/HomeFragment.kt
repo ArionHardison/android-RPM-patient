@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
-    val menus: ArrayList<String> = ArrayList()
+    var menus: ArrayList<String> = ArrayList()
 
     override fun getLayoutId(): Int = R.layout.fragment_home
 

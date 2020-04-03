@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.midokter.app.R
 import com.midokter.app.ui.activity.chat.ChatActivity
 import com.midokter.app.ui.activity.findDoctors.FindDoctorCategoriesActivity
+import com.midokter.app.ui.activity.searchDoctor.SearchDoctorActivity
 import com.midokter.app.ui.activity.visitedDoctor.VisitedDoctorsActivity
 import kotlinx.android.synthetic.main.home_list_item.view.*
 
@@ -34,6 +35,10 @@ class MenuAdapter(val items: ArrayList<String>, val context: Context) :
             }
             if (holder.tvMenuName.text.toString().equals("Chat")){
                 val intent = Intent(context, ChatActivity::class.java)
+                context.startActivity(intent);
+            }
+            if (holder.tvMenuName.text.toString().equals("Search Doctors")){
+                val intent = Intent(context, SearchDoctorActivity::class.java)
                 context.startActivity(intent);
             }
             if (holder.tvMenuName.text.toString().equals("Visited Doctors")){

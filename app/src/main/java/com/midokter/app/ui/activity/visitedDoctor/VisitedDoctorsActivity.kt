@@ -10,7 +10,7 @@ import com.midokter.app.databinding.ActivityVisitedDoctorsBinding
 import com.midokter.app.ui.adapter.OnlineAppointmentListAdapter
 import com.midokter.app.ui.adapter.VisitedDoctorsListAdapter
 import kotlinx.android.synthetic.main.activity_visited_doctors.*
-import kotlinx.android.synthetic.main.fragment_online_appointments.*
+import kotlinx.android.synthetic.main.fragment_online_consultation.*
 
 class VisitedDoctorsActivity : BaseActivity<ActivityVisitedDoctorsBinding>() {
 
