@@ -5,6 +5,7 @@
     <color name="colorAccent">#1b2f5e</color>
     <color name="colorAccentTransparent">#80216081</color>
 
+    <color name="colorRegisterText">#5b769e</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorBlack">#000000</color>
     <color name="colorGrey">#d3d3d3</color>

@@ -10,6 +10,10 @@
         android:color="#DBD9DD" />
 
     <!-- Round Corners -->
-    <corners android:radius="5dp" />
+    <corners
+        android:topLeftRadius="@dimen/_3sdp"
+        android:bottomLeftRadius="@dimen/_3sdp"
+        android:topRightRadius="0dp"
+        android:bottomRightRadius="0dp"/>
 
 </shape>

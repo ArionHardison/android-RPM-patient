@@ -35,7 +35,7 @@
             android:layout_marginTop="170dp"
             android:text="Final step"
             android:textSize="@dimen/_14sdp"
-            android:textColor="@color/colorDarkGrey"
+            android:textColor="@color/colorRegisterText"
             app:layout_constraintStart_toStartOf="@+id/imageView7"
             app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="What is your"
-            android:textColor="@color/colorDarkGrey"
+            android:textColor="@color/colorRegisterText"
             android:textSize="@dimen/_20sdp"
             app:layout_constraintStart_toStartOf="@+id/textView14"
             app:layout_constraintTop_toBottomOf="@+id/textView14" />
@@ -81,8 +81,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:background="@color/colorButton"
+            android:background="@drawable/dark_button"
             android:text="Finish"
+            android:textAllCaps="false"
             android:textSize="@dimen/_12sdp"
             android:textColor="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="@+id/editText4"
