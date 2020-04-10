@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.midokter.app.R
@@ -35,6 +36,10 @@ class FavouriteDoctorFragment : BaseFragment<FragmentFavouriteDoctorBinding>() {
 //        rv_animal_list.layoutManager = GridLayoutManager(this, 2)
 
         // Access the RecyclerView Adapter and load the data into it
+        rv_fav_doctor.addItemDecoration(
+            DividerItemDecoration(context,
+                DividerItemDecoration.VERTICAL)
+        )
         rv_fav_doctor.adapter = context?.let { FavDoctorListAdapter(favDoctors, it) }
     }
 

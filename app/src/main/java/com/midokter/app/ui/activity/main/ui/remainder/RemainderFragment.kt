@@ -2,6 +2,7 @@ package com.midokter.app.ui.activity.main.ui.remainder
 
 import android.view.View
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.midokter.app.R
 import com.midokter.app.base.BaseFragment
@@ -26,6 +27,10 @@ class RemainderFragment : BaseFragment<FragmentRemainderBinding>() {
 //        rv_animal_list.layoutManager = GridLayoutManager(this, 2)
 
         // Access the RecyclerView Adapter and load the data into it
+        rv_remainder.addItemDecoration(
+            DividerItemDecoration(context,
+                DividerItemDecoration.VERTICAL)
+        )
         rv_remainder.adapter = context?.let { RemainderListAdapter(remainders, it) }
     }
 

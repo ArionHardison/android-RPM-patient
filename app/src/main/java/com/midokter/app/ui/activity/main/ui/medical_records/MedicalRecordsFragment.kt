@@ -2,6 +2,7 @@ package com.midokter.app.ui.activity.main.ui.medical_records
 
 import android.view.View
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.midokter.app.R
 import com.midokter.app.base.BaseFragment
@@ -25,6 +26,10 @@ class MedicalRecordsFragment : BaseFragment<FragmentMedicalRecordsBinding>() {
 //        rv_animal_list.layoutManager = GridLayoutManager(this, 2)
 
         // Access the RecyclerView Adapter and load the data into it
+        rv_medical_records.addItemDecoration(
+            DividerItemDecoration(context,
+                DividerItemDecoration.VERTICAL)
+        )
         rv_medical_records.adapter = context?.let { OnlineAppointmentListAdapter(medicalRecords, it) }
     }
 

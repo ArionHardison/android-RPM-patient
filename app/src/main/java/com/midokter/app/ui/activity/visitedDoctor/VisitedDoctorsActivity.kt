@@ -3,6 +3,7 @@ package com.midokter.app.ui.activity.visitedDoctor
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.midokter.app.R
 import com.midokter.app.base.BaseActivity
@@ -21,6 +22,10 @@ class VisitedDoctorsActivity : BaseActivity<ActivityVisitedDoctorsBinding>() {
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         addVisitedDoctors()
         rv_visited_doctors.layoutManager = LinearLayoutManager(applicationContext)
+        rv_visited_doctors.addItemDecoration(
+            DividerItemDecoration(applicationContext,
+                DividerItemDecoration.VERTICAL)
+        )
         rv_visited_doctors.adapter = applicationContext?.let { VisitedDoctorsListAdapter(visitedDoctors, it) }
     }
 

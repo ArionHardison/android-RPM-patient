@@ -19,17 +19,18 @@
             android:id="@+id/textView69"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Saved Cards"
-            android:textSize="@dimen/_14sdp"
-            android:textColor="@color/colorBlack"
             android:background="@color/colorLiteGrey"
             android:paddingStart="@dimen/_8sdp"
             android:paddingTop="@dimen/_8sdp"
             android:paddingEnd="@dimen/_3sdp"
             android:paddingBottom="@dimen/_8sdp"
+            android:text="Saved Cards"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/_14sdp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            tools:layout_editor_absoluteY="56dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView4"
@@ -38,7 +39,8 @@
             android:layout_marginTop="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView69" />
+            app:layout_constraintTop_toBottomOf="@+id/textView69"
+            tools:visibility="gone" />
 
         <EditText
             android:id="@+id/editText10"
@@ -118,11 +120,11 @@
             android:id="@+id/textView71"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="132dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="100dp"
             android:text="$8"
-            android:textSize="@dimen/_14sdp"
             android:textColor="@color/colorBlack"
+            android:textSize="@dimen/_14sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/radioButton5" />
 
@@ -130,10 +132,10 @@
             android:id="@+id/textView72"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="16dp"
             android:text="Consultation fee"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/textView71"
+            app:layout_constraintHorizontal_bias="0.523"
             app:layout_constraintStart_toStartOf="@+id/textView71"
             app:layout_constraintTop_toBottomOf="@+id/textView71" />
 
@@ -142,17 +144,28 @@
             android:layout_width="@dimen/_150sdp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:layout_marginBottom="8dp"
             android:background="@color/colorButton"
             android:text="Pay now"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/_14sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/textView72"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.656"
+            app:layout_constraintHorizontal_bias="0.465"
             app:layout_constraintStart_toEndOf="@+id/textView72"
-            app:layout_constraintTop_toTopOf="@+id/textView71" />
+            app:layout_constraintTop_toTopOf="@+id/textView71"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar5"
+            android:layout_width="409dp"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

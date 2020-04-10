@@ -33,6 +33,4 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         menus.add("Search Doctors")
         menus.add("Visited Doctors")
     }
-
-
 }

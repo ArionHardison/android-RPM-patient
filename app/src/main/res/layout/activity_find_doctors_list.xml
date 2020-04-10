@@ -35,6 +35,7 @@
                 android:drawableEnd="@drawable/ic_search"
                 android:ems="10"
                 android:hint="Search"
+                android:focusable="false"
                 android:inputType="textPersonName"
                 android:padding="@dimen/_8sdp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -54,10 +55,9 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_finddoctors_list"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@color/colorWhite"
+            android:layout_marginTop="@dimen/_5sdp"
             app:layout_constraintEnd_toEndOf="@+id/search_layout"
             app:layout_constraintStart_toStartOf="@+id/search_layout"
             app:layout_constraintTop_toBottomOf="@+id/search_layout" />
