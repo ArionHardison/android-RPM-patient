@@ -19,8 +19,8 @@ android {
     }
     buildTypes {
         debug {
-            buildConfigField "String", "BASE_URL", '"https://queenbeefilm.com/"'
-            buildConfigField "String", "CLIENT_SECRET", '"vpu9Yl4TKjpVdjnfSeifgFXEHqzk6y92O2TWueM2"'
+            buildConfigField "String", "BASE_URL", '""'
+            buildConfigField "String", "CLIENT_SECRET", '""'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
@@ -32,8 +32,8 @@ android {
                 checkReleaseBuilds false
                 abortOnError false
             }
-            buildConfigField "String", "BASE_URL", '"https://queenbeefilm.com/"'
-            buildConfigField "String", "CLIENT_SECRET", '"vpu9Yl4TKjpVdjnfSeifgFXEHqzk6y92O2TWueM2"'
+            buildConfigField "String", "BASE_URL", '""'
+            buildConfigField "String", "CLIENT_SECRET", '""'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             //signingConfig signingConfigs.release
@@ -52,6 +52,13 @@ android {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "${variant.applicationId}_V${variant.versionCode}_VN-${variant.versionName}_" + new Date().format('yyyy-MM-dd') + ".apk"
+        }
+    }
+
 }
 
 dependencies {
