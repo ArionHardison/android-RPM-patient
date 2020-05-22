@@ -17,7 +17,7 @@
         android:background="@color/colorPrimary">
 
         <ImageView
-            android:id="@+id/imageView6"
+            android:id="@+id/backarrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -36,8 +36,8 @@
             android:text="3/4"
             android:textSize="@dimen/_14sdp"
             android:textColor="@color/colorRegisterText"
-            app:layout_constraintStart_toStartOf="@+id/imageView6"
-            app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+            app:layout_constraintStart_toStartOf="@+id/backarrow"
+            app:layout_constraintTop_toBottomOf="@+id/backarrow" />
 
         <TextView
             android:id="@+id/textView12"
@@ -62,7 +62,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
         <Button
-            android:id="@+id/button6"
+            android:id="@+id/male"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -77,7 +77,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
         <Button
-            android:id="@+id/button7"
+            android:id="@+id/female"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/border_grey"
@@ -85,12 +85,12 @@
             android:text="Female"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
-            app:layout_constraintEnd_toEndOf="@+id/button6"
-            app:layout_constraintStart_toStartOf="@+id/button6"
-            app:layout_constraintTop_toBottomOf="@+id/button6" />
+            app:layout_constraintEnd_toEndOf="@+id/male"
+            app:layout_constraintStart_toStartOf="@+id/male"
+            app:layout_constraintTop_toBottomOf="@+id/male" />
 
         <Button
-            android:id="@+id/button8"
+            android:id="@+id/other"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/border_grey"
@@ -98,9 +98,9 @@
             android:text="Other"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
-            app:layout_constraintEnd_toEndOf="@+id/button7"
-            app:layout_constraintStart_toStartOf="@+id/button7"
-            app:layout_constraintTop_toBottomOf="@+id/button7" />
+            app:layout_constraintEnd_toEndOf="@+id/female"
+            app:layout_constraintStart_toStartOf="@+id/female"
+            app:layout_constraintTop_toBottomOf="@+id/female" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

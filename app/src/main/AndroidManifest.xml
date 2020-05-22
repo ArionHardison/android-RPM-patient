@@ -48,7 +48,13 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="YOUR_API_key" />
-
+        <service
+            android:name="com.midokter.app.fcm.FcmService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
         <activity
             android:name=".ui.activity.splash.SplashActivity"
             android:screenOrientation="portrait">
@@ -58,6 +64,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.activity.otp.OTPActivity" />
     </application>
 
 </manifest>

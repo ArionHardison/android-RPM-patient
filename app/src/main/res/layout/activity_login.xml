@@ -46,34 +46,34 @@
 
             <com.hbb20.CountryCodePicker
                 android:id="@+id/countryCodePicker"
-                android:layout_width="50dp"
+                android:layout_width="wrap_content"
                 android:layout_height="45dp"
                 android:layout_marginStart="24dp"
                 android:gravity="center"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/right_rectangular_box"
                 app:ccp_defaultPhoneCode="91"
+                app:ccp_showNameCode="false"
                 app:ccpDialog_textColor="@color/colorBlack"
                 app:ccp_textSize="@dimen/_12sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
 
             <EditText
-                android:id="@+id/editText"
-                android:layout_width="310dp"
+                android:id="@+id/mobile"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
                 android:background="@drawable/left_rectangular_box"
                 android:ems="10"
-                android:focusable="false"
                 android:inputType="textPersonName"
                 android:padding="@dimen/_8sdp"
+                android:text="@={viewmodel.mobile}"
                 app:layout_constraintBottom_toBottomOf="@+id/countryCodePicker"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/countryCodePicker"
                 app:layout_constraintTop_toTopOf="@+id/countryCodePicker"
-                app:layout_constraintVertical_bias="0.0" />
+               />
 
             <Button
                 android:id="@+id/button"
@@ -87,9 +87,10 @@
                 android:textAllCaps="false"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/_14sdp"
+                android:onClick="@{()->viewmodel.ContinueClick()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editText" />
+                app:layout_constraintTop_toBottomOf="@+id/mobile" />
 
             <TextView
                 android:id="@+id/textView2"

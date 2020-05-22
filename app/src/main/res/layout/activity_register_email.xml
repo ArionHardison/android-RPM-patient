@@ -17,7 +17,7 @@
         android:background="@color/colorPrimary">
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/backarrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -36,8 +36,8 @@
             android:text="2/4"
             android:textSize="@dimen/_14sdp"
             android:textColor="@color/colorRegisterText"
-            app:layout_constraintStart_toStartOf="@+id/imageView3"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+            app:layout_constraintStart_toStartOf="@+id/backarrow"
+            app:layout_constraintTop_toBottomOf="@+id/backarrow" />
 
         <TextView
             android:id="@+id/textView9"
@@ -62,7 +62,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
         <EditText
-            android:id="@+id/editText3"
+            android:id="@+id/email"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -76,7 +76,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/next"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -85,9 +85,9 @@
             android:textAllCaps="false"
             android:textSize="@dimen/_12sdp"
             android:textColor="@color/colorWhite"
-            app:layout_constraintEnd_toEndOf="@+id/editText3"
-            app:layout_constraintStart_toStartOf="@+id/editText3"
-            app:layout_constraintTop_toBottomOf="@+id/editText3" />
+            app:layout_constraintEnd_toEndOf="@+id/email"
+            app:layout_constraintStart_toStartOf="@+id/email"
+            app:layout_constraintTop_toBottomOf="@+id/email" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

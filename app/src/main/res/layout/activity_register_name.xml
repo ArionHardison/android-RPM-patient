@@ -17,7 +17,7 @@
         android:background="@color/colorPrimary">
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/backarrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -36,8 +36,8 @@
             android:text="1/4"
             android:textSize="@dimen/_14sdp"
             android:textColor="@color/colorRegisterText"
-            app:layout_constraintStart_toStartOf="@+id/imageView4"
-            app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+            app:layout_constraintStart_toStartOf="@+id/backarrow"
+            app:layout_constraintTop_toBottomOf="@+id/backarrow" />
 
         <TextView
             android:id="@+id/textView6"
@@ -62,7 +62,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -76,7 +76,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/next"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -85,9 +85,9 @@
             android:textAllCaps="false"
             android:textSize="@dimen/_12sdp"
             android:textColor="@color/colorWhite"
-            app:layout_constraintEnd_toEndOf="@+id/editText2"
-            app:layout_constraintStart_toStartOf="@+id/editText2"
-            app:layout_constraintTop_toBottomOf="@+id/editText2" />
+            app:layout_constraintEnd_toEndOf="@+id/name"
+            app:layout_constraintStart_toStartOf="@+id/name"
+            app:layout_constraintTop_toBottomOf="@+id/name" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

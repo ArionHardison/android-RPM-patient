@@ -21,6 +21,7 @@ object PreferenceKey {
     const val ORDER_URL = "order_url"
     const val OTP_VERIFY = "otp_verify"
     const val DEVICE_TOKEN = "device_token"
+    const val DEVICE_ID = "device_id"
     const val PRIVACY_URL = "privacy_url"
     const val TERMS_CONDITION = "terms_condition"
     const val PAYMENTLIST = "paymenttypes"

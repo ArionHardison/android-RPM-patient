@@ -29,7 +29,11 @@ object Constant {
         val ORDER = "ORDER"
         val SERVICE = "SERVICE"
     }
-
+    object Gender {
+        val MALE = "MALE"
+        val FEMALE = "FEMALE"
+        val OTHER = "OTHER"
+    }
     object PaymentMode {
         val CASH = "cash"
         val CARD = "card"
@@ -124,6 +128,13 @@ object Constant {
         const val USER_NAME = "USER_NAME"
         const val ADMIN_SERVICE = "ADMIN_SERVICE"
         const val PROVIDER_NAME = "PROVIDER_NAME"
+    }
+
+    object IntentData {
+        val MOBILE_NUMBER = "MOBILE_NUMBER"
+        val COUNTRY_CODE = "COUNTRY_CODE"
+        val OTP = "OTP"
+        val ISLOGIN = false
     }
 
 }
