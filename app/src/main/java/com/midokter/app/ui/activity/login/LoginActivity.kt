@@ -12,6 +12,8 @@ import com.midokter.app.R
 import com.midokter.app.base.BaseActivity
 import com.midokter.app.data.Constant
 import com.midokter.app.data.PreferenceHelper
+import com.midokter.app.data.PreferenceKey
+import com.midokter.app.data.setValue
 import com.midokter.app.databinding.ActivityLoginBinding
 import com.midokter.app.repositary.WebApiConstants
 import com.midokter.app.ui.activity.otp.OTPActivity
@@ -55,10 +57,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(),LoginNavigator {
     private fun observeResponse() {
         viewModel.motpResponse.observe(this@LoginActivity, Observer<OtpResponse> {
             loadingObservable.value = false
-            if (it.success)
                 goToOTP(it)
-            else
-                ViewUtils.showToast(this@LoginActivity, it.message, false)
+
         })
 
         viewModel.getErrorObservable().observe(this, Observer<String> { message ->
@@ -71,15 +71,21 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(),LoginNavigator {
         //openNewActivity(this@LoginActivity, EmailActivity::class.java, true)
 
     private fun goToOTP(data: OtpResponse) {
+        preferenceHelper.setValue(PreferenceKey.PHONE, mDataBinding.mobile.text.toString())
+        preferenceHelper.setValue(PreferenceKey.COUNTRY_CODE, viewModel.countryCode.value)
         ViewUtils.showToast(this@LoginActivity, data.message, true)
         val intent = Intent(this@LoginActivity, OTPActivity::class.java)
         intent.putExtra(Constant.IntentData.MOBILE_NUMBER, viewModel.mobile.value)
         intent.putExtra(Constant.IntentData.COUNTRY_CODE, viewModel.countryCode.value)
+        if(data.success)
+            intent.putExtra(Constant.IntentData.ISLOGIN, true)
+        else
+            intent.putExtra(Constant.IntentData.ISLOGIN, false)
+
         intent.putExtra(Constant.IntentData.OTP, data.otp)
         startActivity(intent)
-        finish()
-        Register_Map.put(WebApiConstants.SignUp.COUNTRY_CODE, mDataBinding.countryCodePicker.selectedCountryCodeWithPlus)
-        Register_Map.put(WebApiConstants.SignUp.MOBILE,mDataBinding.mobile.text.toString())
+
+
 
     }
 }

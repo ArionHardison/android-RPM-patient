@@ -1,6 +1,7 @@
 package com.midokter.app.repositary
 
 
+import androidx.lifecycle.ViewModel
 import com.midokter.app.BuildConfig
 import com.midokter.app.ui.activity.login.LoginViewModel
 import com.midokter.app.ui.activity.otp.OTPViewModel
@@ -42,7 +43,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun otpSignIn(viewModel: OTPViewModel, params: HashMap<String, Any>): Disposable {
+    fun verfiyotp(viewModel: OTPViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .verifyotp(params)
             .observeOn(AndroidSchedulers.mainThread())
@@ -51,6 +52,30 @@ class AppRepository : BaseRepository() {
                 viewModel.loginResponse.value = it
             }, {
                 viewModel.getErrorObservable().value = getErrorMessage(it)
+            })
+    }
+
+    fun postSignIn(viewModel: OTPViewModel, params: HashMap<String, Any>): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .signIn(params)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                viewModel.loginResponse.value = it
+            }, {
+                viewModel.getErrorObservable().value = getErrorMessage(it)
+            })
+    }
+
+    fun logout(viewModel: ViewModel, params: HashMap<String, Any>): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .logout(params)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+
+            }, {
+
             })
     }
 /*home*/
@@ -133,22 +158,8 @@ class AppRepository : BaseRepository() {
             }, {
                 viewModel.getErrorObservable().value = getErrorMessage(it)
             })
-    }
-    fun logout(viewModel: ViewModel, params: HashMap<String, Any>): Disposable {
-        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
-            .logout(params)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe({
-                if (viewModel is ProfileViewModel) {
-                    viewModel.logoutResponse.value = it
-                }
-            }, {
-                if (viewModel is ProfileViewModel) {
-                    viewModel.getErrorObservable().value = getErrorMessage(it)
-                }
-            })
     }*/
+
 
     companion object {
         private var appRepository: AppRepository? = null

@@ -1,9 +1,11 @@
 package com.midokter.app.repositary
 
 import com.midokter.app.repositary.model.RegisterResponse
+import com.midokter.app.repositary.model.Response
 import com.midokter.doctor.repositary.model.LoginResponse
 
 import com.midokter.doctor.repositary.model.*
+
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -17,7 +19,7 @@ interface ApiInterface {
 
 
     @FormUrlEncoded
-    @POST("api/hospital/login")
+    @POST("api/patient/login")
     fun signIn(@FieldMap hashMap: HashMap<String, Any>): Observable<LoginResponse>
 
 
@@ -29,6 +31,9 @@ interface ApiInterface {
     @POST("api/patient/verify_otp")
     fun verifyotp(@FieldMap hashMap: HashMap<String, Any>): Observable<LoginResponse>
 
+    @FormUrlEncoded
+    @POST("api/patient/logout")
+    fun logout(@FieldMap hashMap: HashMap<String, Any>): Observable<Response>
 
     @FormUrlEncoded
     @POST("api/hospital/update_profile")

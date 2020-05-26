@@ -14,4 +14,7 @@ class RegisterViewModel : BaseViewModel<RegisterNavigator>() {
 
         getCompositeDisposable().add(appRepository.signup(this, hashMap))
     }
+
+    fun pickDate() {navigator.pickDate()}
+    fun nextclick() {navigator.performValidation()}
 }

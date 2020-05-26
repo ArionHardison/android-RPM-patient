@@ -134,7 +134,7 @@ object Constant {
         val MOBILE_NUMBER = "MOBILE_NUMBER"
         val COUNTRY_CODE = "COUNTRY_CODE"
         val OTP = "OTP"
-        val ISLOGIN = false
+        val ISLOGIN = "ISLOGIN"
     }
 
 }

@@ -73,6 +73,7 @@ abstract class BaseViewModel<N> : ViewModel() {
         return try {
             val jsonObject = JSONObject(responseBody.string())
             jsonObject.getString("message")
+
         } catch (e: Exception) {
             e.message
         }

@@ -14,14 +14,20 @@ import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
+import android.view.MenuItem
+import com.midokter.app.BaseApplication
 import com.midokter.app.R
+import com.midokter.app.data.PreferenceHelper
+import com.midokter.app.data.clearAll
 import com.midokter.app.ui.activity.profile.ProfileActivity
+import com.midokter.app.ui.activity.register.RegisterEmailActivity
 import com.midokter.app.ui.activity.register.RegisterNameActivity
+import com.midokter.app.ui.activity.splash.SplashActivity
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-
+    private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -54,6 +60,20 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_logout -> {
+                preferenceHelper.clearAll()
+                val intent = Intent(this@MainActivity, SplashActivity::class.java)
+                startActivity(intent);
+                finish()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)

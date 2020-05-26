@@ -5,7 +5,11 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.midokter.app.R
+import com.midokter.app.data.PreferenceHelper
+import com.midokter.app.data.PreferenceKey
+import com.midokter.app.data.getValue
 import com.midokter.app.ui.activity.login.LoginActivity
+import com.midokter.app.ui.activity.main.MainActivity
 
 class SplashActivity : AppCompatActivity() {
 
@@ -24,16 +28,18 @@ class SplashActivity : AppCompatActivity() {
     }
 
     internal val mRunnable: Runnable = Runnable {
-        val intent = Intent(applicationContext, LoginActivity::class.java)
-        startActivity(intent)
-        finish()
-        /*if (!isFinishing) {
+
+        if (!isFinishing) {
             if (!PreferenceHelper(this).getValue(PreferenceKey.ACCESS_TOKEN, "")?.equals("")!!) {
+                val intent = Intent(applicationContext, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            }else{
                 val intent = Intent(applicationContext, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
             }
-        }*/
+        }
     }
 
     public override fun onDestroy() {

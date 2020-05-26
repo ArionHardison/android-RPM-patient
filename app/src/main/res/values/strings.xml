@@ -27,6 +27,7 @@
     <string name="menu_relative_mgmt">Relatives Management</string>
     <string name="menu_faq">FAQ/Admin Contact</string>
     <string name="menu_settings">Settings</string>
+    <string name="menu_logout">Logout</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -45,9 +46,11 @@
     <string name="error_invalid_email_address">Please enter valid email address</string>
     <string name="error_invalid_password">Please enter valid password</string>
     <string name="error_invalid_mobile">Please enter Mobile Number</string>
+    <string name="hint_mobile">Enter Mobile Number</string>
     <string name="error_invalid_mobile_">Please enter valid Mobile Number</string>
     <string name="error_invalid_gender">Please enter Gender</string>
     <string name="error_invalid_age">Please enter age</string>
+    <string name="error_invalid_dob">Please enter DOB</string>
     <string name="error_invalid_description">Please enter comments</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"

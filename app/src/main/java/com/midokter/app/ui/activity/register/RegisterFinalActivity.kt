@@ -1,5 +1,7 @@
 package com.midokter.app.ui.activity.register
 
+import android.annotation.SuppressLint
+import android.app.DatePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,9 +12,7 @@ import com.midokter.app.BaseApplication
 import com.midokter.app.BuildConfig
 import com.midokter.app.R
 import com.midokter.app.base.BaseActivity
-import com.midokter.app.data.PreferenceHelper
-import com.midokter.app.data.PreferenceKey
-import com.midokter.app.data.setValue
+import com.midokter.app.data.*
 import com.midokter.app.databinding.ActivityRegisterFinalBinding
 import com.midokter.app.databinding.ActivityRegisterGenderBinding
 import com.midokter.app.repositary.WebApiConstants
@@ -23,11 +23,15 @@ import com.midokter.doctor.repositary.model.LoginResponse
 import com.midokter.doctor.repositary.model.OtpResponse
 import kotlinx.android.synthetic.main.activity_register_final.*
 import kotlinx.android.synthetic.main.activity_register_gender.*
+import java.util.*
 
-class RegisterFinalActivity : BaseActivity<ActivityRegisterFinalBinding>() {
+class RegisterFinalActivity : BaseActivity<ActivityRegisterFinalBinding>(),RegisterNavigator {
+
+
     private lateinit var viewModel: RegisterViewModel
     private lateinit var mDataBinding: ActivityRegisterFinalBinding
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
+    private var mdobDate: String? = null
 
 
     override fun getLayoutId(): Int = R.layout.activity_register_final
@@ -36,22 +40,9 @@ class RegisterFinalActivity : BaseActivity<ActivityRegisterFinalBinding>() {
         mDataBinding = mViewDataBinding as ActivityRegisterFinalBinding
         viewModel = ViewModelProviders.of(this).get(RegisterViewModel::class.java)
         mDataBinding.viewmodel = viewModel
+        viewModel.navigator = this
 
-        if (mViewDataBinding.dob.text.toString().isNullOrBlank()) {
-            ViewUtils.showToast(this@RegisterFinalActivity, R.string.error_invalid_name, false)
-        } else {
-            Register_Map.put(WebApiConstants.SignUp.DOB, mDataBinding.dob.text.toString())
-            Register_Map[WebApiConstants.SocialLogin.DEVICE_TOKEN] = BaseApplication.getCustomPreference!!.getString(
-                PreferenceKey.DEVICE_TOKEN, "111") as String
-            Register_Map[WebApiConstants.SocialLogin.DEVICE_ID] = BaseApplication.getCustomPreference!!.getString(
-                PreferenceKey.DEVICE_ID, "111") as String
-            Register_Map[WebApiConstants.SignIn.CLIENT_ID] = BuildConfig.CLIENT_ID
-            Register_Map[WebApiConstants.SignIn.CLIENT_SECRET] = BuildConfig.CLIENT_SECRET
-            loadingObservable.value = true
-            viewModel.Signup(Register_Map)
-
-        }
-
+        observeResponse()
         mDataBinding.backarrow.setOnClickListener {
             finish()
         }
@@ -79,5 +70,51 @@ class RegisterFinalActivity : BaseActivity<ActivityRegisterFinalBinding>() {
             finishAffinity()
         }
     }
+    @SuppressLint("SetTextI18n")
+    override fun pickDate() {
+        val c = Calendar.getInstance()
+        val mYear = c.get(Calendar.YEAR)
+        val mMonth = c.get(Calendar.MONTH)
+        val mDay = c.get(Calendar.DAY_OF_MONTH)
+        val now = System.currentTimeMillis() - 1000
+        val maxDate = System.currentTimeMillis() + (1000 * 60 * 60 * 24 * 3)
+        val datePickerDialog = DatePickerDialog(this@RegisterFinalActivity,R.style.TransportCalenderThemeDialog,
+            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                view.minDate = System.currentTimeMillis() - 1000
+                view.maxDate = maxDate - 1000
+                mdobDate = dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year
+                mDataBinding.dob.setText( dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year)
+
+
+            }, mYear, mMonth, mDay)
+       // datePickerDialog.datePicker.minDate = now
+        datePickerDialog.datePicker.maxDate = now
+        datePickerDialog.show()
+    }
+
+    override fun performValidation() {
+        if (mDataBinding.dob.text.toString().isNullOrBlank()) {
+            ViewUtils.showToast(this@RegisterFinalActivity, R.string.error_invalid_dob, false)
+        } else {
+            Register_Map[WebApiConstants.SignUp.COUNTRY_CODE]= preferenceHelper.getValue(PreferenceKey.COUNTRY_CODE,"91")!!
+            Register_Map[WebApiConstants.SignUp.PHONE]= preferenceHelper.getValue(PreferenceKey.PHONE,"91")!!
+            Register_Map[WebApiConstants.SignUp.EMAIL]= preferenceHelper.getValue(PreferenceKey.EMAIL,"demo@demo.com")!!
+            Register_Map[WebApiConstants.SignUp.GENDER]= preferenceHelper.getValue(PreferenceKey.GENDER,"MALE")!!
+            Register_Map[WebApiConstants.SignUp.DOB]= mdobDate!!
+            Register_Map[WebApiConstants.SignUp.FIRST_NAME]= preferenceHelper.getValue(PreferenceKey.FIRST_NAME,"demo")!!
+            Register_Map[WebApiConstants.SignUp.LAST_NAME]="."
+            Register_Map[WebApiConstants.SignUp.GRANDTYPE]= "password"
+            Register_Map[WebApiConstants.SignUp.DEVICE_TOKEN] = BaseApplication.getCustomPreference!!.getString(PreferenceKey.DEVICE_TOKEN, "111") as String
+            Register_Map[WebApiConstants.SignUp.DEVICE_ID] = BaseApplication.getCustomPreference!!.getString(PreferenceKey.DEVICE_ID, "111") as String
+            Register_Map[WebApiConstants.SignUp.DEVICE_TYPE] = BuildConfig.DEVICE_TYPE
+            Register_Map[WebApiConstants.SignIn.CLIENT_ID] = BuildConfig.CLIENT_ID
+            Register_Map[WebApiConstants.SignIn.CLIENT_SECRET] = BuildConfig.CLIENT_SECRET
+
+            loadingObservable.value = true
+            viewModel.Signup(Register_Map)
+
+        }
+    }
+
 
 }

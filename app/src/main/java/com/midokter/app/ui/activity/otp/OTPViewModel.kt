@@ -1,7 +1,10 @@
 package com.midokter.app.ui.activity.otp
 
 import androidx.lifecycle.MutableLiveData
+import com.midokter.app.BaseApplication
+import com.midokter.app.BuildConfig
 import com.midokter.app.base.BaseViewModel
+import com.midokter.app.data.PreferenceKey
 import com.midokter.app.extensions.default
 import com.midokter.app.repositary.AppRepository
 import com.midokter.app.repositary.WebApiConstants
@@ -23,26 +26,44 @@ class OTPViewModel : BaseViewModel<OTPNavigator>() {
         navigator.goNext()
     }
 
-    fun LoginClick(){
+    fun LoginMailClick(){
         navigator.goToEmail()
     }
     fun verifyOtp() {
-        navigator.goToEmail()
+        navigator.goNext()
     }
 
    fun otpLogin() {
         val hashMap : HashMap<String,Any> = HashMap()
         hashMap[WebApiConstants.SignIn.OTP] = otp.value!!.trim()
         hashMap[WebApiConstants.SignIn.MOBILE] =  countryCode.value!!.trim().plus(mobile.value!!.trim())
-        getCompositeDisposable().add(appRepository.otpSignIn(this,hashMap))
+        //getCompositeDisposable().add(appRepository.otpSignIn(this,hashMap))
     }
-
-   /* fun signIn() {
-        loadingProgress.value = true
+    fun verfiyOtp() {
         val hashMap : HashMap<String,Any> = HashMap()
-        hashMap[WebApiConstants.SignIn.LOGIN_TYPE] = WebApiConstants.SignIn.LOGIN
+        hashMap[WebApiConstants.SignIn.OTP] = otp.value!!.trim()
+        hashMap[WebApiConstants.SignIn.MOBILE] =  countryCode.value!!.trim().plus(mobile.value!!.trim())
+        getCompositeDisposable().add(appRepository.verfiyotp(this,hashMap))
+    }
+    fun signIn() {
+
+        val hashMap : HashMap<String,Any> = HashMap()
+        hashMap[WebApiConstants.SignIn.EMAIL] ="patient@demo.com"
         hashMap[WebApiConstants.SignIn.MOBILE] = mobile.value!!.trim()
         hashMap[WebApiConstants.SignIn.COUNTRY_CODE] = countryCode.value!!.removePrefix("+")
-        getCompositeDisposable().add(appRepository.numberSignIn(this,hashMap))
-    }*/
+        hashMap[WebApiConstants.SignIn.GRANT_TYPE] = BuildConfig.GRANT_TYPE
+        hashMap[WebApiConstants.SignIn.PASSWORD] = "123456"
+        hashMap[WebApiConstants.SocialLogin.DEVICE_TYPE] = BuildConfig.DEVICE_TYPE
+        hashMap[WebApiConstants.SocialLogin.DEVICE_TOKEN] = BaseApplication.getCustomPreference!!.getString(
+            PreferenceKey.DEVICE_TOKEN, "111") as String
+        hashMap[WebApiConstants.SocialLogin.DEVICE_ID] = BaseApplication.getCustomPreference!!.getString(
+            PreferenceKey.DEVICE_ID, "111") as String
+        hashMap[WebApiConstants.SignIn.CLIENT_ID] = BuildConfig.CLIENT_ID
+        hashMap[WebApiConstants.SignIn.CLIENT_SECRET] = BuildConfig.CLIENT_SECRET
+        getCompositeDisposable().add(appRepository.postSignIn(this, hashMap))
+
+
+
+
+    }
 }
