@@ -4,7 +4,9 @@ package com.midokter.app.repositary
 import androidx.lifecycle.ViewModel
 import com.midokter.app.BuildConfig
 import com.midokter.app.ui.activity.login.LoginViewModel
+import com.midokter.app.ui.activity.main.MainViewModel
 import com.midokter.app.ui.activity.otp.OTPViewModel
+import com.midokter.app.ui.activity.profile.ProfileViewModel
 import com.midokter.app.ui.activity.register.RegisterViewModel
 
 
@@ -79,7 +81,7 @@ class AppRepository : BaseRepository() {
             })
     }
 /*home*/
-    /*   fun getHome(viewModel: ViewModel, params: HashMap<String, Any>): Disposable {
+    /*  fun getHome(viewModel: ViewModel, params: HashMap<String, Any>): Disposable {
           return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
               .getHome(params)
               .observeOn(AndroidSchedulers.mainThread())
@@ -93,7 +95,7 @@ class AppRepository : BaseRepository() {
                       viewModel.getErrorObservable().value = getErrorMessage(it)
                   }
               })
-      }
+      }*/
   /*profile*/
      fun getProfile(viewModel: ViewModel): Disposable {
           return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
@@ -101,25 +103,21 @@ class AppRepository : BaseRepository() {
               .observeOn(AndroidSchedulers.mainThread())
               .subscribeOn(Schedulers.io())
               .subscribe({
-                  if (viewModel is ProfileViewModel) {
+                  if (viewModel is MainViewModel) {
                       viewModel.mProfileResponse.value = it
-                  }else  if (viewModel is EditProfileViewModel) {
-                      viewModel.mProfileResponse.value = it
-                  }else  if (viewModel is HomeViewModel) {
+                  }else  if (viewModel is ProfileViewModel) {
                       viewModel.mProfileResponse.value = it
                   }
               }, {
-                  if (viewModel is ProfileViewModel) {
+                  if (viewModel is MainViewModel) {
                       viewModel.getErrorObservable().value = getErrorMessage(it)
-                  }else  if (viewModel is EditProfileViewModel) {
-                      viewModel.getErrorObservable().value = getErrorMessage(it)
-                  }else  if (viewModel is HomeViewModel) {
+                  }else  if (viewModel is ProfileViewModel) {
                       viewModel.getErrorObservable().value = getErrorMessage(it)
                   }
               })
       }
 
-   *//*   updateprofile*//*
+    /*   *//*   updateprofile*//*
     fun postUpdateProfile(viewModel: EditProfileViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .updateprofile(params)

@@ -4,6 +4,7 @@ package com.midokter.app.ui.activity.otp
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.text.Editable
+import android.util.Log
 import androidx.core.text.set
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
@@ -47,7 +48,7 @@ class OTPActivity : BaseActivity<ActivityOtpBinding>(), OTPNavigator {
 
 
         observeResponse()
-        mDataBinding.mobile.setText(viewModel.otp.value)
+        mDataBinding.mobile.setText(viewModel.otp.value.toString())
 
     }
 
@@ -88,9 +89,10 @@ class OTPActivity : BaseActivity<ActivityOtpBinding>(), OTPNavigator {
 
         if (data.getToken().isNullOrBlank()) {
             ViewUtils.showToast(this@OTPActivity, data.geterror(), false)
-            openNewActivity(this@OTPActivity, RegisterNameActivity::class.java, false)
+            //openNewActivity(this@OTPActivity, RegisterNameActivity::class.java, false)
         }else {
             preferenceHelper.setValue(PreferenceKey.ACCESS_TOKEN, data.getToken())
+            Log.e("ACCESS_TOKEN",data.getToken())
             openNewActivity(this@OTPActivity, MainActivity::class.java, true)
             finishAffinity()
         }
@@ -104,16 +106,17 @@ class OTPActivity : BaseActivity<ActivityOtpBinding>(), OTPNavigator {
 
         if (mDataBinding.pinEntry.text.isNullOrBlank()) {
             ViewUtils.showToast(this@OTPActivity, getString(R.string.enter_otp), false)
-        } else {
-            if ( viewModel.islogin.equals(true)){
+        }else if (mDataBinding.pinEntry.text.toString().equals(viewModel.otp.value.toString())){
+            if (viewModel.islogin.value?.equals(true)!!){
                 loadingObservable.value = true
                 viewModel.signIn()
             }else {
                 viewModel.otp.value = mDataBinding.pinEntry.text.toString()
-                loadingObservable.value = true
-                viewModel.verfiyOtp()
-                //viewModel.signIn()
+                preferenceHelper.setValue(PreferenceKey.OTP,mDataBinding.pinEntry.text.toString())
+                openNewActivity(this@OTPActivity, RegisterNameActivity::class.java, false)
             }
+        } else {
+            ViewUtils.showToast(this@OTPActivity, getString(R.string.invalid_otp), false)
         }
     }
 }

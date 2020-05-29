@@ -8,7 +8,7 @@
 
         <variable
             name="viewmodel"
-            type="com.midokter.app.ui.activity.login.LoginViewModel" />
+            type="com.midokter.app.ui.activity.profile.ProfileViewModel" />
     </data>
 
     <ScrollView
@@ -27,6 +27,9 @@
             android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
+            app:titleTextColor="@color/colorWhite"
+            app:title="@string/profile"
+            app:navigationIcon="@drawable/ic_back"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -96,6 +99,7 @@
             <include
                 android:id="@+id/layout_profile_personal"
                 layout="@layout/layout_profile_personal"
+                app:viewmodel ="@{viewmodel}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
@@ -107,6 +111,7 @@
         <include
             android:id="@+id/layout_profile_medical"
             layout="@layout/layout_profile_medical"
+            app:viewmodel ="@{viewmodel}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
@@ -118,6 +123,7 @@
         <include
             android:id="@+id/layout_profile_lifestyle"
             layout="@layout/layout_profile_lifestyle"
+            app:viewmodel ="@{viewmodel}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"

@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.activity.profile.ProfileActivity">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.midokter.app.ui.activity.profile.ProfileViewModel" />
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -17,6 +27,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@={viewmodel.allergies}"
             android:hint="Allergies" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -32,6 +43,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@={viewmodel.current_medications}"
             android:hint="Current Medications" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -47,6 +59,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@={viewmodel.past_medications}"
             android:hint="Past Medications" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -62,6 +75,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@={viewmodel.chronic_diseases}"
             android:hint="Chronic Diseases" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -77,6 +91,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@={viewmodel.injuries}"
             android:hint="Injuries" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -92,7 +107,9 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@={viewmodel.surgeries}"
             android:hint="Surgeries" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

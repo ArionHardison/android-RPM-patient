@@ -82,7 +82,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(),LoginNavigator {
         else
             intent.putExtra(Constant.IntentData.ISLOGIN, false)
 
-        intent.putExtra(Constant.IntentData.OTP, data.otp)
+        intent.putExtra(Constant.IntentData.OTP, data.otp.toString())
         startActivity(intent)
 
 

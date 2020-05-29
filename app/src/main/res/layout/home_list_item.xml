@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/_3sdp"
+    android:layout_marginTop="@dimen/_3sdp"
+    android:layout_marginStart="@dimen/_6sdp"
+    android:layout_marginEnd="@dimen/_6sdp"
     app:cardCornerRadius="@dimen/_3sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,9 +21,10 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:src="@drawable/user_placeholder"
+            android:padding="@dimen/_5sdp"
             app:civ_border_color="@color/colorButton"
-            app:civ_border_overlay="true"
-            app:civ_circle_background_color="@color/colorBlack"
+            app:civ_border_width="@dimen/_1sdp"
+            app:civ_circle_background_color="@color/colorWhite"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -43,7 +46,7 @@
             android:id="@+id/textView18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:text="Speciality"
             android:textSize="@dimen/_12sdp"
             app:layout_constraintEnd_toEndOf="@+id/menuName"

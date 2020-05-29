@@ -7,13 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.midokter.app.R
+import com.midokter.app.repositary.model.HomeResponse
 import com.midokter.app.ui.activity.chat.ChatActivity
 import com.midokter.app.ui.activity.findDoctors.FindDoctorCategoriesActivity
 import com.midokter.app.ui.activity.searchDoctor.SearchDoctorActivity
 import com.midokter.app.ui.activity.visitedDoctor.VisitedDoctorsActivity
 import kotlinx.android.synthetic.main.home_list_item.view.*
 
-class MenuAdapter(val items: ArrayList<String>, val context: Context) :
+class MenuAdapter(val items: ArrayList<HomeResponse.Menu>, val context: Context) :
     RecyclerView.Adapter<ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,7 +28,12 @@ class MenuAdapter(val items: ArrayList<String>, val context: Context) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder?.tvMenuName?.text = items.get(position)
+
+            var data: HomeResponse.Menu=  items.get(position)
+
+        holder?.tvMenuName?.text =data.name
+        holder?.tvsubMenuName?.text =data.subname
+        holder?.imgMenu?.setImageResource(data.imgresouce)
         holder.itemView.setOnClickListener {
             if (holder.tvMenuName.text.toString().equals("Find Doctors")){
                 val intent = Intent(context, FindDoctorCategoriesActivity::class.java)
@@ -57,4 +63,6 @@ class MenuAdapter(val items: ArrayList<String>, val context: Context) :
 class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     // Holds the TextView that will add each animal to
     val tvMenuName = view.menuName
+    val imgMenu = view.imageView8
+    val tvsubMenuName = view.textView18
 }

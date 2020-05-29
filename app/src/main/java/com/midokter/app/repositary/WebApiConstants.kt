@@ -83,6 +83,7 @@ object WebApiConstants {
         const val MOBILE = "mobile"
         const val PHONE = "phone"
         const val EMAIL = "email"
+        const val OTP = "otp"
         const val CONFIRM_PASSWORD = "password_confirmation"
         const val COUNTRY_ID = "country_id"
         const val STATE_ID = "state_id"

@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.activity.profile.ProfileActivity">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.midokter.app.ui.activity.profile.ProfileViewModel" />
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -17,6 +27,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@={viewmodel.smoking}"
             android:hint="Smoking Habits" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -32,6 +43,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@={viewmodel.alcohol}"
             android:hint="Alcohol Consumption" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -47,6 +59,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@={viewmodel.activity}"
             android:hint="Activity Level" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -62,6 +75,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@={viewmodel.food}"
             android:hint="Food Preference" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -77,7 +91,9 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@={viewmodel.occupation}"
             android:hint="Occupation" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

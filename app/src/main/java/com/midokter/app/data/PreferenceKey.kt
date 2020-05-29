@@ -6,6 +6,8 @@ object PreferenceKey {
     const val PHONE = "phone"
     const val EMAIL = "email"
     const val COUNTRY_CODE = "country_code"
+    const val PROFILE_IMAGE = "profile_image"
+
     const val GENDER = "gender"
     const val BASE_CONFIG_RESPONSE = "BASE_CONFIG_RESPONSE"
     const val CURRENCY = "CURRENCY"
@@ -22,6 +24,7 @@ object PreferenceKey {
     const val SERVICE_URL = "service_url"
     const val ORDER_URL = "order_url"
     const val OTP_VERIFY = "otp_verify"
+    const val OTP = "otp"
     const val DEVICE_TOKEN = "device_token"
     const val DEVICE_ID = "device_id"
     const val PRIVACY_URL = "privacy_url"
@@ -34,4 +37,5 @@ object PreferenceKey {
     const val PROVIDER_NEGATIVE_BALANCE = "provider_negative_balance"
     const val FIRST_NAME = "first_name"
     const val LAST_NAME = "last_name"
+    const val PROFILE_PER = "profile_percentage"
 }

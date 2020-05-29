@@ -98,6 +98,7 @@ class RegisterFinalActivity : BaseActivity<ActivityRegisterFinalBinding>(),Regis
         } else {
             Register_Map[WebApiConstants.SignUp.COUNTRY_CODE]= preferenceHelper.getValue(PreferenceKey.COUNTRY_CODE,"91")!!
             Register_Map[WebApiConstants.SignUp.PHONE]= preferenceHelper.getValue(PreferenceKey.PHONE,"91")!!
+            Register_Map[WebApiConstants.SignUp.OTP]= preferenceHelper.getValue(PreferenceKey.OTP,"91")!!
             Register_Map[WebApiConstants.SignUp.EMAIL]= preferenceHelper.getValue(PreferenceKey.EMAIL,"demo@demo.com")!!
             Register_Map[WebApiConstants.SignUp.GENDER]= preferenceHelper.getValue(PreferenceKey.GENDER,"MALE")!!
             Register_Map[WebApiConstants.SignUp.DOB]= mdobDate!!

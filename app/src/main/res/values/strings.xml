@@ -37,9 +37,24 @@
     <!--login-->
     <string name="verify">Verify</string>
     <string name="enter_otp">Enter OTP</string>
+    <string name="invalid_otp">invalid OTP</string>
     <string name="we_just_otp">we just send 4 digit code to  %s%s</string>
     <string name="terms_content">By using the app you agree to</string>
     <string name="terms">terms</string>
+
+   <!-- profile-->
+    <string name="profile_completed">Profile Completed:  </string>
+    <string name="profile">Profile</string>
+    
+<!--    home-->
+    <string name="find_doctors">Find Doctors</string>
+    <string name="chat">Chat</string>
+    <string name="search_doctor">Search Doctors</string>
+    <string name="visted_doctor">Visited Doctors</string>
+    <string name="specialities">Specialities</string>
+    <string name="ask_question">Ask question on helath related</string>
+    <string name="based_hospitals">Based on hospitals</string>
+    <string name="see_you_visted_doc">See your visited doctors</string>
 
     <!--Error alerts-->
     <string name="error_invalid_name">Please enter Name </string>
