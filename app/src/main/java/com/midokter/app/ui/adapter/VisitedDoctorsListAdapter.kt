@@ -5,16 +5,26 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.midokter.app.R
+import com.midokter.app.databinding.VisitedDoctorsListItemBinding
+import com.midokter.app.repositary.model.MainResponse
 import com.midokter.app.ui.activity.visitedDoctor.VisitedDoctorsDetailActivity
+import com.midokter.app.utils.ViewUtils
 import kotlinx.android.synthetic.main.visited_doctors_list_item.view.*
 
-class VisitedDoctorsListAdapter(val items: ArrayList<String>, val context: Context) :
+class VisitedDoctorsListAdapter(val items: MutableList<MainResponse.VisitedDoctor>, val context: Context) :
     RecyclerView.Adapter<VisitedDoctorsViewHolder>() {
 
     override fun onBindViewHolder(holder: VisitedDoctorsViewHolder, position: Int) {
-        holder?.tvDoctorName?.text = items.get(position)
+        val item=items!![position]
+        holder.itemBinding.textView24?.text = ViewUtils.getDayFormat(item.scheduled_at)
+        holder.itemBinding.textView25?.text =  ViewUtils.getTimeFormat(item.scheduled_at)
+        holder.itemBinding.textView26?.text = item.hospital!!.first_name
+        holder.itemBinding.textView27?.text = item.hospital!!.last_name
+        holder.itemBinding.textView28?.text = item.status
+
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, VisitedDoctorsDetailActivity::class.java)
@@ -23,13 +33,11 @@ class VisitedDoctorsListAdapter(val items: ArrayList<String>, val context: Conte
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VisitedDoctorsViewHolder {
-        return VisitedDoctorsViewHolder(
-            LayoutInflater.from(context).inflate(
-                R.layout.visited_doctors_list_item,
-                parent,
-                false
-            )
-        )
+
+        val inflate = DataBindingUtil.inflate<VisitedDoctorsListItemBinding>(
+            LayoutInflater.from(parent.context),
+            R.layout.visited_doctors_list_item, parent, false)
+        return VisitedDoctorsViewHolder(inflate)
     }
 
     // Gets the number of animals in the list
@@ -38,7 +46,6 @@ class VisitedDoctorsListAdapter(val items: ArrayList<String>, val context: Conte
     }
 }
 
-class VisitedDoctorsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    // Holds the TextView that will add each animal to
-    val tvDoctorName = view.textView26
+class VisitedDoctorsViewHolder(view: VisitedDoctorsListItemBinding) : RecyclerView.ViewHolder(view.root) {
+    val itemBinding = view
 }

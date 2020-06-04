@@ -3,11 +3,16 @@ package com.midokter.app.repositary
 
 import androidx.lifecycle.ViewModel
 import com.midokter.app.BuildConfig
+import com.midokter.app.ui.activity.findDoctors.FindDoctorsViewModel
 import com.midokter.app.ui.activity.login.LoginViewModel
 import com.midokter.app.ui.activity.main.MainViewModel
+import com.midokter.app.ui.activity.main.ui.appointment.AppointmentViewModel
+import com.midokter.app.ui.activity.main.ui.favourite_doctor.FavouriteDoctorViewModel
 import com.midokter.app.ui.activity.otp.OTPViewModel
 import com.midokter.app.ui.activity.profile.ProfileViewModel
 import com.midokter.app.ui.activity.register.RegisterViewModel
+import com.midokter.app.ui.activity.searchDoctor.SearchViewModel
+import com.midokter.app.ui.activity.visitedDoctor.VisitedDoctorsViewModel
 
 
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -81,21 +86,33 @@ class AppRepository : BaseRepository() {
             })
     }
 /*home*/
-    /*  fun getHome(viewModel: ViewModel, params: HashMap<String, Any>): Disposable {
+      fun getHome(viewModel: ViewModel, params: HashMap<String, Any>): Disposable {
           return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
               .getHome(params)
               .observeOn(AndroidSchedulers.mainThread())
               .subscribeOn(Schedulers.io())
               .subscribe({
-                  if (viewModel is HomeViewModel) {
-                      viewModel.mhomeResponse.value = it
+                  if (viewModel is FavouriteDoctorViewModel) {
+                      viewModel.mDoctorResponse.value = it
+                  }
+                 else if (viewModel is SearchViewModel) {
+                      viewModel.mDoctorResponse.value = it
+                  }
+                 else if (viewModel is VisitedDoctorsViewModel) {
+                      viewModel.mDoctorResponse.value = it
                   }
               }, {
-                  if (viewModel is HomeViewModel) {
+                  if (viewModel is FavouriteDoctorViewModel) {
+                      viewModel.getErrorObservable().value = getErrorMessage(it)
+                  }
+                  else if (viewModel is SearchViewModel) {
+                      viewModel.getErrorObservable().value = getErrorMessage(it)
+                  }
+                  else if (viewModel is VisitedDoctorsViewModel) {
                       viewModel.getErrorObservable().value = getErrorMessage(it)
                   }
               })
-      }*/
+      }
   /*profile*/
      fun getProfile(viewModel: ViewModel): Disposable {
           return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
@@ -116,7 +133,54 @@ class AppRepository : BaseRepository() {
                   }
               })
       }
+   /* Category*/
+    fun getCategorys(viewModel: ViewModel): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .getCategorys()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                if (viewModel is FindDoctorsViewModel) {
+                    viewModel.mCategoryResponse.value = it
+                }
+            }, {
+                if (viewModel is FindDoctorsViewModel) {
+                    viewModel.getErrorObservable().value = getErrorMessage(it)
+                }
+            })
+    }
 
+    fun getDoctorByCategorys(viewModel: ViewModel): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .getDoctorByCategorys()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                if (viewModel is FindDoctorsViewModel) {
+                    viewModel.mDoctorResponse.value = it
+                }
+            }, {
+                if (viewModel is FindDoctorsViewModel) {
+                    viewModel.getErrorObservable().value = getErrorMessage(it)
+                }
+            })
+    }
+/*Appointments*/
+    fun getAppointment(viewModel: ViewModel): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .getAppointment()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                if (viewModel is AppointmentViewModel) {
+                    viewModel.mResponse.value = it
+                }
+            }, {
+                if (viewModel is AppointmentViewModel) {
+                    viewModel.getErrorObservable().value = getErrorMessage(it)
+                }
+            })
+    }
     /*   *//*   updateprofile*//*
     fun postUpdateProfile(viewModel: EditProfileViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)

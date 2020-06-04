@@ -1,51 +1,102 @@
 package com.midokter.app.ui.activity.main.ui.favourite_doctor
 
 
-import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.midokter.app.R
 import com.midokter.app.base.BaseFragment
 import com.midokter.app.databinding.FragmentFavouriteDoctorBinding
+import com.midokter.app.repositary.model.MainResponse
 import com.midokter.app.ui.adapter.FavDoctorListAdapter
-import com.midokter.app.ui.adapter.OnlineAppointmentListAdapter
+import com.midokter.app.utils.ViewUtils
 import kotlinx.android.synthetic.main.fragment_favourite_doctor.*
-import kotlinx.android.synthetic.main.fragment_online_consultation.*
+import java.util.HashMap
 
 /**
  * A simple [Fragment] subclass.
  */
-class FavouriteDoctorFragment : BaseFragment<FragmentFavouriteDoctorBinding>() {
+class FavouriteDoctorFragment : BaseFragment<FragmentFavouriteDoctorBinding>(),FavouriteDoctorNavigator {
 
     val favDoctors: ArrayList<String> = ArrayList()
+    private lateinit var viewModel: FavouriteDoctorViewModel
+    private lateinit var mDataBinding: FragmentFavouriteDoctorBinding
+    private var mAdapter: FavDoctorListAdapter? = null
+
 
     override fun getLayoutId(): Int = R.layout.fragment_favourite_doctor
 
     override fun initView(mRootView: View?, mViewDataBinding: ViewDataBinding?) {
-        addFavDoctor()
-        // Creates a vertical Layout Manager
-        rv_fav_doctor.layoutManager = LinearLayoutManager(context)
+        mDataBinding = mViewDataBinding as FragmentFavouriteDoctorBinding
+        viewModel = ViewModelProviders.of(this).get(FavouriteDoctorViewModel::class.java)
+        mDataBinding.viewmodel = viewModel
+        viewModel.navigator = this
+        //addFavDoctor()
+        initApiCal()
+        initAdapter()
+        observeResponse()
 
-        // You can use GridLayoutManager if you want multiple columns. Enter the number of columns as a parameter.
-//        rv_animal_list.layoutManager = GridLayoutManager(this, 2)
+    }
+    private fun initApiCal() {
+        showLoading()
+        val hashMap: HashMap<String, Any> = HashMap()
+        viewModel.gethome(hashMap)
 
-        // Access the RecyclerView Adapter and load the data into it
-        rv_fav_doctor.addItemDecoration(
-            DividerItemDecoration(context,
-                DividerItemDecoration.VERTICAL)
-        )
-        rv_fav_doctor.adapter = context?.let { FavDoctorListAdapter(favDoctors, it) }
+    }
+    private fun observeResponse() {
+
+        viewModel.mDoctorResponse.observe(this, Observer<MainResponse> {
+
+
+            viewModel.mDoctorslist = it.favourite_Doctors as MutableList<MainResponse.Doctor>?
+            if (viewModel.mDoctorslist!!.size > 0) {
+                mDataBinding.tvNotFound.visibility = View.GONE
+            } else {
+                mDataBinding.tvNotFound.visibility = View.VISIBLE
+            }
+            mAdapter = FavDoctorListAdapter(viewModel.mDoctorslist!!,activity!!)
+            mDataBinding.adapter = mAdapter
+            mAdapter!!.notifyDataSetChanged()
+         hideLoading()
+
+
+
+
+        })
+        viewModel.getErrorObservable().observe(this, Observer<String> { message ->
+           hideLoading()
+            ViewUtils.showToast(context!!, message, false)
+        })
     }
 
+    private fun initAdapter() {
+        mAdapter = FavDoctorListAdapter( viewModel.mDoctorslist!!,activity!!)
+        mDataBinding.adapter = mAdapter
+        mDataBinding.rvFavDoctor.addItemDecoration(
+            DividerItemDecoration(
+                activity!!,
+                DividerItemDecoration.VERTICAL
+            )
+        )
+        mDataBinding.rvFavDoctor.layoutManager =LinearLayoutManager(activity!!)
+        mAdapter!!.notifyDataSetChanged()
+
+
+    }
     private fun addFavDoctor() {
         favDoctors.add("Dr.Alvin")
         favDoctors.add("Dr.Richard")
         favDoctors.add("Dr.Glen Stwacy")
+        rv_fav_doctor.layoutManager = LinearLayoutManager(context)
+        rv_fav_doctor.addItemDecoration(
+            DividerItemDecoration(context,
+                DividerItemDecoration.VERTICAL)
+        )
+        //rv_fav_doctor.adapter = context?.let { FavDoctorListAdapter(favDoctors, it) }
     }
 }

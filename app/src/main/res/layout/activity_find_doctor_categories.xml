@@ -9,6 +9,9 @@
         <variable
             name="viewmodel"
             type="com.midokter.app.ui.activity.findDoctors.FindDoctorsViewModel" />
+        <variable
+            name="adapter"
+            type="com.midokter.app.ui.adapter.CategoriesListAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,7 +27,7 @@
             android:background="@drawable/search_bg"
             android:drawableEnd="@drawable/ic_search"
             android:ems="10"
-            android:focusable="false"
+            android:focusable="true"
             android:hint="Search for Doctors,Specialities,Symptoms..."
             android:inputType="textPersonName"
             android:padding="@dimen/_8sdp"
@@ -63,6 +66,10 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+            tools:listitem="@layout/list_item_finddoctor_categories"
+            android:adapter="@{adapter}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView44" />
@@ -77,7 +84,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
+        <TextView
+            android:id="@+id/tvNotFound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_result_found"
+            android:textSize="@dimen/_12sdp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="parent"
+            android:layout_centerInParent="true"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -168,5 +168,72 @@ object ViewUtils {
 
     }
 
+    fun getDayFormat(str: String) : String {
+        val formatter = SimpleDateFormat("yyyy-MM-dd ", Locale.ENGLISH)
+        val date =  formatter.parse(str);
+        val format = SimpleDateFormat("dd MMM", Locale.ENGLISH)
+        return  format.format(date)
+    }
+
+
+    fun getDayAndTimeFormat(str: String) : String {
+        val sdf =
+            SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        var dateObj: Date? = null
+        try {
+            dateObj = sdf.parse(str)
+            val time =
+                SimpleDateFormat("h:mm a", Locale.getDefault()).format(dateObj)
+            val fmtOutFull =
+                SimpleDateFormat("d MMM yyyy, EEE", Locale.getDefault())
+            return String.format("%s %s", fmtOutFull.format(dateObj!!.time), time)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return ""
+    }
+
+    fun getScheduleDayFormat(str: String) : String {
+        val sdf =
+            SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        var dateObj: Date? = null
+        try {
+            dateObj = sdf.parse(str)
+            val fmtOutFull =
+                SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault())
+            return String.format("%s", fmtOutFull.format(dateObj!!.time))
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return ""
+    }
+
+    fun getTimeFormat(str: String) : String {
+        val sdf =
+            SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        var dateObj: Date? = null
+        try {
+            dateObj = sdf.parse(str)
+            val time =
+                SimpleDateFormat("h:mm a", Locale.getDefault()).format(dateObj)
+            return time
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return ""
+    }
+
+
+
+    fun getDate(date:Date): String {
+        val sdf = SimpleDateFormat("dd MMM",Locale.ENGLISH)
+        return sdf.format(date)
+    }
+    fun getCurrentDate(): String {
+        val today = Date()
+        val sdf = SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH)
+        return sdf.format(today)
+    }
+
 
 }

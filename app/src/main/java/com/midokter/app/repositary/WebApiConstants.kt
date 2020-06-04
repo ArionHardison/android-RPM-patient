@@ -101,6 +101,7 @@ object WebApiConstants {
     object Home {
         const val FROM_DATE = "from_date"
         const val TO_DATE = "to_date"
+        const val SEARCH = "search"
     }
 
     object AddWallet {

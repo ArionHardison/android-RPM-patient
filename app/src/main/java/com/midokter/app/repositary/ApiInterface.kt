@@ -1,8 +1,6 @@
 package com.midokter.app.repositary
 
-import com.midokter.app.repositary.model.ProfileResponse
-import com.midokter.app.repositary.model.RegisterResponse
-import com.midokter.app.repositary.model.Response
+import com.midokter.app.repositary.model.*
 import com.midokter.doctor.repositary.model.LoginResponse
 
 import com.midokter.doctor.repositary.model.*
@@ -39,6 +37,17 @@ interface ApiInterface {
     @GET("api/patient/profile")
     fun getProfile(): Observable<ProfileResponse>
 
+/*home*/
+    @GET("api/patient/search_doctor")
+    fun getHome(@QueryMap hashMap: HashMap<String, Any>): Observable<MainResponse>
+
+  /*  doctor*/
+    @GET("api/patient/doctor_catagory")
+    fun getCategorys(): Observable<CategoryResponse>
+
+    @GET("api/patient/doctor")
+    fun getDoctorByCategorys(): Observable<DoctorListResponse>
+
     @FormUrlEncoded
     @POST("api/hospital/update_profile")
     fun updateprofile(@FieldMap hashMap: HashMap<String, Any>): Observable<OtpResponse>
@@ -48,5 +57,8 @@ interface ApiInterface {
     @POST("api/hospital/update_profile")
     fun profileUpdate(@PartMap params: HashMap<String, RequestBody>, @Part image : MultipartBody.Part): Observable<OtpResponse>
 
+   /* Appointment*/
+   @GET("api/patient/appointment")
+   fun getAppointment(): Observable<AppointmentResponse>
 
 }

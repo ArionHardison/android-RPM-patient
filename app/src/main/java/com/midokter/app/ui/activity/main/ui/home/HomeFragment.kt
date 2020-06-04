@@ -17,18 +17,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun getLayoutId(): Int = R.layout.fragment_home
 
     override fun initView(mRootView: View?, mViewDataBinding: ViewDataBinding?) {
-        addMenus()
-        // Creates a vertical Layout Manager
+
         recyclerView.layoutManager = LinearLayoutManager(context)
-
-        // You can use GridLayoutManager if you want multiple columns. Enter the number of columns as a parameter.
-//        rv_animal_list.layoutManager = GridLayoutManager(this, 2)
-
-        // Access the RecyclerView Adapter and load the data into it
+        menus.clear()
+        addMenus()
         recyclerView.adapter = context?.let { MenuAdapter(menus, it) }
     }
 
     private fun addMenus() {
+
         menus.add(HomeResponse.Menu(R.drawable.find_doctor,getString(R.string.find_doctors),getString(R.string.find_doctors)))
         menus.add(HomeResponse.Menu(R.drawable.ic_chat,getString(R.string.chat),getString(R.string.ask_question)))
         menus.add(HomeResponse.Menu(R.drawable._ic_search_doc,getString(R.string.search_doctor),getString(R.string.based_hospitals)))

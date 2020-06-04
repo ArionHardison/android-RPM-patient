@@ -10,7 +10,7 @@ import com.midokter.app.R
 import com.midokter.app.ui.activity.findDoctors.FindDoctorsListActivity
 import kotlinx.android.synthetic.main.chat_problem_list_item.view.*
 import kotlinx.android.synthetic.main.fav_doctor_list_item.view.*
-import kotlinx.android.synthetic.main.finddoctor_categories_list_item.view.*
+import kotlinx.android.synthetic.main.list_item_finddoctor_categories.view.*
 
 class ChatProblemAreasListAdapter(val items: ArrayList<String>, val context: Context) :
     RecyclerView.Adapter<ChatProblemsViewHolder>() {

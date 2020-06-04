@@ -8,6 +8,10 @@
         <variable
             name="viewmodel"
             type="com.midokter.app.ui.activity.main.ui.favourite_doctor.FavouriteDoctorViewModel" />
+
+        <variable
+            name="adapter"
+            type="com.midokter.app.ui.adapter.FavDoctorListAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,9 +26,24 @@
             android:background="@color/colorWhite"
             android:paddingTop="@dimen/_8sdp"
             android:paddingBottom="@dimen/_8sdp"
+            android:adapter="@{adapter}"
+            tools:listitem="@layout/fav_doctor_list_item"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tvNotFound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_result_found"
+            android:textSize="@dimen/_12sdp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="parent"
+            android:layout_centerInParent="true"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

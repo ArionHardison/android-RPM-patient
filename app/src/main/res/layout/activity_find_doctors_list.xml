@@ -9,6 +9,9 @@
         <variable
             name="viewmodel"
             type="com.midokter.app.ui.activity.findDoctors.FindDoctorsViewModel" />
+        <variable
+            name="adapter"
+            type="com.midokter.app.ui.adapter.FindDoctorListAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,7 +38,7 @@
                 android:drawableEnd="@drawable/ic_search"
                 android:ems="10"
                 android:hint="Search"
-                android:focusable="false"
+                android:focusable="true"
                 android:inputType="textPersonName"
                 android:padding="@dimen/_8sdp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -58,9 +61,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
+            tools:listitem="@layout/find_doctor_list_item"
+            android:adapter="@{adapter}"
             app:layout_constraintEnd_toEndOf="@+id/search_layout"
             app:layout_constraintStart_toStartOf="@+id/search_layout"
             app:layout_constraintTop_toBottomOf="@+id/search_layout" />
+
+        <TextView
+            android:id="@+id/tvNotFound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_result_found"
+            android:textSize="@dimen/_12sdp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="parent"
+            android:layout_centerInParent="true"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -9,6 +9,10 @@
         <variable
             name="viewmodel"
             type="com.midokter.app.ui.activity.main.ui.appointment.AppointmentViewModel" />
+
+        <variable
+            name="adapter"
+            type="com.midokter.app.ui.adapter.UpcomingAppointmentsListAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,8 +24,23 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
+            android:adapter="@{adapter}"
+            tools:listitem="@layout/upcoming_list_item"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/tvNotFound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_result_found"
+            android:textSize="@dimen/_12sdp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="parent"
+            android:layout_centerInParent="true"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

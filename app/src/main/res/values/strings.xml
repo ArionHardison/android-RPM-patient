@@ -55,6 +55,7 @@
     <string name="ask_question">Ask question on helath related</string>
     <string name="based_hospitals">Based on hospitals</string>
     <string name="see_you_visted_doc">See your visited doctors</string>
+    <string name="result_found">( %s results found )</string>
 
     <!--Error alerts-->
     <string name="error_invalid_name">Please enter Name </string>

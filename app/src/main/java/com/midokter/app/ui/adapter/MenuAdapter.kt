@@ -35,19 +35,19 @@ class MenuAdapter(val items: ArrayList<HomeResponse.Menu>, val context: Context)
         holder?.tvsubMenuName?.text =data.subname
         holder?.imgMenu?.setImageResource(data.imgresouce)
         holder.itemView.setOnClickListener {
-            if (holder.tvMenuName.text.toString().equals("Find Doctors")){
+            if (holder.tvMenuName.text.toString().equals(context.resources.getString(R.string.find_doctors))){
                 val intent = Intent(context, FindDoctorCategoriesActivity::class.java)
                 context.startActivity(intent);
             }
-            if (holder.tvMenuName.text.toString().equals("Chat")){
+            if (holder.tvMenuName.text.toString().equals(context.resources.getString(R.string.chat))){
                 val intent = Intent(context, ChatActivity::class.java)
                 context.startActivity(intent);
             }
-            if (holder.tvMenuName.text.toString().equals("Search Doctors")){
+            if (holder.tvMenuName.text.toString().equals(context.resources.getString(R.string.search_doctor))){
                 val intent = Intent(context, SearchDoctorActivity::class.java)
                 context.startActivity(intent);
             }
-            if (holder.tvMenuName.text.toString().equals("Visited Doctors")){
+            if (holder.tvMenuName.text.toString().equals(context.resources.getString(R.string.visted_doctor))){
                 val intent = Intent(context, VisitedDoctorsActivity::class.java)
                 context.startActivity(intent);
             }

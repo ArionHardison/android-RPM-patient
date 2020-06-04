@@ -2,27 +2,28 @@ package com.midokter.app.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.midokter.app.R
-import kotlinx.android.synthetic.main.fav_doctor_list_item.view.*
+import com.midokter.app.databinding.FavDoctorListItemBinding
+import com.midokter.app.repositary.model.MainResponse
 
-class FavDoctorListAdapter(val items: ArrayList<String>, val context: Context) :
+class FavDoctorListAdapter(val items: MutableList<MainResponse.Doctor>, val context: Context) :
     RecyclerView.Adapter<FavDoctorViewHolder>() {
 
     override fun onBindViewHolder(holder: FavDoctorViewHolder, position: Int) {
-        holder?.tvFavDoctorName?.text = items.get(position)
+        val item=items!![position]
+        holder.itemBinding.favdoctorName?.text = item.first_name.plus(" ").plus(item.last_name)
+        holder.itemBinding.favDrTypeTxt?.text = item.specialities_name!!as String
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavDoctorViewHolder {
-        return FavDoctorViewHolder(
-            LayoutInflater.from(context).inflate(
-                R.layout.fav_doctor_list_item,
-                parent,
-                false
-            )
-        )
+
+        val inflate = DataBindingUtil.inflate<FavDoctorListItemBinding>(
+            LayoutInflater.from(parent.context),
+            R.layout.fav_doctor_list_item, parent, false)
+        return FavDoctorViewHolder(inflate)
     }
 
     // Gets the number of animals in the list
@@ -31,7 +32,7 @@ class FavDoctorListAdapter(val items: ArrayList<String>, val context: Context) :
     }
 }
 
-class FavDoctorViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class FavDoctorViewHolder(view: FavDoctorListItemBinding) : RecyclerView.ViewHolder(view.root) {
     // Holds the TextView that will add each animal to
-    val tvFavDoctorName = view.favdoctorName
+    val itemBinding = view
 }
