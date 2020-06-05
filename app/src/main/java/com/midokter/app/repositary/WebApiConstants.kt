@@ -1,5 +1,7 @@
 package com.midokter.app.repositary
 
+import com.midokter.app.repositary.model.AppointmentResponse
+
 object WebApiConstants {
 
     const val SALT_KEY = "salt_key"
@@ -9,7 +11,7 @@ object WebApiConstants {
 
     const val OLD_PASSWORD = "old_password"
     const val NEW_PASSWORD = "password"
-    const val CONFIRM_PASSWORD = "password_confirmation"
+
 
     object SignIn {
         const val COUNTRY_CODE = "country_code"
@@ -23,7 +25,10 @@ object WebApiConstants {
     }
 
 
-
+    object IntentPass {
+        const val Appointment = "Appointment"
+        const val iscancel = "iscancel"
+    }
 
     object AddAppointment {
         const val PATIENT_ID="patient_id"
@@ -39,6 +44,7 @@ object WebApiConstants {
         const val PHONE="phone"
         const val GENDER="gender"
         const val AGE="age"
+        const val ID="id"
     }
 
 

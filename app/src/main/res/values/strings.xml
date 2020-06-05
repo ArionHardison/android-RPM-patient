@@ -56,6 +56,10 @@
     <string name="based_hospitals">Based on hospitals</string>
     <string name="see_you_visted_doc">See your visited doctors</string>
     <string name="result_found">( %s results found )</string>
+    
+   <!-- application-->
+    <string name="appointments_details">Appointment Details</string>
+    <string name="search_result">Search results for %s</string>
 
     <!--Error alerts-->
     <string name="error_invalid_name">Please enter Name </string>

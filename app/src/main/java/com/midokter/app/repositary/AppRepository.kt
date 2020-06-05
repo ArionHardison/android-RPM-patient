@@ -181,6 +181,36 @@ class AppRepository : BaseRepository() {
                 }
             })
     }
+
+
+    fun cancelAppointment(viewModel: ViewModel, params: HashMap<String, Any>): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .cancelAppointment(params)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                if (viewModel is AppointmentViewModel) {
+                    viewModel.mCancelResponse.value = it
+                }
+            }, {
+                if (viewModel is AppointmentViewModel) {
+                    viewModel.getErrorObservable().value = getErrorMessage(it)
+                }
+            })
+    }
+
+
+    fun postfeedback(viewModel: VisitedDoctorsViewModel, params: HashMap<String, Any>): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .postfeedback(params)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                viewModel.mFeedbackResponse.value = it
+            }, {
+                viewModel.getErrorObservable().value = getErrorMessage(it)
+            })
+    }
     /*   *//*   updateprofile*//*
     fun postUpdateProfile(viewModel: EditProfileViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)

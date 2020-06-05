@@ -37,6 +37,9 @@ class VisitedDoctorsActivity : BaseActivity<ActivityVisitedDoctorsBinding>(),Vis
         initApiCal()
         initAdapter()
         observeResponse()
+        mDataBinding.toolbar3.setNavigationOnClickListener {
+            finish()
+        }
 
     }
     private fun initApiCal() {

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.midokter.app.base.BaseViewModel
 import com.midokter.app.repositary.AppRepository
 import com.midokter.app.repositary.model.ProfileResponse
+import com.midokter.app.repositary.model.Response
 
 class MainViewModel : BaseViewModel<MainNavigator>(){
     private val appRepository = AppRepository.instance()
@@ -13,9 +14,13 @@ class MainViewModel : BaseViewModel<MainNavigator>(){
     var name : ObservableField<String> = ObservableField("")
     var imageurl : ObservableField<String> = ObservableField("")
     var profilepercentage : ObservableField<String> = ObservableField("")
+    var mLogoutResponse = MutableLiveData<Response>()
 
     fun getprofile() {
 
         getCompositeDisposable().add(appRepository.getProfile(this))
+    }
+    fun logout(hashMap: HashMap<String, Any>) {
+        getCompositeDisposable().add(appRepository.logout(this,hashMap))
     }
 }

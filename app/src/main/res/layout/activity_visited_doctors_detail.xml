@@ -9,6 +9,11 @@
         <variable
             name="viewmodel"
             type="com.midokter.app.ui.activity.visitedDoctor.VisitedDoctorsViewModel" />
+
+        <import type="android.view.View"/>
+        <variable
+            name="iscancel"
+            type="java.lang.Boolean"/>
     </data>
 
     <ScrollView
@@ -26,6 +31,9 @@
                 android:background="?attr/colorPrimary"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme"
+                app:title="@string/appointments_details"
+                app:titleTextColor="@color/colorWhite"
+                app:navigationIcon="@drawable/ic_back"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -47,7 +55,8 @@
                 android:layout_marginStart="28dp"
                 android:layout_marginLeft="28dp"
                 android:layout_marginTop="4dp"
-                android:text="Dr.Alvin"
+                tools:text="Dr.Alvin"
+                android:text="@{viewmodel.name}"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/_14sdp"
                 app:layout_constraintStart_toEndOf="@+id/imageView12"
@@ -131,11 +140,19 @@
                 android:paddingTop="@dimen/_12sdp"
                 android:paddingEnd="@dimen/_8sdp"
                 android:paddingBottom="@dimen/_12sdp"
-                android:text="24 Oct 2020,Wed 8.30 pm"
+                tools:text="24 Oct 2020,Wed 8.30 pm"
+                android:text="@{viewmodel.scheduled_at}"
                 android:textColor="@color/colorBlack"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView35" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="@{iscancel ? View.GONE : View.VISIBLE}"
+            app:layout_constraintTop_toBottomOf="@+id/textView36">
 
             <TextView
                 android:id="@+id/textView37"
@@ -147,9 +164,8 @@
                 android:textColor="@color/colorBlack"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView36" />
-
-            <TextView
+                tools:ignore="MissingConstraints" />
+        <TextView
                 android:id="@+id/textView38"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -157,11 +173,14 @@
                 android:paddingTop="@dimen/_12sdp"
                 android:paddingEnd="@dimen/_8sdp"
                 android:paddingBottom="@dimen/_12sdp"
-                android:text="Consulted"
+                tools:text="Consulted"
+            android:textAllCaps="false"
+            android:text="@{viewmodel.status}"
                 android:textColor="@color/colorGreen"
-                app:layout_constraintEnd_toEndOf="@+id/textView37"
-                app:layout_constraintStart_toStartOf="@+id/textView37"
-                app:layout_constraintTop_toBottomOf="@+id/textView37" />
+            app:layout_constraintEnd_toEndOf="@+id/textView37"
+            app:layout_constraintStart_toStartOf="@+id/textView37"
+            app:layout_constraintTop_toBottomOf="@+id/textView37"
+          />
 
             <View
                 android:id="@+id/divider"
@@ -247,7 +266,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/divider2"
                 app:layout_constraintTop_toBottomOf="@+id/divider2" />
-
             <Button
                 android:id="@+id/button14"
                 android:layout_width="match_parent"
@@ -266,5 +284,29 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editText7" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+            <Button
+                android:id="@+id/btncancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/cancel_btn_bg"
+                android:padding="@dimen/_3sdp"
+                android:text="Cancel"
+                tools:visibility="gone"
+                android:visibility="@{iscancel ? View.VISIBLE : View.GONE}"
+                android:textColor="@color/colorRed"
+                android:textAllCaps="false"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView36"
+             />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     </ScrollView>
 </layout>

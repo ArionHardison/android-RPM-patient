@@ -26,6 +26,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_200sdp"
             android:fitsSystemWindows="true"
+
+            app:titleTextColor="@color/colorWhite"
             android:theme="@style/AppTheme.AppBarOverlay">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -34,6 +36,7 @@
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
                 app:contentScrim="?attr/colorPrimary"
+
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:toolbarId="@+id/toolbar">
 
@@ -42,6 +45,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:layout_collapseMode="pin"
+                    app:title="@string/search_doctor"
+                    app:navigationIcon="@drawable/ic_back"
                     app:popupTheme="@style/AppTheme.PopupOverlay" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -85,7 +90,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Search results for Miot"
+                tools:text="Search results for Miot"
+                android:text= "@{@string/search_result(viewmodel.search)}"
                 android:textColor="@color/colorBlack"
                 app:layout_constraintStart_toStartOf="@+id/editText13"
                 app:layout_constraintTop_toBottomOf="@+id/editText13" />

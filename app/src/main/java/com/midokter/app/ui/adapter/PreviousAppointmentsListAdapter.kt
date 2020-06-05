@@ -9,12 +9,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.midokter.app.R
 import com.midokter.app.databinding.VisitedDoctorsListItemBinding
+import com.midokter.app.repositary.WebApiConstants
 import com.midokter.app.repositary.model.AppointmentResponse
 import com.midokter.app.ui.activity.findDoctors.FindDoctorsListActivity
+import com.midokter.app.ui.activity.visitedDoctor.VisitedDoctorsDetailActivity
 import com.midokter.app.utils.ViewUtils
 import kotlinx.android.synthetic.main.fav_doctor_list_item.view.*
 import kotlinx.android.synthetic.main.list_item_finddoctor_categories.view.*
 import kotlinx.android.synthetic.main.visited_doctors_list_item.view.*
+import java.io.Serializable
 
 class PreviousAppointmentsListAdapter(val items: MutableList<AppointmentResponse.Previous.Appointment>, val context: Context) :
     RecyclerView.Adapter<PreviousAppointmentsViewHolder>() {
@@ -26,7 +29,9 @@ class PreviousAppointmentsListAdapter(val items: MutableList<AppointmentResponse
         holder.itemBinding.textView26?.text = item.hospital!!.first_name
         holder.itemBinding.textView28?.text = item.status
         holder.itemView.setOnClickListener {
-            val intent = Intent(context, FindDoctorsListActivity::class.java)
+            val intent = Intent(context, VisitedDoctorsDetailActivity::class.java)
+            intent.putExtra(WebApiConstants.IntentPass.iscancel,false)
+            intent.putExtra(WebApiConstants.IntentPass.Appointment,item as Serializable)
             context.startActivity(intent);
         }
     }

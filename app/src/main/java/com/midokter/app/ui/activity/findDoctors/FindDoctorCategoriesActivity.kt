@@ -48,6 +48,10 @@ class FindDoctorCategoriesActivity : BaseActivity<ActivityFindDoctorCategoriesBi
         initAdapter()
         observeResponse()
 
+        mDataBinding.toolbar8.setNavigationOnClickListener {
+            finish()
+        }
+
     }
     private fun initApiCal() {
         loadingObservable.value = true

@@ -1,9 +1,12 @@
 package com.midokter.app.repositary.model
 
+import android.os.Parcelable
+import java.io.Serializable
+
 data class AppointmentResponse(
     val previous: Previous,
     val upcomming: Upcomming
-) {
+): Serializable {
     data class Previous(
         val appointments: List<Appointment>,
         val created_at: String,
@@ -29,7 +32,7 @@ data class AppointmentResponse(
         val social_unique_id: Any,
         val updated_at: String,
         val wallet_balance: Int
-    ) {
+    ): Serializable {
         data class Appointment(
             val appointment_type: String,
             val checkedout_at: Any,
@@ -50,7 +53,7 @@ data class AppointmentResponse(
             val service_id: Int,
             val status: String,
             val updated_at: String
-        ) {
+        ) : Serializable {
             data class Hospital(
                 val added_by: Any,
                 val clinic: Clinic,
@@ -79,7 +82,7 @@ data class AppointmentResponse(
                 val specialities_name: Any,
                 val tax_id: String,
                 val updated_at: String
-            ) {
+            ) : Serializable{
                 data class Clinic(
                     val address: String,
                     val country_code: Any,
@@ -95,7 +98,7 @@ data class AppointmentResponse(
                     val phone: String,
                     val postal_code: String,
                     val updated_at: String
-                )
+                ): Serializable
             }
         }
     }
@@ -125,7 +128,7 @@ data class AppointmentResponse(
         val social_unique_id: Any,
         val updated_at: String,
         val wallet_balance: Int
-    ) {
+    ): Serializable {
         data class Appointment(
             val appointment_type: String,
             val checkedout_at: Any,
@@ -146,7 +149,7 @@ data class AppointmentResponse(
             val service_id: Int,
             val status: String,
             val updated_at: String
-        ) {
+        ) : Serializable{
             data class Hospital(
                 val added_by: Any,
                 val clinic: Clinic,
@@ -175,7 +178,7 @@ data class AppointmentResponse(
                 val specialities_name: Any,
                 val tax_id: String,
                 val updated_at: String
-            ) {
+            ) : Serializable{
                 data class Clinic(
                     val address: String,
                     val country_code: Any,
@@ -191,7 +194,7 @@ data class AppointmentResponse(
                     val phone: String,
                     val postal_code: String,
                     val updated_at: String
-                )
+                ): Serializable
             }
         }
     }

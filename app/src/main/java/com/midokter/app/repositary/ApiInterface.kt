@@ -61,4 +61,12 @@ interface ApiInterface {
    @GET("api/patient/appointment")
    fun getAppointment(): Observable<AppointmentResponse>
 
+    @FormUrlEncoded
+    @POST("api/patient/cancel_appointment")
+    fun cancelAppointment(@FieldMap hashMap: HashMap<String, Any>): Observable<Response>
+
+    @FormUrlEncoded
+    @POST("api/patient/feedback")
+    fun postfeedback(@FieldMap hashMap: HashMap<String, Any>): Observable<FeedbackResponse>
+
 }

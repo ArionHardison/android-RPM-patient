@@ -29,6 +29,7 @@ import com.midokter.app.data.*
 import com.midokter.app.databinding.ActivityMainBinding
 import com.midokter.app.databinding.ActivityOtpBinding
 import com.midokter.app.repositary.model.ProfileResponse
+import com.midokter.app.repositary.model.Response
 import com.midokter.app.ui.activity.otp.OTPViewModel
 import com.midokter.app.ui.activity.profile.ProfileActivity
 import com.midokter.app.ui.activity.register.RegisterEmailActivity
@@ -55,6 +56,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
+
         initUI()
         initApiCal()
         observeResponse()
@@ -141,6 +143,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
 
             name.setText(preferenceHelper.getValue(PreferenceKey.FIRST_NAME,"Test").toString().plus(" ").plus(preferenceHelper.getValue(PreferenceKey.LAST_NAME,"Test").toString()))
             profile_completed.setText( getString(R.string.profile_completed).plus(" ").plus(preferenceHelper.getValue(PreferenceKey.PROFILE_PER,"Test").toString() ))
+
+
+        })
+
+        viewModel.mLogoutResponse.observe(this, Observer<Response> {
+
+            hideLoading()
+            preferenceHelper.clearAll()
+            val intent = Intent(this@MainActivity, SplashActivity::class.java)
+            startActivity(intent);
+            finish()
+
 
 
         })

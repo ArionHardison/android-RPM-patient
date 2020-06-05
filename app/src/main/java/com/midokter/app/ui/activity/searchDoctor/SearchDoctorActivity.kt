@@ -38,10 +38,13 @@ class SearchDoctorActivity : BaseActivity<ActivitySearchDoctorBinding>(),SearchN
         initApiCal()
         initAdapter()
         observeResponse()
-
+        mDataBinding.toolbar.setNavigationOnClickListener {
+            finish()
+        }
     }
 
     private fun initApiCal() {
+        viewModel.search.set("")
         loadingObservable.value = true
         val hashMap: HashMap<String, Any> = HashMap()
         viewModel.gethome(hashMap)
@@ -100,6 +103,7 @@ class SearchDoctorActivity : BaseActivity<ActivitySearchDoctorBinding>(),SearchN
                     val hashMap: HashMap<String, Any> = HashMap()
                     hashMap[WebApiConstants.Home.SEARCH] = s.toString()
                     viewModel.gethome(hashMap)
+                    viewModel.search.set(s.toString())
                 }else{
                     initApiCal()
                 }

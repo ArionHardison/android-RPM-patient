@@ -10,6 +10,7 @@ class SearchViewModel : BaseViewModel<SearchViewModel>(){
     var mDoctorResponse = MutableLiveData<MainResponse>()
     var mDoctorslist: MutableList<MainResponse.SearchDoctor>? = arrayListOf()
     var listsize : ObservableField<String> = ObservableField("0")
+    var search: ObservableField<String> = ObservableField("")
     private val appRepository = AppRepository.instance()
 
     fun gethome(hashMap: HashMap<String, Any>) {

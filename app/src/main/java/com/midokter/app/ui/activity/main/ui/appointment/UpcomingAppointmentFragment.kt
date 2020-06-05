@@ -12,12 +12,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.midokter.app.R
 import com.midokter.app.base.BaseFragment
 import com.midokter.app.databinding.FragmentUpcomingAppointmentBinding
+import com.midokter.app.repositary.WebApiConstants
 import com.midokter.app.repositary.model.AppointmentResponse
+import com.midokter.app.repositary.model.Response
 import com.midokter.app.ui.activity.visitedDoctor.VisitedDoctorsDetailActivity
 import com.midokter.app.ui.adapter.IAppointmentListener
 import com.midokter.app.ui.adapter.UpcomingAppointmentsListAdapter
 import com.midokter.app.utils.ViewUtils
 import kotlinx.android.synthetic.main.fragment_upcoming_appointment.*
+import java.io.Serializable
+import java.util.HashMap
 
 /**
  * A simple [Fragment] subclass.
@@ -37,13 +41,19 @@ class UpcomingAppointmentFragment : BaseFragment<FragmentUpcomingAppointmentBind
         viewModel = ViewModelProviders.of(this).get(AppointmentViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
+        initApiCal()
         initAdapter()
         observeResponse()
 
     }
-    private fun initAdapter() {
+
+    private fun initApiCal() {
         showLoading()
         viewModel.getAppointment()
+
+    }
+    private fun initAdapter() {
+
         mAdapter = UpcomingAppointmentsListAdapter( viewModel.mUpcominglist!!,activity!!,this)
         mDataBinding.adapter = mAdapter
         mDataBinding.rvUpcomingAppointments.addItemDecoration(
@@ -84,14 +94,28 @@ class UpcomingAppointmentFragment : BaseFragment<FragmentUpcomingAppointmentBind
             hideLoading()
             ViewUtils.showToast(activity!!, message, false)
         })
+        viewModel.mCancelResponse.observe(this, Observer<Response> {
+
+            hideLoading()
+            ViewUtils.showToast(activity!!, it.message, false)
+            initApiCal()
+
+
+
+        })
     }
     override fun onitemclick(selectedItem: AppointmentResponse.Upcomming.Appointment) {
         val intent = Intent(activity!!, VisitedDoctorsDetailActivity::class.java)
-       startActivity(intent);
+        intent.putExtra(WebApiConstants.IntentPass.iscancel,true)
+        intent.putExtra(WebApiConstants.IntentPass.Appointment,selectedItem as Serializable)
+        startActivity(intent);
     }
 
     override fun onCancelclick(selectedItem: AppointmentResponse.Upcomming.Appointment) {
-
+        showLoading()
+        val hashMap: HashMap<String, Any> = HashMap()
+        hashMap[WebApiConstants.AddAppointment.ID] = selectedItem.id
+        viewModel.cancelAppointment(hashMap)
     }
 
     private fun addMenus() {
