@@ -7,6 +7,7 @@ data class CategoryResponse(
         val created_at: Any,
         val id: Int,
         val name: String,
+        val image: String,
         val status: Int,
         val updated_at: Any
     )

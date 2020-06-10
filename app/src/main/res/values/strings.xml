@@ -60,7 +60,11 @@
    <!-- application-->
     <string name="appointments_details">Appointment Details</string>
     <string name="search_result">Search results for %s</string>
+    <string name="years_of_exp"> years of Overall exp</string>
+    <string name="_years_of_exp">%s  years of Overall exp</string>
 
+    <!--doctor booking-->
+    <string name="_consultation_fee">Consultation fee: %d</string>
     <!--Error alerts-->
     <string name="error_invalid_name">Please enter Name </string>
     <string name="error_invalid_email_address">Please enter valid email address</string>

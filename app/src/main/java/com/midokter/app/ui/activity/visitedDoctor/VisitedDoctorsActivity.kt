@@ -19,6 +19,17 @@ import kotlinx.android.synthetic.main.activity_visited_doctors.*
 import java.util.HashMap
 
 class VisitedDoctorsActivity : BaseActivity<ActivityVisitedDoctorsBinding>(),VisitedDoctorsNavigator {
+    override fun onlike() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onunlike() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onSubmit() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     val visitedDoctors: ArrayList<String> = ArrayList()
     private lateinit var viewModel: VisitedDoctorsViewModel

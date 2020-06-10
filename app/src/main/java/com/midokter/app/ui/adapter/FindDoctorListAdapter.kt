@@ -1,7 +1,6 @@
 package com.midokter.app.ui.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,19 +8,15 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.midokter.app.BuildConfig
 import com.midokter.app.R
 import com.midokter.app.databinding.FindDoctorListItemBinding
-import com.midokter.app.repositary.model.CategoryResponse
 import com.midokter.app.repositary.model.DoctorListResponse
-import com.midokter.app.ui.activity.findDoctors.FindDoctorBookingActivity
-import com.midokter.app.ui.activity.findDoctors.FindDoctorsListActivity
-import kotlinx.android.synthetic.main.fav_doctor_list_item.view.*
-import kotlinx.android.synthetic.main.find_doctor_list_item.view.*
-import kotlinx.android.synthetic.main.list_item_finddoctor_categories.view.*
+import com.midokter.app.utils.ViewUtils
 
-class FindDoctorListAdapter(val items:  MutableList<DoctorListResponse.Doctor>, val context: Context,val listener:IDoctorListener)  :
+class FindDoctorListAdapter(val items:  MutableList<DoctorListResponse.specialities.DoctorProfile>, val context: Context, val listener:IDoctorListener)  :
     RecyclerView.Adapter<FindDoctorViewHolder>() , Filterable {
-    private var SearchList: MutableList<DoctorListResponse.Doctor>? = null
+    private var SearchList: MutableList<DoctorListResponse.specialities.DoctorProfile>? = null
 
 
     init {
@@ -31,11 +26,12 @@ class FindDoctorListAdapter(val items:  MutableList<DoctorListResponse.Doctor>, 
 
     override fun onBindViewHolder(holder: FindDoctorViewHolder, position: Int) {
         val item=SearchList!![position]
-        holder.itemBinding.textView47?.text = item.first_name.plus(" ").plus(item.last_name)
-//        holder.itemBinding.textView48?.text = item.specialities_name as String
-
+        holder.itemBinding.textView47?.text = item.hospital[0].first_name.plus(" ").plus(item.hospital[0].last_name)
+        ViewUtils.setImageViewGlide(context,  holder.itemBinding.imageView18,BuildConfig.BASE_IMAGE_URL.plus(item.profile_pic))
+        holder.itemBinding.textView52?.text = item.experience?.plus(" ").plus(context.getString(R.string.years_of_exp))
+        holder.itemBinding.textView52?.text = item.hospital[0].clinic.name.plus(" , ").plus(item.hospital[0].clinic.address)
         holder.itemBinding.button15.setOnClickListener(View.OnClickListener {
-            listener.oncallclick(item.mobile)
+            listener.oncallclick(item.hospital[0].mobile)
         })
         holder.itemBinding.button16.setOnClickListener(View.OnClickListener {
             listener.onbookclick(item)
@@ -68,9 +64,9 @@ class FindDoctorListAdapter(val items:  MutableList<DoctorListResponse.Doctor>, 
                     SearchList = items
                     notifyDataSetChanged()
                 } else {
-                    val filteredList = ArrayList<DoctorListResponse.Doctor>()
+                    val filteredList = ArrayList<DoctorListResponse.specialities.DoctorProfile>()
                     for (row in items) {
-                        if (row.email!!.toLowerCase().contains(charString.toLowerCase())) {
+                        if (row.hospital[0].email!!.toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(row)
                         }
                     }
@@ -84,7 +80,7 @@ class FindDoctorListAdapter(val items:  MutableList<DoctorListResponse.Doctor>, 
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
 
-                SearchList = results?.values as MutableList<DoctorListResponse.Doctor>
+                SearchList = results?.values as MutableList<DoctorListResponse.specialities.DoctorProfile>
                 notifyDataSetChanged()
             }
 
@@ -92,8 +88,8 @@ class FindDoctorListAdapter(val items:  MutableList<DoctorListResponse.Doctor>, 
     }
 }
 interface IDoctorListener{
-    fun onbookclick(selectedItem:DoctorListResponse.Doctor)
-    fun onitemclick(selectedItem:DoctorListResponse.Doctor)
+    fun onbookclick(selectedItem:DoctorListResponse.specialities.DoctorProfile)
+    fun onitemclick(selectedItem:DoctorListResponse.specialities.DoctorProfile)
     fun oncallclick(phone:String)
 }
 class FindDoctorViewHolder(view: FindDoctorListItemBinding) : RecyclerView.ViewHolder(view.root) {

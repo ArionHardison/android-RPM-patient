@@ -27,7 +27,17 @@ object WebApiConstants {
 
     object IntentPass {
         const val Appointment = "Appointment"
+        const val VisitedDoctor = "VisitedDoctor"
+        const val DoctorProfile = "DoctorProfile"
         const val iscancel = "iscancel"
+        const val ID="id"
+    }
+
+    object Feedback {
+        const val hospital_id = "hospital_id"
+        const val experiences = "experiences"
+        const val visited_for="visited_for"
+        const val comments="comments"
     }
 
     object AddAppointment {

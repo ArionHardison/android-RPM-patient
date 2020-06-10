@@ -45,8 +45,8 @@ interface ApiInterface {
     @GET("api/patient/doctor_catagory")
     fun getCategorys(): Observable<CategoryResponse>
 
-    @GET("api/patient/doctor")
-    fun getDoctorByCategorys(): Observable<DoctorListResponse>
+    @GET("api/patient/doctor_catagory/{id}")
+    fun getDoctorByCategorys(@Path("id") id:Int?): Observable<DoctorListResponse>
 
     @FormUrlEncoded
     @POST("api/hospital/update_profile")

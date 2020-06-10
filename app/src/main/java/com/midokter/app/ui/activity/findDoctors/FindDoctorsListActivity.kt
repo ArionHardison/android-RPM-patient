@@ -1,8 +1,6 @@
 package com.midokter.app.ui.activity.findDoctors
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -13,16 +11,15 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.midokter.app.R
 import com.midokter.app.base.BaseActivity
-import com.midokter.app.databinding.ActivityFindDoctorCategoriesBinding
 import com.midokter.app.databinding.ActivityFindDoctorsListBinding
+import com.midokter.app.repositary.WebApiConstants
 import com.midokter.app.repositary.model.DoctorListResponse
 import com.midokter.app.ui.activity.searchDoctor.SearchDoctorDetailActivity
-import com.midokter.app.ui.adapter.CategoriesListAdapter
 import com.midokter.app.ui.adapter.FindDoctorListAdapter
 import com.midokter.app.ui.adapter.IDoctorListener
 import com.midokter.app.utils.ViewUtils
-import kotlinx.android.synthetic.main.activity_find_doctor_categories.*
 import kotlinx.android.synthetic.main.activity_find_doctors_list.*
+import java.io.Serializable
 
 class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),FindDoctorsNavigator,IDoctorListener {
 
@@ -41,15 +38,17 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),F
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
 
-        initApiCal()
+        initApiCal( intent.getIntExtra(WebApiConstants.IntentPass.ID,1))
         initAdapter()
         observeResponse()
         //categoriesList()
 
     }
-    private fun initApiCal() {
+
+
+    private fun initApiCal(id: Int) {
         loadingObservable.value = true
-        viewModel.getDoctorByCategorys()
+        viewModel.getDoctorByCategorys(id)
 
     }
     private fun observeResponse() {
@@ -57,7 +56,7 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),F
         viewModel.mDoctorResponse.observe(this, Observer<DoctorListResponse> {
 
 
-            viewModel.mDoctorslist = it.doctor as MutableList<DoctorListResponse.Doctor>?
+            viewModel.mDoctorslist = it.Specialities.doctor_profile as MutableList<DoctorListResponse.specialities.DoctorProfile>?
             if (viewModel.mDoctorslist!!.size > 0) {
                 mDataBinding.tvNotFound.visibility = View.GONE
             } else {
@@ -112,13 +111,14 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),F
         })
     }
 
-    override fun onbookclick(selectedItem: DoctorListResponse.Doctor) {
+    override fun onbookclick(selectedItem: DoctorListResponse.specialities.DoctorProfile) {
          val intent = Intent(this@FindDoctorsListActivity, FindDoctorBookingActivity::class.java)
     startActivity(intent);
 }
 
-    override fun onitemclick(selectedItem: DoctorListResponse.Doctor) {
+    override fun onitemclick(selectedItem: DoctorListResponse.specialities.DoctorProfile) {
         val intent = Intent(this@FindDoctorsListActivity, SearchDoctorDetailActivity::class.java)
+        intent.putExtra(WebApiConstants.IntentPass.DoctorProfile,selectedItem as Serializable)
         startActivity(intent);
 
     }

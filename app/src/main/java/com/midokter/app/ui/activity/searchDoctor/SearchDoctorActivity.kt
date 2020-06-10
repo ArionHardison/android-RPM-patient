@@ -19,6 +19,21 @@ import kotlinx.android.synthetic.main.content_search_doctor.*
 import java.util.HashMap
 
 class SearchDoctorActivity : BaseActivity<ActivitySearchDoctorBinding>(),SearchNavigator {
+    override fun ViewallClick() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onfavclick() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onshareclick() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun Onbookclick() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     val searchDoctors: ArrayList<String> = ArrayList()
     private lateinit var viewModel: SearchViewModel

@@ -150,9 +150,9 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun getDoctorByCategorys(viewModel: ViewModel): Disposable {
+    fun getDoctorByCategorys(viewModel: ViewModel,id: Int): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
-            .getDoctorByCategorys()
+            .getDoctorByCategorys(id)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
@@ -192,8 +192,14 @@ class AppRepository : BaseRepository() {
                 if (viewModel is AppointmentViewModel) {
                     viewModel.mCancelResponse.value = it
                 }
+                if (viewModel is VisitedDoctorsViewModel) {
+                    viewModel.mCancelResponse.value = it
+                }
             }, {
                 if (viewModel is AppointmentViewModel) {
+                    viewModel.getErrorObservable().value = getErrorMessage(it)
+                }
+                if (viewModel is VisitedDoctorsViewModel) {
                     viewModel.getErrorObservable().value = getErrorMessage(it)
                 }
             })

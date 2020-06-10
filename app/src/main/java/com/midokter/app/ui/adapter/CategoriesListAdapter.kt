@@ -8,10 +8,13 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.midokter.app.BuildConfig
 import com.midokter.app.R
 import com.midokter.app.databinding.ListItemFinddoctorCategoriesBinding
+import com.midokter.app.repositary.WebApiConstants
 import com.midokter.app.repositary.model.CategoryResponse
 import com.midokter.app.ui.activity.findDoctors.FindDoctorsListActivity
+import com.midokter.app.utils.ViewUtils
 
 
 class CategoriesListAdapter(val items: MutableList<CategoryResponse.Category>, val context: Context) :
@@ -28,8 +31,11 @@ class CategoriesListAdapter(val items: MutableList<CategoryResponse.Category>, v
 
         val item=SearchList!![position]
         holder.itemBinding.textView45?.text = item.name
+       // ViewUtils.setImageViewGlide(context,  holder.itemBinding.imageView16, BuildConfig.BASE_IMAGE_URL.plus(item?.image!!))
+
         holder.itemView.setOnClickListener {
             val intent = Intent(context, FindDoctorsListActivity::class.java)
+            intent.putExtra(WebApiConstants.IntentPass.ID,item.id)
             context.startActivity(intent);
         }
     }

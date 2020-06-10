@@ -41,6 +41,7 @@ data class AppointmentResponse(
             val created_at: String,
             val deleted_at: Any,
             val description: String,
+            val booking_for: String,
             val doctor_id: Int,
             val doctor_reminder: Int,
             val engaged_at: Any,
@@ -61,6 +62,7 @@ data class AppointmentResponse(
                 val country_code: Any,
                 val created_at: String,
                 val deleted_at: Any,
+                val doctor_profile: DoctorProfile,
                 val email: String,
                 val email_token: String,
                 val email_verified: Int,
@@ -79,7 +81,7 @@ data class AppointmentResponse(
                 val regn_id: String,
                 val role: Int,
                 val services_id: Any,
-                val specialities_name: Any,
+                val specialities_name: String,
                 val tax_id: String,
                 val updated_at: String
             ) : Serializable{
@@ -99,6 +101,39 @@ data class AppointmentResponse(
                     val postal_code: String,
                     val updated_at: String
                 ): Serializable
+
+                data class DoctorProfile(
+                    val address: Any,
+                    val affiliations: Any,
+                    val awards: Any,
+                    val certification: Any,
+                    val city: Any,
+                    val country: Any,
+                    val created_at: String,
+                    val deleted_at: Any,
+                    val doctor_id: Int,
+                    val experience: Any,
+                    val fees: Int,
+                    val gender: String,
+                    val id: Int,
+                    val internship: Any,
+                    val medical_assoc_name: Any,
+                    val medical_school: Any,
+                    val postal_code: Any,
+                    val profile_description: Any,
+                    val profile_pic: String,
+                    val residency: Any,
+                    val specialities: Int,
+                    val speciality: Speciality,
+                    val updated_at: String
+                ) : Serializable{
+                    data class Speciality(
+                        val id: Int,
+                        val image: Any,
+                        val name: String,
+                        val status: Int
+                    ) : Serializable
+                }
             }
         }
     }
@@ -137,6 +172,7 @@ data class AppointmentResponse(
             val created_at: String,
             val deleted_at: Any,
             val description: String,
+            val booking_for: String,
             val doctor_id: Int,
             val doctor_reminder: Int,
             val engaged_at: Any,
@@ -175,7 +211,8 @@ data class AppointmentResponse(
                 val regn_id: String,
                 val role: Int,
                 val services_id: Any,
-                val specialities_name: Any,
+                val specialities_name: String,
+                val doctor_profile: DoctorProfile,
                 val tax_id: String,
                 val updated_at: String
             ) : Serializable{
@@ -195,6 +232,39 @@ data class AppointmentResponse(
                     val postal_code: String,
                     val updated_at: String
                 ): Serializable
+
+                data class DoctorProfile(
+                    val address: Any,
+                    val affiliations: Any,
+                    val awards: Any,
+                    val certification: Any,
+                    val city: Any,
+                    val country: Any,
+                    val created_at: String,
+                    val deleted_at: Any,
+                    val doctor_id: Int,
+                    val experience: Any,
+                    val fees: Int,
+                    val gender: String,
+                    val id: Int,
+                    val internship: Any,
+                    val medical_assoc_name: Any,
+                    val medical_school: Any,
+                    val postal_code: Any,
+                    val profile_description: Any,
+                    val profile_pic: String,
+                    val residency: Any,
+                    val specialities: Int,
+                    val speciality: Speciality,
+                    val updated_at: String
+                ) : Serializable{
+                    data class Speciality(
+                        val id: Int,
+                        val image: Any,
+                        val name: String,
+                        val status: Int
+                    ) : Serializable
+                }
             }
         }
     }
