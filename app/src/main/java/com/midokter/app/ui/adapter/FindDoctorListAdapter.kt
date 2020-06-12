@@ -1,6 +1,7 @@
 package com.midokter.app.ui.adapter
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +9,12 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.midokter.app.BaseApplication
 import com.midokter.app.BuildConfig
 import com.midokter.app.R
+import com.midokter.app.data.PreferenceHelper
+import com.midokter.app.data.PreferenceKey
+import com.midokter.app.data.getValue
 import com.midokter.app.databinding.FindDoctorListItemBinding
 import com.midokter.app.repositary.model.DoctorListResponse
 import com.midokter.app.utils.ViewUtils
@@ -17,7 +22,7 @@ import com.midokter.app.utils.ViewUtils
 class FindDoctorListAdapter(val items:  MutableList<DoctorListResponse.specialities.DoctorProfile>, val context: Context, val listener:IDoctorListener)  :
     RecyclerView.Adapter<FindDoctorViewHolder>() , Filterable {
     private var SearchList: MutableList<DoctorListResponse.specialities.DoctorProfile>? = null
-
+    private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
 
     init {
         this.SearchList = items
@@ -30,6 +35,10 @@ class FindDoctorListAdapter(val items:  MutableList<DoctorListResponse.specialit
         ViewUtils.setImageViewGlide(context,  holder.itemBinding.imageView18,BuildConfig.BASE_IMAGE_URL.plus(item.profile_pic))
         holder.itemBinding.textView52?.text = item.experience?.plus(" ").plus(context.getString(R.string.years_of_exp))
         holder.itemBinding.textView52?.text = item.hospital[0].clinic.name.plus(" , ").plus(item.hospital[0].clinic.address)
+        holder.itemBinding.textView46?.text =  item.hospital[0].feedback_percentage
+        holder.itemBinding.textView50?.text = String.format(context.getString(R.string.years_of_exp),item.experience)
+            holder.itemBinding.textView54?.text = preferenceHelper.getValue(PreferenceKey.CURRENCY,"$").toString().plus(item.fees)
+
         holder.itemBinding.button15.setOnClickListener(View.OnClickListener {
             listener.oncallclick(item.hospital[0].mobile)
         })

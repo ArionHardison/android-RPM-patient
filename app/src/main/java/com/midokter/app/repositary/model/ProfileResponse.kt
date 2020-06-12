@@ -18,6 +18,7 @@ data class ProfileResponse(
         val phone: String,
         val profile: Profile,
         val regn_id: String,
+        val wallet_balance: String,
         val updated_at: String
     ) {
         data class Profile(

@@ -15,15 +15,16 @@ import com.midokter.app.databinding.SearchDoctorDetailListItemBinding
 import com.midokter.app.repositary.WebApiConstants
 import com.midokter.app.repositary.model.CategoryResponse
 import com.midokter.app.repositary.model.DoctorListResponse
+import com.midokter.app.repositary.model.Hospital
 import com.midokter.app.ui.activity.findDoctors.FindDoctorsListActivity
 import com.midokter.app.utils.ViewUtils
 
 
-class Doctor_feedbackAdapter(val items: MutableList<DoctorListResponse.specialities.DoctorProfile.Hospital.Feedback>, val context: Context) :
+class Doctor_feedbackAdapter(val items: MutableList<Hospital.Feedback>, val context: Context) :
     RecyclerView.Adapter<FeedbackViewHolder>() {
 
 
-    private var SearchList: MutableList<DoctorListResponse.specialities.DoctorProfile.Hospital.Feedback>? = null
+    private var SearchList: MutableList<Hospital.Feedback>? = null
 
     init {
         this.SearchList = items

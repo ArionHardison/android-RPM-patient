@@ -217,6 +217,18 @@ class AppRepository : BaseRepository() {
                 viewModel.getErrorObservable().value = getErrorMessage(it)
             })
     }
+/*doctorprofile*/
+    fun addfav(viewModel: SearchViewModel, params: HashMap<String, Any>): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .addfav(params)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                viewModel.mFavResponse.value = it
+            }, {
+                viewModel.getErrorObservable().value = getErrorMessage(it)
+            })
+    }
     /*   *//*   updateprofile*//*
     fun postUpdateProfile(viewModel: EditProfileViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)

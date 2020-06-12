@@ -57,6 +57,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
 
+        preferenceHelper.setValue(PreferenceKey.CURRENCY, "$")
         initUI()
         initApiCal()
         observeResponse()
@@ -133,13 +134,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
                     .placeholder(R.drawable.app_logo)
                     .into(mDataBinding.profileIv)
             }*/
-
+            preferenceHelper.setValue(PreferenceKey.PATIENT_ID, it.patient.id)
             preferenceHelper.setValue(PreferenceKey.FIRST_NAME, it.patient.first_name)
             preferenceHelper.setValue(PreferenceKey.LAST_NAME, it.patient.last_name)
             preferenceHelper.setValue(PreferenceKey.PROFILE_PER, it.profile_complete)
             preferenceHelper.setValue(PreferenceKey.PHONE, it.patient.phone)
             preferenceHelper.setValue(PreferenceKey.EMAIL, it.patient.email)
             preferenceHelper.setValue(PreferenceKey.PROFILE_IMAGE, it.patient.profile!!.profile_pic)
+            preferenceHelper.setValue(PreferenceKey.WALLET_BALANCE, it.patient.wallet_balance)
 
             name.setText(preferenceHelper.getValue(PreferenceKey.FIRST_NAME,"Test").toString().plus(" ").plus(preferenceHelper.getValue(PreferenceKey.LAST_NAME,"Test").toString()))
             profile_completed.setText( getString(R.string.profile_completed).plus(" ").plus(preferenceHelper.getValue(PreferenceKey.PROFILE_PER,"Test").toString() ))

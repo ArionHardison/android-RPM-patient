@@ -15,6 +15,7 @@ import com.midokter.app.databinding.VisitedDoctorsListItemBinding
 import com.midokter.app.repositary.WebApiConstants
 import com.midokter.app.repositary.model.AppointmentResponse
 import com.midokter.app.repositary.model.DoctorListResponse
+import com.midokter.app.repositary.model.Hospital
 import com.midokter.app.ui.activity.findDoctors.FindDoctorsListActivity
 import com.midokter.app.ui.activity.visitedDoctor.VisitedDoctorsDetailActivity
 import com.midokter.app.utils.ViewUtils
@@ -23,7 +24,7 @@ import kotlinx.android.synthetic.main.list_item_finddoctor_categories.view.*
 import kotlinx.android.synthetic.main.visited_doctors_list_item.view.*
 import java.io.Serializable
 
-class Doctors_serviceAdapter(val items: MutableList<DoctorListResponse.specialities.DoctorProfile.Hospital.DoctorService>, val context: Context) :
+class Doctors_serviceAdapter(val items: MutableList<Hospital.DoctorService>, val context: Context) :
     RecyclerView.Adapter<ServiceViewHolder>() {
     override fun onBindViewHolder(holder: ServiceViewHolder, position: Int) {
         val item=items!![position]

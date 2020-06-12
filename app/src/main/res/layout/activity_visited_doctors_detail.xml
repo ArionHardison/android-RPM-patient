@@ -70,7 +70,7 @@
                 android:background="@color/colorLiteGrey"
                 android:padding="@dimen/_1sdp"
                 tools:text="Allopath"
-                android:text="@{viewmodel.specialit}"
+                android:text="@{viewmodel.catagiery}"
                 app:layout_constraintStart_toStartOf="@+id/textView29"
                 app:layout_constraintTop_toBottomOf="@+id/textView29" />
 
@@ -94,7 +94,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 tools:text="General Physician"
-                android:text="@{viewmodel.catagiery}"
+                android:text="@{viewmodel.specialit}"
                 app:layout_constraintBottom_toBottomOf="@+id/textView29"
                 app:layout_constraintStart_toEndOf="@+id/textView29"
                 app:layout_constraintTop_toTopOf="@+id/textView29" />

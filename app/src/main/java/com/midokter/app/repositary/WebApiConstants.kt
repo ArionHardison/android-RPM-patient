@@ -29,6 +29,7 @@ object WebApiConstants {
         const val Appointment = "Appointment"
         const val VisitedDoctor = "VisitedDoctor"
         const val DoctorProfile = "DoctorProfile"
+        const val FavDoctorProfile = "FavDoctorProfile"
         const val iscancel = "iscancel"
         const val ID="id"
     }
@@ -39,6 +40,13 @@ object WebApiConstants {
         const val visited_for="visited_for"
         const val comments="comments"
     }
+
+    object Favourite {
+        const val patient_id = "patient_id"
+        const val doctor_id = "doctor_id"
+
+    }
+
 
     object AddAppointment {
         const val PATIENT_ID="patient_id"

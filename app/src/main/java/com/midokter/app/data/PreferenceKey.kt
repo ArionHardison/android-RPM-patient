@@ -38,4 +38,5 @@ object PreferenceKey {
     const val FIRST_NAME = "first_name"
     const val LAST_NAME = "last_name"
     const val PROFILE_PER = "profile_percentage"
+    const val PATIENT_ID = "patient_id"
 }

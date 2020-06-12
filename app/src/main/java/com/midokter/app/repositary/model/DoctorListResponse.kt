@@ -36,7 +36,7 @@ data class DoctorListResponse(
             val residency: Any,
             val specialities: Int,
             val updated_at: String
-        ) : Serializable{
+        ) : Serializable/*{
             data class Hospital(
                 val added_by: Any,
                 val clinic: Clinic,
@@ -123,6 +123,6 @@ data class DoctorListResponse(
                     val updated_at: Any
                 ): Serializable
             }
-        }
+        }*/
     }
 }
