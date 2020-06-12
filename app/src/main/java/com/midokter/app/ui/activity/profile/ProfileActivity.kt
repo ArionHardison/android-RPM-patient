@@ -93,6 +93,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(),ProfileNavigator 
         viewModel.mProfileResponse.observe(this, Observer<ProfileResponse> {
             loadingObservable.value = false
 
+            preferenceHelper.setValue(PreferenceKey.WALLET_BALANCE, it.patient.wallet_balance)
             viewModel.name.set(it.patient.first_name.plus(" ").plus(it.patient.last_name))
             viewModel.number.set(it.patient.phone)
             viewModel.email.set(it.patient.email as String?)

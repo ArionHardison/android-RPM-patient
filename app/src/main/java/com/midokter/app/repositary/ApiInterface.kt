@@ -75,4 +75,12 @@ interface ApiInterface {
     @POST("api/patient/favourite_doctor")
     fun addfav(@FieldMap hashMap: HashMap<String, Any>): Observable<Response>
 
+    @GET("api/patient/articles")
+    fun getArticles(): Observable<ArticleResponse>
+
+
+    @FormUrlEncoded
+    @POST("api/patient/add_wallet")
+    fun addMoneyToWallet(@FieldMap hashMap: HashMap<String, Any>): Observable<WalletResponse>
+
 }
