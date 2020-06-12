@@ -91,7 +91,6 @@
                     android:layout_height="wrap_content"
                     android:background="@color/colorPrimary"
                     android:paddingBottom="@dimen/_20sdp"
-                    android:layout_marginEnd="@dimen/_6sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/toolbar2">
@@ -126,7 +125,7 @@
                         android:paddingStart="@dimen/_3sdp"
                         android:paddingEnd="@dimen/_3sdp"
                         tools:text="Allopath"
-                        android:text="@{viewmodel.specialities}"
+                        android:text="@{viewmodel.branch}"
                         app:layout_constraintBottom_toBottomOf="@+id/textView93"
                         app:layout_constraintStart_toEndOf="@+id/textView93"
                         app:layout_constraintTop_toTopOf="@+id/textView93" />
@@ -148,7 +147,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         tools:text="Diabetologist"
-                        android:text="@{viewmodel.branch}"
+                        android:text="@{viewmodel.specialities}"
                         android:textColor="@color/colorWhite"
                         app:layout_constraintBottom_toBottomOf="@+id/textView95"
                         app:layout_constraintStart_toEndOf="@+id/textView95"
@@ -411,7 +410,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Diabetologist"
+                    tools:text="Diabetologist"
+                    android:text="@{viewmodel.specialities}"
                     app:layout_constraintStart_toStartOf="@+id/textView115"
                     app:layout_constraintTop_toBottomOf="@+id/textView115" />
 
@@ -430,7 +430,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="Specializations"
+                    android:text="Locations"
                     android:textSize="@dimen/_14sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider14" />
@@ -461,11 +461,12 @@
                     android:layout_height="@dimen/_100sdp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:scaleType="fitXY"
                     android:layout_marginStart="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/textView118"
                     app:layout_constraintTop_toBottomOf="@+id/textView118"
-                    app:srcCompat="@drawable/rectangular_box" />
+                    app:srcCompat="@drawable/logo_app" />
 
                 <View
                     android:id="@+id/divider15"

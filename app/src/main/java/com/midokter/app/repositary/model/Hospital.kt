@@ -50,20 +50,29 @@ data class Hospital(
         val name: String,
         val phone: String,
         val postal_code: String,
+        val static_map: String ,
+        val clinic_photo:List<photos>,
         val updated_at: String
-    ): Serializable
+    ): Serializable {
+        data class photos(
+            val id: Int,
+            val image: String,
+            val addedby: String,
+            val clinic_id: Int
+        ) : Serializable
+    }
 
     data class DoctorProfile(
         val address: Any,
         val affiliations: Any,
         val awards: Any,
-        val certification: Any,
+        val certification: String,
         val city: Any,
         val country: Any,
         val created_at: String,
         val deleted_at: Any,
         val doctor_id: Int,
-        val experience: Any,
+        val experience: String,
         val fees: Int,
         val gender: String,
         val id: Int,

@@ -51,6 +51,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
         initIntentData()
+        observeResponse()
         button28.setOnClickListener {
             val intent = Intent(applicationContext, SearchDoctorScheduleActivity::class.java)
             startActivity(intent);
@@ -78,8 +79,8 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
                     viewModel.mDoctorProfile.value!!.hospital[0]?.last_name
                 )
             )
-            viewModel.specialities.set(viewModel.mDoctorProfile.value!!.hospital[0]?.specialities_name)
-            viewModel.degree.set(viewModel.mDoctorProfile.value!!.hospital[0]?.specialities_name)
+            viewModel.specialities.set(viewModel.mDoctorProfile.value!!.speciality?.name)
+            viewModel.degree.set(viewModel.mDoctorProfile.value!!.certification)
             viewModel.branch.set(viewModel.mDoctorProfile.value!!.hospital[0]?.specialities_name)
             viewModel.percentage.set(
                 viewModel.mDoctorProfile.value!!.hospital[0]?.feedback_percentage.plus(
@@ -102,33 +103,39 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
             }
             viewModel.clinic.set(viewModel.mDoctorProfile.value!!.hospital[0]?.clinic?.name)
             viewModel.clinic_address.set(viewModel.mDoctorProfile.value!!.hospital[0]?.clinic?.address)
+            if ( viewModel.mDoctorProfile.value!!.hospital[0]?.clinic?.static_map!=null)
+            ViewUtils.setImageViewGlide(this@SearchDoctorDetailActivity, mDataBinding.imageView27, viewModel.mDoctorProfile.value!!.hospital[0]?.clinic?.static_map)
+            else
+                mDataBinding.imageView27.visibility = View.GONE
             viewModel.mfeedbacklist =
                 viewModel.mDoctorProfile.value!!.hospital[0]?.feedback as MutableList<Hospital.Feedback>?
             viewModel.mservcielist =
                 viewModel.mDoctorProfile.value!!.hospital[0]?.doctor_service as MutableList<Hospital.DoctorService>?
             viewModel.mTiminglist =
                 viewModel.mDoctorProfile.value!!.hospital[0]?.timing as MutableList<Hospital.Timing>?
+            viewModel.mphotoslist =
+                viewModel.mDoctorProfile.value!!.hospital[0]?.clinic.clinic_photo as MutableList<Hospital.Clinic.photos>?
             initAdapter()
 
         } else if (favDoctor != null) {
             viewModel.mfavDoctorProfile.value = favDoctor
             viewModel.id.set(viewModel.mfavDoctorProfile.value!!.id)
-            // ViewUtils.setImageViewGlide(this@SearchDoctorDetailActivity,  mDataBinding.imageView25, BuildConfig.BASE_IMAGE_URL.plus(viewModel.mfavDoctorProfile.value!!.profile_pic))
+             ViewUtils.setImageViewGlide(this@SearchDoctorDetailActivity,  mDataBinding.imageView25, BuildConfig.BASE_IMAGE_URL.plus(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.profile_pic))
             viewModel.name.set(
                 viewModel.mfavDoctorProfile.value!!.hospital?.first_name.plus(" ").plus(
                     viewModel.mfavDoctorProfile.value!!.hospital?.last_name
                 )
             )
-            viewModel.specialities.set(viewModel.mfavDoctorProfile.value!!.hospital?.specialities_name)
-            viewModel.degree.set(viewModel.mfavDoctorProfile.value!!.hospital?.specialities_name)
+            viewModel.specialities.set(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.speciality?.name)
+            viewModel.degree.set(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.certification)
             viewModel.branch.set(viewModel.mfavDoctorProfile.value!!.hospital?.specialities_name)
             viewModel.percentage.set(
                 viewModel.mfavDoctorProfile.value!!.hospital?.feedback_percentage.plus(
                     "%"
                 )
             )
-            //viewModel.experience.set(viewModel.mfavDoctorProfile.value!!.experience)
-            //viewModel.fee.set(viewModel.mfavDoctorProfile.value!!.fees)
+            viewModel.experience.set(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.experience)
+            viewModel.fee.set(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.fees)
             if (viewModel.mfavDoctorProfile.value!!.hospital?.timing.size > 0) {
                 viewModel.mor_time.set(
                     viewModel.mfavDoctorProfile.value!!.hospital?.timing[0].start_time.plus(
@@ -143,10 +150,19 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
             }
             viewModel.clinic.set(viewModel.mfavDoctorProfile.value!!.hospital?.clinic?.name)
             viewModel.clinic_address.set(viewModel.mfavDoctorProfile.value!!.hospital?.clinic?.address)
+             if ( viewModel.mfavDoctorProfile.value!!.hospital?.clinic?.static_map!=null)
+            ViewUtils.setImageViewGlide(this@SearchDoctorDetailActivity, mDataBinding.imageView27, viewModel.mfavDoctorProfile.value!!.hospital?.clinic?.static_map)
+                else
+                mDataBinding.imageView27.visibility = View.GONE
+
             viewModel.mfeedbacklist =
                 viewModel.mfavDoctorProfile.value!!.hospital?.feedback as MutableList<Hospital.Feedback>?
             viewModel.mservcielist =
                 viewModel.mfavDoctorProfile.value!!.hospital?.doctor_service as MutableList<Hospital.DoctorService>?
+            viewModel.mTiminglist =
+                viewModel.mfavDoctorProfile.value!!.hospital?.timing as MutableList<Hospital.Timing>?
+            viewModel.mphotoslist =
+                viewModel.mfavDoctorProfile.value!!.hospital?.clinic.clinic_photo as MutableList<Hospital.Clinic.photos>?
             initAdapter()
         }
         if (viewModel.mTiminglist != null) {
@@ -188,6 +204,10 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
                 false
             )
             mAdapterFeedback!!.notifyDataSetChanged()
+            mDataBinding.recyclerView7.visibility= View.VISIBLE
+        } else{
+            mDataBinding.recyclerView7.visibility= View.GONE
+
         }
         if (viewModel.mservcielist != null) {
             mAdapterService =
@@ -214,6 +234,28 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
             mAvailibilityAdapter!!.notifyDataSetChanged()
         }
 
+        if (viewModel.mphotoslist != null) {
+            mAdapterPhotos = Doctors_photoAdapter(viewModel.mphotoslist!!, this@SearchDoctorDetailActivity)
+            mDataBinding.photosadapter = mAdapterPhotos
+            mDataBinding.recyclerView6.layoutManager = LinearLayoutManager(
+                this@SearchDoctorDetailActivity,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+            mAdapterPhotos!!.notifyDataSetChanged()
+
+            if(viewModel.mphotoslist!!.size>0){
+                mDataBinding.recyclerView6.visibility= View.VISIBLE
+                mDataBinding.textView119.visibility= View.VISIBLE
+            }
+            else{
+                mDataBinding.recyclerView6.visibility= View.GONE
+                mDataBinding.textView119.visibility= View.VISIBLE
+            }
+        } else{
+            mDataBinding.recyclerView6.visibility= View.GONE
+            mDataBinding.textView119.visibility= View.VISIBLE
+        }
 
     }
 

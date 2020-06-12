@@ -43,8 +43,7 @@ public class HealthFeedAdapter (val mContext : Context, val list: MutableList<Ar
         holder.mHealthFeedBinding.tvFeedDescription.text=item.description
         holder.mHealthFeedBinding.tvFeedDay.text=ViewUtils.getTimeAgoFormat(item.updatedAt)
         if (item.coverPhoto != null && item.coverPhoto != "") {
-            ViewUtils.setImageViewGlide(mContext,
-                holder.mHealthFeedBinding.imgFeed, BuildConfig.BASE_IMAGE_URL+item.coverPhoto)
+           // ViewUtils.setImageViewGlide(mContext, holder.mHealthFeedBinding.imgFeed, BuildConfig.BASE_IMAGE_URL+item.coverPhoto)
         }
     }
 

@@ -138,11 +138,15 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
 
     override fun onlike() {
         experiences = "LIKE"
+        mDataBinding.imageView13.setImageResource(R.drawable.like_active)
+        mDataBinding.imageView14.setImageResource(R.drawable.ic_thump_down)
 
     }
 
     override fun onunlike() {
         experiences = "DISLIKE"
+        mDataBinding.imageView13.setImageResource(R.drawable.ic_thump_up)
+        mDataBinding.imageView14.setImageResource(R.drawable.dislike_active)
     }
 
     override fun onSubmit() {
