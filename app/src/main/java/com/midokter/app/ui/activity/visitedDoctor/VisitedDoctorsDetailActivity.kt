@@ -61,7 +61,8 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
             viewModel.bookfor.set(viewModel.mupcomingDoctorDetails.value!!.booking_for)
             viewModel.scheduled_at.set(ViewUtils.getDayAndTimeFormat(viewModel.mupcomingDoctorDetails.value!!.scheduled_at))
             viewModel.status.set(viewModel.mupcomingDoctorDetails.value!!.status)
-            viewModel.specialit.set(viewModel.mupcomingDoctorDetails.value!!.hospital?.doctor_profile?.speciality?.name)
+            viewModel.specialit.set(viewModel.mupcomingDoctorDetails.value!!.hospital?.doctor_profile?.certification)
+            viewModel.catagiery.set(viewModel.mupcomingDoctorDetails.value!!.hospital?.doctor_profile?.speciality?.name)
             viewModel.Clinic.set(viewModel.mupcomingDoctorDetails.value!!.hospital.clinic?.name.plus(",").plus(viewModel.mupcomingDoctorDetails.value!!.hospital.clinic?.address))
             if (details!!.hospital.doctor_profile!= null && details!!.hospital.doctor_profile.profile_pic != "") {
                 ViewUtils.setImageViewGlide(this@VisitedDoctorsDetailActivity,mDataBinding.imageView12,BuildConfig.BASE_IMAGE_URL+viewModel.mupcomingDoctorDetails.value!!.hospital.doctor_profile?.profile_pic)
@@ -84,6 +85,7 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
                 viewModel.scheduled_at.set(ViewUtils.getDayAndTimeFormat(viewModel.mPastDoctorDetails.value!!.scheduled_at))
                 viewModel.status.set(viewModel.mPastDoctorDetails.value!!.status)
                 viewModel.specialit.set(viewModel.mPastDoctorDetails.value!!.hospital?.doctor_profile?.speciality?.name)
+                viewModel.catagiery.set(viewModel.mPastDoctorDetails.value!!.hospital?.doctor_profile?.speciality?.name)
                 viewModel.Clinic.set(viewModel.mPastDoctorDetails.value!!.hospital.clinic!!.name.plus(",").plus(viewModel.mPastDoctorDetails.value!!.hospital.clinic!!.address))
                 if (Appointment!!.hospital.doctor_profile!= null && Appointment!!.hospital.doctor_profile.profile_pic != "") {
                     ViewUtils.setImageViewGlide(this@VisitedDoctorsDetailActivity,mDataBinding.imageView12,BuildConfig.BASE_IMAGE_URL+viewModel.mPastDoctorDetails.value!!.hospital.doctor_profile?.profile_pic)
@@ -128,6 +130,7 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
 
             hideLoading()
             ViewUtils.showToast(this@VisitedDoctorsDetailActivity, it.message, true)
+            openNewActivity(this@VisitedDoctorsDetailActivity, ThankyouActivity::class.java, true)
 
 
         })
@@ -135,10 +138,11 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
 
     override fun onlike() {
         experiences = "LIKE"
+
     }
 
     override fun onunlike() {
-        experiences = "UNLIKE"
+        experiences = "DISLIKE"
     }
 
     override fun onSubmit() {

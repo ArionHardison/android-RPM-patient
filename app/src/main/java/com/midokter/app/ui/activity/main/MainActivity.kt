@@ -23,6 +23,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.midokter.app.BaseApplication
+import com.midokter.app.BuildConfig
 import com.midokter.app.R
 import com.midokter.app.base.BaseActivity
 import com.midokter.app.data.*
@@ -58,6 +59,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
         viewModel.navigator = this
 
         preferenceHelper.setValue(PreferenceKey.CURRENCY, "$")
+
         initUI()
         initApiCal()
         observeResponse()
@@ -126,14 +128,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
             viewModel.profilepercentage.set(it.profile_complete)
             viewModel.imageurl.set(it.patient.profile!!.profile_pic as String?)
 
-          /*  viewModel.imageurl.set(BuildConfig.BASE_IMAGE_URL+it.doctor.doctor_profile.profile_pic)
-            if ( it.doctor.doctor_profile.profile_pic!=null) {
+            viewModel.imageurl.set(BuildConfig.BASE_IMAGE_URL+it.patient?.profile?.profile_pic)
+            if ( it.patient?.profile?.profile_pic!=null) {
                 Glide.with(this)
                     .load(viewModel.imageurl.get())
                     .error(R.drawable.app_logo)
                     .placeholder(R.drawable.app_logo)
-                    .into(mDataBinding.profileIv)
-            }*/
+                    .into(profile_img)
+            }
             preferenceHelper.setValue(PreferenceKey.PATIENT_ID, it.patient.id)
             preferenceHelper.setValue(PreferenceKey.FIRST_NAME, it.patient.first_name)
             preferenceHelper.setValue(PreferenceKey.LAST_NAME, it.patient.last_name)

@@ -29,6 +29,12 @@ class PreviousAppointmentsListAdapter(val items: MutableList<AppointmentResponse
         holder.itemBinding.textView26?.text = item.hospital!!.first_name.plus(" ").plus(item.hospital!!.last_name)
         holder.itemBinding.textView27?.text = item.hospital.clinic.name.plus(",").plus(item.hospital.clinic.address)
         holder.itemBinding.textView28?.text = item.status
+        if (item.status.equals("CANCELLED",true)){
+            holder.itemBinding.textView28?.setTextColor(context.resources.getColor(R.color.colorRed))
+            holder.itemBinding.textView28?.setBackgroundColor(context.resources.getColor(R.color.colorLiteRed))
+
+
+        }
         holder.itemView.setOnClickListener {
             val intent = Intent(context, VisitedDoctorsDetailActivity::class.java)
             intent.putExtra(WebApiConstants.IntentPass.iscancel,false)

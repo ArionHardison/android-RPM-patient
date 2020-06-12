@@ -3,6 +3,7 @@ package com.midokter.app.ui.activity.profile
 import android.content.Intent
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
@@ -12,7 +13,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.Glide
 import com.midokter.app.BaseApplication
+import com.midokter.app.BuildConfig
 import com.midokter.app.R
 import com.midokter.app.base.BaseActivity
 import com.midokter.app.data.PreferenceHelper
@@ -30,6 +33,8 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(),ProfileNavigator 
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
     private lateinit var viewModel: ProfileViewModel
     private lateinit var mDataBinding: ActivityProfileBinding
+    private lateinit var profile_img: ImageView
+
 
     override fun getLayoutId(): Int = R.layout.activity_profile
 
@@ -51,7 +56,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(),ProfileNavigator 
     }
     private fun initUI() {
 
-
+        profile_img = findViewById(R.id.img_prof)
         setSupportActionBar( mDataBinding.toolbar9)
         supportActionBar!!.setHomeButtonEnabled(true)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -93,6 +98,13 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(),ProfileNavigator 
         viewModel.mProfileResponse.observe(this, Observer<ProfileResponse> {
             loadingObservable.value = false
 
+            if ( it.patient?.profile?.profile_pic!=null) {
+                Glide.with(this)
+                    .load(BuildConfig.BASE_IMAGE_URL+it.patient?.profile?.profile_pic)
+                    .error(R.drawable.app_logo)
+                    .placeholder(R.drawable.app_logo)
+                    .into( profile_img)
+            }
             viewModel.name.set(it.patient.first_name.plus(" ").plus(it.patient.last_name))
             viewModel.number.set(it.patient.phone)
             viewModel.email.set(it.patient.email as String?)

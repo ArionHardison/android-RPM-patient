@@ -78,7 +78,7 @@
                 android:background="@drawable/search_bg"
                 android:drawableEnd="@drawable/ic_search"
                 android:ems="10"
-                android:focusable="false"
+                android:focusable="true"
                 android:hint="Search hospital or doctor name"
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
