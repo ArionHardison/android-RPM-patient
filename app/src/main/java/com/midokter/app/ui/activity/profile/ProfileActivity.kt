@@ -105,6 +105,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(),ProfileNavigator 
                     .placeholder(R.drawable.app_logo)
                     .into( profile_img)
             }
+            preferenceHelper.setValue(PreferenceKey.WALLET_BALANCE, it.patient.wallet_balance)
             viewModel.name.set(it.patient.first_name.plus(" ").plus(it.patient.last_name))
             viewModel.number.set(it.patient.phone)
             viewModel.email.set(it.patient.email as String?)

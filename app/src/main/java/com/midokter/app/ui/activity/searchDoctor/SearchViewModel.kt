@@ -23,6 +23,7 @@ class SearchViewModel : BaseViewModel<SearchNavigator>(){
     var mfeedbacklist: MutableList<Hospital.Feedback>? = arrayListOf()
     var mphotoslist: MutableList<Hospital.Feedback>? = arrayListOf()
     var mservcielist: MutableList<Hospital.DoctorService>? = arrayListOf()
+    var mTiminglist: MutableList<Hospital.Timing>? = arrayListOf()
 
 
     var mfavDoctorProfile = MutableLiveData<MainResponse.Doctor>()

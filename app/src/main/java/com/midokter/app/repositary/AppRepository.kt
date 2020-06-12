@@ -13,6 +13,8 @@ import com.midokter.app.ui.activity.profile.ProfileViewModel
 import com.midokter.app.ui.activity.register.RegisterViewModel
 import com.midokter.app.ui.activity.searchDoctor.SearchViewModel
 import com.midokter.app.ui.activity.visitedDoctor.VisitedDoctorsViewModel
+import com.midokter.app.ui.activity.main.ui.articles.ArticleViewModel
+import com.midokter.app.ui.activity.main.ui.wallet.WalletViewModel
 
 
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -124,11 +126,15 @@ class AppRepository : BaseRepository() {
                       viewModel.mProfileResponse.value = it
                   }else  if (viewModel is ProfileViewModel) {
                       viewModel.mProfileResponse.value = it
+                  }else  if (viewModel is WalletViewModel) {
+                      viewModel.mProfileResponse.value = it
                   }
               }, {
                   if (viewModel is MainViewModel) {
                       viewModel.getErrorObservable().value = getErrorMessage(it)
                   }else  if (viewModel is ProfileViewModel) {
+                      viewModel.getErrorObservable().value = getErrorMessage(it)
+                  }else  if (viewModel is WalletViewModel) {
                       viewModel.getErrorObservable().value = getErrorMessage(it)
                   }
               })
@@ -202,6 +208,18 @@ class AppRepository : BaseRepository() {
                 if (viewModel is VisitedDoctorsViewModel) {
                     viewModel.getErrorObservable().value = getErrorMessage(it)
                 }
+            })
+    }
+
+    fun addMoneyToWallet(viewModel: WalletViewModel, params: HashMap<String, Any>): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .addMoneyToWallet(params)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                viewModel.mWalletResponse.value = it
+            }, {
+                viewModel.getErrorObservable().value = getErrorMessage(it)
             })
     }
 
@@ -280,6 +298,23 @@ class AppRepository : BaseRepository() {
             }
             return appRepository!!
         }
+    }
+
+
+    fun getArticles(viewModel: ArticleViewModel): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .getArticles()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                if (viewModel is ArticleViewModel) {
+                    viewModel.mArticleResponse.value = it
+                }
+            }, {
+                if (viewModel is ArticleViewModel) {
+                    viewModel.getErrorObservable().value = getErrorMessage(it)
+                }
+            })
     }
 
 
