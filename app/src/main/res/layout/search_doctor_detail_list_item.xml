@@ -12,13 +12,14 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:padding="@dimen/_3sdp">
 
             <TextView
                 android:id="@+id/textView121"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="16dp"
                 android:text="Reagon"
                 android:textColor="@color/colorBlack"
@@ -48,8 +49,8 @@
 
             <ImageView
                 android:id="@+id/imageView28"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
@@ -73,9 +74,9 @@
                 android:id="@+id/textView123"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
-                android:text="Visited for"
+                android:text="Visited for : "
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider17" />
 
@@ -93,7 +94,8 @@
                 android:id="@+id/textView125"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="8dp"
                 android:text="Describtion of doctor"
                 app:layout_constraintStart_toStartOf="@+id/textView123"
                 app:layout_constraintTop_toBottomOf="@+id/textView124" />

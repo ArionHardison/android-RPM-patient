@@ -120,6 +120,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
         } else if (favDoctor != null) {
             viewModel.mfavDoctorProfile.value = favDoctor
             viewModel.id.set(viewModel.mfavDoctorProfile.value!!.id)
+            mDataBinding.imageView26.setImageResource(R.drawable.ic_favourite)
              ViewUtils.setImageViewGlide(this@SearchDoctorDetailActivity,  mDataBinding.imageView25, BuildConfig.BASE_IMAGE_URL.plus(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.profile_pic))
             viewModel.name.set(
                 viewModel.mfavDoctorProfile.value!!.hospital?.first_name.plus(" ").plus(

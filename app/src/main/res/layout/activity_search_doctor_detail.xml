@@ -160,6 +160,7 @@
                         android:layout_marginEnd="8dp"
                         android:drawableStart="@drawable/ic_thump_up"
                         android:drawablePadding="@dimen/_3sdp"
+                        android:drawableTint="@color/colorWhite"
                         android:gravity="center"
                         tools:text="89%"
                         android:text="@{viewmodel.percentage}"
@@ -430,7 +431,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="Locations"
+                    android:text="Location"
                     android:textSize="@dimen/_14sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider14" />

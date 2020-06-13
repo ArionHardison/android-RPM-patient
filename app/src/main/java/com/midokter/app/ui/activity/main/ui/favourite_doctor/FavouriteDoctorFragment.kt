@@ -1,6 +1,9 @@
 package com.midokter.app.ui.activity.main.ui.favourite_doctor
 
 
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.databinding.ViewDataBinding
@@ -8,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 import com.midokter.app.R
 import com.midokter.app.base.BaseFragment
@@ -42,6 +46,18 @@ class FavouriteDoctorFragment : BaseFragment<FragmentFavouriteDoctorBinding>(),F
         observeResponse()
 
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        menu.clear();
+    }
+
     private fun initApiCal() {
         showLoading()
         val hashMap: HashMap<String, Any> = HashMap()
@@ -83,7 +99,7 @@ class FavouriteDoctorFragment : BaseFragment<FragmentFavouriteDoctorBinding>(),F
                 DividerItemDecoration.VERTICAL
             )
         )
-        mDataBinding.rvFavDoctor.layoutManager =LinearLayoutManager(activity!!)
+        mDataBinding.rvFavDoctor.layoutManager = LinearLayoutManager(activity!!) as RecyclerView.LayoutManager?
         mAdapter!!.notifyDataSetChanged()
 
 

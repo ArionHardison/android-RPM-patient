@@ -65,6 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Miot Hospital,Manhattan"
+        android:layout_marginEnd="50dp"
         app:layout_constraintStart_toStartOf="@+id/upcomingDoctorName"
         app:layout_constraintTop_toBottomOf="@+id/upcomingDoctorName" />
 

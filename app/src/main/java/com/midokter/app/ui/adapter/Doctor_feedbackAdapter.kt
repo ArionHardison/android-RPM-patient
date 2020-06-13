@@ -38,9 +38,9 @@ class Doctor_feedbackAdapter(val items: MutableList<Hospital.Feedback>, val cont
         holder.itemBinding.textView124?.text = item.visited_for
         holder.itemBinding.textView125?.text = item.comments
         if (item.experiences.equals("LIKE",true)){
-            holder.itemBinding. imageView28.setImageResource(R.drawable.ic_thump_up)
+            holder.itemBinding. imageView28.setImageResource(R.drawable.like_active)
         }else
-            holder.itemBinding. imageView28.setImageResource(R.drawable.ic_thump_down)
+            holder.itemBinding. imageView28.setImageResource(R.drawable.dislike_active)
        // ViewUtils.setImageViewGlide(context,  holder.itemBinding.imageView16, BuildConfig.BASE_IMAGE_URL.plus(item?.image!!))
 
 
