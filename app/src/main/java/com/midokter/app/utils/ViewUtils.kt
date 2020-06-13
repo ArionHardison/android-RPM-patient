@@ -177,8 +177,8 @@ object ViewUtils {
         Glide.with(context)
             .load(imagePath)
             .thumbnail(0.5f)
-            .error(R.mipmap.ic_launcher)
-            .placeholder(R.drawable.shimmer_bg)
+            .error(R.drawable.app_logo)
+            .placeholder(R.drawable.app_logo)
             .into(imageView)
 
     }
