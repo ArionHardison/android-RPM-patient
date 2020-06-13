@@ -18,6 +18,13 @@ import com.midokter.app.ui.activity.thankyou.ThankyouActivity
 import com.midokter.app.utils.ViewUtils
 import kotlinx.android.synthetic.main.activity_visited_doctors_detail.*
 import java.util.HashMap
+import android.graphics.drawable.Drawable
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
+
 
 class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBinding>(),VisitedDoctorsNavigator {
 
@@ -138,15 +145,15 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
 
     override fun onlike() {
         experiences = "LIKE"
-        mDataBinding.imageView13.setImageResource(R.drawable.like_active)
-        mDataBinding.imageView14.setImageResource(R.drawable.ic_thump_down)
+        mDataBinding.imageView13.setImageResource(R.drawable.like_activ)
+        mDataBinding.imageView14.setImageResource(R.drawable.dislike)
 
     }
 
     override fun onunlike() {
         experiences = "DISLIKE"
-        mDataBinding.imageView13.setImageResource(R.drawable.ic_thump_up)
-        mDataBinding.imageView14.setImageResource(R.drawable.dislike_active)
+        mDataBinding.imageView13.setImageResource(R.drawable.like)
+        mDataBinding.imageView14.setImageResource(R.drawable.dislike_activ)
     }
 
     override fun onSubmit() {

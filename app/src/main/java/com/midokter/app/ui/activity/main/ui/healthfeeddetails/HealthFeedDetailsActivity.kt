@@ -3,6 +3,7 @@ package com.midokter.doctor.ui.activity.healthfeeddetails
 import android.os.Build
 import android.text.Layout.JUSTIFICATION_MODE_INTER_WORD
 import androidx.databinding.ViewDataBinding
+import com.bumptech.glide.Glide
 import com.midokter.app.BuildConfig
 import com.midokter.app.R
 import com.midokter.app.base.BaseActivity
@@ -37,11 +38,13 @@ class HealthFeedDetailsActivity : BaseActivity<ActivityHealthFeedDetailsBinding>
         mViewModel.mArticleResponse.value = article
         mViewModel.title.set(article.name)
         if (article.coverPhoto != null && article.coverPhoto != "") {
-            ViewUtils.setImageViewGlide(
-                this,
-                mViewDataBinding.imgFeed,
-                BuildConfig.BASE_IMAGE_URL+article.coverPhoto
-            )
+
+            Glide.with(this)
+                .load(BuildConfig.BASE_IMAGE_URL + article.coverPhoto)
+                .placeholder(R.drawable.leaderboard)
+                .error(R.drawable.leaderboard)
+                .fallback(R.drawable.leaderboard)
+                .into(  mViewDataBinding.imgFeed)
         }
         mViewModel.description.set(article.description)
         mViewModel.date.set(ViewUtils.getTimeAgoFormat(article.updatedAt))

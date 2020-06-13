@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.midokter.app.BuildConfig
 import com.midokter.app.R
 import com.midokter.app.databinding.ItemHealthFeedBinding
@@ -43,7 +44,13 @@ public class HealthFeedAdapter (val mContext : Context, val list: MutableList<Ar
         holder.mHealthFeedBinding.tvFeedDescription.text=item.description
         holder.mHealthFeedBinding.tvFeedDay.text=ViewUtils.getTimeAgoFormat(item.updatedAt)
         if (item.coverPhoto != null && item.coverPhoto != "") {
-           // ViewUtils.setImageViewGlide(mContext, holder.mHealthFeedBinding.imgFeed, BuildConfig.BASE_IMAGE_URL+item.coverPhoto)
+            //ViewUtils.setImageViewGlide(mContext, holder.mHealthFeedBinding.imgFeed, BuildConfig.BASE_IMAGE_URL+item.coverPhoto)
+            Glide.with(mContext)
+                .load(BuildConfig.BASE_IMAGE_URL + item.coverPhoto)
+                .placeholder(R.drawable.leaderboard)
+                .error(R.drawable.leaderboard)
+                .fallback(R.drawable.leaderboard)
+                .into(holder.mHealthFeedBinding.imgFeed)
         }
     }
 

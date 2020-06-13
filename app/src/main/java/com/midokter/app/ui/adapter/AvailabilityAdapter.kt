@@ -13,7 +13,8 @@ class AvailabilityAdapter(val items: MutableList<Hospital.Timing>, val context: 
     RecyclerView.Adapter<ServiceViewHolder>() {
     override fun onBindViewHolder(holder: ServiceViewHolder, position: Int) {
         val item=items[position]
-        holder.itemBinding.tvTime.text = String.format("%s - %s - %s",item.day,item.start_time,item.end_time)
+        holder.itemBinding.tvTime.text = String.format(" - %s - %s",item.start_time,item.end_time)
+        holder.itemBinding.tvday.text = item.day
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ServiceViewHolder {

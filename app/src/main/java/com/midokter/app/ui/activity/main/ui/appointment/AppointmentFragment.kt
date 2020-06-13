@@ -1,5 +1,8 @@
 package com.midokter.app.ui.activity.main.ui.appointment
 
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
@@ -14,6 +17,9 @@ import com.midokter.app.ui.adapter.MyPagerAdapter
 import com.midokter.app.utils.ViewUtils
 import kotlinx.android.synthetic.main.fragment_appointment.*
 
+
+
+
 class AppointmentFragment : BaseFragment<FragmentAppointmentBinding>(),AppointmentNavigator {
 
   private lateinit var viewModel: AppointmentViewModel
@@ -21,6 +27,8 @@ class AppointmentFragment : BaseFragment<FragmentAppointmentBinding>(),Appointme
     override fun getLayoutId(): Int = R.layout.fragment_appointment
 
     override fun initView(mRootView: View?, mViewDataBinding: ViewDataBinding?) {
+
+
        val fragmentAdapter =this.childFragmentManager!!.let { MyPagerAdapter(it) }
        // val fragmentAdapter = MyPagerAdapter(this.childFragmentManager)
         viewpager_main.adapter = fragmentAdapter
@@ -40,7 +48,16 @@ class AppointmentFragment : BaseFragment<FragmentAppointmentBinding>(),Appointme
         viewModel.getAppointment()
 
     }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        menu.clear();
+    }
 
     private fun observeResponse() {
 

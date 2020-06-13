@@ -1,5 +1,8 @@
 package com.midokter.app.ui.activity.main.ui.wallet
 
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
@@ -34,7 +37,16 @@ class WalletFragment : BaseFragment<FragmentWalletBinding>(),WalletNavigator {
         mViewModel.balance.set(String.format("%s %s",preferenceHelper.getValue(PreferenceKey.CURRENCY,"$"),preferenceHelper.getValue(PreferenceKey.WALLET_BALANCE,"0").toString()))
         initApiCall()
     }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        menu.clear();
+    }
     private fun observeErrorResponse() {
         mViewModel.getErrorObservable().observe(this, Observer<String> { message ->
             ViewUtils.showToast(context!!, message, false)
