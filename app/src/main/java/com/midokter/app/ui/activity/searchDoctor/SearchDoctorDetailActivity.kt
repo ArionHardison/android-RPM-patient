@@ -21,6 +21,7 @@ import com.midokter.app.repositary.model.DoctorListResponse
 import com.midokter.app.repositary.model.Hospital
 import com.midokter.app.repositary.model.MainResponse
 import com.midokter.app.repositary.model.Response
+import com.midokter.app.ui.activity.findDoctors.FindDoctorBookingActivity
 import com.midokter.app.ui.activity.patientDetail.PatientDetailsActivity
 import com.midokter.app.ui.adapter.Doctor_feedbackAdapter
 import com.midokter.app.ui.adapter.Doctors_photoAdapter
@@ -47,9 +48,8 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
         initIntentData()
-        button28.setOnClickListener {
-            val intent = Intent(applicationContext, SearchDoctorScheduleActivity::class.java)
-            startActivity(intent);
+        mDataBinding.toolbar2.setNavigationOnClickListener {
+            finish()
         }
     }
 
@@ -181,7 +181,8 @@ if (viewModel.mservcielist!=null) {
     }
 
     override fun Onbookclick() {
-
+        val intent = Intent(this@SearchDoctorDetailActivity, FindDoctorBookingActivity::class.java)
+        startActivity(intent);
     }
 
     override fun ViewallClick() {

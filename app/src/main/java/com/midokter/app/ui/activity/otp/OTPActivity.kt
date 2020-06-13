@@ -114,6 +114,7 @@ class OTPActivity : BaseActivity<ActivityOtpBinding>(), OTPNavigator {
                 viewModel.otp.value = mDataBinding.pinEntry.text.toString()
                 preferenceHelper.setValue(PreferenceKey.OTP,mDataBinding.pinEntry.text.toString())
                 openNewActivity(this@OTPActivity, RegisterNameActivity::class.java, false)
+                finish()
             }
         } else {
             ViewUtils.showToast(this@OTPActivity, getString(R.string.invalid_otp), false)

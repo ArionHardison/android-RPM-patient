@@ -9,6 +9,7 @@ import com.midokter.app.ui.activity.main.MainViewModel
 import com.midokter.app.ui.activity.main.ui.appointment.AppointmentViewModel
 import com.midokter.app.ui.activity.main.ui.favourite_doctor.FavouriteDoctorViewModel
 import com.midokter.app.ui.activity.otp.OTPViewModel
+import com.midokter.app.ui.activity.patientDetail.PatientDetailViewModel
 import com.midokter.app.ui.activity.profile.ProfileViewModel
 import com.midokter.app.ui.activity.register.RegisterViewModel
 import com.midokter.app.ui.activity.searchDoctor.SearchViewModel
@@ -147,6 +148,19 @@ class AppRepository : BaseRepository() {
                 if (viewModel is FindDoctorsViewModel) {
                     viewModel.getErrorObservable().value = getErrorMessage(it)
                 }
+            })
+    }
+
+    fun bookdoctor(viewModel: PatientDetailViewModel, params: HashMap<String, Any>): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .bookdoctor(params)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                viewModel.mBookedResponse.value = it
+                viewModel.goToBooked()
+            }, {
+                viewModel.getErrorObservable().value = getErrorMessage(it)
             })
     }
 

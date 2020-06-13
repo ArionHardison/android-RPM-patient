@@ -25,6 +25,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/colorPrimary"
+                    android:minHeight="?attr/actionBarSize"
+                    android:theme="?attr/actionBarTheme"
+                    app:title=""
+                    app:titleTextColor="@color/colorWhite"
+                    app:navigationIcon="@drawable/ic_back"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
         <ScrollView
             android:id="@+id/topScroll"
             android:layout_width="match_parent"
@@ -33,24 +47,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar2"
             app:layout_constraintVertical_bias="0.0">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/_100sdp">
-
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar2"
-                    android:layout_width="409dp"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/colorPrimary"
-                    android:minHeight="?attr/actionBarSize"
-                    android:theme="?attr/actionBarTheme"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/top_layer"
@@ -77,11 +80,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        tools:text="Dr.Stephen"
                         android:text="@{viewmodel.name}"
                         android:textColor="@color/colorWhite"
                         app:layout_constraintStart_toStartOf="@+id/imageView25"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView25" />
+                        app:layout_constraintTop_toBottomOf="@+id/imageView25"
+                        tools:text="Dr.Stephen" />
 
                     <TextView
                         android:id="@+id/textView94"
@@ -91,34 +94,34 @@
                         android:background="@color/colorWhite"
                         android:paddingStart="@dimen/_3sdp"
                         android:paddingEnd="@dimen/_3sdp"
-                        tools:text="Allopath"
                         android:text="@{viewmodel.specialities}"
                         app:layout_constraintBottom_toBottomOf="@+id/textView93"
                         app:layout_constraintStart_toEndOf="@+id/textView93"
-                        app:layout_constraintTop_toTopOf="@+id/textView93" />
+                        app:layout_constraintTop_toTopOf="@+id/textView93"
+                        tools:text="Allopath" />
 
                     <TextView
                         android:id="@+id/textView95"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        tools:text="MBBS,MRCP(UK) - "
                         android:text="@{viewmodel.degree}"
                         android:textColor="@color/colorWhite"
                         app:layout_constraintStart_toStartOf="@+id/textView93"
-                        app:layout_constraintTop_toBottomOf="@+id/textView93" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView93"
+                        tools:text="MBBS,MRCP(UK) - " />
 
                     <TextView
                         android:id="@+id/textView96"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        tools:text="Diabetologist"
                         android:text="@{viewmodel.branch}"
                         android:textColor="@color/colorWhite"
                         app:layout_constraintBottom_toBottomOf="@+id/textView95"
                         app:layout_constraintStart_toEndOf="@+id/textView95"
-                        app:layout_constraintTop_toTopOf="@+id/textView95" />
+                        app:layout_constraintTop_toTopOf="@+id/textView95"
+                        tools:text="Diabetologist" />
 
                     <TextView
                         android:id="@+id/textView97"
@@ -128,27 +131,27 @@
                         android:drawableStart="@drawable/ic_thump_up"
                         android:drawablePadding="@dimen/_3sdp"
                         android:gravity="center"
-                        tools:text="89%"
                         android:text="@{viewmodel.percentage}"
                         android:textColor="@color/colorWhite"
                         app:layout_constraintBottom_toBottomOf="@+id/textView94"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toEndOf="@+id/textView94"
-                        app:layout_constraintTop_toTopOf="@+id/textView94" />
+                        app:layout_constraintTop_toTopOf="@+id/textView94"
+                        tools:text="89%" />
 
                     <TextView
                         android:id="@+id/textView98"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        tools:text="18 yrs of overall exp"
-                        android:text= "@{@string/_years_of_exp(viewmodel.experience)}"
+                        android:text="@{@string/_years_of_exp(viewmodel.experience)}"
                         android:textColor="@color/colorWhite"
                         app:layout_constraintEnd_toEndOf="@+id/textView97"
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toEndOf="@+id/textView96"
-                        app:layout_constraintTop_toBottomOf="@+id/textView97" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView97"
+                        tools:text="18 yrs of overall exp" />
 
                     <ImageView
                         android:id="@+id/imageView26"
@@ -191,12 +194,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/_10sdp"
-                    tools:text="Consultation fee: $10"
-                    android:text= "@{@string/_consultation_fee(viewmodel.fee)}"
+                    android:text="@{@string/_consultation_fee(viewmodel.fee)}"
                     android:textSize="@dimen/_12sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/divider10" />
+                    app:layout_constraintTop_toBottomOf="@+id/divider10"
+                    tools:text="Consultation fee: $10" />
 
                 <View
                     android:id="@+id/divider11"
@@ -294,20 +297,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    tools:text="11.00AM - 12.00PM"
                     android:text="@{viewmodel.mor_time}"
                     app:layout_constraintStart_toStartOf="@+id/textView102"
-                    app:layout_constraintTop_toBottomOf="@+id/textView102" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView102"
+                    tools:text="11.00AM - 12.00PM" />
 
                 <TextView
                     android:id="@+id/textView110"
                     android:layout_width="125dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    tools:text="01.00PM - 03.00PM"
                     android:text="@{viewmodel.eve_time}"
                     app:layout_constraintStart_toStartOf="@+id/textView109"
-                    app:layout_constraintTop_toBottomOf="@+id/textView109" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView109"
+                    tools:text="01.00PM - 03.00PM" />
 
                 <View
                     android:id="@+id/divider12"
@@ -351,8 +354,8 @@
                     android:layout_marginTop="8dp"
                     android:drawableEnd="@drawable/ic_right"
                     android:drawableTint="@color/colorButton"
-                    android:text="View all"
                     android:onClick="@{()->viewmodel.ViewallClick()}"
+                    android:text="View all"
                     android:textColor="@color/colorButton"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -397,6 +400,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView116" />
+
                 <TextView
                     android:id="@+id/locations"
                     android:layout_width="wrap_content"
@@ -407,26 +411,27 @@
                     android:textSize="@dimen/_14sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider14" />
+
                 <TextView
                     android:id="@+id/textView117"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    tools:text="@{viewmodel.clinic}"
                     android:text="Hospital Name"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/locations" />
+                    app:layout_constraintTop_toBottomOf="@+id/locations"
+                    tools:text="@{viewmodel.clinic}" />
 
                 <TextView
                     android:id="@+id/textView118"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    tools:text="Hospital Address Name"
                     android:text="@{viewmodel.clinic_address}"
                     app:layout_constraintStart_toStartOf="@+id/textView117"
-                    app:layout_constraintTop_toBottomOf="@+id/textView117" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView117"
+                    tools:text="Hospital Address Name" />
 
                 <ImageView
                     android:id="@+id/imageView27"
@@ -487,12 +492,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="128dp"
                     android:layout_marginTop="8dp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginBottom="8dp"
                     android:adapter="@{feedbackadapter}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/search_doctor_detail_list_item"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/textView120"
-                    app:layout_constraintTop_toBottomOf="@+id/textView120" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView120"
+                    tools:listitem="@layout/search_doctor_detail_list_item" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -513,7 +519,7 @@
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/topScroll"
-            app:layout_constraintVertical_bias="0.875" />
+            app:layout_constraintVertical_bias="0.975" />
 
         <Button
             android:id="@+id/button28"

@@ -16,7 +16,6 @@ interface ApiInterface {
     @POST("api/patient/signup")
     fun signup(@FieldMap hashMap: HashMap<String, Any>): Observable<RegisterResponse>
 
-
     @FormUrlEncoded
     @POST("api/patient/verify_otp")
     fun signIn(@FieldMap hashMap: HashMap<String, Any>): Observable<LoginResponse>
@@ -29,6 +28,10 @@ interface ApiInterface {
     @FormUrlEncoded
     @POST("api/patient/verify_otp")
     fun verifyotp(@FieldMap hashMap: HashMap<String, Any>): Observable<LoginResponse>
+
+    @FormUrlEncoded
+    @POST("api/patient/booking")
+    fun bookdoctor(@FieldMap hashMap: HashMap<String, Any>): Observable<BookedResponse>
 
     @FormUrlEncoded
     @POST("api/patient/logout")
