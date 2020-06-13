@@ -12,11 +12,15 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_configs"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.activity.searchDoctor.SearchDoctorScheduleActivity"></activity>
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:targetApi="n">
+        <activity android:name=".ui.activity.medicalrecorddetails.MedicalRecordDetailsActivity"></activity>
+        <activity android:name=".ui.activity.searchDoctor.SearchDoctorScheduleActivity" />
         <activity android:name=".ui.activity.searchDoctor.SearchDoctorDetailActivity" />
         <activity android:name=".ui.activity.searchDoctor.SearchDoctorActivity" />
         <activity android:name=".ui.activity.chat.ChatSummaryActivity" />

@@ -36,6 +36,7 @@ object WebApiConstants {
         const val FavDoctorProfile = "FavDoctorProfile"
         const val SERVICE_LIST = "serviceList"
         const val iscancel = "iscancel"
+        const val MEDICAL_RECORD = "medical_record"
         const val ID="id"
     }
 

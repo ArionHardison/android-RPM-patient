@@ -59,7 +59,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
         viewModel.navigator = this
 
         preferenceHelper.setValue(PreferenceKey.CURRENCY, "$")
-
         initUI()
         initApiCal()
         observeResponse()
@@ -78,9 +77,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
          drawerLayout = findViewById(R.id.drawer_layout)
          navView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
-        headerview= navView.getHeaderView(0)
-
-        navView.getHeaderView(0).setOnClickListener(){
+        headerview = navView.getHeaderView(0)
+        navView.itemIconTintList = null
+        navView.getHeaderView(0).setOnClickListener() {
             val intent = Intent(applicationContext, ProfileActivity::class.java)
             startActivity(intent);
         }
@@ -128,14 +127,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
             viewModel.profilepercentage.set(it.profile_complete)
             viewModel.imageurl.set(it.patient.profile!!.profile_pic as String?)
 
-            viewModel.imageurl.set(BuildConfig.BASE_IMAGE_URL+it.patient?.profile?.profile_pic)
-            if ( it.patient?.profile?.profile_pic!=null) {
+          /*  viewModel.imageurl.set(BuildConfig.BASE_IMAGE_URL+it.doctor.doctor_profile.profile_pic)
+            if ( it.doctor.doctor_profile.profile_pic!=null) {
                 Glide.with(this)
                     .load(viewModel.imageurl.get())
                     .error(R.drawable.app_logo)
                     .placeholder(R.drawable.app_logo)
-                    .into(profile_img)
-            }
+                    .into(mDataBinding.profileIv)
+            }*/
             preferenceHelper.setValue(PreferenceKey.PATIENT_ID, it.patient.id)
             preferenceHelper.setValue(PreferenceKey.FIRST_NAME, it.patient.first_name)
             preferenceHelper.setValue(PreferenceKey.LAST_NAME, it.patient.last_name)

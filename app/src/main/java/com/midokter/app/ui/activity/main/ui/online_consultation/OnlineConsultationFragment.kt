@@ -20,15 +20,10 @@ class OnlineConsultationFragment : BaseFragment<FragmentOnlineConsultationBindin
         addMenus()
         // Creates a vertical Layout Manager
         rv_online_consultation.layoutManager = LinearLayoutManager(context)
-
-        // You can use GridLayoutManager if you want multiple columns. Enter the number of columns as a parameter.
-//        rv_animal_list.layoutManager = GridLayoutManager(this, 2)
-
+        //You can use GridLayoutManager if you want multiple columns. Enter the number of columns as a parameter.
+        //rv_animal_list.layoutManager = GridLayoutManager(this, 2)
         // Access the RecyclerView Adapter and load the data into it
-        rv_online_consultation.addItemDecoration(
-            DividerItemDecoration(context,
-                DividerItemDecoration.VERTICAL)
-        )
+        rv_online_consultation.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         rv_online_consultation.adapter = context?.let { OnlineAppointmentListAdapter(onlineAppmts, it) }
     }
 

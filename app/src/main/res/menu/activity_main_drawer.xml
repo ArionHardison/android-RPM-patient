@@ -3,52 +3,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_home" />
-        <item
-            android:id="@+id/nav_appointments"
-            android:icon="@drawable/ic_appointments"
-            android:title="@string/menu_appointments" />
-        <item
-            android:id="@+id/nav_online_consultation"
-            android:icon="@drawable/ic_online_consulations"
-            android:title="@string/menu_online_consultation" />
-        <item
-            android:id="@+id/nav_fav_doctor"
-            android:icon="@drawable/ic_fav_doctor"
-            android:title="@string/menu_fav_doctor" />
-        <item
-            android:id="@+id/nav_medical_records"
-            android:icon="@drawable/ic_medical_records"
-            android:title="@string/menu_medical_records" />
-        <item
-            android:id="@+id/nav_remainder"
-            android:icon="@drawable/ic_reminder"
-            android:title="@string/menu_remainder" />
-        <item
-            android:id="@+id/nav_wallet"
-            android:icon="@drawable/ic_wallet"
-            android:title="@string/menu_wallet" />
-        <item
-            android:id="@+id/nav_articles"
-            android:icon="@drawable/ic_articles"
-            android:title="@string/menu_articles" />
-        <item
-            android:id="@+id/nav_relative_mgmt"
-            android:icon="@drawable/ic_relative_mange"
-            android:title="@string/menu_relative_mgmt" />
-        <item
-            android:id="@+id/nav_faq"
-            android:icon="@drawable/ic_faq"
-            android:title="@string/menu_faq" />
-        <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_settings"
-            android:title="@string/menu_settings" />
 
-    </group>
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/menu_home"
+        android:title="@string/menu_home" />
+
+    <item
+        android:id="@+id/nav_appointments"
+        android:icon="@drawable/ic_appointments"
+        android:title="@string/menu_appointments" />
+    <item
+        android:id="@+id/nav_online_consultation"
+        android:icon="@drawable/ic_online_consulations"
+        android:title="@string/menu_online_consultation" />
+    <item
+        android:id="@+id/nav_fav_doctor"
+        android:icon="@drawable/ic_fav_doctor"
+        android:title="@string/menu_fav_doctor" />
+    <item
+        android:id="@+id/nav_medical_records"
+        android:icon="@drawable/ic_medical_records"
+        android:title="@string/menu_medical_records" />
+    <item
+        android:id="@+id/nav_remainder"
+        android:icon="@drawable/ic_reminder"
+        android:title="@string/menu_remainder" />
+    <item
+        android:id="@+id/nav_wallet"
+        android:icon="@drawable/ic_wallet"
+        android:title="@string/menu_wallet" />
+    <item
+        android:id="@+id/nav_articles"
+        android:icon="@drawable/ic_articles"
+        android:title="@string/menu_articles" />
+    <item
+        android:id="@+id/nav_relative_mgmt"
+        android:icon="@drawable/ic_relative_mange"
+        android:title="@string/menu_relative_mgmt" />
+    <item
+        android:id="@+id/nav_faq"
+        android:icon="@drawable/ic_faq"
+        android:title="@string/menu_faq" />
+    <item
+        android:id="@+id/nav_settings"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/menu_settings" />
+
 
 </menu>

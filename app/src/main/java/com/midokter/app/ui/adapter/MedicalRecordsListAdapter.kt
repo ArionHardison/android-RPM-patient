@@ -1,39 +1,64 @@
 package com.midokter.app.ui.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.midokter.app.BuildConfig
 import com.midokter.app.R
-import kotlinx.android.synthetic.main.home_list_item.view.*
+import com.midokter.app.repositary.WebApiConstants
+import com.midokter.app.repositary.model.Hospital1
+import com.midokter.app.repositary.model.Medical
+import com.midokter.app.repositary.model.Speciality
+import com.midokter.app.ui.activity.medicalrecorddetails.MedicalRecordDetailsActivity
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.medical_records_list_item.view.*
-import kotlinx.android.synthetic.main.online_appointments_list_item.view.*
+import java.io.Serializable
 
-class MedicalRecordsListAdapter(val items: ArrayList<String>, val context: Context) :
+class MedicalRecordsListAdapter(val items: List<Medical>, val context: Context) :
     RecyclerView.Adapter<MedicalRecordsViewHolder>() {
 
     override fun onBindViewHolder(holder: MedicalRecordsViewHolder, position: Int) {
-        holder?.tvMrDoctorName?.text = items.get(position)
+        val medicalRecord: Medical = items[position]
+        val hospital: Hospital1 = medicalRecord.hospital
+        if (hospital.doctor_profile != null) {
+            Glide.with(context)
+                .load(BuildConfig.BASE_IMAGE_URL + hospital.doctor_profile.profile_pic)
+                .placeholder(R.drawable.place_holder_image)
+                .error(R.drawable.place_holder_image)
+                .fallback(R.drawable.place_holder_image)
+                .into(holder.imDocPics)
+        }
+
+        holder.tvMrDoctorName.text = hospital.first_name + " " + hospital.last_name
+        if (items[position].hospital.doctor_profile.speciality != null) {
+            val specialities: Speciality = items[position].hospital.doctor_profile.speciality
+            holder.tvDoctorType.text = specialities.name
+        }
+
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context, MedicalRecordDetailsActivity::class.java)
+            intent.putExtra(WebApiConstants.IntentPass.MEDICAL_RECORD, medicalRecord as Serializable)
+            context.startActivity(intent);
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MedicalRecordsViewHolder {
-        return MedicalRecordsViewHolder(
-            LayoutInflater.from(context).inflate(
-                R.layout.medical_records_list_item,
-                parent,
-                false
-            )
-        )
+        return MedicalRecordsViewHolder(LayoutInflater.from(context).inflate(R.layout.medical_records_list_item, parent, false))
     }
 
-    // Gets the number of animals in the list
     override fun getItemCount(): Int {
         return items.size
     }
 }
 
 class MedicalRecordsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    // Holds the TextView that will add each animal to
-    val tvMrDoctorName = view.mrDoctorName
+    val tvMrDoctorName: TextView = view.mrDoctorName
+    val tvDoctorType: TextView = view.docTypeTxt
+    val imDocPics: CircleImageView = view.mrDocPics
 }

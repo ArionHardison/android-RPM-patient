@@ -209,13 +209,12 @@ object ViewUtils {
     }
 
     fun getScheduleDayFormat(str: String) : String {
-        val sdf =
-            SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         var dateObj: Date? = null
         try {
             dateObj = sdf.parse(str)
             val fmtOutFull =
-                SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault())
+                SimpleDateFormat("dd MMM yyyy, EE h:mm a", Locale.getDefault())
             return String.format("%s", fmtOutFull.format(dateObj!!.time))
         } catch (e: ParseException) {
             e.printStackTrace()
