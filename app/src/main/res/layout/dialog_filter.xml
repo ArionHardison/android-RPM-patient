@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.activity.main.ui.faq.FaqFragment">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.midokter.app.ui.activity.main.ui.faq.FaqViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+         android:layout_margin="@dimen/_5sdp"
+            android:text="@string/filter"
+            android:textStyle="bold"
+            android:textSize="@dimen/_14sdp"
+            android:textColor="@color/colorBlack"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/divider5"
+            app:layout_constraintTop_toBottomOf="@+id/divider5" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorLiteGrey"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/avaliablity"
+            android:textSize="@dimen/_12sdp"
+          />
+
+
+        <RadioGroup
+            android:id="@+id/radiogroup_avaliablity"
+            android:layout_width="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/avaliablity_anyday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/avaliablity_anyday"
+               />
+            <RadioButton
+                android:id="@+id/avaliablity_today"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/avaliablity_today"
+                />
+            <RadioButton
+                android:id="@+id/avaliablity_in_next3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/avaliablity_in_next3"
+                />
+            <RadioButton
+                android:id="@+id/avaliablity_coming_week"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/avaliablity_coming_week"
+                />
+
+    </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorLiteGrey"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/gender"
+            android:textSize="@dimen/_12sdp"
+            />
+
+
+        <RadioGroup
+            android:id="@+id/radiogroup_gender"
+            android:layout_width="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/male"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:button="@drawable/ic_radio_select"
+                android:paddingStart="@dimen/_5sdp"
+                android:text="@string/male"
+                />
+            <RadioButton
+                android:id="@+id/female"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:button="@drawable/ic_radio_select"
+                android:paddingStart="@dimen/_5sdp"
+                android:text="@string/female"
+                />
+
+
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorLiteGrey"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/consultationfee"
+            android:textSize="@dimen/_12sdp"
+            />
+
+
+        <RadioGroup
+            android:id="@+id/radiogroup_consultion"
+            android:layout_width="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/one"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/_1to"
+                />
+            <RadioButton
+                android:id="@+id/two"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/_20to"
+                />
+            <RadioButton
+                android:id="@+id/three"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/_30to"
+                />
+
+
+        </RadioGroup>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_margin="@dimen/_5sdp">
+
+            <Button
+                android:id="@+id/button15"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/call_btn_bg"
+                android:text="@string/cancel"
+                android:textColor="@color/colorButton"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <Button
+                android:id="@+id/button16"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/dark_button"
+                android:layout_marginStart="20dp"
+                android:text="@string/apply"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                app:layout_constraintBottom_toBottomOf="@+id/button15"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/button15"
+                app:layout_constraintTop_toTopOf="@+id/button15" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</layout>

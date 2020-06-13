@@ -23,6 +23,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.midokter.app.BaseApplication
+import com.midokter.app.BuildConfig
 import com.midokter.app.R
 import com.midokter.app.base.BaseActivity
 import com.midokter.app.data.*
@@ -76,9 +77,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
          drawerLayout = findViewById(R.id.drawer_layout)
          navView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
-        headerview= navView.getHeaderView(0)
-
-        navView.getHeaderView(0).setOnClickListener(){
+        headerview = navView.getHeaderView(0)
+        navView.itemIconTintList = null
+        navView.getHeaderView(0).setOnClickListener() {
             val intent = Intent(applicationContext, ProfileActivity::class.java)
             startActivity(intent);
         }

@@ -19,6 +19,11 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
         <activity android:name=".ui.activity.searchDoctor.SearchDoctorScheduleActivity"></activity>
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:targetApi="n">
+        <activity android:name=".ui.activity.medicalrecorddetails.MedicalRecordDetailsActivity"></activity>
+        <activity android:name=".ui.activity.searchDoctor.SearchDoctorScheduleActivity" />
         <activity android:name=".ui.activity.searchDoctor.SearchDoctorDetailActivity" />
         <activity android:name=".ui.activity.searchDoctor.SearchDoctorActivity" />
         <activity android:name=".ui.activity.chat.ChatSummaryActivity" />
@@ -46,6 +51,7 @@
         <activity android:name=".ui.activity.register.RegisterEmailActivity" />
         <activity android:name=".ui.activity.register.RegisterNameActivity" />
         <activity android:name=".ui.activity.login.LoginActivity" />
+        <activity android:name=".ui.activity.allservice.AllServiceActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -57,6 +63,8 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+        <activity android:name="com.midokter.doctor.ui.activity.healthfeeddetails.HealthFeedDetailsActivity" />
+
         <activity
             android:name=".ui.activity.splash.SplashActivity"
             android:screenOrientation="portrait">

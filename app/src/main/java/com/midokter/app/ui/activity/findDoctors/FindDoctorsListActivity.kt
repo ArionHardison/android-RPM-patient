@@ -1,9 +1,15 @@
 package com.midokter.app.ui.activity.findDoctors
 
+import android.content.Context
 import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -32,6 +38,7 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),F
     private lateinit var viewModel: FindDoctorsViewModel
     private lateinit var mDataBinding: ActivityFindDoctorsListBinding
     private var mAdapter: FindDoctorListAdapter? = null
+    private lateinit var filterdialog: AlertDialog.Builder
 
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
 
@@ -47,7 +54,12 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),F
         initApiCal( intent.getIntExtra(WebApiConstants.IntentPass.ID,1))
         initAdapter()
         observeResponse()
+        filterdialog = AlertDialog.Builder(this)
         //categoriesList()
+
+        mDataBinding.imageView17.setOnClickListener {
+            showFilterDialog(this@FindDoctorsListActivity)
+        }
 
     }
 
@@ -83,6 +95,45 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),F
         })
     }
 
+    fun showFilterDialog(context: Context) {
+        val builder = android.app.AlertDialog.Builder(context)
+        val inflater: LayoutInflater =
+            context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view: View = inflater.inflate(R.layout.dialog_filter, null)
+        builder.setView(view)
+        val tvYes = view.findViewById<TextView>(R.id.button16)
+        val tvNo = view.findViewById<TextView>(R.id.button15)
+        val radiogroup_avaliablity = view.findViewById<RadioGroup>(R.id.radiogroup_avaliablity)
+        val radiogroup_gender = view.findViewById<RadioGroup>(R.id.radiogroup_gender)
+        val radiogroup_consultion = view.findViewById<RadioGroup>(R.id.radiogroup_consultion)
+        radiogroup_avaliablity.setOnCheckedChangeListener(
+            RadioGroup.OnCheckedChangeListener { group, checkedId ->
+                val radio: RadioButton = findViewById(checkedId)
+
+            })
+        radiogroup_gender.setOnCheckedChangeListener(
+            RadioGroup.OnCheckedChangeListener { group, checkedId ->
+                val radio: RadioButton = findViewById(checkedId)
+
+            })
+        radiogroup_consultion.setOnCheckedChangeListener(
+            RadioGroup.OnCheckedChangeListener { group, checkedId ->
+                val radio: RadioButton = findViewById(checkedId)
+
+            })
+        val ad: android.app.AlertDialog = builder.create()
+        tvNo.setOnClickListener {
+
+            ad.dismiss()
+        }
+        tvYes.setOnClickListener {
+
+            ad.dismiss()
+        }
+        ad.show()
+    }
+
+
     private fun initAdapter() {
         mAdapter = FindDoctorListAdapter( viewModel.mDoctorslist!!,this@FindDoctorsListActivity,this)
         mDataBinding.adapter = mAdapter
@@ -104,12 +155,12 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),F
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+
                 if (s!!.length>0)
                     mDataBinding.adapter!!.filter.filter(s)
                 else{
-                  // mAdapter = FindDoctorListAdapter( viewModel.mDoctorslist!!, this@FindDoctorsListActivity,this)
-                    mDataBinding.adapter = mAdapter
-                    mDataBinding.adapter!!.notifyDataSetChanged()
+                   initAdapter()
                 }
 
             }

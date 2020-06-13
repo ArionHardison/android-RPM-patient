@@ -24,9 +24,8 @@
             android:gravity="start"
             android:padding="@dimen/_8sdp"
             android:text="You can download your Medical Records that you have consulted before with the Doctor"
-            android:textAlignment="center"
-            android:textSize="@dimen/_12sdp"
             android:textColor="@color/colorDarkGrey"
+            android:textSize="@dimen/_12sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -35,12 +34,11 @@
             android:id="@+id/rv_medical_records"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorWhite"
             android:paddingTop="@dimen/_8sdp"
             android:paddingBottom="@dimen/_8sdp"
-            app:layout_constraintTop_toBottomOf="@+id/text_info"
             app:layout_constraintEnd_toEndOf="@+id/text_info"
-            app:layout_constraintStart_toStartOf="@+id/text_info" />
+            app:layout_constraintStart_toStartOf="@+id/text_info"
+            app:layout_constraintTop_toBottomOf="@+id/text_info" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

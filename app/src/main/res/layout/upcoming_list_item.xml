@@ -13,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginStart="@dimen/_5sdp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/rectangular_box"
         android:orientation="vertical"
@@ -54,6 +55,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="Dr.Alvin"
+        android:textSize="@dimen/_14sdp"
+        android:textColor="@color/colorBlack"
         app:layout_constraintStart_toEndOf="@+id/constraintL"
         app:layout_constraintTop_toTopOf="@+id/constraintL" />
 
@@ -69,7 +72,7 @@
         android:id="@+id/textView28"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="@dimen/_5sdp"
         android:background="@drawable/cancel_btn_bg"
         android:padding="@dimen/_3sdp"
         android:text="Cancel"

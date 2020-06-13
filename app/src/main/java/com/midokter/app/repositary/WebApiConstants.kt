@@ -24,13 +24,19 @@ object WebApiConstants {
         const val OTP = "otp"
     }
 
+    object Wallet {
+        const val AMOUNT = "amount"
+    }
+
 
     object IntentPass {
         const val Appointment = "Appointment"
         const val VisitedDoctor = "VisitedDoctor"
         const val DoctorProfile = "DoctorProfile"
         const val FavDoctorProfile = "FavDoctorProfile"
+        const val SERVICE_LIST = "serviceList"
         const val iscancel = "iscancel"
+        const val MEDICAL_RECORD = "medical_record"
         const val ID="id"
     }
 

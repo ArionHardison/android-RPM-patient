@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.activity.medicalrecorddetails.MedicalRecordDetailsActivity">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.midokter.app.ui.activity.medicalrecorddetails.MedicalRecordDetailsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite">
+
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_back"
+            app:title="Doctor Name"
+            app:titleTextColor="@color/colorWhite" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/colorWhite"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/mrDocPics"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:src="@mipmap/ic_launcher"
+                app:civ_border_width="1dp"
+                app:civ_border_color="@color/colorPrimary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/mrDoctorName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@{viewmodel.mDoctorName}"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_13sdp"
+                app:layout_constraintBottom_toBottomOf="@+id/mrDocPics"
+                app:layout_constraintStart_toEndOf="@+id/mrDocPics"
+                app:layout_constraintTop_toTopOf="@+id/mrDocPics"
+                app:layout_constraintVertical_bias="0.294"
+                tools:text="Dr.Doctor Name" />
+
+
+            <TextView
+                android:id="@+id/docTypeTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:text="@{viewmodel.mSpecialist}"
+                android:textColor="@color/colorDarkGrey"
+                android:textSize="@dimen/_12sdp"
+                android:gravity="center_vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/mrDoctorName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.124"
+                app:layout_constraintStart_toEndOf="@+id/mrDoctorName"
+                app:layout_constraintTop_toTopOf="@+id/mrDoctorName"
+                tools:text="Speciality" />
+
+            <TextView
+                android:id="@+id/tvDocSpeciality"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_border_light_gray"
+                android:padding="@dimen/_2sdp"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingTop="@dimen/_2sdp"
+                android:paddingEnd="@dimen/_5sdp"
+                android:text="@{viewmodel.mRecordName}"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_10sdp"
+                app:layout_constraintEnd_toEndOf="@+id/mrDoctorName"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/mrDoctorName"
+                app:layout_constraintTop_toBottomOf="@+id/mrDoctorName"
+                tools:text="Speciality" />
+
+            <TextView
+                android:id="@+id/text1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@color/colorwhiteGrey"
+                android:gravity="start"
+                android:padding="@dimen/_10sdp"
+                android:text="Consulted on"
+                android:textColor="@color/colorDarkGrey"
+                android:textSize="@dimen/_12sdp"
+                app:layout_constraintTop_toBottomOf="@+id/tvDocSpeciality" />
+
+            <TextView
+                android:id="@+id/tvConsultedOn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:padding="@dimen/_10sdp"
+                android:text="@{viewmodel.mConsultedOnDate}"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_15sdp"
+                app:layout_constraintTop_toBottomOf="@+id/text1"
+                tools:text="Date Display" />
+
+            <TextView
+                android:id="@+id/text2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorwhiteGrey"
+                android:gravity="start"
+                android:padding="@dimen/_10sdp"
+                android:text="Download medical records"
+                android:textColor="@color/colorDarkGrey"
+                android:textSize="@dimen/_12sdp"
+                app:layout_constraintTop_toBottomOf="@+id/tvConsultedOn" />
+
+
+            <LinearLayout
+                android:id="@+id/constraintLayout4"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@drawable/bg_color_primary_border"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text2">
+
+                <ImageView
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:padding="@dimen/_6sdp"
+                    android:tint="@color/colorButton"
+                    app:srcCompat="@drawable/ic_download_arrow" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:padding="@dimen/_8sdp"
+                    android:text="Download pdf"
+                    android:textColor="@color/colorButton"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintTop_toBottomOf="@+id/tvConsultedOn" />
+
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -8,12 +8,15 @@ import com.midokter.app.ui.activity.login.LoginViewModel
 import com.midokter.app.ui.activity.main.MainViewModel
 import com.midokter.app.ui.activity.main.ui.appointment.AppointmentViewModel
 import com.midokter.app.ui.activity.main.ui.favourite_doctor.FavouriteDoctorViewModel
+import com.midokter.app.ui.activity.main.ui.medical_records.MedicalRecordsViewModel
 import com.midokter.app.ui.activity.otp.OTPViewModel
 import com.midokter.app.ui.activity.patientDetail.PatientDetailViewModel
 import com.midokter.app.ui.activity.profile.ProfileViewModel
 import com.midokter.app.ui.activity.register.RegisterViewModel
 import com.midokter.app.ui.activity.searchDoctor.SearchViewModel
 import com.midokter.app.ui.activity.visitedDoctor.VisitedDoctorsViewModel
+import com.midokter.app.ui.activity.main.ui.articles.ArticleViewModel
+import com.midokter.app.ui.activity.main.ui.wallet.WalletViewModel
 
 
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -125,15 +128,20 @@ class AppRepository : BaseRepository() {
                       viewModel.mProfileResponse.value = it
                   }else  if (viewModel is ProfileViewModel) {
                       viewModel.mProfileResponse.value = it
+                  }else  if (viewModel is WalletViewModel) {
+                      viewModel.mProfileResponse.value = it
                   }
               }, {
                   if (viewModel is MainViewModel) {
                       viewModel.getErrorObservable().value = getErrorMessage(it)
                   }else  if (viewModel is ProfileViewModel) {
                       viewModel.getErrorObservable().value = getErrorMessage(it)
+                  }else  if (viewModel is WalletViewModel) {
+                      viewModel.getErrorObservable().value = getErrorMessage(it)
                   }
               })
       }
+
    /* Category*/
     fun getCategorys(viewModel: ViewModel): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
@@ -219,6 +227,18 @@ class AppRepository : BaseRepository() {
             })
     }
 
+    fun addMoneyToWallet(viewModel: WalletViewModel, params: HashMap<String, Any>): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .addMoneyToWallet(params)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                viewModel.mWalletResponse.value = it
+            }, {
+                viewModel.getErrorObservable().value = getErrorMessage(it)
+            })
+    }
+
 
     fun postfeedback(viewModel: VisitedDoctorsViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
@@ -231,7 +251,8 @@ class AppRepository : BaseRepository() {
                 viewModel.getErrorObservable().value = getErrorMessage(it)
             })
     }
-/*doctorprofile*/
+
+   /*doctorprofile*/
     fun addfav(viewModel: SearchViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .addfav(params)
@@ -297,15 +318,37 @@ class AppRepository : BaseRepository() {
     }
 
 
+    fun getArticles(viewModel: ArticleViewModel): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .getArticles()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                if (viewModel is ArticleViewModel) {
+                    viewModel.mArticleResponse.value = it
+                }
+            }, {
+                if (viewModel is ArticleViewModel) {
+                    viewModel.getErrorObservable().value = getErrorMessage(it)
+                }
+            })
+    }
+
+
+    /*doctorprofile*/
+    fun getMedicalRecord(viewModel: MedicalRecordsViewModel): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .getMedicalRecord()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                viewModel.mMedicalRecordResponse.value = it
+            }, {
+                viewModel.getErrorObservable().value = getErrorMessage(it)
+            })
+    }
+
 /*
-
-
-
-
-
-
-
-
     fun getPatients(
         viewModel: ViewModel
     ): Disposable {

@@ -237,7 +237,7 @@ data class AppointmentResponse(
                     val address: Any,
                     val affiliations: Any,
                     val awards: Any,
-                    val certification: Any,
+                    val certification: String,
                     val city: Any,
                     val country: Any,
                     val created_at: String,

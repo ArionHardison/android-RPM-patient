@@ -42,11 +42,11 @@
     <string name="terms_content">By using the app you agree to</string>
     <string name="terms">terms</string>
 
-   <!-- profile-->
+    <!-- profile-->
     <string name="profile_completed">Profile Completed:  </string>
     <string name="profile">Profile</string>
-    
-<!--    home-->
+
+    <!--    home-->
     <string name="find_doctors">Find Doctors</string>
     <string name="chat">Chat</string>
     <string name="search_doctor">Search Doctors</string>
@@ -56,8 +56,8 @@
     <string name="based_hospitals">Based on hospitals</string>
     <string name="see_you_visted_doc">See your visited doctors</string>
     <string name="result_found">( %s results found )</string>
-    
-   <!-- application-->
+
+    <!-- application-->
     <string name="appointments_details">Appointment Details</string>
     <string name="search_result">Search results for %s</string>
     <string name="years_of_exp"> years of Overall exp</string>
@@ -65,6 +65,24 @@
 
     <!--doctor booking-->
     <string name="_consultation_fee">Consultation fee: %d</string>
+
+   <!-- filter-->
+    <string name="filter">Filter</string>
+    <string name="avaliablity">Availablity</string>
+    <string name="avaliablity_anyday">available anyday</string>
+    <string name="avaliablity_today">available today</string>
+    <string name="avaliablity_in_next3">available in next 3 days</string>
+    <string name="avaliablity_coming_week">available coming weekend</string>
+    <string name="gender">Gender</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="consultationfee">Consultation fee</string>
+    <string name="_1to">1 -\ 20</string>
+    <string name="_20to">20 -\ 30</string>
+    <string name="_30to"> 30 above</string>
+    <string name="cancel">Cancel</string>
+    <string name="apply">Apply</string>
+
     <!--Error alerts-->
     <string name="error_invalid_name">Please enter Name </string>
     <string name="error_invalid_email_address">Please enter valid email address</string>
@@ -165,4 +183,11 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <string name="health_articles">Health Articles</string>
+    <string name="no_article_found">No article found</string>
+    <string name="articles">Article</string>
+    <string name="please_enter_amount">Please enter amount</string>
+    <string name="added_to_you_wallet">%s Successfully added to your wallet</string>
+    <string name="all_services">All Services</string>
+    <string name="back">Back</string>
 </resources>

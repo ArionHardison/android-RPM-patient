@@ -13,6 +13,7 @@ import com.midokter.app.databinding.ListItemPhotosBinding
 import com.midokter.app.databinding.VisitedDoctorsListItemBinding
 import com.midokter.app.repositary.WebApiConstants
 import com.midokter.app.repositary.model.AppointmentResponse
+import com.midokter.app.repositary.model.Hospital
 import com.midokter.app.ui.activity.findDoctors.FindDoctorsListActivity
 import com.midokter.app.ui.activity.visitedDoctor.VisitedDoctorsDetailActivity
 import com.midokter.app.utils.ViewUtils
@@ -21,13 +22,13 @@ import kotlinx.android.synthetic.main.list_item_finddoctor_categories.view.*
 import kotlinx.android.synthetic.main.visited_doctors_list_item.view.*
 import java.io.Serializable
 
-class Doctors_photoAdapter(val items: MutableList<AppointmentResponse.Previous.Appointment>, val context: Context) :
+class Doctors_photoAdapter(val items: MutableList<Hospital.Clinic.photos>, val context: Context) :
     RecyclerView.Adapter<PhotosViewHolder>() {
 
     override fun onBindViewHolder(holder: PhotosViewHolder, position: Int) {
         val item=items!![position]
 
-             //ViewUtils.setImageViewGlide(context,  holder.itemBinding.imageView28, BuildConfig.BASE_IMAGE_URL.plus(item?.image!!))
+             ViewUtils.setImageViewGlide(context,  holder.itemBinding.imageView28, BuildConfig.BASE_IMAGE_URL.plus(item?.image!!))
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotosViewHolder {
