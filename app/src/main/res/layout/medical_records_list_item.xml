@@ -4,60 +4,83 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/_5sdp"
-    android:padding="@dimen/_3sdp">
+    android:background="@color/colorWhite">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/mrDocPics"
-        android:layout_width="@dimen/_60sdp"
-        android:layout_height="@dimen/_60sdp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:src="@mipmap/ic_launcher"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/mrDoctorName"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout1"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="Dr.Sellina"
-        android:textSize="@dimen/_14sdp"
-        android:textColor="@color/colorBlack"
-        app:layout_constraintBottom_toBottomOf="@+id/mrDocPics"
-        app:layout_constraintStart_toEndOf="@+id/mrDocPics"
-        app:layout_constraintTop_toTopOf="@+id/mrDocPics"
-        app:layout_constraintVertical_bias="0.294" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:padding="@dimen/_3sdp">
 
-    <TextView
-        android:id="@+id/docTypeTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/colorGrey"
-        android:layout_marginTop="8dp"
-        android:text="General Physician"
-        android:textSize="@dimen/_12sdp"
-        android:textColor="@color/colorwhiteGrey"
-        app:layout_constraintEnd_toEndOf="@+id/mrDoctorName"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/mrDoctorName"
-        app:layout_constraintTop_toBottomOf="@+id/mrDoctorName" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/mrDocPics"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_60sdp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:src="@mipmap/ic_launcher"
+            app:civ_border_width="1dp"
+            app:civ_border_color="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/docTypeTxt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.868"
-        app:layout_constraintStart_toEndOf="@+id/docTypeTxt"
-        app:layout_constraintTop_toTopOf="@+id/mrDoctorName"
-        app:layout_constraintVertical_bias="0.4"
-        app:srcCompat="@drawable/ic_forward" />
+        <TextView
+            android:id="@+id/mrDoctorName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Dr.Sellina"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/_15sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/mrDocPics"
+            app:layout_constraintStart_toEndOf="@+id/mrDocPics"
+            app:layout_constraintTop_toTopOf="@+id/mrDocPics"
+            app:layout_constraintVertical_bias="0.294" />
+
+        <TextView
+            android:id="@+id/docTypeTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_border_light_gray"
+            android:padding="@dimen/_2sdp"
+            android:paddingStart="@dimen/_5sdp"
+            android:paddingTop="@dimen/_2sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            android:text=""
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintEnd_toEndOf="@+id/mrDoctorName"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/mrDoctorName"
+            app:layout_constraintTop_toBottomOf="@+id/mrDoctorName" />
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginStart="96dp"
+            android:layout_marginEnd="8dp"
+            android:tint="@color/colorGrey"
+            app:layout_constraintBottom_toBottomOf="@+id/docTypeTxt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.868"
+            app:layout_constraintStart_toEndOf="@+id/docTypeTxt"
+            app:layout_constraintTop_toTopOf="@+id/mrDoctorName"
+            app:layout_constraintVertical_bias="0.4"
+            app:srcCompat="@drawable/ic_arrow_forword" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginStart="@dimen/_15sdp"
+        app:layout_constraintTop_toBottomOf="@+id/layout1"
+        tools:ignore="MissingConstraints"
+        android:background="@color/colorGrey"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

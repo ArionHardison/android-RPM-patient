@@ -6,24 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.midokter.app.R
-import kotlinx.android.synthetic.main.home_list_item.view.*
+import com.midokter.app.repositary.model.MedicalRecord
 import kotlinx.android.synthetic.main.online_appointments_list_item.view.*
+import java.lang.reflect.Array
 
 class OnlineAppointmentListAdapter(val items: ArrayList<String>, val context: Context) :
     RecyclerView.Adapter<OnlineAppointmentViewHolder>() {
 
     override fun onBindViewHolder(holder: OnlineAppointmentViewHolder, position: Int) {
-        holder?.tvDoctorName?.text = items.get(position)
+        //  holder?.tvDoctorName?.text = items.get(position).
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OnlineAppointmentViewHolder {
-        return OnlineAppointmentViewHolder(
-            LayoutInflater.from(context).inflate(
-                R.layout.online_appointments_list_item,
-                parent,
-                false
-            )
-        )
+        return OnlineAppointmentViewHolder(LayoutInflater.from(context).inflate(R.layout.online_appointments_list_item, parent, false))
     }
 
     // Gets the number of animals in the list
