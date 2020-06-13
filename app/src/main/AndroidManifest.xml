@@ -16,14 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:networkSecurityConfig="@xml/network_security_config"
-        tools:ignore="GoogleAppIndexingWarning"
-        tools:targetApi="n">
+        tools:ignore="ExtraText,GoogleAppIndexingWarning"
+        tools:targetApi="n"
+        android:usesCleartextTraffic="true">
         <activity android:name=".ui.activity.searchDoctor.SearchDoctorScheduleActivity"></activity>
-        android:usesCleartextTraffic="true"
-        tools:ignore="GoogleAppIndexingWarning"
-        tools:targetApi="n">
         <activity android:name=".ui.activity.medicalrecorddetails.MedicalRecordDetailsActivity"></activity>
-        <activity android:name=".ui.activity.searchDoctor.SearchDoctorScheduleActivity" />
         <activity android:name=".ui.activity.searchDoctor.SearchDoctorDetailActivity" />
         <activity android:name=".ui.activity.searchDoctor.SearchDoctorActivity" />
         <activity android:name=".ui.activity.chat.ChatSummaryActivity" />

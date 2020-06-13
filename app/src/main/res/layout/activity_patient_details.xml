@@ -27,6 +27,9 @@
                 android:background="?attr/colorPrimary"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme"
+                app:title=""
+                app:titleTextColor="@color/colorWhite"
+                app:navigationIcon="@drawable/ic_back"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -211,7 +214,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="8dp"
                 android:background="@color/colorButton"
                 android:text="Confirm"

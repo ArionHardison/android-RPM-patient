@@ -46,58 +46,14 @@
             android:id="@+id/topScroll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/toolbar2">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/_100sdp">
-
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/toolbar2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <androidx.appcompat.widget.Toolbar
-                        android:id="@+id/all_services_feed"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/colorPrimary"
-                        android:minHeight="?attr/actionBarSize"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/toolbar_back_img"
-                        android:layout_width="wrap_content"
-                        android:layout_height="?attr/actionBarSize"
-                        android:layout_gravity="center_vertical"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:drawableStart="@drawable/ic_arrow_back"
-                        android:gravity="center"
-                        android:text="@string/back"
-                        android:textSize="@dimen/_14sdp"
-                        android:textColor="@color/colorWhite"
-                        android:paddingStart="@dimen/_12sdp"
-                        android:paddingEnd="@dimen/_6sdp"
-                        app:layout_constraintBottom_toBottomOf="@+id/all_services_feed"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/all_services_feed"
-                        app:srcCompat="@drawable/ic_arrow_back" />
-
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/top_layer"
@@ -107,7 +63,7 @@
                     android:paddingBottom="@dimen/_20sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/toolbar2">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/imageView25"
@@ -138,7 +94,6 @@
                         android:background="@color/colorWhite"
                         android:paddingStart="@dimen/_3sdp"
                         android:paddingEnd="@dimen/_3sdp"
-                        tools:text="Allopath"
                         android:text="@{viewmodel.branch}"
                         app:layout_constraintBottom_toBottomOf="@+id/textView93"
                         app:layout_constraintStart_toEndOf="@+id/textView93"
@@ -161,13 +116,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        tools:text="Diabetologist"
                         android:text="@{viewmodel.specialities}"
                         android:textColor="@color/colorWhite"
                         app:layout_constraintBottom_toBottomOf="@+id/textView95"
                         app:layout_constraintStart_toEndOf="@+id/textView95"
                         app:layout_constraintTop_toTopOf="@+id/textView95"
-                        />
+                        tools:text="Diabetologist" />
 
                     <TextView
                         android:id="@+id/textView97"
@@ -344,18 +298,13 @@
                     android:id="@+id/rv_availability"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginTop="8dp"
                     android:adapter="@{availibilityAdapter}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintStart_toStartOf="@+id/textViewMon"
                     app:layout_constraintTop_toBottomOf="@+id/textViewMon"
                     tools:listitem="@layout/list_item_availibility" />
-                    android:layout_marginTop="16dp"
-                    android:text="@{viewmodel.mor_time}"
-                    app:layout_constraintStart_toStartOf="@+id/textView102"
-                    app:layout_constraintTop_toBottomOf="@+id/textView102"
-                    tools:text="11.00AM - 12.00PM" />
 
                 <TextView
                     android:id="@+id/textView110"
@@ -363,8 +312,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@{viewmodel.eve_time}"
-                    app:layout_constraintStart_toStartOf="@+id/textView109"
-                    app:layout_constraintTop_toBottomOf="@+id/textView109"
+                    app:layout_constraintStart_toStartOf="@+id/rv_availability"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_availability"
                     tools:text="01.00PM - 03.00PM" />
 
                 <View
@@ -411,9 +360,9 @@
                     android:onClick="@{()->viewmodel.ViewallClick()}"
                     android:text="View all"
                     android:textColor="@color/colorButton"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@+id/rv_services" />
 
                 <View
@@ -442,10 +391,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    tools:text="Diabetologist"
                     android:text="@{viewmodel.specialities}"
                     app:layout_constraintStart_toStartOf="@+id/textView115"
-                    app:layout_constraintTop_toBottomOf="@+id/textView115" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView115"
+                    tools:text="Diabetologist" />
 
                 <View
                     android:id="@+id/divider14"
@@ -493,10 +442,10 @@
                     android:id="@+id/imageView27"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_100sdp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:scaleType="fitXY"
-                    android:layout_marginStart="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/textView118"
                     app:layout_constraintTop_toBottomOf="@+id/textView118"

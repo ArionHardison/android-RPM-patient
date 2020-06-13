@@ -42,8 +42,8 @@ class PatientDetailsActivity : BaseActivity<ActivityPatientDetailsBinding>(),
 
         mDataBinding.textView63.text = preferenceHelper.getValue(PreferenceKey.VISIT_PURPOSE,"").toString()
         mDataBinding.textView65.text = preferenceHelper.getValue(PreferenceKey.SCHEDULED_DATE,"").toString()
-        mDataBinding.textView67.text = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_NAME,"").toString()
-        mDataBinding.textView68.text = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_ADDRESS,"").toString()
+        mDataBinding.textView67.text = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_NAME,"Dr.Alvin").toString()
+        mDataBinding.textView68.text = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_ADDRESS,"The Apollo,Manhattan").toString()
 
         if (preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_IMAGE,"").toString()!=""){
             ViewUtils.setImageViewGlide(this@PatientDetailsActivity,mDataBinding.imageView20,
@@ -70,6 +70,10 @@ class PatientDetailsActivity : BaseActivity<ActivityPatientDetailsBinding>(),
                 viewModel.BookDoctor(bookDoctor_Map)
 
             }
+        }
+
+        mDataBinding.toolbar6.setNavigationOnClickListener {
+            finish()
         }
 
         observeResponse()
