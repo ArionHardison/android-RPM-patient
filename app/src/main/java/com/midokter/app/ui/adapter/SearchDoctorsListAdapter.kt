@@ -7,25 +7,33 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.midokter.app.BuildConfig
 import com.midokter.app.R
 import com.midokter.app.databinding.SearchDoctorListItemBinding
 import com.midokter.app.databinding.VisitedDoctorsListItemBinding
+import com.midokter.app.repositary.WebApiConstants
+import com.midokter.app.repositary.model.Hospital
 import com.midokter.app.repositary.model.MainResponse
 import com.midokter.app.ui.activity.findDoctors.FindDoctorsListActivity
 import com.midokter.app.ui.activity.searchDoctor.SearchDoctorDetailActivity
+import com.midokter.app.utils.ViewUtils
 import kotlinx.android.synthetic.main.fav_doctor_list_item.view.*
 import kotlinx.android.synthetic.main.list_item_finddoctor_categories.view.*
+import java.io.Serializable
 
-class SearchDoctorsListAdapter(val items: MutableList<MainResponse.SearchDoctor>, val context: Context) :
+class SearchDoctorsListAdapter(val items: MutableList<Hospital>, val context: Context) :
     RecyclerView.Adapter<SearchDoctorsViewHolder>() {
 
     override fun onBindViewHolder(holder: SearchDoctorsViewHolder, position: Int) {
 
         val item=items!![position]
         holder.itemBinding.textView90?.text = item.first_name.plus(" ").plus(item.last_name)
-
+        holder.itemBinding.textView92?.text = item.doctor_profile?.speciality?.name
+        holder.itemBinding.textView91?.text = item.doctor_profile?.certification
+        ViewUtils.setImageViewGlide(context,  holder.itemBinding.imageView23, BuildConfig.BASE_IMAGE_URL.plus( item.doctor_profile?.profile_pic))
         holder.itemView.setOnClickListener {
             val intent = Intent(context, SearchDoctorDetailActivity::class.java)
+            intent.putExtra(WebApiConstants.IntentPass.SearchDoctorProfile,item as Serializable)
             context.startActivity(intent);
         }
     }

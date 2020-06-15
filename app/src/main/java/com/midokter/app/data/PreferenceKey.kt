@@ -43,6 +43,7 @@ object PreferenceKey {
     const val VISIT_PURPOSE = "visit_purpose"
     const val SELECTED_DOC_ID = "selected_doc_id"
     const val SELECTED_DOC_NAME = "selected_doc_name"
+    const val SELECTED_DOC_Special = "selected_doc_special"
     const val SELECTED_DOC_IMAGE = "selected_doc_image"
     const val SELECTED_DOC_ADDRESS = "selected_doc_address"
 }

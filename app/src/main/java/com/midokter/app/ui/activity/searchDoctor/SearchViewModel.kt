@@ -11,7 +11,7 @@ import com.midokter.app.repositary.model.Response
 
 class SearchViewModel : BaseViewModel<SearchNavigator>(){
     var mDoctorResponse = MutableLiveData<MainResponse>()
-    var mDoctorslist: MutableList<MainResponse.SearchDoctor>? = arrayListOf()
+    var mDoctorslist: MutableList<Hospital>? = arrayListOf()
 
     private val appRepository = AppRepository.instance()
     var mFavResponse = MutableLiveData<Response>()
@@ -27,18 +27,18 @@ class SearchViewModel : BaseViewModel<SearchNavigator>(){
 
 
     var mfavDoctorProfile = MutableLiveData<MainResponse.Doctor>()
-
+    var msearchDoctorProfile = MutableLiveData<Hospital>()
 
     var id: ObservableField<Int> = ObservableField()
     var name: ObservableField<String> = ObservableField("")
+    var profile_pic: ObservableField<String> = ObservableField("")
     var specialities: ObservableField<String> = ObservableField("")
     var degree: ObservableField<String> = ObservableField("")
     var branch: ObservableField<String> = ObservableField("")
     var percentage: ObservableField<String> = ObservableField("")
     var experience: ObservableField<String> = ObservableField("")
     var fee: ObservableField<Int> = ObservableField()
-    var mor_time: ObservableField<String> = ObservableField("")
-    var eve_time: ObservableField<String> = ObservableField("")
+
     var clinic: ObservableField<String> = ObservableField("")
     var clinic_address: ObservableField<String> = ObservableField("")
 

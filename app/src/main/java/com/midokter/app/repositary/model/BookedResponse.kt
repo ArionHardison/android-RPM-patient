@@ -4,30 +4,23 @@ import com.google.gson.annotations.Expose
 
 import com.google.gson.annotations.SerializedName
 
-class BookedResponse {
 
-    @SerializedName("status")
-    @Expose
-    private var status: Boolean? = null
-
-    @SerializedName("message")
-    @Expose
-    private var message: String? = null
-
-    fun getStatus(): Boolean? {
-        return status
-    }
-
-    fun setStatus(status: Boolean?) {
-        this.status = status
-    }
-
-    fun getMessage(): String? {
-        return message
-    }
-
-    fun setMessage(message: String?) {
-        this.message = message
-    }
-
+data class BookedResponse(
+    val appointment: Appointment,
+    val status: Boolean,
+    val message: String
+) {
+    data class Appointment(
+        val appointment_type: String,
+        val booking_for: String,
+        val consult_time: Int,
+        val created_at: String,
+        val description: Any,
+        val doctor_id: String,
+        val id: Int,
+        val patient_id: Int,
+        val scheduled_at: String,
+        val status: String,
+        val updated_at: String
+    )
 }

@@ -41,7 +41,7 @@ class PatientDetailsActivity : BaseActivity<ActivityPatientDetailsBinding>(),
         viewModel.navigator = this
 
         mDataBinding.textView63.text = preferenceHelper.getValue(PreferenceKey.VISIT_PURPOSE,"").toString()
-        mDataBinding.textView65.text = preferenceHelper.getValue(PreferenceKey.SCHEDULED_DATE,"").toString()
+        mDataBinding.textView65.text = ViewUtils.getDayAndTimeFormat(preferenceHelper.getValue(PreferenceKey.SCHEDULED_DATE,"").toString())
         mDataBinding.textView67.text = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_NAME,"Dr.Alvin").toString()
         mDataBinding.textView68.text = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_ADDRESS,"The Apollo,Manhattan").toString()
 
@@ -59,6 +59,7 @@ class PatientDetailsActivity : BaseActivity<ActivityPatientDetailsBinding>(),
             }else if (mDataBinding.phoneEt.text.toString().isNullOrBlank()){
                 Toast.makeText(applicationContext, "Invalid Phone number", Toast.LENGTH_LONG).show()
             }else{
+                loadingObservable.value = true
                 bookDoctor_Map["doctor_id"]= preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_ID,"").toString()
                 bookDoctor_Map["booking_for"]= preferenceHelper.getValue(PreferenceKey.VISIT_PURPOSE,"").toString()
                 bookDoctor_Map["scheduled_at"]= preferenceHelper.getValue(PreferenceKey.SCHEDULED_DATE,"").toString()
@@ -83,8 +84,13 @@ class PatientDetailsActivity : BaseActivity<ActivityPatientDetailsBinding>(),
     private fun observeResponse() {
         viewModel.mBookedResponse.observe(this@PatientDetailsActivity, Observer<BookedResponse> {
             loadingObservable.value = false
-            ViewUtils.showToast(this@PatientDetailsActivity, it.getMessage(), true)
-//            goToHome(it)
+            if (it.status) {
+
+                goToBooked()
+
+            }else
+                ViewUtils.showToast(this@PatientDetailsActivity, it.message, false)
+
 
         })
 
@@ -97,5 +103,6 @@ class PatientDetailsActivity : BaseActivity<ActivityPatientDetailsBinding>(),
     override fun goToBooked() {
         val intent = Intent(applicationContext, SuccessActivity::class.java)
         startActivity(intent);
+        finish()
     }
 }

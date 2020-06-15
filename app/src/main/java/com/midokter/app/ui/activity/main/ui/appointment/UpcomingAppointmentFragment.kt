@@ -110,7 +110,8 @@ class UpcomingAppointmentFragment : BaseFragment<FragmentUpcomingAppointmentBind
         viewModel.mCancelResponse.observe(this, Observer<Response> {
 
             hideLoading()
-            ViewUtils.showToast(activity!!, it.message, false)
+            if (it.status)
+            ViewUtils.showToast(activity!!, it.message, true)
             initApiCal()
 
 

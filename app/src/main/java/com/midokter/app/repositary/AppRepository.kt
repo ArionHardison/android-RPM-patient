@@ -159,16 +159,25 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun bookdoctor(viewModel: PatientDetailViewModel, params: HashMap<String, Any>): Disposable {
+    fun bookdoctor(viewModel: ViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .bookdoctor(params)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
-                viewModel.mBookedResponse.value = it
-                viewModel.goToBooked()
+                if (viewModel is PatientDetailViewModel) {
+                    viewModel.mBookedResponse.value = it
+                }
+                if (viewModel is FindDoctorsViewModel) {
+                    viewModel.mBookedResponse.value = it
+                }
             }, {
-                viewModel.getErrorObservable().value = getErrorMessage(it)
+                if (viewModel is PatientDetailViewModel) {
+                    viewModel.getErrorObservable().value = getErrorMessage(it)
+                }
+                if (viewModel is FindDoctorsViewModel) {
+                    viewModel.getErrorObservable().value = getErrorMessage(it)
+                }
             })
     }
 

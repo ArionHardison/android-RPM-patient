@@ -12,6 +12,7 @@ import com.midokter.app.R
 import com.midokter.app.base.BaseActivity
 import com.midokter.app.databinding.ActivitySearchDoctorBinding
 import com.midokter.app.repositary.WebApiConstants
+import com.midokter.app.repositary.model.Hospital
 import com.midokter.app.repositary.model.MainResponse
 import com.midokter.app.ui.adapter.SearchDoctorsListAdapter
 import com.midokter.app.utils.ViewUtils
@@ -70,7 +71,7 @@ class SearchDoctorActivity : BaseActivity<ActivitySearchDoctorBinding>(),SearchN
         viewModel.mDoctorResponse.observe(this, Observer<MainResponse> {
 
 
-            viewModel.mDoctorslist = it.search_doctors as MutableList<MainResponse.SearchDoctor>?
+            viewModel.mDoctorslist = it.search_doctors as MutableList<Hospital>?
             if (viewModel.mDoctorslist!!.size > 0) {
                 viewModel.listsize.set(it.search_doctors.size.toString())
                 mDataBinding.tvNotFound.visibility = View.GONE

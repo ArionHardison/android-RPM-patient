@@ -4,6 +4,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.midokter.app.base.BaseViewModel
 import com.midokter.app.repositary.AppRepository
+import com.midokter.app.repositary.model.BookedResponse
 import com.midokter.app.repositary.model.CategoryResponse
 import com.midokter.app.repositary.model.DoctorListResponse
 import java.text.SimpleDateFormat
@@ -19,7 +20,7 @@ class FindDoctorsViewModel : BaseViewModel<FindDoctorsNavigator>(){
     var mDoctorResponse = MutableLiveData<DoctorListResponse>()
     var mDoctorslist: MutableList<DoctorListResponse.specialities.DoctorProfile>? = arrayListOf()
     private val appRepository = AppRepository.instance()
-
+    var mBookedResponse = MutableLiveData<BookedResponse>()
     fun getCategorys() {
 
         getCompositeDisposable().add(appRepository.getCategorys(this))
@@ -27,5 +28,8 @@ class FindDoctorsViewModel : BaseViewModel<FindDoctorsNavigator>(){
     fun getDoctorByCategorys( id: Int) {
 
         getCompositeDisposable().add(appRepository.getDoctorByCategorys(this,id))
+    }
+    fun BookDoctor(hashMap: HashMap<String, Any>) {
+        getCompositeDisposable().add(appRepository.bookdoctor(this, hashMap))
     }
 }

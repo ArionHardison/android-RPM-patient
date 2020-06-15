@@ -22,7 +22,7 @@
                 android:background="?attr/colorPrimary"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme"
-                app:title=""
+                app:title="@string/booking"
                 app:titleTextColor="@color/colorWhite"
                 app:navigationIcon="@drawable/ic_back"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -49,9 +49,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:id="@+id/imageView19"
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/searchDocImg"
                         android:layout_width="@dimen/_50sdp"
                         android:layout_height="@dimen/_50sdp"
                         android:layout_marginStart="8dp"
@@ -61,7 +60,7 @@
                         app:srcCompat="@drawable/user_placeholder" />
 
                     <TextView
-                        android:id="@+id/textView55"
+                        android:id="@+id/searchDocName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -69,17 +68,29 @@
                         android:text="Dr.Alvin"
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/_16sdp"
-                        app:layout_constraintStart_toEndOf="@+id/imageView19"
-                        app:layout_constraintTop_toTopOf="@+id/imageView19" />
+                        app:layout_constraintStart_toEndOf="@+id/searchDocImg"
+                        app:layout_constraintTop_toTopOf="@+id/searchDocImg" />
 
                     <TextView
-                        android:id="@+id/textView56"
+                        android:id="@+id/searchDocSpec"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@color/colorLiteGrey"
+                        android:padding="@dimen/_3sdp"
+                        android:text="General Physician"
+                        app:layout_constraintStart_toStartOf="@+id/searchDocName"
+                        app:layout_constraintTop_toBottomOf="@+id/searchDocName" />
+
+                    <TextView
+                        android:id="@+id/searchDocHospName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
                         android:text="The Apollo clinic,Manhattan"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageView19"
-                        app:layout_constraintStart_toStartOf="@+id/textView55"
-                        app:layout_constraintTop_toBottomOf="@+id/textView55" />
+                        app:layout_constraintBottom_toBottomOf="@+id/searchDocImg"
+                        app:layout_constraintStart_toStartOf="@+id/searchDocSpec"
+                        app:layout_constraintTop_toBottomOf="@+id/searchDocSpec" />
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

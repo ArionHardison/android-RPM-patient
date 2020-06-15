@@ -118,18 +118,18 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(),ProfileNavigator 
             viewModel.emgcontact.set(it.patient.profile.emergency_contact as String?)
             viewModel.location.set(it.patient.profile.address as String?)
 
-            viewModel.allergies.set(it.patient.profile.allergies as String?)
-            viewModel.current_medications.set(it.patient.profile.current_medications as String?)
-            viewModel.past_medications.set(it.patient.profile.past_medications as String?)
-            viewModel.chronic_diseases.set(it.patient.profile.chronic_diseases as String?)
-            viewModel.injuries.set(it.patient.profile.injuries as String?)
-            viewModel.surgeries.set(it.patient.profile.surgeries as String?)
+            viewModel.allergies.set(it.patient.profile?.allergies as String?)
+            viewModel.current_medications.set(it.patient.profile?.current_medications as String?)
+            viewModel.past_medications.set(it.patient.profile?.past_medications as String?)
+            viewModel.chronic_diseases.set(it.patient.profile?.chronic_diseases as String?)
+            viewModel.injuries.set(it.patient.profile?.injuries as String?)
+            viewModel.surgeries.set(it.patient.profile?.surgeries as String?)
 
-            viewModel.smoking.set(it.patient.profile.smoking as String?)
-            viewModel.alcohol.set(it.patient.profile.alcohol as String?)
-            viewModel.activity.set(it.patient.profile.activity as String?)
-            viewModel.food.set(it.patient.profile.food as String?)
-            viewModel.occupation.set(it.patient.profile.occupation as String?)
+            viewModel.smoking.set(it.patient.profile?.smoking as String?)
+            viewModel.alcohol.set(it.patient.profile?.alcohol as String?)
+            viewModel.activity.set(it.patient.profile?.activity as String?)
+            viewModel.food.set(it.patient.profile?.food as String?)
+            viewModel.occupation.set(it.patient.profile?.occupation as String?)
 
 
 

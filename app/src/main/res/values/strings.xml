@@ -65,7 +65,8 @@
 
     <!--doctor booking-->
     <string name="_consultation_fee">Consultation fee: %d</string>
-
+    <string name="booking">Booking</string>
+    <string name="enter_patient_details">Enter patient detail</string>
    <!-- filter-->
     <string name="filter">Filter</string>
     <string name="avaliablity">Availablity</string>

@@ -108,17 +108,17 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),F
         val radiogroup_consultion = view.findViewById<RadioGroup>(R.id.radiogroup_consultion)
         radiogroup_avaliablity.setOnCheckedChangeListener(
             RadioGroup.OnCheckedChangeListener { group, checkedId ->
-                val radio: RadioButton = findViewById(checkedId)
+               // val radio: RadioButton = findViewById(checkedId)
 
             })
         radiogroup_gender.setOnCheckedChangeListener(
             RadioGroup.OnCheckedChangeListener { group, checkedId ->
-                val radio: RadioButton = findViewById(checkedId)
+                //val radio: RadioButton = findViewById(checkedId)
 
             })
         radiogroup_consultion.setOnCheckedChangeListener(
             RadioGroup.OnCheckedChangeListener { group, checkedId ->
-                val radio: RadioButton = findViewById(checkedId)
+               // val radio: RadioButton = findViewById(checkedId)
 
             })
         val ad: android.app.AlertDialog = builder.create()
@@ -170,9 +170,10 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),F
 
     override fun onbookclick(selectedItem: DoctorListResponse.specialities.DoctorProfile) {
         preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_ID, selectedItem.doctor_id.toString())
-        preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_NAME, selectedItem.medical_assoc_name)
+        preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_NAME, selectedItem.hospital[0].first_name.plus(" ").plus(selectedItem.hospital[0].last_name))
+        preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_Special, selectedItem.speciality.name)
         preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_IMAGE, selectedItem.profile_pic)
-        preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_ADDRESS, selectedItem.address)
+        preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_ADDRESS, selectedItem.hospital[0].clinic.name.plus(" , ").plus(selectedItem.hospital[0].clinic.address))
          val intent = Intent(this@FindDoctorsListActivity, FindDoctorBookingActivity::class.java)
     startActivity(intent);
 }

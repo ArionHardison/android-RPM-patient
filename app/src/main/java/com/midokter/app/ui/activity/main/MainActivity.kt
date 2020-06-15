@@ -125,7 +125,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
 
             viewModel.name.set(it.patient.first_name.plus(" ").plus(it.patient.last_name))
             viewModel.profilepercentage.set(it.profile_complete)
-            viewModel.imageurl.set(it.patient.profile!!.profile_pic as String?)
+            if (it.patient.profile?.profile_pic !=null)
+            viewModel.imageurl.set(it.patient.profile?.profile_pic as String?)
 
           /*  viewModel.imageurl.set(BuildConfig.BASE_IMAGE_URL+it.doctor.doctor_profile.profile_pic)
             if ( it.doctor.doctor_profile.profile_pic!=null) {
@@ -141,7 +142,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
             preferenceHelper.setValue(PreferenceKey.PROFILE_PER, it.profile_complete)
             preferenceHelper.setValue(PreferenceKey.PHONE, it.patient.phone)
             preferenceHelper.setValue(PreferenceKey.EMAIL, it.patient.email)
-            preferenceHelper.setValue(PreferenceKey.PROFILE_IMAGE, it.patient.profile!!.profile_pic)
+            preferenceHelper.setValue(PreferenceKey.PROFILE_IMAGE, it.patient.profile?.profile_pic)
             preferenceHelper.setValue(PreferenceKey.WALLET_BALANCE, it.patient.wallet_balance)
 
             name.setText(preferenceHelper.getValue(PreferenceKey.FIRST_NAME,"Test").toString().plus(" ").plus(preferenceHelper.getValue(PreferenceKey.LAST_NAME,"Test").toString()))

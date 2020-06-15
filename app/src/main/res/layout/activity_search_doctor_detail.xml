@@ -306,15 +306,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textViewMon"
                     tools:listitem="@layout/list_item_availibility" />
 
-                <TextView
-                    android:id="@+id/textView110"
-                    android:layout_width="125dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@{viewmodel.eve_time}"
-                    app:layout_constraintStart_toStartOf="@+id/rv_availability"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_availability"
-                    tools:text="01.00PM - 03.00PM" />
+
 
                 <View
                     android:id="@+id/divider12"
