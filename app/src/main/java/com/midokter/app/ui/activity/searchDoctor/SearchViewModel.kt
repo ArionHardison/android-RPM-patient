@@ -38,10 +38,9 @@ class SearchViewModel : BaseViewModel<SearchNavigator>(){
     var percentage: ObservableField<String> = ObservableField("")
     var experience: ObservableField<String> = ObservableField("")
     var fee: ObservableField<Int> = ObservableField()
-
     var clinic: ObservableField<String> = ObservableField("")
     var clinic_address: ObservableField<String> = ObservableField("")
-
+    var favourite: ObservableField<Boolean> = ObservableField(false)
     fun FavClick() {
         navigator.onfavclick()
     }

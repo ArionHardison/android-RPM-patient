@@ -40,6 +40,25 @@ class FindDoctorListAdapter(val items:  MutableList<DoctorListResponse.specialit
       //  holder.itemBinding.textView50?.text = String.format(context.getString(R.string.years_of_exp),item.experience)
             holder.itemBinding.textView54?.text = preferenceHelper.getValue(PreferenceKey.CURRENCY,"$").toString().plus(item.fees)
 
+        when (item.hospital[0]?.availability){
+
+            "today" -> {
+                holder.itemBinding.textView51?.visibility = View.VISIBLE
+                holder.itemBinding.textView51?.text = context.getString(R.string.avaliable_today)
+            }
+            "tomorrow" -> {
+                holder.itemBinding.textView51?.visibility = View.VISIBLE
+                holder.itemBinding.textView51?.text = context.getString(R.string.avaliable_tomorrow)
+
+            }
+            else  ->{
+                holder.itemBinding.textView51?.visibility = View.GONE;
+            }
+
+
+        }
+
+
         holder.itemBinding.button15.setOnClickListener(View.OnClickListener {
             listener.oncallclick(item.hospital[0].mobile)
         })

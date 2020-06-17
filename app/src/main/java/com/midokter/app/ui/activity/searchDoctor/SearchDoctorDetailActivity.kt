@@ -72,6 +72,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
                 BuildConfig.BASE_IMAGE_URL.plus(viewModel.mDoctorProfile.value!!.profile_pic)
             )
             viewModel.profile_pic.set(viewModel.mDoctorProfile.value!!.profile_pic)
+            viewModel.favourite.set(viewModel.mDoctorProfile.value!!.hospital[0]?.is_favourite)
             viewModel.name.set(
                 viewModel.mDoctorProfile.value!!.hospital[0]?.first_name.plus(" ").plus(
                     viewModel.mDoctorProfile.value!!.hospital[0]?.last_name
@@ -107,7 +108,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
         } else if (favDoctor != null) {
             viewModel.mfavDoctorProfile.value = favDoctor
             viewModel.id.set(viewModel.mfavDoctorProfile.value!!.id)
-            mDataBinding.imageView26.setImageResource(R.drawable.ic_favourite)
+
              ViewUtils.setImageViewGlide(this@SearchDoctorDetailActivity,  mDataBinding.imageView25, BuildConfig.BASE_IMAGE_URL.plus(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.profile_pic))
             viewModel.profile_pic.set(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.profile_pic)
             viewModel.name.set(
@@ -115,6 +116,8 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
                     viewModel.mfavDoctorProfile.value!!.hospital?.last_name
                 )
             )
+
+            viewModel.favourite.set(viewModel.mfavDoctorProfile.value!!.hospital?.is_favourite)
             viewModel.specialities.set(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.speciality?.name)
             viewModel.degree.set(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.certification)
             viewModel.branch.set(viewModel.mfavDoctorProfile.value!!.hospital?.specialities_name)
@@ -154,6 +157,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
                     viewModel.msearchDoctorProfile.value!!.last_name
                 )
             )
+            viewModel.favourite.set(viewModel.msearchDoctorProfile.value!!.is_favourite)
             viewModel.specialities.set(viewModel.msearchDoctorProfile.value!!.doctor_profile?.speciality?.name)
             viewModel.degree.set(viewModel.msearchDoctorProfile.value!!.doctor_profile?.certification)
             viewModel.branch.set(viewModel.msearchDoctorProfile.value!!.specialities_name)
@@ -208,6 +212,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
     }
 
     private fun initAdapter() {
+        isfavourite(viewModel.favourite.get())
         if (viewModel.mfeedbacklist != null) {
             mAdapterFeedback =
                 Doctor_feedbackAdapter(viewModel.mfeedbacklist!!, this@SearchDoctorDetailActivity)
@@ -272,17 +277,36 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
         }
 
     }
+fun isfavourite(data :Boolean?){
+    viewModel.favourite.set(data)
+    when (data){
 
+        true -> {
+            mDataBinding.imageView26.setImageResource(R.drawable.ic_favourite)
+        }
+        false -> {
+            mDataBinding.imageView26.setImageResource(R.drawable.ic_favout_solid)
+
+        }
+        else  ->{
+            mDataBinding.imageView26.setImageResource(R.drawable.ic_favout_solid)
+        }
+
+
+    }
+
+}
     private fun observeResponse() {
         viewModel.getErrorObservable().observe(this, Observer<String> { message ->
             hideLoading()
             ViewUtils.showToast(this@SearchDoctorDetailActivity, message, false)
+
         })
         viewModel.mFavResponse.observe(this, Observer<Response> {
 
             hideLoading()
             ViewUtils.showToast(this@SearchDoctorDetailActivity, it.message, true)
-
+            isfavourite(it.is_favourite)
 
         })
 

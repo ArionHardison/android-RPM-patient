@@ -3,6 +3,7 @@ package com.midokter.app.repositary.model
 import java.io.Serializable
 
 data class Hospital(
+    val availability: String,
     val added_by: Any,
     val clinic: Clinic,
     val clinic_id: Int,
@@ -23,6 +24,7 @@ data class Hospital(
     val is_doctor: Int,
     val is_receptionist: Int,
     val is_staff: Int,
+    val is_favourite: Boolean,
     val last_name: String,
     val medical_id: String,
     val mobile: String,

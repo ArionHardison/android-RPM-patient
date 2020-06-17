@@ -67,6 +67,9 @@
     <string name="_consultation_fee">Consultation fee: %d</string>
     <string name="booking">Booking</string>
     <string name="enter_patient_details">Enter patient detail</string>
+    <string name="avaliable_today">Available Today</string>
+    <string name="avaliable_tomorrow">Available Tomorrow</string>
+
    <!-- filter-->
     <string name="filter">Filter</string>
     <string name="avaliablity">Availablity</string>
