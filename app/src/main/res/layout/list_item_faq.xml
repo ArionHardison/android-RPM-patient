@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+
+    >
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/_5sdp"
+    android:paddingStart="@dimen/_5sdp"
+    android:paddingEnd="@dimen/_5sdp"
+    >
+
+    <TextView
+        android:id="@+id/child_text"
+        android:layout_width="wrap_content"
+        android:paddingBottom="@dimen/_12sdp"
+        android:paddingStart="@dimen/_12sdp"
+        android:paddingEnd="@dimen/_12sdp"
+        android:text="@string/lorem_ipsum"
+        android:layout_height="wrap_content"
+        />
+
+
+</LinearLayout>
+
+<View
+android:id="@+id/divider"
+android:layout_width="match_parent"
+android:layout_height="2dp"
+android:layout_marginStart="@dimen/_12sdp"
+android:background="@color/colorGrey" />
+</LinearLayout>
