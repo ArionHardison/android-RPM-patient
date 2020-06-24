@@ -3,6 +3,7 @@ package com.midokter.app.ui.activity.searchGlobal
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -14,6 +15,7 @@ import com.midokter.app.databinding.ActivityGlobalSearchBinding
 import com.midokter.app.repositary.WebApiConstants
 import com.midokter.app.repositary.model.Hospital
 import com.midokter.app.repositary.model.SearchResponse
+import com.midokter.app.ui.adapter.SearchClinicListAdapter
 import com.midokter.app.ui.adapter.SearchDoctorsListAdapter
 import com.midokter.app.ui.adapter.SearchcatagoryListAdapter
 import com.midokter.app.utils.ViewUtils
@@ -27,6 +29,8 @@ class SearchGlobalActivity : BaseActivity<ActivityGlobalSearchBinding>(),SearchG
     private lateinit var mDataBinding: ActivityGlobalSearchBinding
     private var mAdapter: SearchDoctorsListAdapter? = null
     private var mcatagoryAdapter: SearchcatagoryListAdapter? = null
+    private var mclinicAdapter: SearchClinicListAdapter? = null
+    private lateinit var decorator: DividerItemDecoration
 
     override fun getLayoutId(): Int = R.layout.activity_global_search
 
@@ -67,13 +71,19 @@ class SearchGlobalActivity : BaseActivity<ActivityGlobalSearchBinding>(),SearchG
             mAdapter = SearchDoctorsListAdapter(viewModel.mDoctorslist!!,this@SearchGlobalActivity)
             mDataBinding.doctoradapter = mAdapter
             mAdapter!!.notifyDataSetChanged()
-//catagory
+            //catagory
             viewModel.mCatagorylist = it.specialities as MutableList<SearchResponse.Specialities>?
             mDataBinding.iscatagory = viewModel.mCatagorylist!!.size > 0
-
             mcatagoryAdapter = SearchcatagoryListAdapter(viewModel.mCatagorylist!!,this@SearchGlobalActivity)
             mDataBinding.specialitiesadapter = mcatagoryAdapter
             mcatagoryAdapter!!.notifyDataSetChanged()
+
+            //clinic
+            viewModel.mCliniclist = it.clinic as MutableList<SearchResponse.Clinic>?
+            mDataBinding.isclinic = viewModel.mCliniclist!!.size > 0
+            mclinicAdapter = SearchClinicListAdapter( viewModel.mCliniclist!!,this@SearchGlobalActivity)
+            mDataBinding.clinicadapter = mclinicAdapter
+            mclinicAdapter!!.notifyDataSetChanged()
 
 
             loadingObservable.value = false
@@ -89,27 +99,31 @@ class SearchGlobalActivity : BaseActivity<ActivityGlobalSearchBinding>(),SearchG
     }
 
     private fun initAdapter() {
+
+         decorator = DividerItemDecoration(applicationContext, LinearLayoutManager.VERTICAL)
+        decorator.setDrawable(ContextCompat.getDrawable(applicationContext, R.drawable.divider)!!)
+
         mAdapter = SearchDoctorsListAdapter( viewModel.mDoctorslist!!,this@SearchGlobalActivity)
         mDataBinding.doctoradapter = mAdapter
-        mDataBinding.rvDoctorsList.addItemDecoration(
-            DividerItemDecoration(
-                applicationContext,
-                DividerItemDecoration.HORIZONTAL
-            )
-        )
+
+        mDataBinding.rvDoctorsList.addItemDecoration(decorator)
+
         mDataBinding.rvDoctorsList.layoutManager =LinearLayoutManager(applicationContext)
         mAdapter!!.notifyDataSetChanged()
 //catagory
         mcatagoryAdapter = SearchcatagoryListAdapter( viewModel.mCatagorylist!!,this@SearchGlobalActivity)
         mDataBinding.specialitiesadapter = mcatagoryAdapter
-        mDataBinding.rvSpecialities.addItemDecoration(
-            DividerItemDecoration(
-                applicationContext,
-                DividerItemDecoration.HORIZONTAL
-            )
-        )
+
+        mDataBinding.rvSpecialities.addItemDecoration(decorator)
         mDataBinding.rvSpecialities.layoutManager =LinearLayoutManager(applicationContext)
         mcatagoryAdapter!!.notifyDataSetChanged()
+
+        //clinic
+        mclinicAdapter = SearchClinicListAdapter( viewModel.mCliniclist!!,this@SearchGlobalActivity)
+        mDataBinding.clinicadapter = mclinicAdapter
+        mDataBinding.rvClinic.addItemDecoration(decorator)
+        mDataBinding.rvClinic.layoutManager =LinearLayoutManager(applicationContext)
+        mclinicAdapter!!.notifyDataSetChanged()
 
         mDataBinding.editText9.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {

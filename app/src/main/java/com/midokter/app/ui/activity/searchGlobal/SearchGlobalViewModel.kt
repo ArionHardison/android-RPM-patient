@@ -10,6 +10,7 @@ class SearchGlobalViewModel : BaseViewModel<SearchGlobalNavigator>(){
     var mResponse = MutableLiveData<SearchResponse>()
     var mDoctorslist: MutableList<Hospital>? = arrayListOf()
     var mCatagorylist: MutableList<SearchResponse.Specialities>? = arrayListOf()
+    var mCliniclist: MutableList<SearchResponse.Clinic>? = arrayListOf()
     private val appRepository = AppRepository.instance()
 
 

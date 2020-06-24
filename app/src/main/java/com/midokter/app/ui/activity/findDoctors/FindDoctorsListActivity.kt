@@ -139,7 +139,7 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),F
         mDataBinding.adapter = mAdapter
          mDataBinding.rvFinddoctorsList.addItemDecoration(
              DividerItemDecoration(
-                 applicationContext,
+                 this,
                  DividerItemDecoration.VERTICAL
              )
          )

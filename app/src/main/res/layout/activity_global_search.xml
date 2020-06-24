@@ -14,7 +14,7 @@
             type="com.midokter.app.ui.adapter.SearchDoctorsListAdapter" />
         <variable
             name="clinicadapter"
-            type="com.midokter.app.ui.adapter.SearchDoctorsListAdapter" />
+            type="com.midokter.app.ui.adapter.SearchClinicListAdapter" />
         <variable
             name="Specialitiesadapter"
             type="com.midokter.app.ui.adapter.SearchcatagoryListAdapter" />
@@ -48,7 +48,7 @@
 
             <EditText
                 android:id="@+id/editText9"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/_220sdp"
                 android:layout_height="42dp"
                 app:layout_constraintHorizontal_weight="1"
                 android:layout_margin="@dimen/_8sdp"
@@ -65,8 +65,9 @@
 
             <TextView
                 android:id="@+id/txtcancel"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/_70sdp"
                 android:layout_height="42dp"
+                app:layout_constraintHorizontal_weight="0.3"
                 android:textColor="@color/colorWhite"
                 android:text="@string/cancel"
                 android:gravity="center"
@@ -80,6 +81,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/search_layout"
+            android:layout_marginBottom="@dimen/_20sdp"
             app:layout_constraintEnd_toEndOf="@+id/search_layout"
             app:layout_constraintStart_toStartOf="@+id/search_layout"
             app:layout_constraintTop_toBottomOf="@+id/search_layout">
@@ -87,8 +89,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorWhite"
-            android:orientation="vertical"
-           >
+            android:orientation="vertical">
         <LinearLayout
             android:id="@+id/Specialities_layout"
             android:layout_width="match_parent"
@@ -160,6 +161,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:scrollbars="vertical"
+                    android:layout_marginBottom="@dimen/_50sdp"
                     tools:listitem="@layout/search_doctor_list_item"
                     android:adapter="@{doctoradapter}"
                     />

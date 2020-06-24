@@ -3,6 +3,7 @@ package com.midokter.app.ui.activity.searchDoctor
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -94,14 +95,13 @@ class SearchDoctorActivity : BaseActivity<ActivitySearchDoctorBinding>(),SearchN
     }
 
     private fun initAdapter() {
+
+        val  decorator = DividerItemDecoration(applicationContext, LinearLayoutManager.VERTICAL)
+        decorator.setDrawable(ContextCompat.getDrawable(applicationContext, R.drawable.divider)!!)
         mAdapter = SearchDoctorsListAdapter( viewModel.mDoctorslist!!,this@SearchDoctorActivity)
         mDataBinding.adapter = mAdapter
-        mDataBinding.rvSerachDoctors.addItemDecoration(
-            DividerItemDecoration(
-                applicationContext,
-                DividerItemDecoration.VERTICAL
-            )
-        )
+        mDataBinding.rvSerachDoctors.addItemDecoration(decorator)
+
         mDataBinding.rvSerachDoctors.layoutManager =LinearLayoutManager(applicationContext)
         mAdapter!!.notifyDataSetChanged()
 

@@ -30,7 +30,7 @@
 
             <EditText
                 android:id="@+id/editText9"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/_220sdp"
                 android:layout_height="42dp"
                 app:layout_constraintHorizontal_weight="1"
                 android:layout_margin="@dimen/_8sdp"
