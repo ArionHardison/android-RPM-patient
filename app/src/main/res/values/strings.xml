@@ -199,4 +199,7 @@
     <string name="added_to_you_wallet">%s Successfully added to your wallet</string>
     <string name="all_services">All Services</string>
     <string name="back">Back</string>
+    <string name="show_reminder_notification">Show reminder notification</string>
+    <string name="about_mi_dokter">About Mi Dokter</string>
+    <string name="rate_us_on_play_store">Rate us on Play Store</string>
 </resources>
