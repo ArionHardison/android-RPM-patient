@@ -39,7 +39,7 @@ class FindDoctorListAdapter(val items:  MutableList<DoctorListResponse.specialit
         holder.itemBinding.textView48?.text =  item.speciality?.name
       //  holder.itemBinding.textView50?.text = String.format(context.getString(R.string.years_of_exp),item.experience)
             holder.itemBinding.textView54?.text = preferenceHelper.getValue(PreferenceKey.CURRENCY,"$").toString().plus(item.fees)
-
+if(item.hospital[0]?.availability!=null)
         when (item.hospital[0]?.availability){
 
             "today" -> {

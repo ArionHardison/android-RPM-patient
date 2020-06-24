@@ -90,4 +90,7 @@ interface ApiInterface {
     @POST("api/patient/add_wallet")
     fun addMoneyToWallet(@FieldMap hashMap: HashMap<String, Any>): Observable<WalletResponse>
 
+   /* search*/
+   @GET("api/patient/home_search")
+   fun getglobalsearch(@QueryMap hashMap: HashMap<String, Any>): Observable<SearchResponse>
 }

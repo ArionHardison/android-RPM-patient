@@ -21,7 +21,7 @@
     <string name="menu_online_consultation">Online Consultations</string>
     <string name="menu_fav_doctor">Favourite Doctor</string>
     <string name="menu_medical_records">Medical Records</string>
-    <string name="menu_remainder">Remainder</string>
+    <string name="menu_remainder">Reminder</string>
     <string name="menu_wallet">Wallet</string>
     <string name="menu_articles">Articles</string>
     <string name="menu_relative_mgmt">Relatives Management</string>
@@ -86,6 +86,11 @@
     <string name="_30to"> 30 above</string>
     <string name="cancel">Cancel</string>
     <string name="apply">Apply</string>
+
+    <string name="doctor">Doctor</string>
+    <string name="Specialities">Specialities</string>
+    <string name="clinic">Clinic</string>
+
 
     <!--Error alerts-->
     <string name="error_invalid_name">Please enter Name </string>

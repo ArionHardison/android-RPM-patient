@@ -114,6 +114,7 @@
             android:paddingStart="@dimen/_3sdp"
             android:paddingEnd="@dimen/_3sdp"
             android:text="Available Today"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="@+id/textView49"
             app:layout_constraintTop_toBottomOf="@+id/textView50" />
 

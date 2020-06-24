@@ -3,6 +3,7 @@ package com.midokter.app.repositary
 
 import androidx.lifecycle.ViewModel
 import com.midokter.app.BuildConfig
+import com.midokter.app.ui.activity.searchGlobal.SearchGlobalViewModel
 import com.midokter.app.ui.activity.findDoctors.FindDoctorsViewModel
 import com.midokter.app.ui.activity.login.LoginViewModel
 import com.midokter.app.ui.activity.main.MainViewModel
@@ -22,10 +23,6 @@ import com.midokter.app.ui.activity.main.ui.wallet.WalletViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import retrofit2.http.Part
-import retrofit2.http.PartMap
 
 class AppRepository : BaseRepository() {
 
@@ -357,54 +354,23 @@ class AppRepository : BaseRepository() {
             })
     }
 
-/*
-    fun getPatients(
-        viewModel: ViewModel
-    ): Disposable {
+    /*search*/
+    fun getgloblsearch(viewModel: ViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
-            .getPatients()
+            .getglobalsearch(params)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
-                if (viewModel is PatientsViewModel) {
-                    viewModel.mPatientsResponse.value = it
+                if (viewModel is SearchGlobalViewModel) {
+                    viewModel.mResponse.value = it
                 }
+
             }, {
-                if (viewModel is PatientsViewModel) {
+                if (viewModel is SearchGlobalViewModel) {
                     viewModel.getErrorObservable().value = getErrorMessage(it)
                 }
+
             })
     }
-
-    fun getAppointments(
-        viewModel: ViewModel
-    ): Disposable {
-        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
-            .getAppointments("2020-05-16")
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe({
-                if (viewModel is AppointmentViewModel) {
-                    viewModel.mAppointmentsResponse.value = it
-                }
-            }, {
-                if (viewModel is AppointmentViewModel) {
-                    viewModel.getErrorObservable().value = getErrorMessage(it)
-                }
-            })
-    }
-
-    fun addAppointmentApi(addAppointmentViewModel: AddAppointmentViewModel, hashMap: HashMap<String, Any>): Disposable {
-        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
-            .addAppointment(hashMap)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe({
-                addAppointmentViewModel.mAddAppointmentResponse.value = it
-            }, {
-                addAppointmentViewModel.loadingProgress.value=false
-                addAppointmentViewModel.getErrorObservable().value = getErrorMessage(it)
-            })
-    }*/
 
 }

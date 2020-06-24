@@ -35,7 +35,7 @@
             android:drawableTop="@drawable/ic_add"
             android:drawablePadding="@dimen/_3sdp"
             android:drawableTint="@color/colorButton"
-            android:text="New Remainder"
+            android:text="New Reminder"
             android:textSize="@dimen/_18sdp"
             android:textColor="@color/colorButton"
             app:layout_constraintBottom_toBottomOf="parent"

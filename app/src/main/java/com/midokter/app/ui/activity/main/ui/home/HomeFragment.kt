@@ -7,6 +7,7 @@ import com.midokter.app.R
 import com.midokter.app.base.BaseFragment
 import com.midokter.app.databinding.FragmentHomeBinding
 import com.midokter.app.repositary.model.HomeResponse
+import com.midokter.app.ui.activity.searchGlobal.SearchGlobalActivity
 import com.midokter.app.ui.adapter.MenuAdapter
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -22,6 +23,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         menus.clear()
         addMenus()
         recyclerView.adapter = context?.let { MenuAdapter(menus, it) }
+
+        editText5.setOnClickListener {
+            openNewActivity(activity,SearchGlobalActivity::class.java,false)
+        }
     }
 
     private fun addMenus() {
