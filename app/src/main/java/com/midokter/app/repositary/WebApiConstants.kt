@@ -28,6 +28,14 @@ object WebApiConstants {
         const val AMOUNT = "amount"
     }
 
+    object AddRemainder {
+        const val NAME = "name"
+        const val DATE = "date"
+        const val TIME = "time"
+        const val ALARM = "alarm"
+        const val NOTIFY_ME = "notify_me"
+    }
+
 
     object IntentPass {
         const val Appointment = "Appointment"

@@ -93,4 +93,11 @@ interface ApiInterface {
    /* search*/
    @GET("api/patient/home_search")
    fun getglobalsearch(@QueryMap hashMap: HashMap<String, Any>): Observable<SearchResponse>
+
+
+
+    @FormUrlEncoded
+    @POST("api/patient/reminder")
+    fun addRemainder(@FieldMap hashMap: HashMap<String, Any>): Observable<AddRemainderResponse>
+
 }

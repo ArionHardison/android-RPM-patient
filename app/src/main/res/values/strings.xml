@@ -202,4 +202,15 @@
     <string name="show_reminder_notification">Show reminder notification</string>
     <string name="about_mi_dokter">About Mi Dokter</string>
     <string name="rate_us_on_play_store">Rate us on Play Store</string>
+    <string name="reminder_added_successfully">Reminder added successfully</string>
+    <string name="reminder_name">Reminder name</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="alarm">Alarm</string>
+    <string name="notify_me">Notify me</string>
+
+    <string name="past_time_error">You cannot select past time</string>
+    <string name="submit">Submit</string>
+    <string name="please_enter_reminder_name">Please enter Reminder name</string>
+    <string name="add_reminder">Add Remider</string>
 </resources>

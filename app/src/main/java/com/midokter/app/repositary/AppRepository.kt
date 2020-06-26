@@ -3,6 +3,7 @@ package com.midokter.app.repositary
 
 import androidx.lifecycle.ViewModel
 import com.midokter.app.BuildConfig
+import com.midokter.app.ui.activity.addreminder.AddReminderViewModel
 import com.midokter.app.ui.activity.searchGlobal.SearchGlobalViewModel
 import com.midokter.app.ui.activity.findDoctors.FindDoctorsViewModel
 import com.midokter.app.ui.activity.login.LoginViewModel
@@ -370,6 +371,18 @@ class AppRepository : BaseRepository() {
                     viewModel.getErrorObservable().value = getErrorMessage(it)
                 }
 
+            })
+    }
+
+    fun addRemainder(addRemainderViewModel: AddReminderViewModel, params: HashMap<String, Any>): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .addRemainder(params)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                addRemainderViewModel.mAddRemainderResponse.value = it
+            }, {
+                addRemainderViewModel.getErrorObservable().value = getErrorMessage(it)
             })
     }
 

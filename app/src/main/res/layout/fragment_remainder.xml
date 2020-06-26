@@ -14,7 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorwhiteGrey">
+        android:background="@color/colorWhite">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_remainder"
@@ -37,6 +37,7 @@
             android:drawableTint="@color/colorButton"
             android:text="New Reminder"
             android:textSize="@dimen/_18sdp"
+            android:onClick="@{()->viewmodel.onNewRemainderClicked()}"
             android:textColor="@color/colorButton"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
