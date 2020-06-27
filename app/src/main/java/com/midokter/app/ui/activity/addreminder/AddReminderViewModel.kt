@@ -12,6 +12,8 @@ import com.midokter.app.repositary.model.AddRemainderResponse
 class AddReminderViewModel : BaseViewModel<AddReminderNavigator>(){
     private val appRepository = AppRepository.instance()
     var name : ObservableField<String> = ObservableField("")
+    var id : ObservableField<Int> = ObservableField(0)
+    var patientId : ObservableField<Int> = ObservableField(0)
     var fromDate = MutableLiveData<String>().default("")
     var displayFromDate: ObservableField<String> = ObservableField("")
     var fromTime = MutableLiveData<String>().default("")

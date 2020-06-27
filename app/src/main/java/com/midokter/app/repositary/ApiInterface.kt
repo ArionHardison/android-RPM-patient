@@ -100,4 +100,9 @@ interface ApiInterface {
     @POST("api/patient/reminder")
     fun addRemainder(@FieldMap hashMap: HashMap<String, Any>): Observable<AddRemainderResponse>
 
+
+    @GET("api/patient/reminder_list")
+    fun getReminders(): Observable<ReminderResponse>
+
+
 }

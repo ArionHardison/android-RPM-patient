@@ -55,6 +55,7 @@
                 app:srcCompat="@drawable/ic_arrow_back" />
 
             <TextView
+                android:id="@+id/tvReminderTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/add_reminder"

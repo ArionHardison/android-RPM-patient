@@ -5,9 +5,13 @@ import android.app.TimePickerDialog
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.bumptech.glide.Glide
+import com.midokter.app.BuildConfig
 import com.midokter.app.R
 import com.midokter.app.base.BaseActivity
 import com.midokter.app.databinding.ActivityAddReminderBinding
+import com.midokter.app.repositary.model.ArticleResponse
+import com.midokter.app.repositary.model.ReminderResponse
 import com.midokter.app.utils.ViewUtils
 import java.text.Format
 import java.text.ParseException
@@ -20,7 +24,7 @@ class AddReminderActivity : BaseActivity<ActivityAddReminderBinding>(), AddRemin
     lateinit var mViewDataBinding: ActivityAddReminderBinding
     lateinit var mViewModel : AddReminderViewModel
     override fun getLayoutId(): Int = R.layout.activity_add_reminder
-
+    var isEdit: Boolean= false
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         this.mViewDataBinding = mViewDataBinding as ActivityAddReminderBinding
@@ -32,6 +36,31 @@ class AddReminderActivity : BaseActivity<ActivityAddReminderBinding>(), AddRemin
         observeSuccessResponse()
         observeErrorResponse()
         observeShowLoading()
+        initIntentData()
+    }
+
+    private fun initIntentData() {
+        val reminder =
+            intent.getSerializableExtra("reminder") as ReminderResponse.Reminder?
+        if(reminder!=null) {
+            isEdit=true
+            mViewModel.name.set(reminder.name)
+            mViewModel.patientId.set(reminder.patientId)
+            val notify = if (reminder.notifyMe == 0) false else true
+            mViewModel.notifyme.set(notify)
+            mViewModel.notifymeValue.set(reminder.notifyMe)
+            val alarm = if (reminder.alarm == 0) false else true
+            mViewModel.alarm.set(alarm)
+            mViewModel.alarmValue.set(reminder.alarm)
+            mViewModel.id.set(reminder.id)
+
+            mViewModel.displayFromDate.set(ViewUtils.getDisplayDayFormat(reminder.date))
+            mViewModel.displayfromTime.set(ViewUtils.getDisplayTimeFormat(reminder.time))
+            mViewModel.fromDate.value = reminder.date
+            mViewModel.fromTime.value = reminder.time
+            mViewDataBinding.btnSubmit.text=getString(R.string.save_changes)
+            mViewDataBinding.tvReminderTitle.text=getString(R.string.edit_reminder)
+        }
     }
 
     private fun observeErrorResponse() {
@@ -151,22 +180,21 @@ class AddReminderActivity : BaseActivity<ActivityAddReminderBinding>(), AddRemin
     }
 
     override fun validateAddRemainder() {
+        if (!isEdit) {
+            val currentTimeTwoHours = Calendar.getInstance()
 
-        val currentTimeTwoHours = Calendar.getInstance()
+            currentTimeTwoHours.add(Calendar.MINUTE, -5)
 
-        currentTimeTwoHours.add(Calendar.MINUTE, -5)
-
-        if(mViewModel.name.get()!!.equals("")){
-            ViewUtils.showToast(this, getString(R.string.please_enter_reminder_name), false)
-        }
-        else if (fromCalendar.getTimeInMillis() < currentTimeTwoHours.timeInMillis) {
-            ViewUtils.showToast(
-                this@AddReminderActivity,
-                getString(R.string.past_time_error), false
-            )
-        }
-        else{
-            mViewModel.addReminderAPI()
+            if (mViewModel.name.get()!!.equals("")) {
+                ViewUtils.showToast(this, getString(R.string.please_enter_reminder_name), false)
+            } else if (fromCalendar.getTimeInMillis() < currentTimeTwoHours.timeInMillis) {
+                ViewUtils.showToast(
+                    this@AddReminderActivity,
+                    getString(R.string.past_time_error), false
+                )
+            } else {
+                mViewModel.addReminderAPI()
+            }
         }
     }
 }

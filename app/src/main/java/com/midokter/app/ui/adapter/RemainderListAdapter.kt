@@ -2,37 +2,49 @@ package com.midokter.app.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.midokter.app.R
-import kotlinx.android.synthetic.main.fav_doctor_list_item.view.*
-import kotlinx.android.synthetic.main.remainder_list_item.view.*
+import com.midokter.app.databinding.RemainderListItemBinding
+import com.midokter.app.repositary.model.AddRemainderResponse
+import com.midokter.app.repositary.model.ReminderResponse
+import com.midokter.app.utils.CustomClickListener
+import com.midokter.app.utils.ViewUtils
 
-class RemainderListAdapter(val items: ArrayList<String>, val context: Context) :
+class RemainderListAdapter(val mContext : Context, val list: MutableList<ReminderResponse.Reminder>, val listener: OnReminderClickListener) :
     RecyclerView.Adapter<RemainderViewHolder>() {
 
     override fun onBindViewHolder(holder: RemainderViewHolder, position: Int) {
-        holder?.remainderName?.text = items.get(position)
+        val item = list.get(position)
+        holder.mReminderBinding.itemClickListener = object : CustomClickListener {
+            override fun onItemClickListener() {
+                listener.onReminderClicked(item)
+            }
+        }
+
+        holder.mReminderBinding.remainderName.text=item.name
+        holder.mReminderBinding.dateTxt.text= ViewUtils.getDayAndTimeFormat(String.format("%s %s",item.date,item.time))
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RemainderViewHolder {
-        return RemainderViewHolder(
-            LayoutInflater.from(context).inflate(
-                R.layout.remainder_list_item,
-                parent,
-                false
-            )
-        )
+        val inflate = DataBindingUtil.inflate<RemainderListItemBinding>(
+            LayoutInflater.from(parent.context),
+            R.layout.remainder_list_item, parent, false)
+        return RemainderViewHolder(inflate)
     }
 
     // Gets the number of animals in the list
     override fun getItemCount(): Int {
-        return items.size
+        return list.size
     }
 }
 
-class RemainderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    // Holds the TextView that will add each animal to
-    val remainderName = view.remainderName
+interface OnReminderClickListener{
+    fun onReminderClicked(item:ReminderResponse.Reminder)
+}
+
+
+class RemainderViewHolder(view : RemainderListItemBinding) : RecyclerView.ViewHolder(view.root) {
+    val mReminderBinding = view
 }

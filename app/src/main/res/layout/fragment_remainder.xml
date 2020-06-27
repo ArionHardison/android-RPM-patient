@@ -7,6 +7,9 @@
     <data>
 
         <variable
+            name="reminderAdapter"
+            type="com.midokter.app.ui.adapter.RemainderListAdapter" />
+        <variable
             name="viewmodel"
             type="com.midokter.app.ui.activity.main.ui.remainder.RemainderViewModel" />
     </data>
@@ -22,30 +25,40 @@
             android:layout_height="wrap_content"
             android:background="@color/colorWhite"
             android:paddingTop="@dimen/_8sdp"
+            android:adapter="@{reminderAdapter}"
+            tools:listitem="@layout/remainder_list_item"
             android:paddingBottom="@dimen/_8sdp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/textView19"
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            style="@style/Widget.MaterialComponents.FloatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:drawableTop="@drawable/ic_add"
-            android:drawablePadding="@dimen/_3sdp"
-            android:drawableTint="@color/colorButton"
-            android:text="New Reminder"
-            android:textSize="@dimen/_18sdp"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="14dp"
             android:onClick="@{()->viewmodel.onNewRemainderClicked()}"
-            android:textColor="@color/colorButton"
+            app:backgroundTint="@color/colorButton"
+            app:elevation="@dimen/_3sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rv_remainder"
-            app:layout_constraintVertical_bias="0.944" />
+            app:maxImageSize="42dp"
+            app:srcCompat="@drawable/ic_add_white" />
 
-
+        <TextView
+            android:id="@+id/tvNotFound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_reminder_found"
+            android:textSize="@dimen/_12sdp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

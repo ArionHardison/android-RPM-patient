@@ -213,4 +213,7 @@
     <string name="submit">Submit</string>
     <string name="please_enter_reminder_name">Please enter Reminder name</string>
     <string name="add_reminder">Add Remider</string>
+    <string name="no_reminder_found">No reminder found</string>
+    <string name="save_changes">Save changes</string>
+    <string name="edit_reminder">Edit Reminder</string>
 </resources>

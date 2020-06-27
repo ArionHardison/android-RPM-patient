@@ -190,6 +190,34 @@ object ViewUtils {
         return  format.format(date)
     }
 
+    fun getDisplayDayFormat(str: String) : String {
+        val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        var dateObj: Date? = null
+        try {
+            dateObj = formatter.parse(str)
+            val fmtOutFull =
+                SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault())
+            return String.format("%s", fmtOutFull.format(dateObj!!.time))
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return ""
+    }
+
+    fun getDisplayTimeFormat(str: String) : String {
+        val formatter = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+        var dateObj: Date? = null
+        try {
+            dateObj = formatter.parse(str)
+            val fmtOutFull =
+                SimpleDateFormat("h:mm a", Locale.getDefault())
+            return String.format("%s", fmtOutFull.format(dateObj!!.time))
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return ""
+    }
+
 
     fun getDayAndTimeFormat(str: String) : String {
         val sdf =

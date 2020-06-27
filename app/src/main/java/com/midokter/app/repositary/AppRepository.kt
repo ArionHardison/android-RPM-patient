@@ -18,6 +18,7 @@ import com.midokter.app.ui.activity.register.RegisterViewModel
 import com.midokter.app.ui.activity.searchDoctor.SearchViewModel
 import com.midokter.app.ui.activity.visitedDoctor.VisitedDoctorsViewModel
 import com.midokter.app.ui.activity.main.ui.articles.ArticleViewModel
+import com.midokter.app.ui.activity.main.ui.remainder.RemainderViewModel
 import com.midokter.app.ui.activity.main.ui.wallet.WalletViewModel
 
 
@@ -385,5 +386,23 @@ class AppRepository : BaseRepository() {
                 addRemainderViewModel.getErrorObservable().value = getErrorMessage(it)
             })
     }
+
+
+    fun getReminders(viewModel: RemainderViewModel): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .getReminders()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                if (viewModel is RemainderViewModel) {
+                    viewModel.mReminderResponse.value = it
+                }
+            }, {
+                if (viewModel is RemainderViewModel) {
+                    viewModel.getErrorObservable().value = getErrorMessage(it)
+                }
+            })
+    }
+
 
 }
