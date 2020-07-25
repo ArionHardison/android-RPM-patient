@@ -9,6 +9,14 @@
         <variable
             name="viewmodel"
             type="com.midokter.app.ui.activity.chat.ChatViewModel" />
+
+        <variable
+            name="viewmodelSummary"
+            type="com.midokter.app.ui.activity.chat.ChatSummaryViewModel" />
+
+        <variable
+            name="viewModelFindDoctor"
+            type="com.midokter.app.ui.activity.findDoctors.FindDoctorsViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -43,7 +51,20 @@
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <include layout="@layout/content_chat_summary" />
-
+        <include android:id="@+id/content_chat_summary" layout="@layout/content_chat_summary" />
+        <Button
+            android:id="@+id/buttonToProceed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/colorButton"
+            android:text="Proceed to pay"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_14sdp"
+            android:layout_gravity="bottom"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

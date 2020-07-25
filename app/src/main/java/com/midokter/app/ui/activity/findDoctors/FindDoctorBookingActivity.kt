@@ -181,7 +181,9 @@ mDataBinding.searchDocName.text = preferenceHelper.getValue(PreferenceKey.SELECT
         bookDoctor_Map["description"]= ""
 
 //                loadingObservable.value = true
-        viewModel.BookDoctor(bookDoctor_Map)
+       // viewModel.BookDoctor(bookDoctor_Map)
+        val intent = Intent(this@FindDoctorBookingActivity, PatientDetailsActivity::class.java)
+        startActivity(intent);
     }
 
 }

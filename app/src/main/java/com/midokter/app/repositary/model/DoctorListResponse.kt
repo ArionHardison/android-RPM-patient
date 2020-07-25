@@ -10,6 +10,9 @@ data class DoctorListResponse(
         val id: Int,
         val image: Any,
         val name: String,
+        val discount: Double,
+        val fees: Double,
+        val offer_fees: Double,
         val status: Int
     ): Serializable {
         data class DoctorProfile(

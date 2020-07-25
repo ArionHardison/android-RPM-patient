@@ -5,75 +5,136 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/layout_circle_corner"
+    android:paddingBottom="@dimen/_45sdp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ui.activity.chat.ChatSummaryActivity"
     tools:showIn="@layout/activity_chat_summary">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
         android:background="@color/colorWhite"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView82"
+            android:id="@+id/textViewVerifiedText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Verified Orthopedics Specialists online now"
+            android:drawableStart="@drawable/ic_check_black_18dp"
+            android:drawablePadding="@dimen/_6sdp"
+            android:text="@string/verified_specialists_online_now"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView5"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/llDoctorView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textView82"
-            app:layout_constraintTop_toBottomOf="@+id/textView82" />
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewVerifiedText">
 
-        <TextView
-            android:id="@+id/textView83"
-            android:layout_width="wrap_content"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvSpecialist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                android:scrollbars="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:itemCount="5"
+                tools:listitem="@layout/list_item_doctor_image" />
+            <TextView
+                android:id="@+id/tvDoctorCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:visibility="gone"
+                android:padding="@dimen/_4sdp"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llSpecialistFoundOrNot"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="One of them will chat to you shortly"
-            app:layout_constraintStart_toStartOf="@+id/recyclerView5"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerView5" />
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="@+id/llDoctorView"
+            app:layout_constraintTop_toBottomOf="@+id/llDoctorView">
+
+            <TextView
+                android:id="@+id/tvSpecialistNotFound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No specialist found"
+                android:textSize="@dimen/_12sdp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/textViewOneOfThem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="One of them will chat to you shortly"
+                android:visibility="gone" />
+        </LinearLayout>
 
         <View
             android:id="@+id/divider8"
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="6dp"
             android:layout_marginTop="8dp"
             android:background="?android:attr/listDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView83" />
+            app:layout_constraintTop_toBottomOf="@+id/llSpecialistFoundOrNot" />
 
         <TextView
             android:id="@+id/textView84"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="Fee"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/divider8"
             app:layout_constraintTop_toBottomOf="@+id/divider8" />
 
-        <TextView
-            android:id="@+id/textView85"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/llFees"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="$10"
+            android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="@+id/textView84"
-            app:layout_constraintTop_toBottomOf="@+id/textView84" />
+            app:layout_constraintTop_toBottomOf="@+id/textView84">
+
+            <TextView
+                android:id="@+id/tvSummaryStrikePrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/_1sdp"
+                android:paddingEnd="@dimen/_6sdp"
+                android:paddingBottom="@dimen/_6sdp"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_13sdp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tvSummaryPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/_6sdp"
+                android:paddingTop="@dimen/_1sdp"
+                android:paddingEnd="@dimen/_6sdp"
+                android:paddingBottom="@dimen/_6sdp"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_13sdp" />
+        </LinearLayout>
 
         <View
             android:id="@+id/divider9"
@@ -83,13 +144,12 @@
             android:background="?android:attr/listDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView85" />
+            app:layout_constraintTop_toBottomOf="@+id/llFees" />
 
         <EditText
-            android:id="@+id/editText11"
+            android:id="@+id/editTextPromoValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:ems="10"
             android:hint="Have a promo code?"
@@ -98,46 +158,26 @@
             app:layout_constraintTop_toBottomOf="@+id/divider9" />
 
         <TextView
-            android:id="@+id/textView86"
+            android:id="@+id/textViewApplyPromo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="115dp"
+            android:padding="@dimen/_8sdp"
             android:text="Apply"
-            app:layout_constraintBottom_toBottomOf="@+id/editText11"
+            android:textColor="@color/colorButton"
+            app:layout_constraintBottom_toBottomOf="@+id/editTextPromoValue"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/editText11"
-            app:layout_constraintTop_toTopOf="@+id/editText11" />
+            app:layout_constraintTop_toTopOf="@+id/editTextPromoValue" />
 
         <TextView
             android:id="@+id/textView87"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="224dp"
-            android:layout_marginEnd="8dp"
-            android:text="100% Money back if no response.Not for emergency use"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:text="100% Money back if no response. Not for emergency use"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText11" />
-
-        <Button
-            android:id="@+id/button26"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@color/colorButton"
-            android:text="Proceed to pay"
-            android:textAllCaps="false"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/_14sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView87" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextPromoValue" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.core.widget.NestedScrollView>

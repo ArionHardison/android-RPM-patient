@@ -18,6 +18,7 @@ object Constant {
     const val COUNTRYCODE_PICKER_REQUEST_CODE = 111
     const val PAYMENT_TYPE_REQUEST_CODE = 201
     const val CHANGE_ADDRESS_TYPE_REQUEST_CODE = 202
+    const val CATEGORY_REQUEST_CODE = 210
     const val ADDCARD = 125
     const val CUSTOM_PREFERENCE: String = "BaseConfigSetting"
     const val storetype = "Restaurant"

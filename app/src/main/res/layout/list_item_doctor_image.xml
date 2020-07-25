@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_4sdp"
+    android:orientation="horizontal">
+<de.hdodenhof.circleimageview.CircleImageView
+    android:id="@+id/imgItem"
+    android:layout_width="@dimen/_40sdp"
+    android:layout_height="@dimen/_40sdp"/>
+</LinearLayout>
+</layout>

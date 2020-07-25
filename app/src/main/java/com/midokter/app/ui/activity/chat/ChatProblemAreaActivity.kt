@@ -1,48 +1,91 @@
 package com.midokter.app.ui.activity.chat
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
+import android.app.Activity
+import android.content.Intent
+import android.view.View
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.midokter.app.R
 import com.midokter.app.base.BaseActivity
 import com.midokter.app.databinding.ActivityChatProblemAreaBinding
+import com.midokter.app.repositary.model.CategoryResponse
+import com.midokter.app.ui.activity.findDoctors.FindDoctorsViewModel
 import com.midokter.app.ui.adapter.ChatProblemAreasListAdapter
-import kotlinx.android.synthetic.main.activity_chat_problem_area.*
+import com.midokter.app.ui.adapter.IChatProblemAreaListener
+import com.midokter.app.utils.ViewUtils
+import java.io.Serializable
 
-class ChatProblemAreaActivity : BaseActivity<ActivityChatProblemAreaBinding>() {
-
-    val problemAreas: ArrayList<String> = ArrayList()
-
-
+class ChatProblemAreaActivity : BaseActivity<ActivityChatProblemAreaBinding>(), ChatNavigator,
+    IChatProblemAreaListener {
     override fun getLayoutId(): Int = R.layout.activity_chat_problem_area
+    private lateinit var viewModel: ChatViewModel
+    private lateinit var viewModelFindDoctor: FindDoctorsViewModel
+    private lateinit var mDataBinding: ActivityChatProblemAreaBinding
+    private var mCategoriesAdapter: ChatProblemAreasListAdapter? = null
+
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
-        addProblemAreas()
-        // Creates a vertical Layout Manager
-        rv_chat_problem.layoutManager = GridLayoutManager(applicationContext,2)
+        mDataBinding = mViewDataBinding as ActivityChatProblemAreaBinding
+        viewModel = ViewModelProviders.of(this).get(ChatViewModel::class.java)
+        mDataBinding.viewmodel = viewModel
+        viewModelFindDoctor = ViewModelProviders.of(this).get(FindDoctorsViewModel::class.java)
+        mDataBinding.viewModelDoctor = viewModelFindDoctor
+        viewModel.navigator = this
 
-        // You can use GridLayoutManager if you want multiple columns. Enter the number of columns as a parameter.
-//        rv_animal_list.layoutManager = GridLayoutManager(this, 2)
+        initApiCal()
+        initAdapter()
+        observeResponse()
 
-        // Access the RecyclerView Adapter and load the data into it
-        rv_chat_problem.adapter = applicationContext?.let { ChatProblemAreasListAdapter(problemAreas, it) }
+        mDataBinding.textViewBack.setOnClickListener {
+            finish()
+        }
     }
 
-    private fun addProblemAreas() {
-        problemAreas.add("General Physician")
-        problemAreas.add("Gynaecology")
-        problemAreas.add("Dermatology")
-        problemAreas.add("Eye & Vision")
-        problemAreas.add("Sexology")
-        problemAreas.add("Psychiatry")
-        problemAreas.add("Diet & Nutrition")
-        problemAreas.add("Stomuch & Digestion")
-        problemAreas.add("Breathing & Chest")
-        problemAreas.add("Cancer")
-        problemAreas.add("Kidney & Urine")
-        problemAreas.add("Orthopedic")
-        problemAreas.add("Diabetes")
+    override fun onChatProblemAreaClicked(category: CategoryResponse.Category) {
+        val intent = Intent()
+        intent.putExtra("selectedCategory", category as Serializable)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
+    }
+
+    private fun initApiCal() {
+        loadingObservable.value = true
+        viewModelFindDoctor.getCategorys()
+
+    }
+
+    private fun observeResponse() {
+
+        viewModelFindDoctor.mCategoryResponse.observe(this, Observer<CategoryResponse> {
+
+            viewModelFindDoctor.mCategoryslist =
+                it.category as MutableList<CategoryResponse.Category>?
+            if (viewModelFindDoctor.mCategoryslist!!.size > 0) {
+                mDataBinding.tvNotFound.visibility = View.GONE
+            } else {
+                mDataBinding.tvNotFound.visibility = View.VISIBLE
+            }
+            mCategoriesAdapter =
+                ChatProblemAreasListAdapter(viewModelFindDoctor.mCategoryslist!!, this,this)
+            mDataBinding.rvCategories.adapter = mCategoriesAdapter
+            mDataBinding.rvCategories.layoutManager = GridLayoutManager(applicationContext, 2)
+            mCategoriesAdapter!!.notifyDataSetChanged()
+            loadingObservable.value = false
+
+
+        })
+        viewModelFindDoctor.getErrorObservable().observe(this, Observer<String> { message ->
+            loadingObservable.value = false
+            ViewUtils.showToast(this@ChatProblemAreaActivity, message, false)
+        })
+    }
+
+    private fun initAdapter() {
+        mCategoriesAdapter = ChatProblemAreasListAdapter(viewModelFindDoctor.mCategoryslist!!, this,this)
+        mDataBinding.rvCategories.adapter = mCategoriesAdapter
+        mDataBinding.rvCategories.layoutManager = GridLayoutManager(applicationContext, 2)
+        mCategoriesAdapter!!.notifyDataSetChanged()
     }
 }

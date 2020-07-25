@@ -196,6 +196,9 @@
     <string name="no_article_found">No article found</string>
     <string name="articles">Article</string>
     <string name="please_enter_amount">Please enter amount</string>
+    <string name="please_choose_speciality">Please choose speciality</string>
+    <string name="please_enter_promo_code">Please enter promo code</string>
+    <string name="please_enter_symptoms_health_problem">Please enter symptoms or health problem</string>
     <string name="added_to_you_wallet">%s Successfully added to your wallet</string>
     <string name="all_services">All Services</string>
     <string name="back">Back</string>
@@ -216,4 +219,7 @@
     <string name="no_reminder_found">No reminder found</string>
     <string name="save_changes">Save changes</string>
     <string name="edit_reminder">Edit Reminder</string>
+    <string name="see_all_specialities"><![CDATA[See all specialities >]]></string>
+    <string name="invalid_promo_code">Invalid promo code</string>
+    <string name="verified_specialists_online_now">Verified %1$s Specialists online now</string>
 </resources>

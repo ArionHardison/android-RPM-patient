@@ -1,9 +1,14 @@
 package com.midokter.app.repositary
 
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
+import com.midokter.app.BaseApplication
 import com.midokter.app.BuildConfig
+import com.midokter.app.R
 import com.midokter.app.ui.activity.addreminder.AddReminderViewModel
+import com.midokter.app.ui.activity.chat.ChatSummaryViewModel
+import com.midokter.app.ui.activity.chat.ChatViewModel
 import com.midokter.app.ui.activity.searchGlobal.SearchGlobalViewModel
 import com.midokter.app.ui.activity.findDoctors.FindDoctorsViewModel
 import com.midokter.app.ui.activity.login.LoginViewModel
@@ -403,6 +408,20 @@ class AppRepository : BaseRepository() {
                 }
             })
     }
+
+    fun addChatPromoCode(chatViewModel: ChatSummaryViewModel, hashMap: java.util.HashMap<String, Any>): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .addChatPromoCode(hashMap)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                chatViewModel.mChatPromoResponse.value = it
+            }, {
+                chatViewModel.getErrorObservable().value = BaseApplication.baseApplication.getString(R.string.invalid_promo_code)
+            })
+    }
+
+
 
 
 }

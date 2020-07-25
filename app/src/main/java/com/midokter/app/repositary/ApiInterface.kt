@@ -104,5 +104,9 @@ interface ApiInterface {
     @GET("api/patient/reminder_list")
     fun getReminders(): Observable<ReminderResponse>
 
+    @FormUrlEncoded
+    @POST("api/patient/chat/promocode")
+    fun addChatPromoCode(@FieldMap hashMap: HashMap<String, Any>): Observable<ChatPromoResponse>
+
 
 }

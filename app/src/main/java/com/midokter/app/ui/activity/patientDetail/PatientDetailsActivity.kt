@@ -64,6 +64,7 @@ class PatientDetailsActivity : BaseActivity<ActivityPatientDetailsBinding>(),
                 bookDoctor_Map["booking_for"]= preferenceHelper.getValue(PreferenceKey.VISIT_PURPOSE,"").toString()
                 bookDoctor_Map["scheduled_at"]= preferenceHelper.getValue(PreferenceKey.SCHEDULED_DATE,"").toString()
                 bookDoctor_Map["consult_time"]= "15"
+                bookDoctor_Map["service_id"]= "2"
                 bookDoctor_Map["appointment_type"]= "OFFLINE"
                 bookDoctor_Map["description"]= ""
 
