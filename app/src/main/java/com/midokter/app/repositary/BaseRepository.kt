@@ -73,7 +73,7 @@ open class BaseRepository {
     private fun getErrorMessage(responseBody: ResponseBody): String? {
         return try {
             val jsonObject = JSONObject(responseBody.string())
-            jsonObject.getString("message")
+            jsonObject.getString("error")
         } catch (e: Exception) {
             e.message
         }
