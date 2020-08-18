@@ -31,11 +31,13 @@ class RegisterNameActivity : BaseActivity<ActivityRegisterNameBinding>() {
 
         mDataBinding.next.setOnClickListener {
 
-            if (mViewDataBinding.name.text.toString().isNullOrBlank()) {
-                ViewUtils.showToast(this@RegisterNameActivity, R.string.error_invalid_name, false)
+            if (mViewDataBinding.firstName.text.toString().isNullOrBlank()) {
+                ViewUtils.showToast(this@RegisterNameActivity, R.string.error_invalid_first_name, false)
+            }else if (mViewDataBinding.lastName.text.toString().isNullOrBlank()) {
+                ViewUtils.showToast(this@RegisterNameActivity, R.string.error_invalid__last_name, false)
             } else {
-
-                preferenceHelper.setValue(PreferenceKey.FIRST_NAME, mDataBinding.name.text.toString())
+                preferenceHelper.setValue(PreferenceKey.FIRST_NAME, mDataBinding.firstName.text.toString())
+                preferenceHelper.setValue(PreferenceKey.FIRST_NAME, mDataBinding.lastName.text.toString())
                 val intent = Intent(applicationContext,RegisterEmailActivity::class.java)
                 startActivity(intent);
 

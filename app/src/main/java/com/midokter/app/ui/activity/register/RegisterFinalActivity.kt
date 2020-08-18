@@ -103,7 +103,7 @@ class RegisterFinalActivity : BaseActivity<ActivityRegisterFinalBinding>(),Regis
             Register_Map[WebApiConstants.SignUp.GENDER]= preferenceHelper.getValue(PreferenceKey.GENDER,"MALE")!!
             Register_Map[WebApiConstants.SignUp.DOB]= mdobDate!!
             Register_Map[WebApiConstants.SignUp.FIRST_NAME]= preferenceHelper.getValue(PreferenceKey.FIRST_NAME,"demo")!!
-            Register_Map[WebApiConstants.SignUp.LAST_NAME]="."
+            Register_Map[WebApiConstants.SignUp.LAST_NAME]=preferenceHelper.getValue(PreferenceKey.LAST_NAME,"demo")!!
             Register_Map[WebApiConstants.SignUp.GRANDTYPE]= "password"
             Register_Map[WebApiConstants.SignUp.DEVICE_TOKEN] = BaseApplication.getCustomPreference!!.getString(PreferenceKey.DEVICE_TOKEN, "111") as String
             Register_Map[WebApiConstants.SignUp.DEVICE_ID] = BaseApplication.getCustomPreference!!.getString(PreferenceKey.DEVICE_ID, "111") as String

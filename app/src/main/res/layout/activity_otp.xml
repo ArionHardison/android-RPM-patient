@@ -108,7 +108,7 @@ tools:text="1234"
                     app:mask=""
                     app:numDigits="4"
                     app:digitTextColor="@color/colorBlack"
-                    app:digitTextSize="15sp"
+                    app:digitTextSize="10dp"
                     app:pinInputType="number" />
 
             </LinearLayout>

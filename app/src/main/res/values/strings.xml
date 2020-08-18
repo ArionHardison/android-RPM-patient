@@ -94,6 +94,8 @@
 
     <!--Error alerts-->
     <string name="error_invalid_name">Please enter Name </string>
+    <string name="error_invalid_first_name">Please enter first Name </string>
+    <string name="error_invalid__last_name">Please enter last Name </string>
     <string name="error_invalid_email_address">Please enter valid email address</string>
     <string name="error_invalid_password">Please enter valid password</string>
     <string name="error_invalid_mobile">Please enter Mobile Number</string>
