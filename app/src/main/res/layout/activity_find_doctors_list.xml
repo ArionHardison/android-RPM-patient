@@ -62,6 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_46sdp"
             tools:listitem="@layout/find_doctor_list_item"
             android:adapter="@{adapter}"
             app:layout_constraintEnd_toEndOf="@+id/search_layout"

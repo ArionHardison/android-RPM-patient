@@ -11,36 +11,77 @@
             type="com.midokter.app.ui.activity.findDoctors.FindDoctorsViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar7"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_back"
+            app:title="@string/booking"
+            app:titleTextColor="@color/colorWhite" />
+
+        <LinearLayout
+            android:id="@+id/llDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar7"
+            android:background="@color/colorWhite"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvYearMonth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
-                android:minHeight="?attr/actionBarSize"
-                android:theme="?attr/actionBarTheme"
-                app:title="@string/booking"
-                app:titleTextColor="@color/colorWhite"
-                app:navigationIcon="@drawable/ic_back"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="@={viewmodel.mYearMonth}"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_13sdp"
+                android:textStyle="bold" />
+
+            <devs.mulham.horizontalcalendar.HorizontalCalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                app:selectedDateBackground="@color/colorButton"
+                app:selectorColor="@color/colorWhite"
+                app:sizeBottomText="@dimen/_9sdp"
+                app:sizeMiddleText="@dimen/_12sdp"
+                app:sizeTopText="@dimen/_9sdp"
+                app:textColorNormal="@color/colorBlack"
+                app:textColorSelected="@color/colorBlack" />
+
+            <View
+                android:id="@+id/divider5"
+                android:layout_width="409dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="21dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintStart_toStartOf="@+id/radiogroup"
+                app:layout_constraintTop_toBottomOf="@+id/radiogroup" />
+        </LinearLayout>
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar7">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/llDate">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <LinearLayout
                     android:id="@+id/constraintLayout2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -49,50 +90,59 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
+
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/searchDocImg"
                         android:layout_width="@dimen/_50sdp"
                         android:layout_height="@dimen/_50sdp"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_gravity="center_vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/user_placeholder" />
 
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:orientation="vertical">
                     <TextView
                         android:id="@+id/searchDocName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
+                        android:padding="@dimen/_4sdp"
                         android:text="Dr.Alvin"
                         android:textColor="@color/colorBlack"
-                        android:textSize="@dimen/_16sdp"
+                        android:textSize="@dimen/_14sdp"
                         app:layout_constraintStart_toEndOf="@+id/searchDocImg"
-                        app:layout_constraintTop_toTopOf="@+id/searchDocImg" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/searchDocSpec"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@color/colorLiteGrey"
-                        android:padding="@dimen/_3sdp"
+                        android:padding="@dimen/_4sdp"
                         android:text="General Physician"
-                        app:layout_constraintStart_toStartOf="@+id/searchDocName"
+                        android:textSize="@dimen/_12sdp"
+                        app:layout_constraintStart_toEndOf="@+id/searchDocImg"
                         app:layout_constraintTop_toBottomOf="@+id/searchDocName" />
 
                     <TextView
                         android:id="@+id/searchDocHospName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:text="The Apollo clinic,Manhattan"
-                        app:layout_constraintBottom_toBottomOf="@+id/searchDocImg"
-                        app:layout_constraintStart_toStartOf="@+id/searchDocSpec"
+                        android:padding="@dimen/_4sdp"
+                        android:text="The Apollo clinic,Manhattan sdgfsdf sdf sdfsdfsfsdfs df sdfssdfsdfsdfsdfsdfsdfs f sdfsdf a asdas asdasdasda"
+                        android:textSize="@dimen/_12sdp"
+                        app:layout_constraintStart_toEndOf="@+id/searchDocImg"
                         app:layout_constraintTop_toBottomOf="@+id/searchDocSpec" />
 
+                    </LinearLayout>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout3"
@@ -111,9 +161,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="4dp"
+                        android:textSize="@dimen/_12sdp"
                         android:text="Purpose of visit"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -147,109 +196,32 @@
 
                     </RadioGroup>
 
-                    <TextView
-                        android:id="@+id/textView58"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="16dp"
-                        android:text="Day Slot"
-                        android:textSize="@dimen/_14sdp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/divider5"
-                        app:layout_constraintTop_toBottomOf="@+id/divider5" />
-
-                    <devs.mulham.horizontalcalendar.HorizontalCalendarView
-                        android:id="@+id/calendarView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/colorWhite"
-                        app:layout_constraintTop_toBottomOf="@+id/textView58"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:selectedDateBackground="@color/colorButton"
-                        app:selectorColor="@color/colorWhite"
-                        app:sizeBottomText="@dimen/_9sdp"
-                        app:sizeMiddleText="@dimen/_12sdp"
-                        app:sizeTopText="@dimen/_9sdp"
-                        app:textColorNormal="@color/colorBlack"
-                        app:textColorSelected="@color/colorBlack" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerView2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="16dp"
-                        android:background="@color/colorLiteGrey"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/calendarView" />
-
-                    <TextView
-                        android:id="@+id/textView59"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="16dp"
-                        android:text="Time Slot"
-                        android:textSize="@dimen/_14sdp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/recyclerView2"
-                        android:visibility="invisible"/>
-
-                    <TextView
-                        android:id="@+id/textView60"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="Evening"
-                        android:textSize="@dimen/_14sdp"
-                        app:layout_constraintStart_toStartOf="@+id/textView59"
-                        app:layout_constraintTop_toBottomOf="@+id/textView59"
-                        android:visibility="gone" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerView3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="16dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView59" />
-
-                    <Button
-                        android:id="@+id/button17"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="32dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="@dimen/_20sdp"
-                        android:background="@color/colorButton"
-                        android:text="Proceed"
-                        android:textAllCaps="false"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/_14sdp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/recyclerView3" />
-
-                    <View
-                        android:id="@+id/divider5"
-                        android:layout_width="409dp"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="21dp"
-                        android:background="?android:attr/listDivider"
-                        app:layout_constraintStart_toStartOf="@+id/radiogroup"
-                        app:layout_constraintTop_toBottomOf="@+id/radiogroup" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/_8sdp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/button17"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:background="@color/colorButton"
+                android:text="Proceed"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_14sdp" />
+        </LinearLayout>
+    </RelativeLayout>
 
 </layout>

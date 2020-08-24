@@ -37,7 +37,7 @@ class RegisterNameActivity : BaseActivity<ActivityRegisterNameBinding>() {
                 ViewUtils.showToast(this@RegisterNameActivity, R.string.error_invalid__last_name, false)
             } else {
                 preferenceHelper.setValue(PreferenceKey.FIRST_NAME, mDataBinding.firstName.text.toString())
-                preferenceHelper.setValue(PreferenceKey.FIRST_NAME, mDataBinding.lastName.text.toString())
+                preferenceHelper.setValue(PreferenceKey.LAST_NAME, mDataBinding.lastName.text.toString())
                 val intent = Intent(applicationContext,RegisterEmailActivity::class.java)
                 startActivity(intent);
 

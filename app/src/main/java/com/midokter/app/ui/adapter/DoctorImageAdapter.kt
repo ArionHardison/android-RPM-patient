@@ -22,7 +22,7 @@ class DoctorImageAdapter(
         ViewUtils.setImageViewGlide(
             context,
             holder.itemBinding.imgItem,
-            BuildConfig.BASE_IMAGE_URL.plus(item?.profile_pic!!)
+            BuildConfig.BASE_IMAGE_URL.plus(item?.profile_pic?:"")
         )
     }
 

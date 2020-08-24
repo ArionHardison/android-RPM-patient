@@ -115,9 +115,8 @@ mDataBinding.searchDocName.text = preferenceHelper.getValue(PreferenceKey.SELECT
         currentDay = cal[Calendar.DAY_OF_MONTH]
         if (d.time.after(cal.time)) {
             return false
-        } else return !(d.get(Calendar.YEAR) == currentYear && d.get(Calendar.MONTH) == currentMonth && d.get(
-            Calendar.DAY_OF_MONTH
-        ) == currentDay)
+        }
+        else return !(d.get(Calendar.YEAR) == currentYear && d.get(Calendar.MONTH) == currentMonth && d.get(Calendar.DAY_OF_MONTH) == currentDay)
 
     }
 
@@ -137,7 +136,7 @@ mDataBinding.searchDocName.text = preferenceHelper.getValue(PreferenceKey.SELECT
             val selectedminutes  =          if(minute<10)"0"+ String.valueOf(minute)else String.valueOf(minute)
             preferenceHelper.setValue(
                 PreferenceKey.SCHEDULED_DATE,
-                viewModel.selectedDate!!.get(Calendar.YEAR).toString() +"-"+(viewModel.selectedDate!!.get(Calendar.MONTH)+1).toString() +"-"+(viewModel.selectedDate!!.get(Calendar.DAY_OF_MONTH)+1).toString() + " " + selectedhour + ":" + selectedminutes + ":" + "00"
+                viewModel.selectedDate!!.get(Calendar.YEAR).toString() +"-"+(viewModel.selectedDate!!.get(Calendar.MONTH)+1).toString() +"-"+(viewModel.selectedDate!!.get(Calendar.DAY_OF_MONTH)).toString() + " " + selectedhour + ":" + selectedminutes + ":" + "00"
             )
             if (mDataBinding.radioButton.isChecked) {
                 preferenceHelper.setValue(PreferenceKey.VISIT_PURPOSE, "follow_up")
