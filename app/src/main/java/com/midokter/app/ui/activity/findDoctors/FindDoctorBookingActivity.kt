@@ -171,7 +171,7 @@ mDataBinding.searchDocName.text = preferenceHelper.getValue(PreferenceKey.SELECT
 
     }
     fun performclick(){
-        loadingObservable.value = true
+       // loadingObservable.value = true
         bookDoctor_Map["doctor_id"]= preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_ID,"").toString()
         bookDoctor_Map["booking_for"]= preferenceHelper.getValue(PreferenceKey.VISIT_PURPOSE,"").toString()
         bookDoctor_Map["scheduled_at"]= preferenceHelper.getValue(PreferenceKey.SCHEDULED_DATE,"").toString()

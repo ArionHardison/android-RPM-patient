@@ -1,6 +1,7 @@
 package com.midokter.app.ui.activity.register
 
 import android.content.Intent
+import android.text.TextUtils
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProviders
 import com.midokter.app.BaseApplication
@@ -11,6 +12,7 @@ import com.midokter.app.data.PreferenceKey
 import com.midokter.app.data.setValue
 import com.midokter.app.databinding.ActivityRegisterEmailBinding
 import com.midokter.app.repositary.WebApiConstants
+import com.midokter.app.utils.ValidationUtils
 import com.midokter.app.utils.ViewUtils
 import kotlinx.android.synthetic.main.activity_register_email.*
 import kotlinx.android.synthetic.main.activity_register_name.*
@@ -31,6 +33,8 @@ class RegisterEmailActivity : BaseActivity<ActivityRegisterEmailBinding>() {
 
         mDataBinding.next.setOnClickListener {
             if (mViewDataBinding.email.text.toString().isNullOrBlank()) {
+                ViewUtils.showToast(this@RegisterEmailActivity, R.string.error_invalid_email_address, false)
+            }else if(!ValidationUtils.isValidEmail(email.text.toString())) {
                 ViewUtils.showToast(this@RegisterEmailActivity, R.string.error_invalid_email_address, false)
             } else {
 
