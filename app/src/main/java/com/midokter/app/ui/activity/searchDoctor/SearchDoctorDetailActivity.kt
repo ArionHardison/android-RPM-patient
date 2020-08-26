@@ -102,7 +102,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
             viewModel.mTiminglist =
                 viewModel.mDoctorProfile.value!!.hospital[0]?.timing as MutableList<Hospital.Timing>?
             viewModel.mphotoslist =
-                viewModel.mDoctorProfile.value!!.hospital[0]?.clinic.clinic_photo as MutableList<Hospital.Clinic.photos>?
+                viewModel.mDoctorProfile.value!!.hospital[0]?.clinic?.clinic_photo as MutableList<Hospital.Clinic.photos>?
             initAdapter()
 
         } else if (favDoctor != null) {

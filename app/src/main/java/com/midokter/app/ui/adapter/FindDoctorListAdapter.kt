@@ -34,7 +34,7 @@ class FindDoctorListAdapter(val items:  MutableList<DoctorListResponse.specialit
         holder.itemBinding.textView47?.text = item.hospital[0].first_name.plus(" ").plus(item.hospital[0].last_name)
         ViewUtils.setImageViewGlide(context,  holder.itemBinding.imageView18,BuildConfig.BASE_IMAGE_URL.plus(item.profile_pic))
         holder.itemBinding.textView50?.text = item.experience?.plus(" ").plus(context.getString(R.string.years_of_exp))
-        holder.itemBinding.textView52?.text = item.hospital[0].clinic.name.plus(" , ").plus(item.hospital[0].clinic.address)
+        holder.itemBinding.textView52?.text = item.hospital[0].clinic?.name.plus(" , ").plus(item.hospital[0].clinic?.address)
         holder.itemBinding.textView46?.text =  item.hospital[0].feedback_percentage.plus("%")
         holder.itemBinding.textView48?.text =  item.speciality?.name
       //  holder.itemBinding.textView50?.text = String.format(context.getString(R.string.years_of_exp),item.experience)
