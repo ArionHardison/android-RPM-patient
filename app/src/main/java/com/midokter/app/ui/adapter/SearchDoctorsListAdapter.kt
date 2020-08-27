@@ -26,14 +26,23 @@ class SearchDoctorsListAdapter(val items: MutableList<Hospital>, val context: Co
 
     override fun onBindViewHolder(holder: SearchDoctorsViewHolder, position: Int) {
 
-        val item=items!![position]
+        val item = items!![position]
         holder.itemBinding.textView90?.text = item.first_name.plus(" ").plus(item.last_name)
-        holder.itemBinding.textView92?.text = item.doctor_profile?.speciality?.name
+        if (item.doctor_profile?.speciality?.name != null) {
+            holder.itemBinding.textView92?.text = item.doctor_profile?.speciality?.name
+            holder.itemBinding.textView92?.visibility = View.VISIBLE
+        } else
+            holder.itemBinding.textView92?.visibility = View.GONE
+
         holder.itemBinding.textView91?.text = item.doctor_profile?.certification
-        ViewUtils.setImageViewGlide(context,  holder.itemBinding.imageView23, BuildConfig.BASE_IMAGE_URL.plus( item.doctor_profile?.profile_pic))
+        ViewUtils.setImageViewGlide(
+            context,
+            holder.itemBinding.imageView23,
+            BuildConfig.BASE_IMAGE_URL.plus(item.doctor_profile?.profile_pic)
+        )
         holder.itemView.setOnClickListener {
             val intent = Intent(context, SearchDoctorDetailActivity::class.java)
-            intent.putExtra(WebApiConstants.IntentPass.SearchDoctorProfile,item as Serializable)
+            intent.putExtra(WebApiConstants.IntentPass.SearchDoctorProfile, item as Serializable)
             context.startActivity(intent);
         }
     }
@@ -42,7 +51,8 @@ class SearchDoctorsListAdapter(val items: MutableList<Hospital>, val context: Co
 
         val inflate = DataBindingUtil.inflate<SearchDoctorListItemBinding>(
             LayoutInflater.from(parent.context),
-            R.layout.search_doctor_list_item, parent, false)
+            R.layout.search_doctor_list_item, parent, false
+        )
         return SearchDoctorsViewHolder(inflate)
     }
 
@@ -52,7 +62,8 @@ class SearchDoctorsListAdapter(val items: MutableList<Hospital>, val context: Co
     }
 }
 
-class SearchDoctorsViewHolder(view: SearchDoctorListItemBinding) : RecyclerView.ViewHolder(view.root) {
+class SearchDoctorsViewHolder(view: SearchDoctorListItemBinding) :
+    RecyclerView.ViewHolder(view.root) {
     // Holds the TextView that will add each animal to
     val itemBinding = view
 }

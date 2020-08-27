@@ -39,7 +39,7 @@
         android:background="@drawable/rectangular_box"
         android:paddingStart="@dimen/_3sdp"
         android:paddingEnd="@dimen/_3sdp"
-        android:text="89%"
+        android:text="0%"
         app:layout_constraintEnd_toEndOf="@+id/imageView18"
         app:layout_constraintStart_toStartOf="@+id/imageView18"
         app:layout_constraintTop_toBottomOf="@+id/imageView18" />
@@ -61,7 +61,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="Dr. Alvin"
         android:textColor="@color/colorBlack"
         android:textSize="@dimen/_16sdp"
         android:layout_weight="1"/>
@@ -71,7 +70,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="General Physician"
         android:layout_weight="1"/>
     </LinearLayout>
 
@@ -88,7 +86,9 @@
         android:layout_height="wrap_content"
         android:background="@color/colorLiteGrey"
         android:padding="@dimen/_3sdp"
+        android:visibility="gone"
         android:text="Allopath"
+        android:layout_marginEnd="8dp"
         android:singleLine="true"
         app:layout_constraintStart_toStartOf="@+id/textView47"
         app:layout_constraintTop_toBottomOf="@+id/textView48" />
@@ -97,8 +97,7 @@
         android:id="@+id/textView50"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="18 years of Overall exp"
+        android:text="0 year of Overall exp"
         android:singleLine="true"
         app:layout_constraintBottom_toBottomOf="@+id/textView49"
         app:layout_constraintStart_toEndOf="@+id/textView49"
@@ -132,8 +131,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            android:text="The Apollo clinic,Mahantta" />
+            android:layout_marginStart="8dp"/>
 
     </LinearLayout>
 
@@ -166,7 +164,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="$10"
+                android:text="$0"
                 android:textColor="@color/colorButton"
                 android:textSize="@dimen/_14sdp" />
         </LinearLayout>

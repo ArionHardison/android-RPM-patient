@@ -60,11 +60,11 @@
     <!-- application-->
     <string name="appointments_details">Appointment Details</string>
     <string name="search_result">Search results for %s</string>
-    <string name="years_of_exp"> years of Overall exp</string>
-    <string name="_years_of_exp">%s  years of Overall exp</string>
+    <string name="years_of_exp"> yrs of overall exp</string>
+    <string name="_years_of_exp">%s yrs of overall exp</string>
 
     <!--doctor booking-->
-    <string name="_consultation_fee">Consultation fee: %d</string>
+    <string name="_consultation_fee">Consultation fee: %s</string>
     <string name="booking">Booking</string>
     <string name="enter_patient_details">Enter patient detail</string>
     <string name="avaliable_today">Available Today</string>
@@ -212,6 +212,7 @@
     <string name="date">Date</string>
     <string name="time">Time</string>
     <string name="alarm">Alarm</string>
+    <string name="not_found">Not found</string>
     <string name="notify_me">Notify me</string>
 
     <string name="past_time_error">You cannot select past time</string>
@@ -224,4 +225,5 @@
     <string name="see_all_specialities"><![CDATA[See all specialities >]]></string>
     <string name="invalid_promo_code">Invalid promo code</string>
     <string name="verified_specialists_online_now">Verified %1$s Specialists online now</string>
+    <string name="not_available">Not available</string>
 </resources>

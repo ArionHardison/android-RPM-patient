@@ -18,6 +18,7 @@ data class BookedResponse(
         val description: Any,
         val doctor_id: String,
         val id: Int,
+        val service_id:Any,
         val patient_id: Int,
         val scheduled_at: String,
         val status: String,

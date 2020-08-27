@@ -113,7 +113,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/_4sdp"
-                        android:text="Dr.Alvin"
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/_14sdp"
                         app:layout_constraintStart_toEndOf="@+id/searchDocImg"
@@ -125,7 +124,6 @@
                         android:layout_height="wrap_content"
                         android:background="@color/colorLiteGrey"
                         android:padding="@dimen/_4sdp"
-                        android:text="General Physician"
                         android:textSize="@dimen/_12sdp"
                         app:layout_constraintStart_toEndOf="@+id/searchDocImg"
                         app:layout_constraintTop_toBottomOf="@+id/searchDocName" />
@@ -135,7 +133,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/_4sdp"
-                        android:text="The Apollo clinic,Manhattan sdgfsdf sdf sdfsdfsfsdfs df sdfssdfsdfsdfsdfsdfsdfs f sdfsdf a asdas asdasdasda"
                         android:textSize="@dimen/_12sdp"
                         app:layout_constraintStart_toEndOf="@+id/searchDocImg"
                         app:layout_constraintTop_toBottomOf="@+id/searchDocSpec" />

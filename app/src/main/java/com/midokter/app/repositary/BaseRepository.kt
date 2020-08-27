@@ -73,9 +73,14 @@ open class BaseRepository {
     private fun getErrorMessage(responseBody: ResponseBody): String? {
         return try {
             val jsonObject = JSONObject(responseBody.string())
-            jsonObject.getString("error")
+            if(jsonObject.has("error"))
+                jsonObject.getString("error")
+            else if(jsonObject.has("message"))
+                jsonObject.getString("message")
+            else
+                NetworkError.SERVER_EXCEPTION
         } catch (e: Exception) {
-            e.message
+            NetworkError.SERVER_EXCEPTION
         }
     }
 

@@ -60,6 +60,7 @@ class PatientDetailsActivity : BaseActivity<ActivityPatientDetailsBinding>(),
                 Toast.makeText(applicationContext, "Invalid Phone number", Toast.LENGTH_LONG).show()
             }else{
                 loadingObservable.value = true
+                bookDoctor_Map["selectedPatient"]= preferenceHelper.getValue(PreferenceKey.PATIENT_ID,0).toString()
                 bookDoctor_Map["doctor_id"]= preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_ID,"").toString()
                 bookDoctor_Map["booking_for"]= preferenceHelper.getValue(PreferenceKey.VISIT_PURPOSE,"").toString()
                 bookDoctor_Map["scheduled_at"]= preferenceHelper.getValue(PreferenceKey.SCHEDULED_DATE,"").toString()
@@ -85,10 +86,8 @@ class PatientDetailsActivity : BaseActivity<ActivityPatientDetailsBinding>(),
     private fun observeResponse() {
         viewModel.mBookedResponse.observe(this@PatientDetailsActivity, Observer<BookedResponse> {
             loadingObservable.value = false
-            if (it.status) {
-
+            if (it.message==null) {
                 goToBooked()
-
             }else
                 ViewUtils.showToast(this@PatientDetailsActivity, it.message, false)
 

@@ -12,7 +12,7 @@ data class Hospital(
     val deleted_at: Any,
     val doctor_profile: DoctorProfile,
     val doctor_service: List<DoctorService>,
-    val feedback_percentage: String,
+    val feedback_percentage: String?,
     val email: String,
     val email_token: String,
     val email_verified: Int,

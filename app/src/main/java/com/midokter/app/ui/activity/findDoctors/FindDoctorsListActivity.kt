@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.common.util.CollectionUtils
 import com.midokter.app.BaseApplication
 import com.midokter.app.R
 import com.midokter.app.base.BaseActivity
@@ -170,10 +171,12 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),F
 
     override fun onbookclick(selectedItem: DoctorListResponse.specialities.DoctorProfile) {
         preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_ID, selectedItem.doctor_id.toString())
-        preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_NAME, selectedItem.hospital[0].first_name.plus(" ").plus(selectedItem.hospital[0].last_name))
+        if(!CollectionUtils.isEmpty(selectedItem.hospital)){
+            preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_NAME, selectedItem.hospital[0].first_name.plus(" ").plus(selectedItem.hospital[0].last_name))
+            preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_ADDRESS, selectedItem.hospital[0].clinic?.name.plus(" , ").plus(selectedItem.hospital[0].clinic?.address))
+        }
         preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_Special, selectedItem.speciality?.name?:"")
         preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_IMAGE, selectedItem.profile_pic?:"")
-        preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_ADDRESS, selectedItem.hospital[0].clinic?.name.plus(" , ").plus(selectedItem.hospital[0].clinic?.address))
          val intent = Intent(this@FindDoctorsListActivity, FindDoctorBookingActivity::class.java)
     startActivity(intent);
 }

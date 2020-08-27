@@ -93,6 +93,7 @@
                         android:layout_marginStart="8dp"
                         android:background="@color/colorWhite"
                         android:paddingStart="@dimen/_3sdp"
+                        android:visibility="gone"
                         android:paddingEnd="@dimen/_3sdp"
                         android:text="@{viewmodel.branch}"
                         app:layout_constraintBottom_toBottomOf="@+id/textView93"
@@ -107,6 +108,7 @@
                         android:layout_marginTop="8dp"
                         android:text="@{viewmodel.degree}"
                         android:textColor="@color/colorWhite"
+                        android:layout_marginEnd="8dp"
                         app:layout_constraintStart_toStartOf="@+id/textView93"
                         app:layout_constraintTop_toBottomOf="@+id/textView93"
                         tools:text="MBBS,MRCP(UK) - " />
@@ -115,7 +117,6 @@
                         android:id="@+id/textView96"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
                         android:text="@{viewmodel.specialities}"
                         android:textColor="@color/colorWhite"
                         app:layout_constraintBottom_toBottomOf="@+id/textView95"
@@ -139,7 +140,7 @@
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toEndOf="@+id/textView94"
                         app:layout_constraintTop_toTopOf="@+id/textView94"
-                        tools:text="89%" />
+                        tools:text="0%" />
 
                     <TextView
                         android:id="@+id/textView98"
@@ -200,7 +201,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider10"
-                    tools:text="Consultation fee: $10" />
+                    tools:text="Consultation fee: $0" />
 
                 <View
                     android:id="@+id/divider11"
@@ -305,9 +306,17 @@
                     app:layout_constraintStart_toStartOf="@+id/textViewMon"
                     app:layout_constraintTop_toBottomOf="@+id/textViewMon"
                     tools:listitem="@layout/list_item_availibility" />
-
-
-
+                <TextView
+                    android:id="@+id/textViewNotAvailable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:visibility="gone"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/not_available"
+                    android:textSize="@dimen/_14sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_availability" />
                 <View
                     android:id="@+id/divider12"
                     android:layout_width="409dp"
@@ -316,7 +325,7 @@
                     android:background="?android:attr/listDivider"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_availability" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewNotAvailable" />
 
                 <TextView
                     android:id="@+id/textView111"

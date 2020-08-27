@@ -30,7 +30,6 @@
             android:id="@+id/upcomingDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="27 Oct"
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/_12sdp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +40,6 @@
             android:id="@+id/upcomingTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sat 7.30 PM"
             android:textSize="@dimen/_8sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/upcomingDate"
@@ -51,20 +49,23 @@
 
     <TextView
         android:id="@+id/upcomingDoctorName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="Dr.Alvin"
-        android:textSize="@dimen/_14sdp"
+        android:layout_marginEnd="8dp"
         android:textColor="@color/colorBlack"
+        android:textSize="@dimen/_14sdp"
+        app:layout_constraintEnd_toStartOf="@+id/textView28"
         app:layout_constraintStart_toEndOf="@+id/constraintL"
         app:layout_constraintTop_toTopOf="@+id/constraintL" />
 
     <TextView
         android:id="@+id/upcomingHospitalName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Miot Hospital,Manhattan"
+        app:layout_constraintVertical_weight="1"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/textView28"
         app:layout_constraintStart_toStartOf="@+id/upcomingDoctorName"
         app:layout_constraintTop_toBottomOf="@+id/upcomingDoctorName" />
 
@@ -79,8 +80,6 @@
         android:textColor="@color/colorRed"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/upcomingHospitalName"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.513" />
 

@@ -28,9 +28,12 @@ class UpcomingAppointmentsListAdapter(
 
         holder.itemBinding.upcomingDate?.text = ViewUtils.getDayFormat(item.scheduled_at)
         holder.itemBinding.upcomingTime?.text = ViewUtils.getTimeFormat(item.scheduled_at)
-        holder.itemBinding.upcomingDoctorName?.text = item.hospital.first_name.plus(" ").plus(item.hospital.last_name)
-        holder.itemBinding.upcomingHospitalName?.text = item.hospital.clinic?.name.plus(",").plus(item.hospital.clinic?.address)
-
+        if(item.hospital!=null) {
+            holder.itemBinding.upcomingDoctorName?.text =
+                item.hospital.first_name.plus(" ").plus(item.hospital.last_name)
+            holder.itemBinding.upcomingHospitalName?.text =
+                item.hospital.clinic?.name.plus(",").plus(item.hospital.clinic?.address)
+        }
         holder.itemView.setOnClickListener {
             listener.onitemclick(item)
         }

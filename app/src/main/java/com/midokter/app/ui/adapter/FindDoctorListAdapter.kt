@@ -9,6 +9,7 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.common.util.CollectionUtils
 import com.midokter.app.BaseApplication
 import com.midokter.app.BuildConfig
 import com.midokter.app.R
@@ -16,12 +17,18 @@ import com.midokter.app.data.PreferenceHelper
 import com.midokter.app.data.PreferenceKey
 import com.midokter.app.data.getValue
 import com.midokter.app.databinding.FindDoctorListItemBinding
+import com.midokter.app.repositary.model.CategoryResponse
 import com.midokter.app.repositary.model.DoctorListResponse
 import com.midokter.app.utils.ViewUtils
 
-class FindDoctorListAdapter(val items:  MutableList<DoctorListResponse.specialities.DoctorProfile>, val context: Context, val listener:IDoctorListener)  :
-    RecyclerView.Adapter<FindDoctorViewHolder>() , Filterable {
-    private var SearchList: MutableList<DoctorListResponse.specialities.DoctorProfile>? = null
+class FindDoctorListAdapter(
+    val items: MutableList<DoctorListResponse.specialities.DoctorProfile>,
+    val context: Context,
+    val listener: IDoctorListener
+) :
+    RecyclerView.Adapter<FindDoctorViewHolder>(), Filterable {
+    private var SearchList: MutableList<DoctorListResponse.specialities.DoctorProfile> =
+        mutableListOf()
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
 
     init {
@@ -30,38 +37,50 @@ class FindDoctorListAdapter(val items:  MutableList<DoctorListResponse.specialit
 
 
     override fun onBindViewHolder(holder: FindDoctorViewHolder, position: Int) {
-        val item=SearchList!![position]
-        holder.itemBinding.textView47?.text = item.hospital[0].first_name.plus(" ").plus(item.hospital[0].last_name)
-        ViewUtils.setImageViewGlide(context,  holder.itemBinding.imageView18,BuildConfig.BASE_IMAGE_URL.plus(item.profile_pic))
-        holder.itemBinding.textView50?.text = item.experience?.plus(" ").plus(context.getString(R.string.years_of_exp))
-        holder.itemBinding.textView52?.text = item.hospital[0].clinic?.name.plus(" , ").plus(item.hospital[0].clinic?.address)
-        holder.itemBinding.textView46?.text =  item.hospital[0].feedback_percentage.plus("%")
-        holder.itemBinding.textView48?.text =  item.speciality?.name
-      //  holder.itemBinding.textView50?.text = String.format(context.getString(R.string.years_of_exp),item.experience)
-            holder.itemBinding.textView54?.text = preferenceHelper.getValue(PreferenceKey.CURRENCY,"$").toString().plus(item.fees)
-if(item.hospital[0]?.availability!=null)
-        when (item.hospital[0]?.availability){
+        val item = SearchList!![position]
+        if (item.hospital.size > 0) {
+            holder.itemBinding.textView47?.text =
+                item.hospital[0].first_name?:"".plus(" ").plus(item.hospital[0].last_name?:"")
+            holder.itemBinding.textView52?.text =
+                item.hospital[0].clinic?.name?:"".plus(" , ").plus(item.hospital[0].clinic?.address?:"")
+            holder.itemBinding.textView46?.text = item.hospital[0].feedback_percentage?:"0".plus("%")
+            if (item.hospital[0]?.availability != null)
+                when (item.hospital[0]?.availability) {
 
-            "today" -> {
-                holder.itemBinding.textView51?.visibility = View.VISIBLE
-                holder.itemBinding.textView51?.text = context.getString(R.string.avaliable_today)
-            }
-            "tomorrow" -> {
-                holder.itemBinding.textView51?.visibility = View.VISIBLE
-                holder.itemBinding.textView51?.text = context.getString(R.string.avaliable_tomorrow)
+                    "today" -> {
+                        holder.itemBinding.textView51?.visibility = View.VISIBLE
+                        holder.itemBinding.textView51?.text =
+                            context.getString(R.string.avaliable_today)
+                    }
+                    "tomorrow" -> {
+                        holder.itemBinding.textView51?.visibility = View.VISIBLE
+                        holder.itemBinding.textView51?.text =
+                            context.getString(R.string.avaliable_tomorrow)
 
-            }
-            else  ->{
-                holder.itemBinding.textView51?.visibility = View.GONE;
-            }
+                    }
+                    else -> {
+                        holder.itemBinding.textView51?.visibility = View.GONE;
+                    }
 
 
+                }
+
+
+            holder.itemBinding.button15.setOnClickListener(View.OnClickListener {
+                listener.oncallclick(item.hospital[0].mobile)
+            })
         }
+        ViewUtils.setImageViewGlide(
+            context,
+            holder.itemBinding.imageView18,
+            BuildConfig.BASE_IMAGE_URL.plus(item.profile_pic)
+        )
+        holder.itemBinding.textView50?.text =
+            item.experience?:"0".plus(" ").plus(context.getString(R.string.years_of_exp))
+        holder.itemBinding.textView48?.text = item.speciality?.name
+        holder.itemBinding.textView54?.text =
+            preferenceHelper.getValue(PreferenceKey.CURRENCY, "$").toString().plus(item.fees?:"0")
 
-
-        holder.itemBinding.button15.setOnClickListener(View.OnClickListener {
-            listener.oncallclick(item.hospital[0].mobile)
-        })
         holder.itemBinding.button16.setOnClickListener(View.OnClickListener {
             listener.onbookclick(item)
         })
@@ -76,7 +95,8 @@ if(item.hospital[0]?.availability!=null)
 
         val inflate = DataBindingUtil.inflate<FindDoctorListItemBinding>(
             LayoutInflater.from(parent.context),
-            R.layout.find_doctor_list_item, parent, false)
+            R.layout.find_doctor_list_item, parent, false
+        )
         return FindDoctorViewHolder(inflate)
     }
 
@@ -84,6 +104,7 @@ if(item.hospital[0]?.availability!=null)
     override fun getItemCount(): Int {
         return SearchList!!.size
     }
+
     override fun getFilter(): Filter {
 
         return object : Filter() {
@@ -95,8 +116,13 @@ if(item.hospital[0]?.availability!=null)
                 } else {
                     val filteredList = ArrayList<DoctorListResponse.specialities.DoctorProfile>()
                     for (row in items) {
-                        if (row.hospital[0].email!!.toLowerCase().contains(charString.toLowerCase())) {
-                            filteredList.add(row)
+                        if (!CollectionUtils.isEmpty(row.hospital)) {
+                            if (row.hospital[0].first_name!!.toLowerCase()
+                                    .contains(charString.toLowerCase()) || row.hospital[0].last_name!!.toLowerCase()
+                                    .contains(charString.toLowerCase())
+                            ) {
+                                filteredList.add(row)
+                            }
                         }
                     }
                     SearchList = filteredList
@@ -109,18 +135,21 @@ if(item.hospital[0]?.availability!=null)
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
 
-                SearchList = results?.values as MutableList<DoctorListResponse.specialities.DoctorProfile>
+                SearchList =
+                    results?.values as MutableList<DoctorListResponse.specialities.DoctorProfile>
                 notifyDataSetChanged()
             }
 
         }
     }
 }
-interface IDoctorListener{
-    fun onbookclick(selectedItem:DoctorListResponse.specialities.DoctorProfile)
-    fun onitemclick(selectedItem:DoctorListResponse.specialities.DoctorProfile)
-    fun oncallclick(phone:String)
+
+interface IDoctorListener {
+    fun onbookclick(selectedItem: DoctorListResponse.specialities.DoctorProfile)
+    fun onitemclick(selectedItem: DoctorListResponse.specialities.DoctorProfile)
+    fun oncallclick(phone: String)
 }
+
 class FindDoctorViewHolder(view: FindDoctorListItemBinding) : RecyclerView.ViewHolder(view.root) {
     val itemBinding = view
 }
