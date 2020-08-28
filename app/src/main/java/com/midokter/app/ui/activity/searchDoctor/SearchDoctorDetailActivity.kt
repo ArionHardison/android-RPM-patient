@@ -80,7 +80,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
                         viewModel.mDoctorProfile.value!!.hospital[0]?.last_name
                     )
                 )
-                viewModel.specialities.set(viewModel.mDoctorProfile.value!!.speciality?.name?:getString(R.string.not_found))
+                viewModel.specialities.set(viewModel.mDoctorProfile.value!!.speciality?.name?:"")
                 viewModel.degree.set(viewModel.mDoctorProfile.value!!.certification)
                 viewModel.branch.set(viewModel.mDoctorProfile.value!!.hospital[0]?.specialities_name)
                 viewModel.percentage.set(
@@ -124,7 +124,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
             )
 
             viewModel.favourite.set(viewModel.mfavDoctorProfile.value!!.hospital?.is_favourite)
-            viewModel.specialities.set(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.speciality?.name?:getString(R.string.not_found))
+            viewModel.specialities.set(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.speciality?.name?:"")
             viewModel.degree.set(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.certification)
             viewModel.branch.set(viewModel.mfavDoctorProfile.value!!.hospital?.specialities_name)
             viewModel.percentage.set(
@@ -164,7 +164,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
                 )
             )
             viewModel.favourite.set(viewModel.msearchDoctorProfile.value!!.is_favourite)
-            viewModel.specialities.set(viewModel.msearchDoctorProfile.value!!.doctor_profile?.speciality?.name?:getString(R.string.not_found))
+            viewModel.specialities.set(viewModel.msearchDoctorProfile.value!!.doctor_profile?.speciality?.name?:"")
             viewModel.degree.set(viewModel.msearchDoctorProfile.value!!.doctor_profile?.certification)
             viewModel.branch.set(viewModel.msearchDoctorProfile.value!!.specialities_name)
             viewModel.percentage.set(

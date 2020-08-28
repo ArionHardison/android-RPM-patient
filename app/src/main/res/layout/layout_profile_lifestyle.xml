@@ -15,43 +15,110 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.google.android.material.textfield.TextInputLayout
+    <RelativeLayout
         android:id="@+id/textInputLayout19"
+android:padding="@dimen/_4sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tvSmoking"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@={viewmodel.smoking}"
-            android:hint="Smoking Habits" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_centerVertical="true"
+            android:text="Smoking Habits"
+            android:textSize="@dimen/_13sdp" />
 
-    <com.google.android.material.textfield.TextInputLayout
+        <RadioGroup
+            android:id="@+id/rgSmoking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:orientation="horizontal"
+            tools:ignore="RelativeOverlap">
+
+            <RadioButton
+                android:id="@+id/smoking_yes"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:button="@null"
+                android:drawableEnd="?android:attr/listChoiceIndicatorSingle"
+                android:text="@string/yes"
+                android:textAlignment="textStart" />
+
+            <RadioButton
+                android:id="@+id/smoking_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableEnd="?android:attr/listChoiceIndicatorSingle"
+                android:text="@string/no"
+                android:textAlignment="textStart" />
+
+        </RadioGroup>
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/textInputLayout20"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout19">
+        android:padding="@dimen/_4sdp"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout19"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tvAlcohol"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@={viewmodel.alcohol}"
-            android:hint="Alcohol Consumption" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_centerVertical="true"
+            android:text="Alcohol Consumption"
+            android:textSize="@dimen/_13sdp" />
+
+        <RadioGroup
+            android:id="@+id/rgAlcohol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:orientation="horizontal"
+            tools:ignore="RelativeOverlap">
+
+            <RadioButton
+                android:id="@+id/alcohol_yes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:button="@null"
+                android:drawableEnd="?android:attr/listChoiceIndicatorSingle"
+                android:text="@string/yes"
+                android:textAlignment="textStart" />
+
+            <RadioButton
+                android:id="@+id/alcohol_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableEnd="?android:attr/listChoiceIndicatorSingle"
+                android:text="@string/no"
+                android:textAlignment="textStart" />
+
+        </RadioGroup>
+    </RelativeLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout21"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout20">

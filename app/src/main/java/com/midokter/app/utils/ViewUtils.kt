@@ -15,6 +15,9 @@ import androidx.annotation.StringRes
 import com.bumptech.glide.Glide
 import com.midokter.app.R
 import es.dmoral.toasty.Toasty
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import permissions.dispatcher.PermissionRequest
 import java.io.ByteArrayOutputStream
 import java.text.ParseException
@@ -64,7 +67,9 @@ object ViewUtils {
             }
             .show()
     }
-
+    fun convertRequestBody(data: String): RequestBody {
+        return data.toRequestBody("text/plain".toMediaTypeOrNull())
+    }
     fun showAlert(context: Context, @StringRes messageResId: Int, callBack: ViewCallBack.Alert) {
         AlertDialog.Builder(context)
             .setTitle(R.string.app_name)

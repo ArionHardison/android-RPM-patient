@@ -3,6 +3,7 @@ package com.midokter.app.ui.activity.findDoctors
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.text.format.DateFormat
+import android.view.View
 import android.widget.TimePicker
 import android.widget.Toast
 import androidx.databinding.ViewDataBinding
@@ -49,11 +50,13 @@ class FindDoctorBookingActivity : BaseActivity<ActivityFindDoctorBookingBinding>
         mDataBinding.toolbar7.setNavigationOnClickListener {
             finish()
         }
-mDataBinding.searchDocName.text = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_NAME,"Dr test").toString()
-        mDataBinding.searchDocSpec.text = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_Special,"Dr test").toString()
-        mDataBinding.searchDocHospName.text = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_ADDRESS,"Dr test").toString()
+mDataBinding.searchDocName.text = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_NAME,"").toString()
+        if(preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_Special,"").toString().isEmpty())
+            mDataBinding.searchDocSpec.visibility=View.GONE
+        mDataBinding.searchDocSpec.text = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_Special,"").toString()
+        mDataBinding.searchDocHospName.text = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_ADDRESS,"").toString()
         Glide.with(this@FindDoctorBookingActivity)
-            .load(BuildConfig.BASE_IMAGE_URL +  preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_IMAGE,"Dr test").toString())
+            .load(BuildConfig.BASE_IMAGE_URL +  preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_IMAGE,"").toString())
             .placeholder(R.drawable.user_placeholder)
             .error(R.drawable.user_placeholder)
             .fallback(R.drawable.user_placeholder)

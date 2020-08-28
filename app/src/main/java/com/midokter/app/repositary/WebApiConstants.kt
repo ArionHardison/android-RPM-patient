@@ -80,6 +80,32 @@ object WebApiConstants {
         const val ID="id"
     }
 
+    object EditPatient {
+        const val FIRST_NAME="first_name"
+        const val LAST_NAME="last_name"
+        const val PHONE="phone"
+        const val EMAIL="email"
+        const val GENDER="gender"
+        const val DOB="dob"
+        const val BLOOD_GROUP="blood_group"
+        const val MERITAL_STATUS="merital_status"
+        const val HEIGHT="height"
+        const val WEIGHT="weight"
+        const val EMERGENCY_CONTACT="emergency_contact"
+        const val LOCATION="location"
+        const val ALLERGIES="allergies"
+        const val CURRENT_MEDICATIONS="current_medications"
+        const val PAST_MEDICATIONS="past_medications"
+        const val CHRONIC_DISEASES="chronic_diseases"
+        const val INJURIES="injuries"
+        const val SURGERIES="surgeries"
+        const val SMOKING="smoking"
+        const val ALCOHOL="alcohol"
+        const val ACTIVITY="activity"
+        const val FOOD="food"
+        const val OCCUPATION="occupation"
+        const val PROFILE_PIC="profile_pic"
+    }
 
     object SocialLogin {
         const val DEVICE_TYPE = "device_type"

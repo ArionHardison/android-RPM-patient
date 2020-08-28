@@ -30,6 +30,9 @@ import com.midokter.app.ui.activity.main.ui.wallet.WalletViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.http.Part
 
 class AppRepository : BaseRepository() {
 
@@ -347,6 +350,41 @@ class AppRepository : BaseRepository() {
             })
     }
 
+    fun editPatientApi(
+        id: Int,
+        editPatientViewModel: ProfileViewModel,
+        hashMap: HashMap<String, Any>
+    ): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .editPatient(hashMap)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                editPatientViewModel.mEditpatientResponse.value = it
+            }, {
+                editPatientViewModel.getErrorObservable().value = getErrorMessage(it)
+            })
+
+    }
+
+
+    fun editPatientWithImageApi(
+        id: Int,
+        editPatientViewModel: ProfileViewModel,
+        hashMap: HashMap<String, RequestBody>,
+        @Part image: MultipartBody.Part?
+    ): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .editPatientWithImage(hashMap, image)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                editPatientViewModel.mEditpatientResponse.value = it
+            }, {
+                editPatientViewModel.getErrorObservable().value = getErrorMessage(it)
+            })
+
+    }
 
     /*doctorprofile*/
     fun getMedicalRecord(viewModel: MedicalRecordsViewModel): Disposable {

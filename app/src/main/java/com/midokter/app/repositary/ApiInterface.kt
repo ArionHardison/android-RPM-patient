@@ -85,6 +85,19 @@ interface ApiInterface {
     @GET("api/patient/articles")
     fun getArticles(): Observable<ArticleResponse>
 
+    @FormUrlEncoded
+    @POST("api/patient/profile")
+    fun editPatient(
+        @FieldMap hashMap: HashMap<String, Any>
+    ): Observable<ProfileResponse>
+
+
+    @Multipart
+    @POST("api/patient/profile")
+    fun editPatientWithImage(
+        @PartMap hashMap: HashMap<String, RequestBody>,
+        @Part image: MultipartBody.Part?
+    ): Observable<ProfileResponse>
 
     @FormUrlEncoded
     @POST("api/patient/add_wallet")

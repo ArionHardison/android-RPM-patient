@@ -226,4 +226,8 @@
     <string name="invalid_promo_code">Invalid promo code</string>
     <string name="verified_specialists_online_now">Verified %1$s Specialists online now</string>
     <string name="not_available">Not available</string>
+    <string name="done">Done</string>
+    <string name="profile_successfully_edited">Profile successfully edited</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>
