@@ -28,11 +28,13 @@
             app:srcCompat="@drawable/tick" />
 
         <TextView
-            android:id="@+id/textView73"
+            android:id="@+id/textViewSuccessTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:gravity="center"
+            android:paddingStart="@dimen/_6sdp"
+            android:paddingEnd="@dimen/_6sdp"
             android:text="Your booking has been \n confirmed."
             android:textSize="@dimen/_14sdp"
             app:layout_constraintEnd_toEndOf="@+id/imageView21"
@@ -40,15 +42,17 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView21" />
 
         <TextView
-            android:id="@+id/textView74"
+            android:id="@+id/textViewSuccessDesc"
             android:layout_width="wrap_content"
+            android:paddingStart="@dimen/_6sdp"
+            android:paddingEnd="@dimen/_6sdp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:gravity="center"
             android:text="Hope to\n Get Well Soon"
             android:textSize="@dimen/_14sdp"
-            app:layout_constraintEnd_toEndOf="@+id/textView73"
-            app:layout_constraintStart_toStartOf="@+id/textView73"
-            app:layout_constraintTop_toBottomOf="@+id/textView73" />
+            app:layout_constraintEnd_toEndOf="@+id/textViewSuccessTitle"
+            app:layout_constraintStart_toStartOf="@+id/textViewSuccessTitle"
+            app:layout_constraintTop_toBottomOf="@+id/textViewSuccessTitle" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

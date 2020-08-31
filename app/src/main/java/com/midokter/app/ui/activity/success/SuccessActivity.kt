@@ -5,6 +5,8 @@ import androidx.databinding.ViewDataBinding
 import com.midokter.app.R
 import com.midokter.app.base.BaseActivity
 import com.midokter.app.databinding.ActivitySuccessBinding
+import com.midokter.app.databinding.ActivityVisitedDoctorsBinding
+import com.midokter.app.repositary.model.CategoryResponse
 import com.midokter.app.ui.activity.main.MainActivity
 import kotlinx.android.synthetic.main.activity_success.*
 
@@ -13,9 +15,20 @@ class SuccessActivity : BaseActivity<ActivitySuccessBinding>() {
     private val SPLASH_DELAY: Long = 3000 //3 seconds
     override fun getLayoutId(): Int = R.layout.activity_success
 
+    private lateinit var mDataBinding: ActivitySuccessBinding
+
     override fun initView(mViewDataBinding: ViewDataBinding?) {
+
+        mDataBinding = mViewDataBinding as ActivitySuccessBinding
         mDelayHandler = Handler()
 
+        val data = intent.extras
+        if (data != null) {
+            if (intent.getStringExtra("isFrom")!=null && intent.getStringExtra("isFrom").toString().equals("chat")) {
+                mDataBinding.textViewSuccessTitle.text = intent.getStringExtra("title")
+                mDataBinding.textViewSuccessDesc.text = intent.getStringExtra("description")
+            }
+        }
         //Navigate with delay
         mDelayHandler!!.postDelayed(mRunnable, SPLASH_DELAY)
         imageView21.setOnClickListener {

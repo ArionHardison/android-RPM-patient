@@ -1,5 +1,6 @@
 package com.midokter.app.ui.activity.chat
 
+import android.content.Intent
 import android.graphics.Paint
 import android.view.View
 import androidx.databinding.ViewDataBinding
@@ -16,9 +17,12 @@ import com.midokter.app.databinding.ActivityChatSummaryBinding
 import com.midokter.app.repositary.model.CategoryResponse
 import com.midokter.app.repositary.model.ChatPromoResponse
 import com.midokter.app.repositary.model.DoctorListResponse
+import com.midokter.app.repositary.model.MessageResponse
 import com.midokter.app.ui.activity.findDoctors.FindDoctorsViewModel
+import com.midokter.app.ui.activity.success.SuccessActivity
 import com.midokter.app.ui.adapter.DoctorImageAdapter
 import com.midokter.app.utils.ViewUtils
+import kotlinx.android.synthetic.main.content_chat.*
 import kotlinx.android.synthetic.main.content_chat_summary.view.*
 import java.util.HashMap
 
@@ -28,6 +32,8 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
 
     override fun getLayoutId(): Int = R.layout.activity_chat_summary
     lateinit var category: CategoryResponse.Category
+    lateinit var notes: String
+    lateinit var fees: String
     private lateinit var viewModel: ChatViewModel
     private lateinit var viewModelFindDoctor: FindDoctorsViewModel
     private lateinit var viewModelSummary: ChatSummaryViewModel
@@ -44,11 +50,10 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
         viewModelFindDoctor = ViewModelProviders.of(this).get(FindDoctorsViewModel::class.java)
         mDataBinding.viewModelFindDoctor = viewModelFindDoctor
         viewModel.navigator = this
-
         val data = intent.extras
         if (data != null) {
-            category =
-                intent.getSerializableExtra("category") as CategoryResponse.Category
+            category = intent.getSerializableExtra("category") as CategoryResponse.Category
+            notes = intent.getStringExtra("notes")?:""
         }
         initAdapter()
         observeResponse()
@@ -63,6 +68,7 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
                 category?.fees.toString()
             )
             mDataBinding.contentChatSummary.tvSummaryStrikePrice.visibility = View.GONE
+            fees=category?.fees.toString()
         } else {
             mDataBinding.contentChatSummary.tvSummaryStrikePrice.visibility = View.VISIBLE
             mDataBinding.contentChatSummary.tvSummaryPrice.text = String.format(
@@ -75,6 +81,7 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
                 preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"),
                 category?.fees.toString()
             )
+            fees=category?.offer_fees.toString()
         }
 
         mDataBinding.contentChatSummary.textViewApplyPromo.setOnClickListener {
@@ -85,6 +92,8 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
                     false
                 )
             } else {
+
+
                 val hashMap: HashMap<String, Any> = HashMap()
                 hashMap["id"] = category.id
                 hashMap["promocode"] =
@@ -92,6 +101,23 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
                 viewModelSummary.addPromoCode(hashMap)
             }
         }
+
+        mDataBinding.buttonToProceed.setOnClickListener {
+            payForChatRequest()
+        }
+    }
+    private fun payForChatRequest(){
+
+        val hashMap: HashMap<String, Any> = HashMap()
+        hashMap["id"] = category.id
+        hashMap["message"] =notes
+        hashMap["Amount"] =fees
+        hashMap["pay_for"] ="CHAT"
+        hashMap["promo_id"] = 1
+        hashMap["speciality_id"] = category.id
+        hashMap["payment_mode"] = "CARD"
+        hashMap["use_wallet"] = false
+        viewModelSummary.payForChatRequest(hashMap)
     }
 
     private fun initApiCal() {
@@ -143,6 +169,18 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
                     preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"),
                     it?.finalFees.toString()
                 )
+                fees=it?.finalFees.toString()
+            }
+        })
+        viewModelSummary.mChatRequestResponse.observe(this, Observer<MessageResponse> {
+            if (it != null && it.message != null && !it.message.equals("")) {
+                ViewUtils.showToast(this@ChatSummaryActivity, it.message, true)
+                val intent = Intent(applicationContext, SuccessActivity::class.java)
+                intent.putExtra("isFrom","chat")
+                intent.putExtra("title",getString(R.string.chat_thank_title,category.name))
+                intent.putExtra("description",getString(R.string.chat_thank_desc))
+                startActivity(intent);
+                finishAffinity()
             }
         })
     }

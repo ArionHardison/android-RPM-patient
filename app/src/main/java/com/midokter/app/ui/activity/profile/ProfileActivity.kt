@@ -1,7 +1,9 @@
 package com.midokter.app.ui.activity.profile
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -37,6 +39,7 @@ import com.midokter.app.data.getValue
 import com.midokter.app.data.setValue
 import com.midokter.app.databinding.ActivityProfileBinding
 import com.midokter.app.repositary.model.ProfileResponse
+import com.midokter.app.ui.activity.main.MainActivity
 import com.midokter.app.utils.ValidationUtils
 import com.midokter.app.utils.ViewUtils
 import com.theartofdev.edmodo.cropper.CropImage
@@ -46,6 +49,8 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ProfileActivity : BaseActivity<ActivityProfileBinding>(),ProfileNavigator {
 
@@ -74,6 +79,28 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(),ProfileNavigator 
         loadingObservable.value = true
         viewModel.getprofile()
     }
+
+    fun pickDate() {
+        val c = Calendar.getInstance()
+        val mYear = c.get(Calendar.YEAR)
+        val mMonth = c.get(Calendar.MONTH)
+        val mDay = c.get(Calendar.DAY_OF_MONTH)
+        val now = System.currentTimeMillis() - 1000
+        val maxDate = System.currentTimeMillis() + (1000 * 60 * 60 * 24 * 3)
+        val datePickerDialog = DatePickerDialog(this@ProfileActivity,R.style.TransportCalenderThemeDialog,
+            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                c.set(Calendar.YEAR, year)
+                c.set(Calendar.MONTH, monthOfYear)
+                c.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                val sdf =
+                    SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                mDataBinding.layoutProfilePersonal.tvDob.setText(sdf.format(c.getTime()))
+            }, mYear, mMonth, mDay)
+        // datePickerDialog.datePicker.minDate = now
+        datePickerDialog.datePicker.maxDate = now
+        datePickerDialog.show()
+    }
+
     private fun initUI() {
 
         profile_img = findViewById(R.id.img_prof)
@@ -93,6 +120,9 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(),ProfileNavigator 
             layout_profile_personal.visibility = View.VISIBLE
             layout_profile_medical.visibility = View.GONE
             layout_profile_lifestyle.visibility = View.GONE
+        }
+        mDataBinding.layoutProfilePersonal.tvDob.setOnClickListener {
+            pickDate()
         }
         button12.setOnClickListener {
             cutomColorButton(button12)
@@ -246,7 +276,9 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(),ProfileNavigator 
                 getString(R.string.profile_successfully_edited),
                 true
             )
-            viewModel.getprofile()
+            val newIntent = Intent(this,MainActivity::class.java)
+            startActivity(newIntent)
+            finishAffinity()
             //}
         })
 

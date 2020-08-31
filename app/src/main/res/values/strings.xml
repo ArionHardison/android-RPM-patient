@@ -230,4 +230,6 @@
     <string name="profile_successfully_edited">Profile successfully edited</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="chat_thank_title">An %s Specialist will chat with you in a moment.</string>
+    <string name="chat_thank_desc">It will take 5 to 10 minutes. Please be patient.</string>
 </resources>

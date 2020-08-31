@@ -84,8 +84,8 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
                 viewModel.mPastDoctorDetails.value = Appointment
                 viewModel.id.set(viewModel.mPastDoctorDetails.value!!.id)
                 viewModel.name.set(
-                    viewModel.mPastDoctorDetails.value!!.hospital.first_name.plus(" ").plus(
-                        viewModel.mPastDoctorDetails.value!!.hospital.last_name
+                    viewModel.mPastDoctorDetails.value!!.hospital?.first_name?.plus(" ").plus(
+                        viewModel.mPastDoctorDetails.value!!.hospital?.last_name
                     )
                 )
                 viewModel.bookfor.set(viewModel.mPastDoctorDetails.value!!.booking_for)
@@ -93,8 +93,8 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
                 viewModel.status.set(viewModel.mPastDoctorDetails.value!!.status)
                 viewModel.specialit.set(viewModel.mPastDoctorDetails.value!!.hospital?.doctor_profile?.speciality?.name)
                 viewModel.catagiery.set(viewModel.mPastDoctorDetails.value!!.hospital?.doctor_profile?.speciality?.name)
-                viewModel.Clinic.set(viewModel.mPastDoctorDetails.value!!.hospital.clinic?.name.plus(",").plus(viewModel.mPastDoctorDetails.value!!.hospital?.clinic?.address))
-                if (Appointment!!.hospital.doctor_profile!= null && Appointment!!.hospital.doctor_profile.profile_pic != "") {
+                viewModel.Clinic.set(viewModel.mPastDoctorDetails.value!!.hospital?.clinic?.name.plus(",").plus(viewModel.mPastDoctorDetails.value!!.hospital?.clinic?.address))
+                if (Appointment!!.hospital?.doctor_profile!= null && Appointment!!.hospital?.doctor_profile.profile_pic != "") {
                     ViewUtils.setImageViewGlide(this@VisitedDoctorsDetailActivity,mDataBinding.imageView12,BuildConfig.BASE_IMAGE_URL+viewModel.mPastDoctorDetails.value!!.hospital.doctor_profile?.profile_pic)
 
                 }
@@ -102,8 +102,8 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
                 val VisitedDoctor = intent.getSerializableExtra(WebApiConstants.IntentPass.VisitedDoctor) as? MainResponse.VisitedDoctor
                 viewModel.mVisitedDoctorDetails.value = VisitedDoctor
                 viewModel.id.set(viewModel.mVisitedDoctorDetails.value!!.id)
-                viewModel.name.set(viewModel.mVisitedDoctorDetails.value!!.hospital.first_name.plus(" ").plus(
-                        viewModel.mVisitedDoctorDetails.value!!.hospital.last_name
+                viewModel.name.set(viewModel.mVisitedDoctorDetails.value!!.hospital?.first_name.plus(" ").plus(
+                        viewModel.mVisitedDoctorDetails.value!!.hospital?.last_name
                     )
                 )
                 viewModel.bookfor.set(viewModel.mVisitedDoctorDetails.value!!.booking_for)

@@ -121,5 +121,10 @@ interface ApiInterface {
     @POST("api/patient/chat/promocode")
     fun addChatPromoCode(@FieldMap hashMap: HashMap<String, Any>): Observable<ChatPromoResponse>
 
+    @FormUrlEncoded
+    @POST("api/patient/payment")
+    fun payForChatRequest(@FieldMap hashMap: HashMap<String, Any>): Observable<MessageResponse>
+
+
 
 }

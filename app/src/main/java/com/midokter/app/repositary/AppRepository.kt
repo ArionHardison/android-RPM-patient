@@ -459,7 +459,15 @@ class AppRepository : BaseRepository() {
             })
     }
 
-
-
-
+    fun payForChatRequest(chatViewModel: ChatSummaryViewModel, hashMap: java.util.HashMap<String, Any>): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .payForChatRequest(hashMap)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                chatViewModel.mChatRequestResponse.value = it
+            }, {
+                chatViewModel.getErrorObservable().value = getErrorMessage(it)
+            })
+    }
 }
