@@ -23,6 +23,7 @@ import com.midokter.app.ui.activity.register.RegisterViewModel
 import com.midokter.app.ui.activity.searchDoctor.SearchViewModel
 import com.midokter.app.ui.activity.visitedDoctor.VisitedDoctorsViewModel
 import com.midokter.app.ui.activity.main.ui.articles.ArticleViewModel
+import com.midokter.app.ui.activity.main.ui.online_consultation.OnlineConsultationViewModel
 import com.midokter.app.ui.activity.main.ui.remainder.RemainderViewModel
 import com.midokter.app.ui.activity.main.ui.wallet.WalletViewModel
 
@@ -367,6 +368,20 @@ class AppRepository : BaseRepository() {
 
     }
 
+    fun getChatsAPI(
+        onlineConsultationViewModel: OnlineConsultationViewModel
+    ): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .getChat()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                onlineConsultationViewModel.mChatResponse.value = it
+            }, {
+                onlineConsultationViewModel.loadingProgress.value = false
+                onlineConsultationViewModel.getErrorObservable().value = getErrorMessage(it)
+            })
+    }
 
     fun editPatientWithImageApi(
         id: Int,

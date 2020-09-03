@@ -178,8 +178,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
             R.id.action_logout -> {
                 preferenceHelper.clearAll()
                 val intent = Intent(this@MainActivity, SplashActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent);
-                finish()
+                finishAffinity()
                 true
             }
 

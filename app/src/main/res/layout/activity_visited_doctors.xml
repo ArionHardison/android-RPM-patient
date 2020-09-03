@@ -17,32 +17,33 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/cardview_light_background">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_visited_doctors"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorWhite"
-            android:paddingTop="@dimen/_8sdp"
             android:adapter="@{adapter}"
-            android:paddingBottom="@dimen/_8sdp"
+            android:paddingBottom="@dimen/_46sdp"
+            tools:listitem="@layout/visited_doctors_list_item"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar3" />
+
         <TextView
             android:id="@+id/tvNotFound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:text="@string/no_result_found"
             android:textSize="@dimen/_12sdp"
             android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="parent"
-            android:layout_centerInParent="true"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar3"

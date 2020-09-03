@@ -232,4 +232,5 @@
     <string name="no">No</string>
     <string name="chat_thank_title">An %s Specialist will chat with you in a moment.</string>
     <string name="chat_thank_desc">It will take 5 to 10 minutes. Please be patient.</string>
+    <string name="unknown">Unknown</string>
 </resources>

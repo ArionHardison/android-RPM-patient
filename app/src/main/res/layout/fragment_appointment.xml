@@ -10,10 +10,11 @@
             type="com.midokter.app.ui.activity.main.ui.appointment.AppointmentViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorWhite"
+        android:orientation="vertical"
         tools:context="me.eijaz.tabstutorial.MainActivity">
 
         <com.google.android.material.tabs.TabLayout
@@ -32,10 +33,11 @@
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewpager_main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tabs_main" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>

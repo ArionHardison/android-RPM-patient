@@ -7,5 +7,5 @@ data class MessageResponse(
     @SerializedName("message")
     val message: String,
     @SerializedName("status")
-    val status: Int
+    val status: String
 )

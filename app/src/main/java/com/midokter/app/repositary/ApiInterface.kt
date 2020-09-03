@@ -1,6 +1,7 @@
 package com.midokter.app.repositary
 
 import com.midokter.app.repositary.model.*
+import com.midokter.app.repositary.model.chatmodel.ChatListResponse
 import com.midokter.doctor.repositary.model.LoginResponse
 
 import com.midokter.doctor.repositary.model.*
@@ -91,6 +92,8 @@ interface ApiInterface {
         @FieldMap hashMap: HashMap<String, Any>
     ): Observable<ProfileResponse>
 
+    @GET("api/patient/chat/history")
+    fun getChat(): Observable<ChatListResponse>
 
     @Multipart
     @POST("api/patient/profile")

@@ -137,6 +137,10 @@ dependencies {
         transitive = true
     }
 
+    implementation 'com.pubnub:pubnub-android:3.7.5'
+    implementation 'com.pubnub:pubnub-gson:4.10.0'
+    implementation 'me.himanshusoni.chatmessageview:chat-message-view:1.0.3'
+
     //Circular imageview
     api 'de.hdodenhof:circleimageview:3.0.1'
 

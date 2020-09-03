@@ -65,18 +65,17 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
                     viewModel.mupcomingDoctorDetails.value!!.hospital?.last_name
                 )
             )
-            viewModel.bookfor.set(viewModel.mupcomingDoctorDetails.value!!.booking_for)
-            viewModel.scheduled_at.set(ViewUtils.getDayAndTimeFormat(viewModel.mupcomingDoctorDetails.value!!.scheduled_at))
-            viewModel.status.set(viewModel.mupcomingDoctorDetails.value!!.status)
-            viewModel.specialit.set(viewModel.mupcomingDoctorDetails.value!!.hospital?.doctor_profile?.certification)
-            viewModel.catagiery.set(viewModel.mupcomingDoctorDetails.value!!.hospital?.doctor_profile?.speciality?.name)
-            viewModel.Clinic.set(viewModel.mupcomingDoctorDetails.value!!.hospital?.clinic?.name.plus(",").plus(viewModel.mupcomingDoctorDetails.value!!.hospital?.clinic?.address))
+            viewModel.bookfor.set(viewModel.mupcomingDoctorDetails.value!!.booking_for?:"")
+            viewModel.scheduled_at.set(ViewUtils.getDayAndTimeFormat(viewModel.mupcomingDoctorDetails.value!!.scheduled_at?:""))
+            viewModel.status.set(viewModel.mupcomingDoctorDetails.value!!.status?:"")
+            viewModel.specialit.set(viewModel.mupcomingDoctorDetails.value!!.hospital?.doctor_profile?.certification?:"")
+            viewModel.catagiery.set(viewModel.mupcomingDoctorDetails.value!!.hospital?.doctor_profile?.speciality?.name?:"")
+            if(viewModel.mupcomingDoctorDetails.value!!.hospital?.clinic!=null)
+                viewModel.Clinic.set(viewModel.mupcomingDoctorDetails.value!!.hospital?.clinic?.name.plus(",").plus(viewModel.mupcomingDoctorDetails.value!!.hospital?.clinic?.address?:""))
             if (details!!.hospital?.doctor_profile?.profile_pic != "") {
                 ViewUtils.setImageViewGlide(this@VisitedDoctorsDetailActivity,mDataBinding.imageView12,BuildConfig.BASE_IMAGE_URL+viewModel.mupcomingDoctorDetails.value!!.hospital?.doctor_profile?.profile_pic)
-
             }
             mDataBinding.iscancel = true
-
         }else {
             mDataBinding.iscancel = false
             if (intent.getSerializableExtra(WebApiConstants.IntentPass.Appointment)!=null) {
@@ -88,15 +87,15 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
                         viewModel.mPastDoctorDetails.value!!.hospital?.last_name
                     )
                 )
-                viewModel.bookfor.set(viewModel.mPastDoctorDetails.value!!.booking_for)
-                viewModel.scheduled_at.set(ViewUtils.getDayAndTimeFormat(viewModel.mPastDoctorDetails.value!!.scheduled_at))
-                viewModel.status.set(viewModel.mPastDoctorDetails.value!!.status)
-                viewModel.specialit.set(viewModel.mPastDoctorDetails.value!!.hospital?.doctor_profile?.speciality?.name)
-                viewModel.catagiery.set(viewModel.mPastDoctorDetails.value!!.hospital?.doctor_profile?.speciality?.name)
-                viewModel.Clinic.set(viewModel.mPastDoctorDetails.value!!.hospital?.clinic?.name.plus(",").plus(viewModel.mPastDoctorDetails.value!!.hospital?.clinic?.address))
+                viewModel.bookfor.set(viewModel.mPastDoctorDetails.value!!.booking_for?:"")
+                viewModel.scheduled_at.set(ViewUtils.getDayAndTimeFormat(viewModel.mPastDoctorDetails.value!!.scheduled_at?:""))
+                viewModel.status.set(viewModel.mPastDoctorDetails.value!!.status?:"")
+                viewModel.specialit.set(viewModel.mPastDoctorDetails.value!!.hospital?.doctor_profile?.speciality?.name?:"")
+                viewModel.catagiery.set(viewModel.mPastDoctorDetails.value!!.hospital?.doctor_profile?.speciality?.name?:"")
+                if(viewModel.mPastDoctorDetails.value!!.hospital?.clinic!=null)
+                    viewModel.Clinic.set(viewModel.mPastDoctorDetails.value!!.hospital?.clinic?.name.plus(",").plus(viewModel.mPastDoctorDetails.value!!.hospital?.clinic?.address))
                 if (Appointment!!.hospital?.doctor_profile!= null && Appointment!!.hospital?.doctor_profile.profile_pic != "") {
                     ViewUtils.setImageViewGlide(this@VisitedDoctorsDetailActivity,mDataBinding.imageView12,BuildConfig.BASE_IMAGE_URL+viewModel.mPastDoctorDetails.value!!.hospital.doctor_profile?.profile_pic)
-
                 }
             }else if (intent.getSerializableExtra(WebApiConstants.IntentPass.VisitedDoctor)!=null){
                 val VisitedDoctor = intent.getSerializableExtra(WebApiConstants.IntentPass.VisitedDoctor) as? MainResponse.VisitedDoctor
@@ -106,12 +105,13 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
                         viewModel.mVisitedDoctorDetails.value!!.hospital?.last_name
                     )
                 )
-                viewModel.bookfor.set(viewModel.mVisitedDoctorDetails.value!!.booking_for)
-                viewModel.scheduled_at.set(ViewUtils.getDayAndTimeFormat(viewModel.mVisitedDoctorDetails.value!!.scheduled_at))
-                viewModel.status.set(viewModel.mVisitedDoctorDetails.value!!.status)
-                viewModel.specialit.set(viewModel.mVisitedDoctorDetails.value!!.hospital?.doctor_profile?.speciality?.name)
-              viewModel.Clinic.set(viewModel.mVisitedDoctorDetails.value!!.hospital?.clinic?.name?.plus(",").plus(viewModel.mVisitedDoctorDetails.value!!.hospital?.clinic?.address!!))
-
+                viewModel.bookfor.set(viewModel.mVisitedDoctorDetails.value!!.booking_for?:"")
+                viewModel.scheduled_at.set(ViewUtils.getDayAndTimeFormat(viewModel.mVisitedDoctorDetails.value!!.scheduled_at?:""))
+                viewModel.status.set(viewModel.mVisitedDoctorDetails.value!!.status?:"")
+                viewModel.catagiery.set(viewModel.mVisitedDoctorDetails.value!!.hospital?.doctor_profile?.speciality?.name?:"")
+                viewModel.specialit.set(viewModel.mVisitedDoctorDetails.value!!.hospital?.doctor_profile?.speciality?.name?:"")
+                if(viewModel.mVisitedDoctorDetails.value!!.hospital?.clinic!=null)
+                    viewModel.Clinic.set(viewModel.mVisitedDoctorDetails.value!!.hospital?.clinic?.name?.plus(",").plus(viewModel.mVisitedDoctorDetails.value!!.hospital?.clinic?.address!!))
                 if (VisitedDoctor!!.hospital.doctor_profile!= null && VisitedDoctor!!.hospital.doctor_profile.profile_pic != "") {
                     ViewUtils.setImageViewGlide(this@VisitedDoctorsDetailActivity,mDataBinding.imageView12,BuildConfig.BASE_IMAGE_URL+viewModel.mVisitedDoctorDetails.value!!.hospital.doctor_profile?.profile_pic)
 

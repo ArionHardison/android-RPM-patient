@@ -58,7 +58,7 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(), ChatNavigator, IChatCa
             } else {
                 val intent = Intent(applicationContext, ChatSummaryActivity::class.java)
                 intent.putExtra("category", category)
-                intent.putExtra("notes", etNotes.text)
+                intent.putExtra("notes", etNotes.text.toString())
                 startActivity(intent)
             }
         }

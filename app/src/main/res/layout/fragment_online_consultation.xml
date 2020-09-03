@@ -6,6 +6,9 @@
     <data>
 
         <variable
+            name="mChatAdapter"
+            type="com.midokter.app.ui.adapter.ChatAdapter" />
+        <variable
             name="viewmodel"
             type="com.midokter.app.ui.activity.main.ui.online_consultation.OnlineConsultationViewModel" />
     </data>
@@ -23,11 +26,24 @@
             android:background="@color/colorWhite"
             android:paddingTop="@dimen/_8sdp"
             android:paddingBottom="@dimen/_8sdp"
+            android:adapter="@{mChatAdapter}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
 
+        <TextView
+            android:id="@+id/tvNotFound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/no_result_found"
+            android:textSize="@dimen/_12sdp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
