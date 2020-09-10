@@ -47,7 +47,7 @@ public class ChatMessageAdapter extends ArrayAdapter<MessageModel> {
     public int getItemViewType(int position) {
         MessageModel item = getItem(position);
         String str= String.valueOf(preferenceHelper.mPref.getInt(PreferenceKey.PATIENT_ID,0));
-        if (Objects.requireNonNull(item).getSenderId().equals(str)) {
+        if (item!=null&&item.senderId!=null&&item.getSenderId().equals(str)) {
             return MY_MESSAGE;
         } else
             return OTHER_MESSAGE;
@@ -67,7 +67,7 @@ public class ChatMessageAdapter extends ArrayAdapter<MessageModel> {
                 textView.setText(chat.getMessage());
             }
             TextView timestamp = convertView.findViewById(R.id.timestamp);
-            if (chat != null) {
+            if (chat != null&& chat.getTime()!=null&&!chat.getTime().isEmpty()) {
                 String today = chat.getTime();
                 DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Date date = null;
@@ -90,7 +90,7 @@ public class ChatMessageAdapter extends ArrayAdapter<MessageModel> {
                 textView.setText(chat.getMessage());
             }
             TextView timestamp = convertView.findViewById(R.id.timestamp);
-            if (chat != null) {
+            if (chat != null&& chat.getTime()!=null&&!chat.getTime().isEmpty()) {
                 String today = chat.getTime();
                 DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Date date = null;

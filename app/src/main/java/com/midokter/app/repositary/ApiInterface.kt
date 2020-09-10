@@ -2,6 +2,7 @@ package com.midokter.app.repositary
 
 import com.midokter.app.repositary.model.*
 import com.midokter.app.repositary.model.chatmodel.ChatListResponse
+import com.midokter.app.repositary.model.chatmodel.ChatStatusResponse
 import com.midokter.doctor.repositary.model.LoginResponse
 
 import com.midokter.doctor.repositary.model.*
@@ -94,6 +95,9 @@ interface ApiInterface {
 
     @GET("api/patient/chat/history")
     fun getChat(): Observable<ChatListResponse>
+
+    @GET("api/patient/chat/status/{id}")
+    fun getChatStatus(@Path("id") int: Int): Observable<ChatStatusResponse>
 
     @Multipart
     @POST("api/patient/profile")

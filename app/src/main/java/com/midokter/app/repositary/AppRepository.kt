@@ -383,6 +383,21 @@ class AppRepository : BaseRepository() {
             })
     }
 
+    fun getChatStatusAPI(
+        onlineConsultationViewModel: OnlineConsultationViewModel,id:Int
+    ): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .getChatStatus(id)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                onlineConsultationViewModel.mChatStatusResponse.value = it
+            }, {
+                onlineConsultationViewModel.loadingProgress.value = false
+                onlineConsultationViewModel.getErrorObservable().value = getErrorMessage(it)
+            })
+    }
+
     fun editPatientWithImageApi(
         id: Int,
         editPatientViewModel: ProfileViewModel,

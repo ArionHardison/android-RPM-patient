@@ -15,7 +15,7 @@ import com.midokter.app.utils.ViewUtils
 import java.io.Serializable
 
 
-class ChatAdapter(val context: Context, val list: List<Chat>) :
+class ChatAdapter(val context: Context, val list: List<Chat>,val listener:IChatListener) :
     RecyclerView.Adapter<ChatViewHolder>() {
 
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
@@ -32,15 +32,10 @@ class ChatAdapter(val context: Context, val list: List<Chat>) :
             )
 
         holder.listItemChat.cardViewChatItem.setOnClickListener {
-            pubNubChatActivity(item)
+            listener.onChatClicked(item)
         }
     }
 
-    fun pubNubChatActivity(list: Chat) {
-        var intent = Intent(context, PubnubChatActivity::class.java)
-        intent.putExtra("chat_data", list as Serializable)
-        context.startActivity(intent)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder {
         val inflate = DataBindingUtil.inflate<OnlineAppointmentsListItemBinding>(
@@ -54,6 +49,10 @@ class ChatAdapter(val context: Context, val list: List<Chat>) :
     override fun getItemCount(): Int {
         return list.size
     }
+}
+
+interface IChatListener{
+    fun onChatClicked(item:Chat)
 }
 
 class ChatViewHolder(view: OnlineAppointmentsListItemBinding) : RecyclerView.ViewHolder(view.root) {
