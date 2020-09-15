@@ -4,7 +4,7 @@ package com.midokter.app.repositary.model.chatmodel
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class CheckStatus(
+data class ChatRequest(
     @SerializedName("chennel")
     val chennel: String,
     @SerializedName("finished_at")

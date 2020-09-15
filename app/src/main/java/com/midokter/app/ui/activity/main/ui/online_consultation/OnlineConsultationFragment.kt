@@ -37,7 +37,7 @@ private var chat: Chat?=null
 
     override fun onChatClicked(item: Chat) {
         chat=item
-        mViewModel.getChatStatus(item.id)
+        mViewModel.getChatStatus(item.chatRequestsId)
     }
 
     private fun initApiCall() {

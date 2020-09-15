@@ -6,32 +6,22 @@ import com.midokter.app.repositary.model.Hospital
 import java.io.Serializable
 
 data class Chat(
+    @SerializedName("chat_request")
+    val chatRequest: ChatRequest,
+    @SerializedName("chat_requests_id")
+    val chatRequestsId: Int,
     @SerializedName("chennel")
     val chennel: String,
-    @SerializedName("finished_at")
-    val finishedAt: String,
+    @SerializedName("created_at")
+    val createdAt: String,
     @SerializedName("hospital")
     val hospital: Hospital,
     @SerializedName("hospital_id")
-    val hospitalId: Any,
+    val hospitalId: Int,
     @SerializedName("id")
     val id: Int,
-    @SerializedName("messages")
-    val messages: Any,
-    @SerializedName("paid")
-    val paid: Int,
-    @SerializedName("paid_hours")
-    val paidHours: Int,
     @SerializedName("patient_id")
     val patientId: Int,
-    @SerializedName("payment_mode")
-    val paymentMode: String,
-    @SerializedName("speciality_id")
-    val specialityId: Int,
-    @SerializedName("started_at")
-    val startedAt: String,
-    @SerializedName("status")
-    val status: String,
-    @SerializedName("use_wallet")
-    val useWallet: Int
+    @SerializedName("updated_at")
+    val updatedAt: String
 ):Serializable
