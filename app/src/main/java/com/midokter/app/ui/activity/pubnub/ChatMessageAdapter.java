@@ -96,11 +96,11 @@ public class ChatMessageAdapter extends ArrayAdapter<MessageModel> {
                 Date date = null;
                 try {
                     date = formatter.parse(today);
+                    long dateInLong = date.getTime();
+                    timestamp.setText(String.valueOf(getDisplayableTime(dateInLong)));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                long dateInLong = date.getTime();
-                timestamp.setText(String.valueOf(getDisplayableTime(dateInLong)));
             }
         }
 

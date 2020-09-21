@@ -269,8 +269,11 @@ public class PubnubChatActivity extends AppCompatActivity {
         Date date = new Date(val);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         jObj.addProperty("time", dateFormat.format(date));
-        jObj.addProperty("senderid", chat_request_id);
+        jObj.addProperty("senderId", chat_request_id);
 
+        jObj.addProperty("request_id", PUBNUB_CHANNEL_NAME);
+        jObj.addProperty("user_id", chat_request_id);
+        jObj.addProperty("provider_id", chat_provider_id);
 
       /*  jObj.addProperty("read", 0);
         jObj.addProperty("created_at", System.currentTimeMillis());

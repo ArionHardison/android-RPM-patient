@@ -8,6 +8,7 @@ import com.midokter.app.data.NetworkError
 import com.midokter.app.data.PreferenceHelper
 import com.midokter.app.data.PreferenceKey
 import com.midokter.app.data.getValue
+import com.queenbee.app.session.SessionListener
 import com.queenbee.app.session.SessionManager
 import okhttp3.ResponseBody
 import org.json.JSONObject
@@ -58,6 +59,14 @@ open class BaseRepository {
                         ""
                     )!! != ""
                 ) {
+                    SessionManager.instance(object :SessionListener{
+                        override fun invalidate() {
+
+                        }
+
+                        override fun refresh() {
+                        }
+                    })
                     SessionManager.clearSession()
                 }
                 getErrorMessage(responseBody!!)

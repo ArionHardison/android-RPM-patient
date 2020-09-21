@@ -21,7 +21,7 @@ android {
         debug {
             buildConfigField "String", "BASE_URL", '"http://67.205.186.53/"'
             buildConfigField "String", "BASE_IMAGE_URL", '"http://67.205.186.53/storage/"'
-            buildConfigField "String", "CLIENT_SECRET", '"0aCTqaqhhTBFS8SiLEN0TlEdrSZSrGlpcJTnY3SO"'
+            buildConfigField "String", "CLIENT_SECRET", '"YxCuScoQElcK8dpIHsGZ0HYXzv0KPpTxZg5owxNn"'
             buildConfigField "String", "CLIENT_ID", '"2"'
             buildConfigField "String", "DEVICE_TYPE", '"android"'
             buildConfigField "String", "GRANT_TYPE", '"password"'

@@ -9,7 +9,8 @@ object SessionManager {
     }
 
     fun clearSession() {
-        listener.invalidate()
+        if(listener!=null)
+            listener.invalidate()
     }
 
 

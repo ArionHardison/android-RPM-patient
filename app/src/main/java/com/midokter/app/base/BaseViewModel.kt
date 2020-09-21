@@ -10,6 +10,7 @@ import com.midokter.app.data.NetworkError
 import com.midokter.app.data.PreferenceHelper
 import com.midokter.app.data.PreferenceKey
 import com.midokter.app.data.getValue
+import com.queenbee.app.session.SessionListener
 import com.queenbee.app.session.SessionManager
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.ResponseBody
@@ -18,7 +19,7 @@ import java.io.IOException
 import java.lang.ref.WeakReference
 import java.net.SocketTimeoutException
 
-abstract class BaseViewModel<N> : ViewModel() {
+abstract class BaseViewModel<N> : ViewModel() , SessionListener {
     private var compositeDisposable = CompositeDisposable()
     private lateinit var mNavigator: WeakReference<N>
     private var liveErrorResponse = MutableLiveData<String>()
@@ -41,6 +42,12 @@ abstract class BaseViewModel<N> : ViewModel() {
         return liveErrorResponse
     }
 
+    override fun invalidate() {
+
+    }
+
+    override fun refresh() {
+    }
 
     fun getErrorMessage(e: Throwable): String? {
         return when (e) {
@@ -57,6 +64,7 @@ abstract class BaseViewModel<N> : ViewModel() {
                         ""
                     )!! != ""
                 ) {
+                    SessionManager.instance(this)
                     SessionManager.clearSession()
                 }
                 getErrorMessage(responseBody!!)

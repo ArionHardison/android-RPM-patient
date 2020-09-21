@@ -46,9 +46,9 @@ private var chat: Chat?=null
 
     private fun observeSuccessResponse() {
         mViewModel.mChatResponse.observe(this, Observer {
-            if (mViewModel.mChatResponse.value!!.chats.size > 0) {
+            if(mViewModel.mChatResponse.value!!.chats.size > 0) {
                 mDataBinding.tvNotFound.visibility = View.GONE
-            } else {
+            }else{
                 mDataBinding.tvNotFound.visibility = View.VISIBLE
             }
 
