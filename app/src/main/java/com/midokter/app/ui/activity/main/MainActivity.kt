@@ -1,42 +1,36 @@
 package com.midokter.app.ui.activity.main
 
 import android.content.Intent
-import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.navigation.NavigationView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import androidx.databinding.ViewDataBinding
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.bumptech.glide.Glide
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.navigation.NavigationView
 import com.midokter.app.BaseApplication
-import com.midokter.app.BuildConfig
 import com.midokter.app.R
 import com.midokter.app.base.BaseActivity
 import com.midokter.app.data.*
 import com.midokter.app.databinding.ActivityMainBinding
-import com.midokter.app.databinding.ActivityOtpBinding
 import com.midokter.app.repositary.model.ProfileResponse
 import com.midokter.app.repositary.model.Response
-import com.midokter.app.ui.activity.otp.OTPViewModel
+import com.midokter.app.repositary.model.VideoStatusCheck
 import com.midokter.app.ui.activity.profile.ProfileActivity
-import com.midokter.app.ui.activity.register.RegisterEmailActivity
-import com.midokter.app.ui.activity.register.RegisterNameActivity
 import com.midokter.app.ui.activity.splash.SplashActivity
+import com.midokter.app.ui.twilio.IncomingVideoCallActivity
+import com.midokter.app.utils.NetworkUtils
 import com.midokter.app.utils.ViewUtils
+import java.util.*
 
 class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -49,6 +43,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
     private lateinit var name: TextView
     private lateinit var profile_completed: TextView
     private lateinit var profile_img: ImageView
+    private var checkRequestTimer: Timer? = null
 
     override fun getLayoutId(): Int = R.layout.activity_main
 
@@ -69,6 +64,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
     private fun initApiCal() {
         loadingObservable.value = true
         viewModel.getprofile()
+
+        checkRequestTimer = Timer()
+        checkRequestTimer!!.schedule(object : TimerTask() {
+            override fun run() {
+                if (NetworkUtils.isNetworkConnected(this@MainActivity))
+                    viewModel.callCheckVideoAPI()
+            }
+        }, 0, 5000)
     }
     private fun initUI() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
@@ -87,9 +90,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_appointments, R.id.nav_online_consultation,
-                R.id.nav_fav_doctor, R.id.nav_medical_records, R.id.nav_remainder,R.id.nav_wallet, R.id.nav_articles
-                , R.id.nav_relative_mgmt, R.id.nav_faq, R.id.nav_settings
+                R.id.nav_home,
+                R.id.nav_appointments,
+                R.id.nav_online_consultation,
+                R.id.nav_fav_doctor,
+                R.id.nav_medical_records,
+                R.id.nav_remainder,
+                R.id.nav_wallet,
+                R.id.nav_articles,
+                R.id.nav_relative_mgmt,
+                R.id.nav_faq,
+                R.id.nav_settings
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -98,11 +109,31 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
         name = headerview.findViewById(R.id.name)
         profile_completed = headerview.findViewById(R.id.profile_completed)
         profile_img = headerview.findViewById(R.id.profile_img)
-        name.setText(preferenceHelper.getValue(PreferenceKey.FIRST_NAME,"Test").toString().plus(" ").plus(preferenceHelper.getValue(PreferenceKey.LAST_NAME,"Test").toString()))
-        profile_completed.setText( getString(R.string.profile_completed).plus(" ").plus(preferenceHelper.getValue(PreferenceKey.PROFILE_PER,"Test").toString() ))
+        name.setText(
+            preferenceHelper.getValue(PreferenceKey.FIRST_NAME, "Test").toString().plus(" ").plus(
+                preferenceHelper.getValue(
+                    PreferenceKey.LAST_NAME,
+                    "Test"
+                ).toString()
+            )
+        )
+        profile_completed.setText(
+            getString(R.string.profile_completed).plus(" ").plus(
+                preferenceHelper.getValue(
+                    PreferenceKey.PROFILE_PER,
+                    "Test"
+                ).toString()
+            )
+        )
 
 
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(NetworkUtils.isNetworkConnected(this))
+            viewModel.callCheckVideoAPI()
     }
 
     private fun observeResponse() {
@@ -125,10 +156,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
 
             viewModel.name.set(it.patient.first_name.plus(" ").plus(it.patient.last_name))
             viewModel.profilepercentage.set(it.profile_complete)
-            if (it.patient.profile?.profile_pic !=null)
-            viewModel.imageurl.set(it.patient.profile?.profile_pic as String?)
+            if (it.patient.profile?.profile_pic != null)
+                viewModel.imageurl.set(it.patient.profile?.profile_pic as String?)
 
-          /*  viewModel.imageurl.set(BuildConfig.BASE_IMAGE_URL+it.doctor.doctor_profile.profile_pic)
+            /*  viewModel.imageurl.set(BuildConfig.BASE_IMAGE_URL+it.doctor.doctor_profile.profile_pic)
             if ( it.doctor.doctor_profile.profile_pic!=null) {
                 Glide.with(this)
                     .load(viewModel.imageurl.get())
@@ -145,10 +176,36 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
             preferenceHelper.setValue(PreferenceKey.PROFILE_IMAGE, it.patient.profile?.profile_pic)
             preferenceHelper.setValue(PreferenceKey.WALLET_BALANCE, it.patient.wallet_balance)
 
-            name.setText(preferenceHelper.getValue(PreferenceKey.FIRST_NAME,"Test").toString().plus(" ").plus(preferenceHelper.getValue(PreferenceKey.LAST_NAME,"Test").toString()))
-            profile_completed.setText( getString(R.string.profile_completed).plus(" ").plus(preferenceHelper.getValue(PreferenceKey.PROFILE_PER,"Test").toString() ))
+            name.setText(
+                preferenceHelper.getValue(PreferenceKey.FIRST_NAME, "Test").toString().plus(
+                    " "
+                ).plus(preferenceHelper.getValue(PreferenceKey.LAST_NAME, "Test").toString())
+            )
+            profile_completed.setText(
+                getString(R.string.profile_completed).plus(" ").plus(
+                    preferenceHelper.getValue(
+                        PreferenceKey.PROFILE_PER,
+                        "Test"
+                    ).toString()
+                )
+            )
 
-
+            viewModel.mVideoIncomingResponse.observe(this, Observer<VideoStatusCheck> {
+                if (it.data != null) {
+                    val mainIntent = Intent(
+                        this,
+                        IncomingVideoCallActivity::class.java
+                    )
+                    mainIntent.flags =
+                        Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                    mainIntent.putExtra("chat_path", it.data.roomId)
+                    mainIntent.putExtra("name", "Doctor")
+                    mainIntent.putExtra("is_video", 1)
+                    startActivity(mainIntent)
+                    return@Observer;
+                } else {
+                }
+            })
         })
 
         viewModel.mLogoutResponse.observe(this, Observer<Response> {
@@ -158,7 +215,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
             val intent = Intent(this@MainActivity, SplashActivity::class.java)
             startActivity(intent);
             finish()
-
 
 
         })

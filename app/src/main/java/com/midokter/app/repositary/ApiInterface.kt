@@ -3,6 +3,7 @@ package com.midokter.app.repositary
 import com.midokter.app.repositary.model.*
 import com.midokter.app.repositary.model.chatmodel.ChatListResponse
 import com.midokter.app.repositary.model.chatmodel.ChatStatusResponse
+import com.midokter.app.ui.twilio.TwilloVideoActivity
 import com.midokter.doctor.repositary.model.LoginResponse
 
 import com.midokter.doctor.repositary.model.*
@@ -10,6 +11,7 @@ import com.midokter.doctor.repositary.model.*
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.Call
 import retrofit2.http.*
 
 interface ApiInterface {
@@ -133,5 +135,20 @@ interface ApiInterface {
     fun payForChatRequest(@FieldMap hashMap: HashMap<String, Any>): Observable<MessageResponse>
 
 
+
+    @GET("api/patient/video/call/check")
+    fun videoCheckStatusAPI(): Observable<VideoStatusCheck>
+
+    @GET("api/patient/video/cancel")
+    fun cancelVideoCall(
+        @Query("user_id") user_id: Any?,
+        @Query("provider_id") provider_id: Any?,
+        @Query("push_to") push_to: Any?
+    ): Call<TwilloVideoActivity.AccessToken?>?
+
+    @GET("api/patient/video/call/token")
+    fun getTwilloVideoToken(
+        @Query("room_id") obj: Any?
+    ): Call<TwilloVideoActivity.AccessToken?>?
 
 }

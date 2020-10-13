@@ -83,6 +83,7 @@ class PreviousAppointmentFragment : BaseFragment<FragmentPreviousAppointmentBind
             mAdapter = PreviousAppointmentsListAdapter(viewModel.mPreviouslist!!,activity!!)
             mDataBinding.adapter = mAdapter
             mAdapter!!.notifyDataSetChanged()
+
             hideLoading()
         })
         viewModel.getErrorObservable().observe(this, Observer<String> { message ->

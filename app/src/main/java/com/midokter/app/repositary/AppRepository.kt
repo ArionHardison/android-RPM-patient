@@ -500,4 +500,20 @@ class AppRepository : BaseRepository() {
                 chatViewModel.getErrorObservable().value = getErrorMessage(it)
             })
     }
+    fun videoCheckStatusAPI(viewModel: MainViewModel): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .videoCheckStatusAPI()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                if (viewModel is MainViewModel) {
+                    viewModel.mVideoIncomingResponse.value = it
+                }
+            }, {
+                if (viewModel is MainViewModel) {
+                    viewModel.getErrorObservable().value = getErrorMessage(it)
+                }
+            })
+    }
+
 }

@@ -6,6 +6,7 @@ import com.midokter.app.base.BaseViewModel
 import com.midokter.app.repositary.AppRepository
 import com.midokter.app.repositary.model.ProfileResponse
 import com.midokter.app.repositary.model.Response
+import com.midokter.app.repositary.model.VideoStatusCheck
 
 class MainViewModel : BaseViewModel<MainNavigator>(){
     private val appRepository = AppRepository.instance()
@@ -15,6 +16,7 @@ class MainViewModel : BaseViewModel<MainNavigator>(){
     var imageurl : ObservableField<String> = ObservableField("")
     var profilepercentage : ObservableField<String> = ObservableField("")
     var mLogoutResponse = MutableLiveData<Response>()
+    var mVideoIncomingResponse = MutableLiveData<VideoStatusCheck>()
 
     fun getprofile() {
 
@@ -22,5 +24,9 @@ class MainViewModel : BaseViewModel<MainNavigator>(){
     }
     fun logout(hashMap: HashMap<String, Any>) {
         getCompositeDisposable().add(appRepository.logout(this,hashMap))
+    }
+
+    fun callCheckVideoAPI() {
+        getCompositeDisposable().add(appRepository.videoCheckStatusAPI(this))
     }
 }

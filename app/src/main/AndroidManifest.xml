@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.midokter.app">
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
@@ -24,6 +27,9 @@
         <activity android:name=".ui.activity.searchGlobal.SearchGlobalActivity"></activity>
         <activity android:name=".ui.activity.searchDoctor.SearchDoctorDetailActivity" />
         <activity android:name=".ui.activity.addreminder.AddReminderActivity" />
+        <activity android:name=".ui.twilio.TwilloSettingsActivity" />
+        <activity android:name=".ui.twilio.IncomingVideoCallActivity" />
+        <activity android:name=".ui.twilio.TwilloVideoActivity" />
         <activity android:name=".ui.activity.searchDoctor.SearchDoctorActivity" />
         <activity android:name=".ui.activity.pubnub.PubnubChatActivity" />
         <activity android:name=".ui.activity.chat.ChatSummaryActivity" />
