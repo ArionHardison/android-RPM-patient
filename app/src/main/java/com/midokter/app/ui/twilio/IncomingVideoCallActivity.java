@@ -5,15 +5,27 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.midokter.app.BaseApplication;
+import com.midokter.app.BuildConfig;
 import com.midokter.app.R;
+import com.midokter.app.data.PreferenceHelper;
+import com.midokter.app.repositary.ApiInterface;
+import com.midokter.app.repositary.AppRepository;
+import com.midokter.app.repositary.model.VideoCallCancelResponse;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 
 public class IncomingVideoCallActivity extends AppCompatActivity implements View.OnClickListener {
@@ -77,7 +89,7 @@ public class IncomingVideoCallActivity extends AppCompatActivity implements View
         switch (v.getId()) {
             case R.id.imgEndCall:
                 stopRingtone();
-                finish();
+                cancelVideoCall();
                 break;
             case R.id.imgAcceptCall:
                 stopRingtone();
@@ -86,6 +98,7 @@ public class IncomingVideoCallActivity extends AppCompatActivity implements View
                 i.putExtra("is_video", isVideo);
                 i.putExtra("sender", sender);
                 startActivity(i);
+                finish();
                 break;
         }
     }
@@ -98,6 +111,23 @@ public class IncomingVideoCallActivity extends AppCompatActivity implements View
             ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
             ringtone.play();
         }
+    }
+
+    private AppRepository appRepository = new AppRepository();
+
+    private void cancelVideoCall() {
+        Call<VideoCallCancelResponse> call = appRepository.createApiClient(BuildConfig.BASE_URL, ApiInterface.class).cancelVideoCall(chatPath);
+        call.enqueue(new Callback<VideoCallCancelResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<VideoCallCancelResponse> call, @NonNull retrofit2.Response<VideoCallCancelResponse> response) {
+                finish();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<VideoCallCancelResponse> call, @NonNull Throwable t) {
+            }
+        });
+
     }
 
 

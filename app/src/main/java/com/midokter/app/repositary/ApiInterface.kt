@@ -141,10 +141,8 @@ interface ApiInterface {
 
     @GET("api/patient/video/cancel")
     fun cancelVideoCall(
-        @Query("user_id") user_id: Any?,
-        @Query("provider_id") provider_id: Any?,
-        @Query("push_to") push_to: Any?
-    ): Call<TwilloVideoActivity.AccessToken?>?
+        @Query("room_id") room_id: Any?
+    ): Call<VideoCallCancelResponse>?
 
     @GET("api/patient/video/call/token")
     fun getTwilloVideoToken(

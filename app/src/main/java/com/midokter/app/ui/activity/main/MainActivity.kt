@@ -64,14 +64,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
     private fun initApiCal() {
         loadingObservable.value = true
         viewModel.getprofile()
-
-        checkRequestTimer = Timer()
-        checkRequestTimer!!.schedule(object : TimerTask() {
-            override fun run() {
-                if (NetworkUtils.isNetworkConnected(this@MainActivity))
-                    viewModel.callCheckVideoAPI()
-            }
-        }, 0, 5000)
     }
     private fun initUI() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
@@ -130,10 +122,23 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
 
     }
 
+    override fun onPause() {
+        super.onPause()
+        if(checkRequestTimer != null) {
+            checkRequestTimer!!.cancel();
+            checkRequestTimer = null;
+        }
+    }
+
     override fun onResume() {
         super.onResume()
-        if(NetworkUtils.isNetworkConnected(this))
-            viewModel.callCheckVideoAPI()
+        checkRequestTimer = Timer()
+        checkRequestTimer!!.schedule(object : TimerTask() {
+            override fun run() {
+                if (NetworkUtils.isNetworkConnected(this@MainActivity))
+                    viewModel.callCheckVideoAPI()
+            }
+        }, 0, 5000)
     }
 
     private fun observeResponse() {
@@ -202,7 +207,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
                     mainIntent.putExtra("name", "Doctor")
                     mainIntent.putExtra("is_video", 1)
                     startActivity(mainIntent)
-                    return@Observer;
                 } else {
                 }
             })

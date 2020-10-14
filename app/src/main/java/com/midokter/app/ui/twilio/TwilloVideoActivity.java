@@ -35,6 +35,7 @@ import com.midokter.app.data.PreferenceHelper;
 import com.midokter.app.data.PreferenceKey;
 import com.midokter.app.repositary.ApiInterface;
 import com.midokter.app.repositary.AppRepository;
+import com.midokter.app.repositary.model.VideoCallCancelResponse;
 import com.twilio.video.AudioCodec;
 import com.twilio.video.CameraCapturer;
 import com.twilio.video.CameraCapturer.CameraSource;
@@ -1070,19 +1071,14 @@ public class TwilloVideoActivity extends AppCompatActivity {
     PreferenceHelper preferenceHelper = new PreferenceHelper(BaseApplication.baseApplication);
 
     private void cancelCallself() {
-        Call<AccessToken> call = appRepository.createApiClient(BuildConfig.BASE_URL, ApiInterface.class).cancelVideoCall(preferenceHelper.mPref.getInt(PreferenceKey.PATIENT_ID,0), id, "provider");
-        call.enqueue(new Callback<AccessToken>() {
+        Call<VideoCallCancelResponse> call = appRepository.createApiClient(BuildConfig.BASE_URL, ApiInterface.class).cancelVideoCall(chatPath);
+        call.enqueue(new Callback<VideoCallCancelResponse>() {
             @Override
-            public void onResponse(@NonNull Call<AccessToken> call, @NonNull retrofit2.Response<AccessToken> response) {
-                customDialog.dismiss();
-                if (response.isSuccessful()) {
-
-                } else {
-                }
+            public void onResponse(@NonNull Call<VideoCallCancelResponse> call, @NonNull retrofit2.Response<VideoCallCancelResponse> response) {
             }
 
             @Override
-            public void onFailure(@NonNull Call<AccessToken> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<VideoCallCancelResponse> call, @NonNull Throwable t) {
             }
         });
 
