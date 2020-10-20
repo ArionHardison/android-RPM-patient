@@ -29,7 +29,8 @@
         <activity android:name=".ui.activity.addreminder.AddReminderActivity" />
         <activity android:name=".ui.twilio.TwilloSettingsActivity" />
         <activity android:name=".ui.twilio.IncomingVideoCallActivity" />
-        <activity android:name=".ui.twilio.TwilloVideoActivity" />
+        <activity android:name=".ui.twilio.TwilloVideoActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".ui.activity.searchDoctor.SearchDoctorActivity" />
         <activity android:name=".ui.activity.pubnub.PubnubChatActivity" />
         <activity android:name=".ui.activity.chat.ChatSummaryActivity" />
