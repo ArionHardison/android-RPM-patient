@@ -54,7 +54,7 @@ class MedicalRecordsFragment : BaseFragment<FragmentMedicalRecordsBinding>(),
                 if (medicalRecords.isNotEmpty()) {
                     rv_medical_records.adapter = context?.let { MedicalRecordsListAdapter(medicalRecords, it) }
                 } else {
-                    ViewUtils.showToast(activity!!, "No Record found", false)
+                    //ViewUtils.showToast(activity!!, "No Record found", false)
                 }
             }
         })

@@ -50,13 +50,21 @@ class FindDoctorBookingActivity : BaseActivity<ActivityFindDoctorBookingBinding>
         mDataBinding.toolbar7.setNavigationOnClickListener {
             finish()
         }
-mDataBinding.searchDocName.text = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_NAME,"").toString()
-        if(preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_Special,"").toString().isEmpty())
-            mDataBinding.searchDocSpec.visibility=View.GONE
-        mDataBinding.searchDocSpec.text = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_Special,"").toString()
-        mDataBinding.searchDocHospName.text = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_ADDRESS,"").toString()
+        mDataBinding.searchDocName.text =
+            preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_NAME, "").toString()
+        if (preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_Special, "").toString().isEmpty())
+            mDataBinding.searchDocSpec.visibility = View.GONE
+        mDataBinding.searchDocSpec.text =
+            preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_Special, "").toString()
+        mDataBinding.searchDocHospName.text =
+            preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_ADDRESS, "").toString()
         Glide.with(this@FindDoctorBookingActivity)
-            .load(BuildConfig.BASE_IMAGE_URL +  preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_IMAGE,"").toString())
+            .load(
+                BuildConfig.BASE_IMAGE_URL + preferenceHelper.getValue(
+                    PreferenceKey.SELECTED_DOC_IMAGE,
+                    ""
+                ).toString()
+            )
             .placeholder(R.drawable.user_placeholder)
             .error(R.drawable.user_placeholder)
             .fallback(R.drawable.user_placeholder)
@@ -97,11 +105,10 @@ mDataBinding.searchDocName.text = preferenceHelper.getValue(PreferenceKey.SELECT
             var hour: Int = 0
             var minute: Int = 0
             val calendar: Calendar = Calendar.getInstance()
-            hour = calendar.get(Calendar.HOUR)
+            hour = calendar.get(Calendar.HOUR_OF_DAY)
             minute = calendar.get(Calendar.MINUTE)
             val timePickerDialog = TimePickerDialog(
-                this, this@FindDoctorBookingActivity, hour, minute,
-                DateFormat.is24HourFormat(this)
+                this, this@FindDoctorBookingActivity, hour, minute,false
             )
             timePickerDialog.show()
 
@@ -118,50 +125,54 @@ mDataBinding.searchDocName.text = preferenceHelper.getValue(PreferenceKey.SELECT
         currentDay = cal[Calendar.DAY_OF_MONTH]
         if (d.time.after(cal.time)) {
             return false
-        }
-        else return !(d.get(Calendar.YEAR) == currentYear && d.get(Calendar.MONTH) == currentMonth && d.get(Calendar.DAY_OF_MONTH) == currentDay)
+        } else return !(d.get(Calendar.YEAR) == currentYear && d.get(Calendar.MONTH) == currentMonth && d.get(
+            Calendar.DAY_OF_MONTH
+        ) == currentDay)
 
     }
 
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
-
-        val datetime = Calendar.getInstance()
-        val c = Calendar.getInstance()
-        datetime[Calendar.YEAR] = viewModel.selectedDate!!.get(Calendar.YEAR)
-        datetime[Calendar.MONTH] = viewModel.selectedDate!!.get(Calendar.MONTH)+1
-        datetime[Calendar.DAY_OF_MONTH] = viewModel.selectedDate!!.get(Calendar.DAY_OF_MONTH)
-        datetime[Calendar.HOUR_OF_DAY] = hourOfDay
-        datetime[Calendar.MINUTE] = minute
-        if (datetime.timeInMillis >= c.timeInMillis) {
-            val hour = hourOfDay % 12
-
-            val selectedhour  =          if(hourOfDay<10)"0"+ String.valueOf(hourOfDay)else String.valueOf(hourOfDay)
-            val selectedminutes  =          if(minute<10)"0"+ String.valueOf(minute)else String.valueOf(minute)
-            preferenceHelper.setValue(
-                PreferenceKey.SCHEDULED_DATE,
-                viewModel.selectedDate!!.get(Calendar.YEAR).toString() +"-"+(viewModel.selectedDate!!.get(Calendar.MONTH)+1).toString() +"-"+(viewModel.selectedDate!!.get(Calendar.DAY_OF_MONTH)).toString() + " " + selectedhour + ":" + selectedminutes + ":" + "00"
+        viewModel.selectedDate!!.set(Calendar.HOUR_OF_DAY, hourOfDay)
+        viewModel.selectedDate!!.set(Calendar.MINUTE, minute)
+        val currentTime = Calendar.getInstance()
+        currentTime.add(Calendar.MINUTE, -1)
+        if (viewModel.selectedDate!!.getTimeInMillis() < currentTime.timeInMillis) {
+            ViewUtils.showToast(
+                this@FindDoctorBookingActivity,
+                getString(R.string.past_time_error), false
             )
-            if (mDataBinding.radioButton.isChecked) {
-                preferenceHelper.setValue(PreferenceKey.VISIT_PURPOSE, "follow_up")
-            } else {
-                preferenceHelper.setValue(PreferenceKey.VISIT_PURPOSE, "consultation")
-            }
-
-            performclick()
-
-        } else {
-            Toast.makeText(applicationContext, "Invalid Time", Toast.LENGTH_LONG).show()
+            return
         }
 
+
+        val selectedhour =
+            if (hourOfDay < 10) "0" + String.valueOf(hourOfDay) else String.valueOf(hourOfDay)
+        val selectedminutes =
+            if (minute < 10) "0" + String.valueOf(minute) else String.valueOf(minute)
+        preferenceHelper.setValue(
+            PreferenceKey.SCHEDULED_DATE,
+            viewModel.selectedDate!!.get(Calendar.YEAR)
+                .toString() + "-" + (viewModel.selectedDate!!.get(Calendar.MONTH) + 1).toString() + "-" + (viewModel.selectedDate!!.get(
+                Calendar.DAY_OF_MONTH
+            )).toString() + " " + selectedhour + ":" + selectedminutes + ":" + "00"
+        )
+        if (mDataBinding.radioButton.isChecked) {
+            preferenceHelper.setValue(PreferenceKey.VISIT_PURPOSE, "follow_up")
+        } else {
+            preferenceHelper.setValue(PreferenceKey.VISIT_PURPOSE, "consultation")
+        }
+        performclick()
     }
+
     private fun observeResponse() {
         viewModel.mBookedResponse.observe(this@FindDoctorBookingActivity, Observer<BookedResponse> {
             loadingObservable.value = false
             if (it.status) {
-                val intent = Intent(this@FindDoctorBookingActivity, PatientDetailsActivity::class.java)
+                val intent =
+                    Intent(this@FindDoctorBookingActivity, PatientDetailsActivity::class.java)
                 startActivity(intent);
 
-            }else
+            } else
                 ViewUtils.showToast(this@FindDoctorBookingActivity, it.message, false)
 
 
@@ -173,18 +184,23 @@ mDataBinding.searchDocName.text = preferenceHelper.getValue(PreferenceKey.SELECT
 
 
     }
-    fun performclick(){
-       // loadingObservable.value = true
-        bookDoctor_Map["doctor_id"]= preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_ID,"").toString()
-        bookDoctor_Map["selectedPatient"]= preferenceHelper.getValue(PreferenceKey.PATIENT_ID,0).toString()
-        bookDoctor_Map["booking_for"]= preferenceHelper.getValue(PreferenceKey.VISIT_PURPOSE,"").toString()
-        bookDoctor_Map["scheduled_at"]= preferenceHelper.getValue(PreferenceKey.SCHEDULED_DATE,"").toString()
-        bookDoctor_Map["consult_time"]= "15"
-        bookDoctor_Map["appointment_type"]= "OFFLINE"
-        bookDoctor_Map["description"]= ""
+
+    fun performclick() {
+        // loadingObservable.value = true
+        bookDoctor_Map["doctor_id"] =
+            preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_ID, "").toString()
+        bookDoctor_Map["selectedPatient"] =
+            preferenceHelper.getValue(PreferenceKey.PATIENT_ID, 0).toString()
+        bookDoctor_Map["booking_for"] =
+            preferenceHelper.getValue(PreferenceKey.VISIT_PURPOSE, "").toString()
+        bookDoctor_Map["scheduled_at"] =
+            preferenceHelper.getValue(PreferenceKey.SCHEDULED_DATE, "").toString()
+        bookDoctor_Map["consult_time"] = "15"
+        bookDoctor_Map["appointment_type"] = "OFFLINE"
+        bookDoctor_Map["description"] = ""
 
 //                loadingObservable.value = true
-       // viewModel.BookDoctor(bookDoctor_Map)
+        // viewModel.BookDoctor(bookDoctor_Map)
         val intent = Intent(this@FindDoctorBookingActivity, PatientDetailsActivity::class.java)
         startActivity(intent);
     }

@@ -35,7 +35,7 @@
             android:drawableTop="@drawable/ic_add"
             android:drawablePadding="@dimen/_3sdp"
             android:drawableTint="@color/colorButton"
-            android:text="Add Re"
+            android:text="Add Relative"
             android:textSize="@dimen/_18sdp"
             android:textColor="@color/colorButton"
             app:layout_constraintBottom_toBottomOf="parent"
