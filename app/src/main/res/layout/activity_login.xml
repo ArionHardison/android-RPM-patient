@@ -8,7 +8,7 @@
 
         <variable
             name="viewmodel"
-            type="com.midokter.app.ui.activity.login.LoginViewModel" />
+            type="com.telehealthmanager.app.ui.activity.login.LoginViewModel" />
     </data>
 
     <ScrollView
@@ -30,7 +30,8 @@
                 app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/logo_app" />
+                app:srcCompat="@drawable/logo_app"
+                android:tint="@color/colorWhite"/>
 
             <TextView
                 android:id="@+id/textView"

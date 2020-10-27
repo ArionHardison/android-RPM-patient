@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.midokter.app.ui.activity.otp.OTPViewModel"
+            type="com.telehealthmanager.app.ui.activity.otp.OTPViewModel"
            />
     </data>
 

@@ -7,7 +7,7 @@
 
         <variable
             name="itemClickListener"
-            type="com.midokter.app.utils.CustomClickListener" />
+            type="com.telehealthmanager.app.utils.CustomClickListener" />
     </data>
 
     <androidx.cardview.widget.CardView

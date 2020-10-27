@@ -8,10 +8,10 @@
 
         <variable
             name="reminderAdapter"
-            type="com.midokter.app.ui.adapter.RemainderListAdapter" />
+            type="com.telehealthmanager.app.ui.adapter.RemainderListAdapter" />
         <variable
             name="viewmodel"
-            type="com.midokter.app.ui.activity.main.ui.remainder.RemainderViewModel" />
+            type="com.telehealthmanager.app.ui.activity.main.ui.remainder.RemainderViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

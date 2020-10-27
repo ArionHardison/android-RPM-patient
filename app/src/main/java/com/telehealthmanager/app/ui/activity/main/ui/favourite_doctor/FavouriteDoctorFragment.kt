@@ -1,0 +1,118 @@
+package com.telehealthmanager.app.ui.activity.main.ui.favourite_doctor
+
+
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import androidx.fragment.app.Fragment
+import android.view.View
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+
+import com.telehealthmanager.app.R
+import com.telehealthmanager.app.base.BaseFragment
+import com.telehealthmanager.app.databinding.FragmentFavouriteDoctorBinding
+import com.telehealthmanager.app.repositary.model.MainResponse
+import com.telehealthmanager.app.ui.adapter.FavDoctorListAdapter
+import com.telehealthmanager.app.utils.ViewUtils
+import kotlinx.android.synthetic.main.fragment_favourite_doctor.*
+import java.util.HashMap
+
+/**
+ * A simple [Fragment] subclass.
+ */
+class FavouriteDoctorFragment : BaseFragment<FragmentFavouriteDoctorBinding>(),FavouriteDoctorNavigator {
+
+    val favDoctors: ArrayList<String> = ArrayList()
+    private lateinit var viewModel: FavouriteDoctorViewModel
+    private lateinit var mDataBinding: FragmentFavouriteDoctorBinding
+    private var mAdapter: FavDoctorListAdapter? = null
+
+
+    override fun getLayoutId(): Int = R.layout.fragment_favourite_doctor
+
+    override fun initView(mRootView: View?, mViewDataBinding: ViewDataBinding?) {
+        mDataBinding = mViewDataBinding as FragmentFavouriteDoctorBinding
+        viewModel = ViewModelProviders.of(this).get(FavouriteDoctorViewModel::class.java)
+        mDataBinding.viewmodel = viewModel
+        viewModel.navigator = this
+        //addFavDoctor()
+        initApiCal()
+        initAdapter()
+        observeResponse()
+
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        menu.clear();
+    }
+
+    private fun initApiCal() {
+        showLoading()
+        val hashMap: HashMap<String, Any> = HashMap()
+        viewModel.gethome(hashMap)
+
+    }
+    private fun observeResponse() {
+
+        viewModel.mDoctorResponse.observe(this, Observer<MainResponse> {
+
+
+            viewModel.mDoctorslist = it.favourite_Doctors as MutableList<MainResponse.Doctor>?
+            if (viewModel.mDoctorslist!!.size > 0) {
+                mDataBinding.tvNotFound.visibility = View.GONE
+            } else {
+                mDataBinding.tvNotFound.visibility = View.VISIBLE
+            }
+            mAdapter = FavDoctorListAdapter(viewModel.mDoctorslist!!,activity!!)
+            mDataBinding.adapter = mAdapter
+            mAdapter!!.notifyDataSetChanged()
+         hideLoading()
+
+
+
+
+        })
+        viewModel.getErrorObservable().observe(this, Observer<String> { message ->
+           hideLoading()
+            ViewUtils.showToast(context!!, message, false)
+        })
+    }
+
+    private fun initAdapter() {
+        mAdapter = FavDoctorListAdapter( viewModel.mDoctorslist!!,activity!!)
+        mDataBinding.adapter = mAdapter
+        mDataBinding.rvFavDoctor.addItemDecoration(
+            DividerItemDecoration(
+                activity!!,
+                DividerItemDecoration.VERTICAL
+            )
+        )
+        mDataBinding.rvFavDoctor.layoutManager = LinearLayoutManager(activity!!) as RecyclerView.LayoutManager?
+        mAdapter!!.notifyDataSetChanged()
+
+
+    }
+    private fun addFavDoctor() {
+        favDoctors.add("Dr.Alvin")
+        favDoctors.add("Dr.Richard")
+        favDoctors.add("Dr.Glen Stwacy")
+        rv_fav_doctor.layoutManager = LinearLayoutManager(context)
+        rv_fav_doctor.addItemDecoration(
+            DividerItemDecoration(context,
+                DividerItemDecoration.VERTICAL)
+        )
+        //rv_fav_doctor.adapter = context?.let { FavDoctorListAdapter(favDoctors, it) }
+    }
+}

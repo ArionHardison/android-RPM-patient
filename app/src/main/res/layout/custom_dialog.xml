@@ -8,7 +8,7 @@
 
         <variable
             name="viewmodel"
-            type="com.midokter.app.ui.activity.main.ui.faq.FaqViewModel" />
+            type="com.telehealthmanager.app.ui.activity.main.ui.faq.FaqViewModel" />
     </data>
 
     <LinearLayout

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.midokter.app.ui.activity.addreminder.AddReminderViewModel" />
+            type="com.telehealthmanager.app.ui.activity.addreminder.AddReminderViewModel" />
 
 
     </data>

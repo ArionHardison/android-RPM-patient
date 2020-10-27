@@ -8,16 +8,16 @@
 
         <variable
             name="viewmodel"
-            type="com.midokter.app.ui.activity.searchGlobal.SearchGlobalViewModel" />
+            type="com.telehealthmanager.app.ui.activity.searchGlobal.SearchGlobalViewModel" />
         <variable
             name="doctoradapter"
-            type="com.midokter.app.ui.adapter.SearchDoctorsListAdapter" />
+            type="com.telehealthmanager.app.ui.adapter.SearchDoctorsListAdapter" />
         <variable
             name="clinicadapter"
-            type="com.midokter.app.ui.adapter.SearchClinicListAdapter" />
+            type="com.telehealthmanager.app.ui.adapter.SearchClinicListAdapter" />
         <variable
             name="Specialitiesadapter"
-            type="com.midokter.app.ui.adapter.SearchcatagoryListAdapter" />
+            type="com.telehealthmanager.app.ui.adapter.SearchcatagoryListAdapter" />
 
 
         <import type="android.view.View"/>

@@ -8,7 +8,7 @@
 
         <variable
             name="viewmodel"
-            type="com.midokter.app.ui.activity.visitedDoctor.VisitedDoctorsViewModel" />
+            type="com.telehealthmanager.app.ui.activity.visitedDoctor.VisitedDoctorsViewModel" />
 
         <import type="android.view.View" />
 

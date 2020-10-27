@@ -8,11 +8,11 @@
 
         <variable
             name="viewmodel"
-            type="com.midokter.app.ui.activity.searchDoctor.SearchViewModel" />
+            type="com.telehealthmanager.app.ui.activity.searchDoctor.SearchViewModel" />
 
         <variable
             name="adapter"
-            type="com.midokter.app.ui.adapter.SearchDoctorsListAdapter" />
+            type="com.telehealthmanager.app.ui.adapter.SearchDoctorsListAdapter" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

@@ -8,10 +8,10 @@
 
         <variable
             name="viewmodel"
-            type="com.midokter.app.ui.activity.findDoctors.FindDoctorsViewModel" />
+            type="com.telehealthmanager.app.ui.activity.findDoctors.FindDoctorsViewModel" />
         <variable
             name="adapter"
-            type="com.midokter.app.ui.adapter.FindDoctorListAdapter" />
+            type="com.telehealthmanager.app.ui.adapter.FindDoctorListAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

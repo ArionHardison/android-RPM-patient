@@ -7,62 +7,62 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.midokter.app.ui.activity.main.ui.home.HomeFragment"
+        android:name="com.telehealthmanager.app.ui.activity.main.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_appointments"
-        android:name="com.midokter.app.ui.activity.main.ui.appointment.AppointmentFragment"
+        android:name="com.telehealthmanager.app.ui.activity.main.ui.appointment.AppointmentFragment"
         android:label="@string/menu_appointments"
         tools:layout="@layout/fragment_appointment" />
 
     <fragment
         android:id="@+id/nav_online_consultation"
-        android:name="com.midokter.app.ui.activity.main.ui.online_consultation.OnlineConsultationFragment"
+        android:name="com.telehealthmanager.app.ui.activity.main.ui.online_consultation.OnlineConsultationFragment"
         android:label="@string/menu_online_consultation"
         tools:layout="@layout/fragment_online_consultation" />
 
     <fragment
         android:id="@+id/nav_fav_doctor"
-        android:name="com.midokter.app.ui.activity.main.ui.favourite_doctor.FavouriteDoctorFragment"
+        android:name="com.telehealthmanager.app.ui.activity.main.ui.favourite_doctor.FavouriteDoctorFragment"
         android:label="@string/menu_fav_doctor"
         tools:layout="@layout/fragment_favourite_doctor" />
 
     <fragment
         android:id="@+id/nav_medical_records"
-        android:name="com.midokter.app.ui.activity.main.ui.medical_records.MedicalRecordsFragment"
+        android:name="com.telehealthmanager.app.ui.activity.main.ui.medical_records.MedicalRecordsFragment"
         android:label="@string/menu_medical_records"
         tools:layout="@layout/fragment_medical_records" />
 
     <fragment
         android:id="@+id/nav_remainder"
-        android:name="com.midokter.app.ui.activity.main.ui.remainder.RemainderFragment"
+        android:name="com.telehealthmanager.app.ui.activity.main.ui.remainder.RemainderFragment"
         android:label="@string/menu_remainder"
         tools:layout="@layout/fragment_remainder" />
     <fragment
         android:id="@+id/nav_wallet"
-        android:name="com.midokter.app.ui.activity.main.ui.wallet.WalletFragment"
+        android:name="com.telehealthmanager.app.ui.activity.main.ui.wallet.WalletFragment"
         android:label="@string/menu_wallet"
         tools:layout="@layout/fragment_wallet" />
     <fragment
         android:id="@+id/nav_articles"
-        android:name="com.midokter.app.ui.activity.main.ui.articles.ArticleFragment"
+        android:name="com.telehealthmanager.app.ui.activity.main.ui.articles.ArticleFragment"
         android:label="@string/menu_articles"
         tools:layout="@layout/fragment_article" />
     <fragment
         android:id="@+id/nav_relative_mgmt"
-        android:name="com.midokter.app.ui.activity.main.ui.relative_management.RelativeMgmtFragment"
+        android:name="com.telehealthmanager.app.ui.activity.main.ui.relative_management.RelativeMgmtFragment"
         android:label="@string/menu_relative_mgmt"
         tools:layout="@layout/fragment_relative_mgmt" />
     <fragment
         android:id="@+id/nav_faq"
-        android:name="com.midokter.app.ui.activity.main.ui.faq.FaqFragment"
+        android:name="com.telehealthmanager.app.ui.activity.main.ui.faq.FaqFragment"
         android:label="@string/menu_faq"
         tools:layout="@layout/fragment_faq" />
     <fragment
         android:id="@+id/nav_settings"
-        android:name="com.midokter.app.ui.activity.main.ui.settings.SettingsFragment"
+        android:name="com.telehealthmanager.app.ui.activity.main.ui.settings.SettingsFragment"
         android:label="@string/menu_settings"
         tools:layout="@layout/fragment_settings" />
 </navigation>

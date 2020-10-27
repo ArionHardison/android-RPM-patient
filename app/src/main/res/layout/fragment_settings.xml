@@ -7,7 +7,7 @@
 
         <variable
             name="viewmodel"
-            type="com.midokter.app.ui.activity.main.ui.settings.SettingViewModel" />
+            type="com.telehealthmanager.app.ui.activity.main.ui.settings.SettingViewModel" />
     </data>
     <RelativeLayout
         android:layout_width="match_parent"

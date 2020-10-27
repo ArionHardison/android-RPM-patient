@@ -8,11 +8,11 @@
 
         <variable
             name="viewmodel"
-            type="com.midokter.app.ui.activity.chat.ChatViewModel" />
+            type="com.telehealthmanager.app.ui.activity.chat.ChatViewModel" />
 
         <variable
             name="viewModelFindDoctor"
-            type="com.midokter.app.ui.activity.findDoctors.FindDoctorsViewModel" />
+            type="com.telehealthmanager.app.ui.activity.findDoctors.FindDoctorsViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

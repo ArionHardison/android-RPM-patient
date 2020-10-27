@@ -8,11 +8,11 @@
 
         <variable
             name="viewmodel"
-            type="com.midokter.app.ui.activity.main.ui.appointment.AppointmentViewModel" />
+            type="com.telehealthmanager.app.ui.activity.main.ui.appointment.AppointmentViewModel" />
 
         <variable
             name="adapter"
-            type="com.midokter.app.ui.adapter.UpcomingAppointmentsListAdapter" />
+            type="com.telehealthmanager.app.ui.adapter.UpcomingAppointmentsListAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -7,11 +7,11 @@
     <data>
         <variable
             name="serviceAdapter"
-            type="com.midokter.app.ui.adapter.AllServiceAdapter" />
+            type="com.telehealthmanager.app.ui.adapter.AllServiceAdapter" />
 
         <variable
             name="viewmodel"
-            type="com.midokter.app.ui.activity.allservice.AllServiceViewModel" />
+            type="com.telehealthmanager.app.ui.activity.allservice.AllServiceViewModel" />
     </data>
 
     <LinearLayout

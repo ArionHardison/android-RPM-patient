@@ -8,19 +8,19 @@
 
         <variable
             name="viewmodel"
-            type="com.midokter.app.ui.activity.searchDoctor.SearchViewModel" />
+            type="com.telehealthmanager.app.ui.activity.searchDoctor.SearchViewModel" />
         <variable
         name="feedbackadapter"
-        type="com.midokter.app.ui.adapter.Doctor_feedbackAdapter" />
+        type="com.telehealthmanager.app.ui.adapter.Doctor_feedbackAdapter" />
         <variable
             name="photosadapter"
-            type="com.midokter.app.ui.adapter.Doctors_photoAdapter" />
+            type="com.telehealthmanager.app.ui.adapter.Doctors_photoAdapter" />
         <variable
             name="serviceadapter"
-            type="com.midokter.app.ui.adapter.AllServiceAdapter"/>
+            type="com.telehealthmanager.app.ui.adapter.AllServiceAdapter"/>
         <variable
             name="availibilityAdapter"
-            type="com.midokter.app.ui.adapter.AvailabilityAdapter" />
+            type="com.telehealthmanager.app.ui.adapter.AvailabilityAdapter" />
 
     </data>
 

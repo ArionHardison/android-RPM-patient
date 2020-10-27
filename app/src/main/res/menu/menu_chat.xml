@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.midokter.app.ui.activity.chat.ChatActivity">
+    tools:context="com.telehealthmanager.app.ui.activity.chat.ChatActivity">
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

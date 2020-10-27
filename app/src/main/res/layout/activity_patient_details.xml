@@ -8,7 +8,7 @@
 
         <variable
             name="viewmodel"
-            type="com.midokter.app.ui.activity.patientDetail.PatientDetailViewModel" />
+            type="com.telehealthmanager.app.ui.activity.patientDetail.PatientDetailViewModel" />
     </data>
 
     <ScrollView

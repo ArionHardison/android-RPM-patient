@@ -7,7 +7,7 @@
 
         <variable
             name="viewmodel"
-            type="com.midokter.app.ui.activity.main.ui.appointment.AppointmentViewModel" />
+            type="com.telehealthmanager.app.ui.activity.main.ui.appointment.AppointmentViewModel" />
     </data>
 
     <LinearLayout

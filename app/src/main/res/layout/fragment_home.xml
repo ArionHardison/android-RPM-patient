@@ -6,7 +6,7 @@
 
         <variable
             name="viewmodel"
-            type="com.midokter.app.ui.activity.main.ui.home.HomeViewModel" />
+            type="com.telehealthmanager.app.ui.activity.main.ui.home.HomeViewModel" />
     </data>
 
     <ScrollView

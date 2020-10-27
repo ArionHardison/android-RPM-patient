@@ -7,11 +7,11 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "com.midokter.app"
+        applicationId "com.telehealthmanager.app"
         minSdkVersion 17
         targetSdkVersion 29
         versionCode 1
-        versionName "1.0.0.1"
+        versionName "1.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
@@ -19,9 +19,12 @@ android {
     }
     buildTypes {
         debug {
-            buildConfigField "String", "BASE_URL", '"http://67.205.186.53/"'
-            buildConfigField "String", "BASE_IMAGE_URL", '"http://67.205.186.53/storage/"'
-            buildConfigField "String", "CLIENT_SECRET", '"YxCuScoQElcK8dpIHsGZ0HYXzv0KPpTxZg5owxNn"'
+
+            resValue "string", "google_map_api", "AIzaSyB7ls-7iiB5vM9BDxHnMcD6khxv4a_S06Q"
+
+            buildConfigField "String", "BASE_URL", '"http://telehealthmanager.net/"'
+            buildConfigField "String", "BASE_IMAGE_URL", '"http://telehealthmanager.net/storage/"'
+            buildConfigField "String", "CLIENT_SECRET", '"FUKbf4dklbxmZJ+09YPAtfKFh341TNP8HGUU8PFl"'
             buildConfigField "String", "CLIENT_ID", '"2"'
             buildConfigField "String", "DEVICE_TYPE", '"android"'
             buildConfigField "String", "GRANT_TYPE", '"password"'
@@ -36,9 +39,12 @@ android {
                 checkReleaseBuilds false
                 abortOnError false
             }
-            buildConfigField "String", "BASE_URL", '"http://67.205.186.53/"'
-            buildConfigField "String", "BASE_IMAGE_URL", '"http://67.205.186.53/storage/"'
-            buildConfigField "String", "CLIENT_SECRET", '"0aCTqaqhhTBFS8SiLEN0TlEdrSZSrGlpcJTnY3SO"'
+
+            resValue "string", "google_map_api", "AIzaSyB7ls-7iiB5vM9BDxHnMcD6khxv4a_S06Q"
+
+            buildConfigField "String", "BASE_URL", '"http://telehealthmanager.net/"'
+            buildConfigField "String", "BASE_IMAGE_URL", '"http://telehealthmanager.net/storage/"'
+            buildConfigField "String", "CLIENT_SECRET", '"FUKbf4dklbxmZJ+09YPAtfKFh341TNP8HGUU8PFl"'
             buildConfigField "String", "CLIENT_ID", '"2"'
             buildConfigField "String", "DEVICE_TYPE", '"android"'
             buildConfigField "String", "GRANT_TYPE", '"password"'

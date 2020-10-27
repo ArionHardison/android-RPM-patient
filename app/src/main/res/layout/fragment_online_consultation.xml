@@ -7,10 +7,10 @@
 
         <variable
             name="mChatAdapter"
-            type="com.midokter.app.ui.adapter.ChatAdapter" />
+            type="com.telehealthmanager.app.ui.adapter.ChatAdapter" />
         <variable
             name="viewmodel"
-            type="com.midokter.app.ui.activity.main.ui.online_consultation.OnlineConsultationViewModel" />
+            type="com.telehealthmanager.app.ui.activity.main.ui.online_consultation.OnlineConsultationViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

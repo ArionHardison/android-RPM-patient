@@ -8,7 +8,7 @@
 
         <variable
             name="viewmodel"
-            type="com.midokter.app.ui.activity.payment.PaymentViewModel" />
+            type="com.telehealthmanager.app.ui.activity.payment.PaymentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

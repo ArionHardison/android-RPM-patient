@@ -8,7 +8,7 @@
 
         <variable
             name="viewmodel"
-            type="com.midokter.app.ui.activity.medicalrecorddetails.MedicalRecordDetailsViewModel" />
+            type="com.telehealthmanager.app.ui.activity.medicalrecorddetails.MedicalRecordDetailsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

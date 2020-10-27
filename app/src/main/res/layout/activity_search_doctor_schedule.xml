@@ -8,7 +8,7 @@
 
         <variable
             name="viewmodel"
-            type="com.midokter.app.ui.activity.searchDoctor.SearchViewModel" />
+            type="com.telehealthmanager.app.ui.activity.searchDoctor.SearchViewModel" />
     </data>
 
     <ScrollView

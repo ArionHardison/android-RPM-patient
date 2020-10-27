@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "599024491005",
+    "firebase_url": "https://telehealth-manager.firebaseio.com",
+    "project_id": "telehealth-manager",
+    "storage_bucket": "telehealth-manager.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:599024491005:android:1784467e35124d3518e194",
+        "android_client_info": {
+          "package_name": "com.telehealthmanager.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "599024491005-4tt4bn8afsrc58dnrlt76iatst4do5k9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.telehealthmanager.app",
+            "certificate_hash": "078c0d83833f89a2719dc9bb68dd54278548c635"
+          }
+        },
+        {
+          "client_id": "599024491005-1h0bpi5iuc0c2me5kp6i15vefibjmju8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7ls-7iiB5vM9BDxHnMcD6khxv4a_S06Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "599024491005-1h0bpi5iuc0c2me5kp6i15vefibjmju8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

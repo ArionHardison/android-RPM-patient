@@ -7,15 +7,15 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.midokter.app.ui.activity.main.ui.articles.ArticleViewModel" />
+            type="com.telehealthmanager.app.ui.activity.main.ui.articles.ArticleViewModel" />
 
         <variable
             name="itemClickListener"
-            type="com.midokter.app.utils.CustomClickListener" />
+            type="com.telehealthmanager.app.utils.CustomClickListener" />
 
         <variable
             name="HealthFeedAdapter"
-            type="com.midokter.app.ui.adapter.HealthFeedAdapter" />
+            type="com.telehealthmanager.app.ui.adapter.HealthFeedAdapter" />
 
     </data>
 

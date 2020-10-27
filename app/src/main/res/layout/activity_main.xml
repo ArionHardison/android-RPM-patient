@@ -8,7 +8,7 @@
 
         <variable
             name="viewmodel"
-            type="com.midokter.app.ui.activity.main.MainViewModel" />
+            type="com.telehealthmanager.app.ui.activity.main.MainViewModel" />
     </data>
 
 <androidx.drawerlayout.widget.DrawerLayout
