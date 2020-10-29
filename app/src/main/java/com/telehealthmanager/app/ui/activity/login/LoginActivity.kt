@@ -73,6 +73,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(),LoginNavigator {
         preferenceHelper.setValue(PreferenceKey.PHONE, mDataBinding.mobile.text.toString())
         preferenceHelper.setValue(PreferenceKey.COUNTRY_CODE, viewModel.countryCode.value)
 
+        val intent = Intent(this@LoginActivity, OTPActivity::class.java)
         if(data.success) {
             intent.putExtra(Constant.IntentData.ISLOGIN, true)
             ViewUtils.showToast(this@LoginActivity, data.message, true)
@@ -81,7 +82,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(),LoginNavigator {
             ViewUtils.showToast(this@LoginActivity, data.message, false)
         }
 
-        val intent = Intent(this@LoginActivity, OTPActivity::class.java)
         intent.putExtra(Constant.IntentData.MOBILE_NUMBER, viewModel.mobile.value)
         intent.putExtra(Constant.IntentData.COUNTRY_CODE, viewModel.countryCode.value)
 

@@ -22,8 +22,8 @@ android {
 
             resValue "string", "google_map_api", "AIzaSyB7ls-7iiB5vM9BDxHnMcD6khxv4a_S06Q"
 
-            buildConfigField "String", "BASE_URL", '"http://telehealthmanager.net/"'
-            buildConfigField "String", "BASE_IMAGE_URL", '"http://telehealthmanager.net/storage/"'
+            buildConfigField "String", "BASE_URL", '"https://telehealthmanager.net/"'
+            buildConfigField "String", "BASE_IMAGE_URL", '"https://telehealthmanager.net/storage/"'
             buildConfigField "String", "CLIENT_SECRET", '"FUKbf4dklbxmZJ+09YPAtfKFh341TNP8HGUU8PFl"'
             buildConfigField "String", "CLIENT_ID", '"2"'
             buildConfigField "String", "DEVICE_TYPE", '"android"'
@@ -42,8 +42,8 @@ android {
 
             resValue "string", "google_map_api", "AIzaSyB7ls-7iiB5vM9BDxHnMcD6khxv4a_S06Q"
 
-            buildConfigField "String", "BASE_URL", '"http://telehealthmanager.net/"'
-            buildConfigField "String", "BASE_IMAGE_URL", '"http://telehealthmanager.net/storage/"'
+            buildConfigField "String", "BASE_URL", '"https://telehealthmanager.net/"'
+            buildConfigField "String", "BASE_IMAGE_URL", '"https://telehealthmanager.net/storage/"'
             buildConfigField "String", "CLIENT_SECRET", '"FUKbf4dklbxmZJ+09YPAtfKFh341TNP8HGUU8PFl"'
             buildConfigField "String", "CLIENT_ID", '"2"'
             buildConfigField "String", "DEVICE_TYPE", '"android"'

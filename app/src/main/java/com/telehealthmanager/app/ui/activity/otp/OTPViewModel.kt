@@ -18,6 +18,7 @@ class OTPViewModel : BaseViewModel<OTPNavigator>() {
     var otp = MutableLiveData<String>().default("")
     var mobile = MutableLiveData<String?>().default("")
     var countryCode = MutableLiveData<String>().default("91")
+    var isloginn = MutableLiveData<String>().default("")
     var islogin = MutableLiveData<Boolean>().default(false)
     private val appRepository = AppRepository.instance()
 

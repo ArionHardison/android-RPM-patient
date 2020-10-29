@@ -68,7 +68,7 @@
                 android:background="@drawable/left_rectangular_box"
                 android:ems="10"
                 android:hint="@string/hint_mobile"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:padding="@dimen/_8sdp"
                 android:text="@={viewmodel.mobile}"
                 app:layout_constraintBottom_toBottomOf="@+id/countryCodePicker"

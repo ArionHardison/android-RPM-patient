@@ -136,6 +136,7 @@ object Constant {
         val COUNTRY_CODE = "COUNTRY_CODE"
         val OTP = "OTP"
         val ISLOGIN = "ISLOGIN"
+        val ISLOGINS = "ISLOGINS"
     }
 
 }

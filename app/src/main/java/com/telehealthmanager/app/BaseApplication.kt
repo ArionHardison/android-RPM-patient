@@ -20,7 +20,7 @@ open class BaseApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-//        Stetho.initializeWithDefaults(this)
+        //Stetho.initializeWithDefaults(this)
         baseApplication = this
         preferences = getSharedPreferences(Constant.CUSTOM_PREFERENCE, Context.MODE_PRIVATE)
     }
