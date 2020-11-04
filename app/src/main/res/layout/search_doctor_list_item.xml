@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -26,7 +27,8 @@
         android:textColor="@color/colorBlack"
         android:textSize="@dimen/_14sdp"
         app:layout_constraintStart_toEndOf="@+id/imageView23"
-        app:layout_constraintTop_toTopOf="@+id/imageView23" />
+        app:layout_constraintTop_toTopOf="@+id/imageView23"
+        tools:text="Doc name"/>
 
     <TextView
         android:id="@+id/textView91"
@@ -35,7 +37,8 @@
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView90"
         app:layout_constraintStart_toEndOf="@+id/textView90"
-        app:layout_constraintTop_toTopOf="@+id/textView90" />
+        app:layout_constraintTop_toTopOf="@+id/textView90"
+        tools:text="DR MBBS"/>
 
     <TextView
         android:id="@+id/textView92"
@@ -45,7 +48,8 @@
         android:background="@color/colorLiteGrey"
         android:padding="@dimen/_3sdp"
         app:layout_constraintStart_toStartOf="@+id/textView90"
-        app:layout_constraintTop_toBottomOf="@+id/textView90" />
+        app:layout_constraintTop_toBottomOf="@+id/textView90"
+        tools:text="Breast Surgery"/>
 
     <ImageView
         android:id="@+id/imageView24"

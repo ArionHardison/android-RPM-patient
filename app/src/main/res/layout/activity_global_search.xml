@@ -9,27 +9,33 @@
         <variable
             name="viewmodel"
             type="com.telehealthmanager.app.ui.activity.searchGlobal.SearchGlobalViewModel" />
+
         <variable
             name="doctoradapter"
             type="com.telehealthmanager.app.ui.adapter.SearchDoctorsListAdapter" />
+
         <variable
             name="clinicadapter"
             type="com.telehealthmanager.app.ui.adapter.SearchClinicListAdapter" />
+
         <variable
             name="Specialitiesadapter"
             type="com.telehealthmanager.app.ui.adapter.SearchcatagoryListAdapter" />
 
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
+
         <variable
             name="iscatagory"
-            type="java.lang.Boolean"/>
+            type="java.lang.Boolean" />
+
         <variable
             name="isclinic"
-            type="java.lang.Boolean"/>
+            type="java.lang.Boolean" />
+
         <variable
             name="isdoctor"
-            type="java.lang.Boolean"/>
+            type="java.lang.Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -41,25 +47,25 @@
             android:id="@+id/search_layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:background="@color/colorAccent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:background="@color/colorAccent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <EditText
                 android:id="@+id/editText9"
                 android:layout_width="@dimen/_220sdp"
                 android:layout_height="42dp"
-                app:layout_constraintHorizontal_weight="1"
                 android:layout_margin="@dimen/_8sdp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/search_bg"
                 android:drawableEnd="@drawable/ic_search"
                 android:ems="10"
-                android:hint="Search"
                 android:focusable="true"
+                android:hint="Search"
                 android:inputType="textPersonName"
                 android:padding="@dimen/_8sdp"
+                app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -67,17 +73,18 @@
                 android:id="@+id/txtcancel"
                 android:layout_width="@dimen/_70sdp"
                 android:layout_height="42dp"
-                app:layout_constraintHorizontal_weight="0.3"
-                android:textColor="@color/colorWhite"
-                android:text="@string/cancel"
                 android:gravity="center"
+                android:text="@string/cancel"
+                android:textColor="@color/colorWhite"
                 app:layout_constraintBottom_toBottomOf="@+id/editText9"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="0.3"
                 app:layout_constraintStart_toEndOf="@+id/editText9"
                 app:layout_constraintTop_toTopOf="@+id/editText9"
                 app:srcCompat="@drawable/ic_filter" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-        <ScrollView
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/search_layout"
@@ -85,91 +92,97 @@
             app:layout_constraintEnd_toEndOf="@+id/search_layout"
             app:layout_constraintStart_toStartOf="@+id/search_layout"
             app:layout_constraintTop_toBottomOf="@+id/search_layout">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorWhite"
-            android:orientation="vertical">
-        <LinearLayout
-            android:id="@+id/Specialities_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorWhite"
-            android:visibility="@{iscatagory ? View.VISIBLE : View.GONE}"
-            android:orientation="vertical"
-           >
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorLiteGrey"
-                android:padding="@dimen/_8sdp"
-                android:text="@string/Specialities"
-                android:textColor="@color/colorBlack"
-                />
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_Specialities"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                tools:listitem="@layout/fav_doctor_list_item"
-                android:adapter="@{Specialitiesadapter}"
-                />
 
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/clinc_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="@{isclinic ? View.VISIBLE : View.GONE}"
-            android:background="@color/colorWhite"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorLiteGrey"
-                android:padding="@dimen/_8sdp"
-                android:text="@string/clinic"
-                android:textColor="@color/colorBlack"
-              />
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_clinic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            tools:listitem="@layout/fav_doctor_list_item"
-            android:adapter="@{clinicadapter}"
-           />
-
-    </LinearLayout>
             <LinearLayout
-                android:id="@+id/doctor_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="@{isdoctor ? View.VISIBLE : View.GONE}"
                 android:background="@color/colorWhite"
                 android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorLiteGrey"
-                    android:padding="@dimen/_8sdp"
-                    android:text="@string/doctor"
-                    android:textColor="@color/colorBlack"
-                    />
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_doctors_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:scrollbars="vertical"
-                    android:layout_marginBottom="@dimen/_50sdp"
-                    tools:listitem="@layout/search_doctor_list_item"
-                    android:adapter="@{doctoradapter}"
-                    />
 
+                <LinearLayout
+                    android:id="@+id/Specialities_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:orientation="vertical"
+                    android:visibility="@{iscatagory ? View.VISIBLE : View.GONE}">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorLiteGrey"
+                        android:padding="@dimen/_8sdp"
+                        android:text="@string/Specialities"
+                        android:textColor="@color/colorBlack" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_Specialities"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:nestedScrollingEnabled="false"
+                        android:adapter="@{Specialitiesadapter}"
+                        tools:listitem="@layout/fav_doctor_list_item" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/clinc_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:orientation="vertical"
+                    android:visibility="@{isclinic ? View.VISIBLE : View.GONE}">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorLiteGrey"
+                        android:padding="@dimen/_8sdp"
+                        android:text="@string/clinic"
+                        android:textColor="@color/colorBlack" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_clinic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:nestedScrollingEnabled="false"
+                        android:adapter="@{clinicadapter}"
+                        tools:listitem="@layout/fav_doctor_list_item" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/doctor_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:orientation="vertical"
+                    android:visibility="@{isdoctor ? View.VISIBLE : View.GONE}">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorLiteGrey"
+                        android:padding="@dimen/_8sdp"
+                        android:text="@string/doctor"
+                        android:textColor="@color/colorBlack" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_doctors_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_50sdp"
+                        android:adapter="@{doctoradapter}"
+                        android:nestedScrollingEnabled="false"
+                        android:scrollbars="vertical"
+                        tools:listitem="@layout/search_doctor_list_item" />
+
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,15 +12,17 @@ import com.telehealthmanager.app.repositary.model.Hospital
 class AvailabilityAdapter(val items: MutableList<Hospital.Timing>, val context: Context) :
     RecyclerView.Adapter<ServiceViewHolder>() {
     override fun onBindViewHolder(holder: ServiceViewHolder, position: Int) {
-        val item=items[position]
-        holder.itemBinding.tvTime.text = String.format(" - %s - %s",item.start_time,item.end_time)
+        val item = items[position]
+        holder.itemBinding.tvTime.text = item.start_time
+        holder.itemBinding.tvEndTime.text = item.end_time
         holder.itemBinding.tvday.text = item.day
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ServiceViewHolder {
         val inflate = DataBindingUtil.inflate<ListItemAvailibilityBinding>(
             LayoutInflater.from(parent.context),
-            R.layout.list_item_availibility, parent, false)
+            R.layout.list_item_availibility, parent, false
+        )
         return ServiceViewHolder(inflate)
     }
 

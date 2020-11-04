@@ -28,7 +28,7 @@ import java.util.*
 
 abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
 
-    protected var baseLiveDataLoading = MutableLiveData<Boolean>()
+    private var baseLiveDataLoading = MutableLiveData<Boolean>()
     private var mViewDataBinding: T? = null
     private var mCustomLoader: CustomLoaderDialog? = null
     val Register_Map: HashMap<String, Any> = HashMap()

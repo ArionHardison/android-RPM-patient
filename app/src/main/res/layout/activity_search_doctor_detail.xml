@@ -9,15 +9,19 @@
         <variable
             name="viewmodel"
             type="com.telehealthmanager.app.ui.activity.searchDoctor.SearchViewModel" />
+
         <variable
-        name="feedbackadapter"
-        type="com.telehealthmanager.app.ui.adapter.Doctor_feedbackAdapter" />
+            name="feedbackadapter"
+            type="com.telehealthmanager.app.ui.adapter.Doctor_feedbackAdapter" />
+
         <variable
             name="photosadapter"
             type="com.telehealthmanager.app.ui.adapter.Doctors_photoAdapter" />
+
         <variable
             name="serviceadapter"
-            type="com.telehealthmanager.app.ui.adapter.AllServiceAdapter"/>
+            type="com.telehealthmanager.app.ui.adapter.AllServiceAdapter" />
+
         <variable
             name="availibilityAdapter"
             type="com.telehealthmanager.app.ui.adapter.AvailabilityAdapter" />
@@ -28,19 +32,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/colorPrimary"
-                    android:minHeight="?attr/actionBarSize"
-                    android:theme="?attr/actionBarTheme"
-                    app:title=""
-                    app:titleTextColor="@color/colorWhite"
-                    app:navigationIcon="@drawable/ic_back"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_back"
+            app:title=""
+            app:titleTextColor="@color/colorWhite" />
 
         <ScrollView
             android:id="@+id/topScroll"
@@ -93,9 +97,9 @@
                         android:layout_marginStart="8dp"
                         android:background="@color/colorWhite"
                         android:paddingStart="@dimen/_3sdp"
-                        android:visibility="gone"
                         android:paddingEnd="@dimen/_3sdp"
                         android:text="@{viewmodel.branch}"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="@+id/textView93"
                         app:layout_constraintStart_toEndOf="@+id/textView93"
                         app:layout_constraintTop_toTopOf="@+id/textView93"
@@ -106,9 +110,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
                         android:text="@{viewmodel.degree}"
                         android:textColor="@color/colorWhite"
-                        android:layout_marginEnd="8dp"
                         app:layout_constraintStart_toStartOf="@+id/textView93"
                         app:layout_constraintTop_toBottomOf="@+id/textView93"
                         tools:text="MBBS,MRCP(UK) - " />
@@ -220,6 +224,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="8dp"
                     android:text="Availability"
+                    android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_14sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -306,16 +311,18 @@
                     app:layout_constraintStart_toStartOf="@+id/textViewMon"
                     app:layout_constraintTop_toBottomOf="@+id/textViewMon"
                     tools:listitem="@layout/list_item_availibility" />
+
                 <TextView
                     android:id="@+id/textViewNotAvailable"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:visibility="gone"
                     android:layout_marginTop="16dp"
                     android:text="@string/not_available"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/rv_availability" />
+
                 <View
                     android:id="@+id/divider12"
                     android:layout_width="409dp"
@@ -333,6 +340,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:text="Services"
+                    android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_14sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider12" />
@@ -382,6 +390,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:text="Specializations"
+                    android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_14sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider13" />
@@ -413,6 +422,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:text="Location"
+                    android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_14sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider14" />
@@ -468,6 +478,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:text="Photos"
+                    android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_14sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider15" />
@@ -490,6 +501,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:text="Patient Reviews"
+                    android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_14sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/recyclerView6" />
@@ -517,10 +529,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@color/colorWhite"
+            android:onClick="@{()->viewmodel.ShareClick()}"
             android:text="Share Experience"
             android:textAllCaps="false"
             android:textColor="@color/colorButton"
-            android:onClick="@{()->viewmodel.ShareClick()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button28"
             app:layout_constraintHorizontal_weight="1"
@@ -533,10 +545,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@color/colorButton"
+            android:onClick="@{()->viewmodel.BookClick()}"
             android:text="Book"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
-            android:onClick="@{()->viewmodel.BookClick()}"
             app:layout_constraintBottom_toBottomOf="@+id/button27"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_weight="1"

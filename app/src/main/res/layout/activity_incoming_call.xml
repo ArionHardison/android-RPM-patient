@@ -26,7 +26,7 @@
 
 
         <TextView
-            android:id="@+id/call_type"
+            android:id="@+id/callType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

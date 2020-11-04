@@ -32,7 +32,7 @@ import com.telehealthmanager.app.utils.NetworkUtils
 import com.telehealthmanager.app.utils.ViewUtils
 import java.util.*
 
-class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
+class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
     private lateinit var viewModel: MainViewModel
@@ -65,12 +65,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
         loadingObservable.value = true
         viewModel.getprofile()
     }
+
     private fun initUI() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-         drawerLayout = findViewById(R.id.drawer_layout)
-         navView = findViewById(R.id.nav_view)
+        drawerLayout = findViewById(R.id.drawer_layout)
+        navView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
         headerview = navView.getHeaderView(0)
         navView.itemIconTintList = null
@@ -119,12 +120,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
         )
 
 
-
     }
 
     override fun onPause() {
         super.onPause()
-        if(checkRequestTimer != null) {
+        if (checkRequestTimer != null) {
             checkRequestTimer!!.cancel();
             checkRequestTimer = null;
         }
@@ -135,8 +135,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
         checkRequestTimer = Timer()
         checkRequestTimer!!.schedule(object : TimerTask() {
             override fun run() {
-                if (NetworkUtils.isNetworkConnected(this@MainActivity))
-                    viewModel.callCheckVideoAPI()
+                if (NetworkUtils.isNetworkConnected(this@MainActivity)){}
+                    //viewModel.callCheckVideoAPI()
             }
         }, 0, 5000)
     }
@@ -164,7 +164,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
             if (it.patient.profile?.profile_pic != null)
                 viewModel.imageurl.set(it.patient.profile?.profile_pic as String?)
 
-            /*  viewModel.imageurl.set(BuildConfig.BASE_IMAGE_URL+it.doctor.doctor_profile.profile_pic)
+            /*viewModel.imageurl.set(BuildConfig.BASE_IMAGE_URL+it.doctor.doctor_profile.profile_pic)
             if ( it.doctor.doctor_profile.profile_pic!=null) {
                 Glide.with(this)
                     .load(viewModel.imageurl.get())
@@ -172,6 +172,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
                     .placeholder(R.drawable.app_logo)
                     .into(mDataBinding.profileIv)
             }*/
+
             preferenceHelper.setValue(PreferenceKey.PATIENT_ID, it.patient.id)
             preferenceHelper.setValue(PreferenceKey.FIRST_NAME, it.patient.first_name)
             preferenceHelper.setValue(PreferenceKey.LAST_NAME, it.patient.last_name)
@@ -205,7 +206,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
                         Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
                     mainIntent.putExtra("chat_path", it.data.roomId)
                     mainIntent.putExtra("name", "Doctor")
-                    mainIntent.putExtra("is_video", 1)
+                    mainIntent.putExtra("is_video", "1")
                     startActivity(mainIntent)
                 } else {
                 }
@@ -233,6 +234,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),MainNavigator {
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_logout -> {
