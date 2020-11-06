@@ -9,16 +9,18 @@ import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
-import com.telehealthmanager.app.data.*
+import com.telehealthmanager.app.data.PreferenceHelper
+import com.telehealthmanager.app.data.PreferenceKey
+import com.telehealthmanager.app.data.getValue
+import com.telehealthmanager.app.data.setValue
 import com.telehealthmanager.app.databinding.ActivityRegisterFinalBinding
-import com.telehealthmanager.app.databinding.ActivityRegisterGenderBinding
 import com.telehealthmanager.app.repositary.WebApiConstants
 import com.telehealthmanager.app.repositary.model.RegisterResponse
 import com.telehealthmanager.app.ui.activity.main.MainActivity
 import com.telehealthmanager.app.utils.ViewUtils
 import java.util.*
 
-class RegisterFinalActivity : BaseActivity<ActivityRegisterFinalBinding>(),RegisterNavigator {
+class RegisterFinalActivity : BaseActivity<ActivityRegisterFinalBinding>(), RegisterNavigator {
 
 
     private lateinit var viewModel: RegisterViewModel
@@ -40,6 +42,7 @@ class RegisterFinalActivity : BaseActivity<ActivityRegisterFinalBinding>(),Regis
             finish()
         }
     }
+
     private fun observeResponse() {
         viewModel.mRegisterResponse.observe(this@RegisterFinalActivity, Observer<RegisterResponse> {
             loadingObservable.value = false
@@ -63,6 +66,7 @@ class RegisterFinalActivity : BaseActivity<ActivityRegisterFinalBinding>(),Regis
             finishAffinity()
         }
     }
+
     @SuppressLint("SetTextI18n")
     override fun pickDate() {
         val c = Calendar.getInstance()
@@ -71,16 +75,18 @@ class RegisterFinalActivity : BaseActivity<ActivityRegisterFinalBinding>(),Regis
         val mDay = c.get(Calendar.DAY_OF_MONTH)
         val now = System.currentTimeMillis() - 1000
         val maxDate = System.currentTimeMillis() + (1000 * 60 * 60 * 24 * 3)
-        val datePickerDialog = DatePickerDialog(this@RegisterFinalActivity,R.style.TransportCalenderThemeDialog,
-            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                view.minDate = System.currentTimeMillis() - 1000
-                view.maxDate = maxDate - 1000
-                mdobDate = dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year
-                mDataBinding.dob.setText( dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year)
-
-
-            }, mYear, mMonth, mDay)
-       // datePickerDialog.datePicker.minDate = now
+        val datePickerDialog =
+            DatePickerDialog(
+                this@RegisterFinalActivity, R.style.TransportCalenderThemeDialog,
+                { view, year, monthOfYear, dayOfMonth ->
+                    view.minDate = System.currentTimeMillis() - 1000
+                    view.maxDate = maxDate - 1000
+                    mdobDate =
+                        year.toString() + "-" + (monthOfYear + 1) + "-" + dayOfMonth.toString()
+                    mDataBinding.dob.setText(dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year)
+                }, mYear, mMonth, mDay
+            )
+        // datePickerDialog.datePicker.minDate = now
         datePickerDialog.datePicker.maxDate = now
         datePickerDialog.show()
     }
@@ -89,17 +95,33 @@ class RegisterFinalActivity : BaseActivity<ActivityRegisterFinalBinding>(),Regis
         if (mDataBinding.dob.text.toString().isNullOrBlank()) {
             ViewUtils.showToast(this@RegisterFinalActivity, R.string.error_invalid_dob, false)
         } else {
-            Register_Map[WebApiConstants.SignUp.COUNTRY_CODE]= preferenceHelper.getValue(PreferenceKey.COUNTRY_CODE,"91")!!
-            Register_Map[WebApiConstants.SignUp.PHONE]= preferenceHelper.getValue(PreferenceKey.COUNTRY_CODE,"91")!!.toString()+preferenceHelper.getValue(PreferenceKey.PHONE,"91")!!
-            Register_Map[WebApiConstants.SignUp.OTP]= preferenceHelper.getValue(PreferenceKey.OTP,"91")!!
-            Register_Map[WebApiConstants.SignUp.EMAIL]= preferenceHelper.getValue(PreferenceKey.EMAIL,"demo@demo.com")!!
-            Register_Map[WebApiConstants.SignUp.GENDER]= preferenceHelper.getValue(PreferenceKey.GENDER,"MALE")!!
-            Register_Map[WebApiConstants.SignUp.DOB]= mdobDate!!
-            Register_Map[WebApiConstants.SignUp.FIRST_NAME]= preferenceHelper.getValue(PreferenceKey.FIRST_NAME,"demo")!!
-            Register_Map[WebApiConstants.SignUp.LAST_NAME]=preferenceHelper.getValue(PreferenceKey.LAST_NAME,"demo")!!
-            Register_Map[WebApiConstants.SignUp.GRANDTYPE]= "password"
-            Register_Map[WebApiConstants.SignUp.DEVICE_TOKEN] = BaseApplication.getCustomPreference!!.getString(PreferenceKey.DEVICE_TOKEN, "111") as String
-            Register_Map[WebApiConstants.SignUp.DEVICE_ID] = BaseApplication.getCustomPreference!!.getString(PreferenceKey.DEVICE_ID, "111") as String
+            Register_Map[WebApiConstants.SignUp.COUNTRY_CODE] =
+                preferenceHelper.getValue(PreferenceKey.COUNTRY_CODE, "91")!!
+            Register_Map[WebApiConstants.SignUp.PHONE] =
+                preferenceHelper.getValue(PreferenceKey.COUNTRY_CODE, "91")!!
+                    .toString() + preferenceHelper.getValue(PreferenceKey.PHONE, "91")!!
+            Register_Map[WebApiConstants.SignUp.OTP] =
+                preferenceHelper.getValue(PreferenceKey.OTP, "91")!!
+            Register_Map[WebApiConstants.SignUp.EMAIL] =
+                preferenceHelper.getValue(PreferenceKey.EMAIL, "demo@demo.com")!!
+            Register_Map[WebApiConstants.SignUp.GENDER] =
+                preferenceHelper.getValue(PreferenceKey.GENDER, "MALE")!!
+            Register_Map[WebApiConstants.SignUp.DOB] = mdobDate!!
+            Register_Map[WebApiConstants.SignUp.FIRST_NAME] =
+                preferenceHelper.getValue(PreferenceKey.FIRST_NAME, "demo")!!
+            Register_Map[WebApiConstants.SignUp.LAST_NAME] =
+                preferenceHelper.getValue(PreferenceKey.LAST_NAME, "demo")!!
+            Register_Map[WebApiConstants.SignUp.GRANDTYPE] = "password"
+            Register_Map[WebApiConstants.SignUp.DEVICE_TOKEN] =
+                BaseApplication.getCustomPreference!!.getString(
+                    PreferenceKey.DEVICE_TOKEN,
+                    "111"
+                ) as String
+            Register_Map[WebApiConstants.SignUp.DEVICE_ID] =
+                BaseApplication.getCustomPreference!!.getString(
+                    PreferenceKey.DEVICE_ID,
+                    "111"
+                ) as String
             Register_Map[WebApiConstants.SignUp.DEVICE_TYPE] = BuildConfig.DEVICE_TYPE
             Register_Map[WebApiConstants.SignIn.CLIENT_ID] = BuildConfig.CLIENT_ID
             Register_Map[WebApiConstants.SignIn.CLIENT_SECRET] = BuildConfig.CLIENT_SECRET

@@ -35,6 +35,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
             android:text="@string/nav_header_title"
+            android:textStyle="bold"
             android:textColor="@color/colorWhite"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
@@ -47,7 +48,7 @@
             android:padding="@dimen/_3sdp"
             android:layout_marginTop="@dimen/_3sdp"
             android:layout_marginBottom="@dimen/_3sdp"
-            android:text="View &amp; Edit Profile >" />
+            android:text="@string/view_amp_edit_profile" />
 
         <TextView
             android:id="@+id/profile_completed"

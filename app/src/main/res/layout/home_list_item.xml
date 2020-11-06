@@ -36,6 +36,7 @@
             android:layout_marginStart="8dp"
             android:text="Find Doctors"
             android:textColor="@color/colorBlack"
+            android:fontFamily="@font/montserrat_medium"
             android:textSize="@dimen/_14sdp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView8"
             app:layout_constraintStart_toEndOf="@+id/imageView8"

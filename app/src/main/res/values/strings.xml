@@ -38,9 +38,10 @@
     <string name="verify">Verify</string>
     <string name="enter_otp">Enter OTP</string>
     <string name="invalid_otp">invalid OTP</string>
-    <string name="we_just_otp">we just send 4 digit code to  %s%s</string>
+    <string name="we_just_otp">"We just send 4 digit code to "</string>
     <string name="terms_content">By using the app you agree to</string>
     <string name="terms">terms</string>
+    <string name="login_using_mail"><u>Login using email</u></string>
 
     <!-- profile-->
     <string name="profile_completed">Profile Completed:  </string>
@@ -255,4 +256,6 @@
     <string name="turn_speaker_on">Speaker ON</string>
     <string name="vp8_simulcast">VP8 Simulcast</string>
     <string name="video_call">Video Call</string>
+    <string name="view_amp_edit_profile"><![CDATA[View & Edit Profile >]]></string>
+
 </resources>

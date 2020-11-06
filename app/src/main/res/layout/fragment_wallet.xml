@@ -19,8 +19,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/top"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_180sdp"
-            android:background="@color/colorwalletbg"
+            android:layout_height="@dimen/_200sdp"
+            android:background="@drawable/wallet_border_radius"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -29,7 +29,7 @@
             <ImageView
                 android:id="@+id/imageView10"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_50sdp"
                 android:layout_marginTop="32dp"
                 android:src="@drawable/wallet_img"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -89,7 +89,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="28dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="324dp"
                 android:text="Add money to Wallet"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/_18sdp"
@@ -108,6 +107,7 @@
                 android:text="@={viewmodel.enteredMoney}"
                 android:hint="Enter amount"
                 android:inputType="number"
+                app:layout_constraintEnd_toStartOf="@+id/btnAmount"
                 app:layout_constraintStart_toStartOf="@+id/textView23"
                 app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
@@ -115,11 +115,11 @@
                 android:id="@+id/btnAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:background="@color/colorButton"
                 android:padding="@dimen/_8sdp"
                 android:onClick="@{()->viewmodel.onAddMoneyClicked()}"
                 android:text="Add money"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:textColor="@color/colorWhite"
                 app:layout_constraintBottom_toBottomOf="@+id/editTextAmount"
                 app:layout_constraintEnd_toEndOf="parent"

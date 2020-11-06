@@ -19,7 +19,7 @@ import com.telehealthmanager.app.ui.activity.register.RegisterNameActivity
 import com.telehealthmanager.app.utils.ViewUtils
 
 import com.telehealthmanager.doctor.repositary.model.LoginResponse
-
+import kotlinx.android.synthetic.main.activity_otp.*
 
 
 class OTPActivity : BaseActivity<ActivityOtpBinding>(), OTPNavigator {
@@ -50,16 +50,17 @@ class OTPActivity : BaseActivity<ActivityOtpBinding>(), OTPNavigator {
     }
 
 
-
     @SuppressLint("SetTextI18n")
     private fun getIntentData() {
         //setIntent Data on Text
         if (intent.getStringExtra(Constant.IntentData.MOBILE_NUMBER) != null) {
-            //viewModel.countryCode.value = intent.getStringExtra(Constant.IntentData.COUNTRY_CODE)
-            viewModel.mobile.value = intent.getStringExtra(Constant.IntentData.MOBILE_NUMBER)
-            viewModel.otp.value =intent.getStringExtra(Constant.IntentData.OTP)
-            viewModel.islogin.value =intent.getBooleanExtra(Constant.IntentData.ISLOGIN,false)
-
+            viewModel.countryCode.set(intent.getStringExtra(Constant.IntentData.COUNTRY_CODE))
+            viewModel.mobile.set(intent.getStringExtra(Constant.IntentData.MOBILE_NUMBER))
+            viewModel.otp.value = intent.getStringExtra(Constant.IntentData.OTP)
+            viewModel.islogin.value = intent.getBooleanExtra(Constant.IntentData.ISLOGIN, false)
+            mDataBinding.textInfo.text =
+                resources.getString(R.string.we_just_otp) + viewModel.countryCode.get()
+                    .toString() + viewModel.mobile.get().toString()
         }
     }
 
@@ -79,14 +80,15 @@ class OTPActivity : BaseActivity<ActivityOtpBinding>(), OTPNavigator {
     override fun goResendOTP() {
 
     }
+
     private fun goToHome(data: LoginResponse) {
 
         if (data.getToken().isNullOrBlank()) {
             ViewUtils.showToast(this@OTPActivity, data.geterror(), false)
             //openNewActivity(this@OTPActivity, RegisterNameActivity::class.java, false)
-        }else {
+        } else {
             preferenceHelper.setValue(PreferenceKey.ACCESS_TOKEN, data.getToken())
-            Log.e("ACCESS_TOKEN",data.getToken())
+            Log.e("ACCESS_TOKEN", data.getToken())
             openNewActivity(this@OTPActivity, MainActivity::class.java, true)
             finishAffinity()
         }
@@ -96,17 +98,18 @@ class OTPActivity : BaseActivity<ActivityOtpBinding>(), OTPNavigator {
     override fun goToEmail() {
         openNewActivity(this@OTPActivity, RegisterNameActivity::class.java, true)
     }
+
     override fun goNext() {
 
         if (mDataBinding.pinEntry.text.isNullOrBlank()) {
             ViewUtils.showToast(this@OTPActivity, getString(R.string.enter_otp), false)
-        }else if (mDataBinding.pinEntry.text.toString().equals(viewModel.otp.value.toString())){
-            if (viewModel.islogin.value?.equals(true)!!){
+        } else if (mDataBinding.pinEntry.text.toString().equals(viewModel.otp.value.toString())) {
+            if (viewModel.islogin.value?.equals(true)!!) {
                 loadingObservable.value = true
                 viewModel.signIn()
-            }else {
+            } else {
                 viewModel.otp.value = mDataBinding.pinEntry.text.toString()
-                preferenceHelper.setValue(PreferenceKey.OTP,mDataBinding.pinEntry.text.toString())
+                preferenceHelper.setValue(PreferenceKey.OTP, mDataBinding.pinEntry.text.toString())
                 openNewActivity(this@OTPActivity, RegisterNameActivity::class.java, false)
                 finish()
             }

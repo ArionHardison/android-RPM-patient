@@ -22,12 +22,15 @@ import com.telehealthmanager.app.repositary.model.DoctorListResponse
 import com.telehealthmanager.app.repositary.model.Hospital
 import com.telehealthmanager.app.repositary.model.MainResponse
 import com.telehealthmanager.app.repositary.model.Response
-import com.telehealthmanager.app.ui.activity.findDoctors.FindDoctorBookingActivity
 import com.telehealthmanager.app.ui.activity.allservice.AllServiceActivity
-import com.telehealthmanager.app.ui.adapter.*
+import com.telehealthmanager.app.ui.activity.findDoctors.FindDoctorBookingActivity
+import com.telehealthmanager.app.ui.adapter.AllServiceAdapter
+import com.telehealthmanager.app.ui.adapter.AvailabilityAdapter
+import com.telehealthmanager.app.ui.adapter.Doctor_feedbackAdapter
+import com.telehealthmanager.app.ui.adapter.Doctors_photoAdapter
 import com.telehealthmanager.app.utils.ViewUtils
 import java.io.Serializable
-import java.util.HashMap
+import java.util.*
 
 class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBinding>(),
     SearchNavigator {
@@ -56,9 +59,12 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
     }
 
     private fun initIntentData() {
-        val details = intent.getSerializableExtra(WebApiConstants.IntentPass.DoctorProfile) as? DoctorListResponse.specialities.DoctorProfile
-        val favDoctor = intent.getSerializableExtra(WebApiConstants.IntentPass.FavDoctorProfile) as? MainResponse.Doctor
-        val searchDoctor = intent.getSerializableExtra(WebApiConstants.IntentPass.SearchDoctorProfile) as? Hospital
+        val details =
+            intent.getSerializableExtra(WebApiConstants.IntentPass.DoctorProfile) as? DoctorListResponse.specialities.DoctorProfile
+        val favDoctor =
+            intent.getSerializableExtra(WebApiConstants.IntentPass.FavDoctorProfile) as? MainResponse.Doctor
+        val searchDoctor =
+            intent.getSerializableExtra(WebApiConstants.IntentPass.SearchDoctorProfile) as? Hospital
         if (details != null) {
             viewModel.mDoctorProfile.value = details
             viewModel.id.set(viewModel.mDoctorProfile.value!!.doctor_id)
@@ -67,24 +73,27 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
                 mDataBinding.imageView25,
                 BuildConfig.BASE_IMAGE_URL.plus(viewModel.mDoctorProfile.value!!.profile_pic)
             )
-            if(viewModel.mDoctorProfile.value!!.hospital.size>0) {
+            if (viewModel.mDoctorProfile.value!!.hospital.size > 0) {
                 viewModel.profile_pic.set(viewModel.mDoctorProfile.value!!.profile_pic)
-                viewModel.favourite.set(viewModel.mDoctorProfile.value!!.hospital[0]?.is_favourite)
+                viewModel.favourite.set(viewModel.mDoctorProfile.value!!.hospital[0].is_favourite.toString())
                 viewModel.name.set(
                     viewModel.mDoctorProfile.value!!.hospital[0]?.first_name.plus(" ").plus(
                         viewModel.mDoctorProfile.value!!.hospital[0]?.last_name
                     )
                 )
-                viewModel.specialities.set(viewModel.mDoctorProfile.value!!.speciality?.name?:"")
+                viewModel.specialities.set(viewModel.mDoctorProfile.value!!.speciality?.name ?: "")
                 viewModel.degree.set(viewModel.mDoctorProfile.value!!.certification)
                 viewModel.branch.set(viewModel.mDoctorProfile.value!!.hospital[0]?.specialities_name)
                 viewModel.percentage.set(
-                    viewModel.mDoctorProfile.value!!.hospital[0]?.feedback_percentage?:"0".plus(
+                    viewModel.mDoctorProfile.value!!.hospital[0]?.feedback_percentage ?: "0".plus(
                         "%"
                     )
                 )
-                viewModel.experience.set(viewModel.mDoctorProfile.value!!.experience?:"0")
-                viewModel.fee.set(preferenceHelper.getValue(PreferenceKey.CURRENCY, "$").toString().plus(viewModel.mDoctorProfile.value!!.fees?:"0"))
+                viewModel.experience.set(viewModel.mDoctorProfile.value!!.experience ?: "0")
+                viewModel.fee.set(
+                    preferenceHelper.getValue(PreferenceKey.CURRENCY, "$").toString()
+                        .plus(viewModel.mDoctorProfile.value!!.fees ?: "0")
+                )
 
                 viewModel.clinic.set(viewModel.mDoctorProfile.value!!.hospital[0]?.clinic?.name)
                 viewModel.clinic_address.set(viewModel.mDoctorProfile.value!!.hospital[0]?.clinic?.address)
@@ -110,7 +119,11 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
             viewModel.mfavDoctorProfile.value = favDoctor
             viewModel.id.set(viewModel.mfavDoctorProfile.value!!.id)
 
-             ViewUtils.setImageViewGlide(this@SearchDoctorDetailActivity,  mDataBinding.imageView25, BuildConfig.BASE_IMAGE_URL.plus(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.profile_pic))
+            ViewUtils.setImageViewGlide(
+                this@SearchDoctorDetailActivity,
+                mDataBinding.imageView25,
+                BuildConfig.BASE_IMAGE_URL.plus(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.profile_pic)
+            )
             viewModel.profile_pic.set(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.profile_pic)
             viewModel.name.set(
                 viewModel.mfavDoctorProfile.value!!.hospital?.first_name.plus(" ").plus(
@@ -118,23 +131,34 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
                 )
             )
 
-            viewModel.favourite.set(viewModel.mfavDoctorProfile.value!!.hospital?.is_favourite)
-            viewModel.specialities.set(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.speciality?.name?:"")
+            viewModel.favourite.set(viewModel.mfavDoctorProfile.value!!.hospital.is_favourite.toString())
+            viewModel.specialities.set(
+                viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.speciality?.name ?: ""
+            )
             viewModel.degree.set(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.certification)
             viewModel.branch.set(viewModel.mfavDoctorProfile.value!!.hospital?.specialities_name)
             viewModel.percentage.set(
-                viewModel.mfavDoctorProfile.value!!.hospital?.feedback_percentage?:"0".plus(
+                viewModel.mfavDoctorProfile.value!!.hospital?.feedback_percentage ?: "0".plus(
                     "%"
                 )
             )
-            viewModel.experience.set(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.experience?:"0")
-            viewModel.fee.set(preferenceHelper.getValue(PreferenceKey.CURRENCY, "$").toString().plus(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.fees?:"0"))
+            viewModel.experience.set(
+                viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.experience ?: "0"
+            )
+            viewModel.fee.set(
+                preferenceHelper.getValue(PreferenceKey.CURRENCY, "$").toString()
+                    .plus(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.fees ?: "0")
+            )
 
             viewModel.clinic.set(viewModel.mfavDoctorProfile.value!!.hospital?.clinic?.name)
             viewModel.clinic_address.set(viewModel.mfavDoctorProfile.value!!.hospital?.clinic?.address)
-             if ( viewModel.mfavDoctorProfile.value!!.hospital?.clinic?.static_map!=null)
-            ViewUtils.setImageViewGlide(this@SearchDoctorDetailActivity, mDataBinding.imageView27, viewModel.mfavDoctorProfile.value!!.hospital?.clinic?.static_map)
-                else
+            if (viewModel.mfavDoctorProfile.value!!.hospital?.clinic?.static_map != null)
+                ViewUtils.setImageViewGlide(
+                    this@SearchDoctorDetailActivity,
+                    mDataBinding.imageView27,
+                    viewModel.mfavDoctorProfile.value!!.hospital?.clinic?.static_map
+                )
+            else
                 mDataBinding.imageView27.visibility = View.GONE
 
             viewModel.mfeedbacklist =
@@ -146,74 +170,163 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
             viewModel.mphotoslist =
                 viewModel.mfavDoctorProfile.value!!.hospital?.clinic.clinic_photo as MutableList<Hospital.Clinic.photos>?
             initAdapter()
-        }else if(searchDoctor != null){
+        } else if (searchDoctor != null) {
 
             viewModel.msearchDoctorProfile.value = searchDoctor
             viewModel.id.set(viewModel.msearchDoctorProfile.value!!.id)
 
-            ViewUtils.setImageViewGlide(this@SearchDoctorDetailActivity,  mDataBinding.imageView25, BuildConfig.BASE_IMAGE_URL.plus(viewModel.msearchDoctorProfile.value!!.doctor_profile?.profile_pic))
+            ViewUtils.setImageViewGlide(
+                this@SearchDoctorDetailActivity,
+                mDataBinding.imageView25,
+                BuildConfig.BASE_IMAGE_URL.plus(viewModel.msearchDoctorProfile.value!!.doctor_profile?.profile_pic)
+            )
             viewModel.profile_pic.set(viewModel.msearchDoctorProfile.value!!.doctor_profile?.profile_pic)
             viewModel.name.set(
                 viewModel.msearchDoctorProfile.value!!.first_name.plus(" ").plus(
                     viewModel.msearchDoctorProfile.value!!.last_name
                 )
             )
-            viewModel.favourite.set(viewModel.msearchDoctorProfile.value!!.is_favourite)
-            viewModel.specialities.set(viewModel.msearchDoctorProfile.value!!.doctor_profile?.speciality?.name?:"")
+            viewModel.favourite.set(viewModel.msearchDoctorProfile.value!!.is_favourite.toString())
+            viewModel.specialities.set(
+                viewModel.msearchDoctorProfile.value!!.doctor_profile?.speciality?.name ?: ""
+            )
             viewModel.degree.set(viewModel.msearchDoctorProfile.value!!.doctor_profile?.certification)
             viewModel.branch.set(viewModel.msearchDoctorProfile.value!!.specialities_name)
             viewModel.percentage.set(
-                viewModel.msearchDoctorProfile.value!!.feedback_percentage?:"0".plus(
+                viewModel.msearchDoctorProfile.value!!.feedback_percentage ?: "0".plus(
                     "%"
                 )
             )
-            viewModel.experience.set(viewModel.msearchDoctorProfile.value!!.doctor_profile?.experience?:"0")
-            viewModel.fee.set(preferenceHelper.getValue(PreferenceKey.CURRENCY, "$").toString().plus(viewModel.msearchDoctorProfile.value!!.doctor_profile?.fees?:"0"))
+            viewModel.experience.set(
+                viewModel.msearchDoctorProfile.value!!.doctor_profile?.experience ?: "0"
+            )
+            viewModel.fee.set(
+                preferenceHelper.getValue(PreferenceKey.CURRENCY, "$").toString()
+                    .plus(viewModel.msearchDoctorProfile.value!!.doctor_profile?.fees ?: "0")
+            )
 
             viewModel.clinic.set(viewModel.msearchDoctorProfile.value!!.clinic?.name)
             viewModel.clinic_address.set(viewModel.msearchDoctorProfile.value!!.clinic?.address)
-            if ( viewModel.msearchDoctorProfile.value!!.clinic?.static_map!=null)
-                ViewUtils.setImageViewGlide(this@SearchDoctorDetailActivity, mDataBinding.imageView27, viewModel.msearchDoctorProfile.value!!.clinic?.static_map)
+            if (viewModel.msearchDoctorProfile.value!!.clinic?.static_map != null)
+                ViewUtils.setImageViewGlide(
+                    this@SearchDoctorDetailActivity,
+                    mDataBinding.imageView27,
+                    viewModel.msearchDoctorProfile.value!!.clinic?.static_map
+                )
             else
                 mDataBinding.imageView27.visibility = View.GONE
 
-            viewModel.mfeedbacklist = viewModel.msearchDoctorProfile.value!!.feedback as MutableList<Hospital.Feedback>?
-            viewModel.mservcielist = viewModel.msearchDoctorProfile.value!!.doctor_service as MutableList<Hospital.DoctorService>?
-            viewModel.mTiminglist = viewModel.msearchDoctorProfile.value!!.timing as MutableList<Hospital.Timing>?
-            viewModel.mphotoslist = viewModel.msearchDoctorProfile.value!!.clinic?.clinic_photo as MutableList<Hospital.Clinic.photos>?
+            viewModel.mfeedbacklist =
+                viewModel.msearchDoctorProfile.value!!.feedback as MutableList<Hospital.Feedback>?
+            viewModel.mservcielist =
+                viewModel.msearchDoctorProfile.value!!.doctor_service as MutableList<Hospital.DoctorService>?
+            viewModel.mTiminglist =
+                viewModel.msearchDoctorProfile.value!!.timing as MutableList<Hospital.Timing>?
+            viewModel.mphotoslist =
+                viewModel.msearchDoctorProfile.value!!.clinic?.clinic_photo as MutableList<Hospital.Clinic.photos>?
             initAdapter()
 
         }
         if (viewModel.mTiminglist != null) {
-            for (item in viewModel.mTiminglist!!){
+            for (item in viewModel.mTiminglist!!) {
                 setAvailabilityVisibility(item.day)
             }
         }
     }
 
-    fun setAvailabilityVisibility(day:String){
+    fun setAvailabilityVisibility(day: String) {
         when (day.toLowerCase()) {
             "all" -> {
-                mDataBinding.textViewMon.setTextColor(ContextCompat.getColor(applicationContext, R.color.colorGreen))
-                mDataBinding.textViewTue.setTextColor(ContextCompat.getColor(applicationContext, R.color.colorGreen))
-                mDataBinding.textViewWed.setTextColor(ContextCompat.getColor(applicationContext, R.color.colorGreen))
-                mDataBinding.textViewThur.setTextColor(ContextCompat.getColor(applicationContext, R.color.colorGreen))
-                mDataBinding.textViewFri.setTextColor(ContextCompat.getColor(applicationContext, R.color.colorGreen))
-                mDataBinding.textViewSat.setTextColor(ContextCompat.getColor(applicationContext, R.color.colorGreen))
-                mDataBinding.textViewSun.setTextColor(ContextCompat.getColor(applicationContext, R.color.colorGreen))
+                mDataBinding.textViewMon.setTextColor(
+                    ContextCompat.getColor(
+                        applicationContext,
+                        R.color.colorGreen
+                    )
+                )
+                mDataBinding.textViewTue.setTextColor(
+                    ContextCompat.getColor(
+                        applicationContext,
+                        R.color.colorGreen
+                    )
+                )
+                mDataBinding.textViewWed.setTextColor(
+                    ContextCompat.getColor(
+                        applicationContext,
+                        R.color.colorGreen
+                    )
+                )
+                mDataBinding.textViewThur.setTextColor(
+                    ContextCompat.getColor(
+                        applicationContext,
+                        R.color.colorGreen
+                    )
+                )
+                mDataBinding.textViewFri.setTextColor(
+                    ContextCompat.getColor(
+                        applicationContext,
+                        R.color.colorGreen
+                    )
+                )
+                mDataBinding.textViewSat.setTextColor(
+                    ContextCompat.getColor(
+                        applicationContext,
+                        R.color.colorGreen
+                    )
+                )
+                mDataBinding.textViewSun.setTextColor(
+                    ContextCompat.getColor(
+                        applicationContext,
+                        R.color.colorGreen
+                    )
+                )
             }
-            "mon" -> mDataBinding.textViewMon.setTextColor(ContextCompat.getColor(applicationContext, R.color.colorGreen))
-            "tue" -> mDataBinding.textViewTue.setTextColor(ContextCompat.getColor(applicationContext, R.color.colorGreen))
-            "wed" -> mDataBinding.textViewWed.setTextColor(ContextCompat.getColor(applicationContext, R.color.colorGreen))
-            "thu" -> mDataBinding.textViewThur.setTextColor(ContextCompat.getColor(applicationContext, R.color.colorGreen))
-            "fri" -> mDataBinding.textViewFri.setTextColor(ContextCompat.getColor(applicationContext, R.color.colorGreen))
-            "sat" -> mDataBinding.textViewSat.setTextColor(ContextCompat.getColor(applicationContext, R.color.colorGreen))
-            "sun" -> mDataBinding.textViewSun.setTextColor(ContextCompat.getColor(applicationContext, R.color.colorGreen))
+            "mon" -> mDataBinding.textViewMon.setTextColor(
+                ContextCompat.getColor(
+                    applicationContext,
+                    R.color.colorGreen
+                )
+            )
+            "tue" -> mDataBinding.textViewTue.setTextColor(
+                ContextCompat.getColor(
+                    applicationContext,
+                    R.color.colorGreen
+                )
+            )
+            "wed" -> mDataBinding.textViewWed.setTextColor(
+                ContextCompat.getColor(
+                    applicationContext,
+                    R.color.colorGreen
+                )
+            )
+            "thu" -> mDataBinding.textViewThur.setTextColor(
+                ContextCompat.getColor(
+                    applicationContext,
+                    R.color.colorGreen
+                )
+            )
+            "fri" -> mDataBinding.textViewFri.setTextColor(
+                ContextCompat.getColor(
+                    applicationContext,
+                    R.color.colorGreen
+                )
+            )
+            "sat" -> mDataBinding.textViewSat.setTextColor(
+                ContextCompat.getColor(
+                    applicationContext,
+                    R.color.colorGreen
+                )
+            )
+            "sun" -> mDataBinding.textViewSun.setTextColor(
+                ContextCompat.getColor(
+                    applicationContext,
+                    R.color.colorGreen
+                )
+            )
         }
     }
 
     private fun initAdapter() {
-        isfavourite(viewModel.favourite.get())
+        isfavourite(viewModel.favourite.get().toString())
         if (!CollectionUtils.isEmpty(viewModel.mfeedbacklist)) {
             mAdapterFeedback =
                 Doctor_feedbackAdapter(viewModel.mfeedbacklist!!, this@SearchDoctorDetailActivity)
@@ -224,47 +337,53 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
                 false
             )
             mAdapterFeedback!!.notifyDataSetChanged()
-            mDataBinding.recyclerView7.visibility= View.VISIBLE
-        } else{
-            mDataBinding.recyclerView7.visibility= View.GONE
-            mDataBinding.textView120.visibility= View.GONE
+            mDataBinding.recyclerView7.visibility = View.VISIBLE
+        } else {
+            mDataBinding.recyclerView7.visibility = View.GONE
+            mDataBinding.textView120.visibility = View.GONE
         }
         if (!CollectionUtils.isEmpty(viewModel.mservcielist)) {
             mAdapterService =
-                AllServiceAdapter(this@SearchDoctorDetailActivity,viewModel.mservcielist!! )
+                AllServiceAdapter(this@SearchDoctorDetailActivity, viewModel.mservcielist!!)
             mDataBinding.serviceadapter = mAdapterService
             mDataBinding.rvServices.layoutManager =
-                LinearLayoutManager(this@SearchDoctorDetailActivity, LinearLayoutManager.VERTICAL, false)
+                LinearLayoutManager(
+                    this@SearchDoctorDetailActivity,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
             mAdapterService!!.notifyDataSetChanged()
 
-            if(viewModel.mservcielist!!.size>4){
-                mDataBinding.serviceViewAll.visibility= View.VISIBLE
+            if (viewModel.mservcielist!!.size > 4) {
+                mDataBinding.serviceViewAll.visibility = View.VISIBLE
+            } else {
+                mDataBinding.serviceViewAll.visibility = View.GONE
             }
-            else{
-                mDataBinding.serviceViewAll.visibility= View.GONE
-            }
-        }
-        else{
-            mDataBinding.rvServices.visibility=View.GONE
-            mDataBinding.textView111.visibility=View.GONE
-            mDataBinding.divider13.visibility=View.GONE
+        } else {
+            mDataBinding.rvServices.visibility = View.GONE
+            mDataBinding.textView111.visibility = View.GONE
+            mDataBinding.divider13.visibility = View.GONE
         }
 
-        if(!CollectionUtils.isEmpty(viewModel.mTiminglist)){
+        if (!CollectionUtils.isEmpty(viewModel.mTiminglist)) {
             mAvailibilityAdapter =
-                AvailabilityAdapter(viewModel.mTiminglist!!,this@SearchDoctorDetailActivity )
+                AvailabilityAdapter(viewModel.mTiminglist!!, this@SearchDoctorDetailActivity)
             mDataBinding.availibilityAdapter = mAvailibilityAdapter
             mDataBinding.rvAvailability.layoutManager =
-                LinearLayoutManager(this@SearchDoctorDetailActivity, LinearLayoutManager.VERTICAL, false)
+                LinearLayoutManager(
+                    this@SearchDoctorDetailActivity,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
             mAvailibilityAdapter!!.notifyDataSetChanged()
-            mDataBinding.textViewNotAvailable.visibility=View.GONE
-        }
-        else{
-            mDataBinding.textViewNotAvailable.visibility=View.VISIBLE
+            mDataBinding.textViewNotAvailable.visibility = View.GONE
+        } else {
+            mDataBinding.textViewNotAvailable.visibility = View.VISIBLE
         }
 
         if (!CollectionUtils.isEmpty(viewModel.mphotoslist)) {
-            mAdapterPhotos = Doctors_photoAdapter(viewModel.mphotoslist!!, this@SearchDoctorDetailActivity)
+            mAdapterPhotos =
+                Doctors_photoAdapter(viewModel.mphotoslist!!, this@SearchDoctorDetailActivity)
             mDataBinding.photosadapter = mAdapterPhotos
             mDataBinding.recyclerView6.layoutManager = LinearLayoutManager(
                 this@SearchDoctorDetailActivity,
@@ -273,34 +392,34 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
             )
             mAdapterPhotos!!.notifyDataSetChanged()
 
-                mDataBinding.recyclerView6.visibility= View.VISIBLE
-                mDataBinding.textView119.visibility= View.VISIBLE
+            mDataBinding.recyclerView6.visibility = View.VISIBLE
+            mDataBinding.textView119.visibility = View.VISIBLE
 
-        } else{
-            mDataBinding.recyclerView6.visibility= View.GONE
-            mDataBinding.textView119.visibility= View.GONE
+        } else {
+            mDataBinding.recyclerView6.visibility = View.GONE
+            mDataBinding.textView119.visibility = View.GONE
         }
 
     }
-fun isfavourite(data :Boolean?){
-    viewModel.favourite.set(data)
-    when (data){
 
-        true -> {
-            mDataBinding.imageView26.setImageResource(R.drawable.ic_favourite)
-        }
-        false -> {
-            mDataBinding.imageView26.setImageResource(R.drawable.ic_favout_solid)
+    fun isfavourite(data: String?) {
+        viewModel.favourite.set(data)
+        when (data) {
 
-        }
-        else  ->{
-            mDataBinding.imageView26.setImageResource(R.drawable.ic_favout_solid)
-        }
+            "true" -> {
+                mDataBinding.imageView26.setImageResource(R.drawable.ic_favourite)
+            }
+            "false" -> {
+                mDataBinding.imageView26.setImageResource(R.drawable.ic_favout_solid)
 
+            }
+            else -> {
+                mDataBinding.imageView26.setImageResource(R.drawable.ic_favout_solid)
+            }
+        }
 
     }
 
-}
     private fun observeResponse() {
         viewModel.getErrorObservable().observe(this, Observer<String> { message ->
             hideLoading()
@@ -308,11 +427,9 @@ fun isfavourite(data :Boolean?){
 
         })
         viewModel.mFavResponse.observe(this, Observer<Response> {
-
             hideLoading()
             ViewUtils.showToast(this@SearchDoctorDetailActivity, it.message, true)
-            isfavourite(it.is_favourite)
-
+           // isfavourite(it.is_favourite)
         })
 
     }
@@ -330,18 +447,30 @@ fun isfavourite(data :Boolean?){
     }
 
     override fun Onbookclick() {
-        preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_ID,viewModel.id.get().toString())
+        preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_ID, viewModel.id.get().toString())
         preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_NAME, viewModel.name.get().toString())
-        preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_Special, viewModel.specialities.get().toString())
-        preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_IMAGE, viewModel.profile_pic.get().toString())
-        preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_ADDRESS, viewModel.clinic.get().plus(",").plus(viewModel.clinic_address.get().toString()))
+        preferenceHelper.setValue(
+            PreferenceKey.SELECTED_DOC_Special,
+            viewModel.specialities.get().toString()
+        )
+        preferenceHelper.setValue(
+            PreferenceKey.SELECTED_DOC_IMAGE,
+            viewModel.profile_pic.get().toString()
+        )
+        preferenceHelper.setValue(
+            PreferenceKey.SELECTED_DOC_ADDRESS,
+            viewModel.clinic.get().plus(",").plus(viewModel.clinic_address.get().toString())
+        )
         val intent = Intent(this@SearchDoctorDetailActivity, FindDoctorBookingActivity::class.java)
         startActivity(intent);
     }
 
     override fun ViewallClick() {
         val intent = Intent(this, AllServiceActivity::class.java)
-        intent.putExtra(WebApiConstants.IntentPass.SERVICE_LIST,viewModel.mservcielist as Serializable)
+        intent.putExtra(
+            WebApiConstants.IntentPass.SERVICE_LIST,
+            viewModel.mservcielist as Serializable
+        )
         startActivity(intent)
     }
 }

@@ -1,0 +1,108 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@drawable/bg_call_gradient">
+
+    <include layout="@layout/twillio_content_video" />
+
+    <TextView
+        android:id="@+id/videoStatusTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/_18sdp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="Connecting..." />
+
+
+    <LinearLayout
+        android:id="@+id/linearCallControls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabSwitchCamera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:backgroundTint="@color/colorWhite"
+            app:backgroundTint="@color/colorWhite"
+            app:borderWidth="0dp"
+            app:elevation="2dp"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_switch_camera" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabSpeaker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="12dp"
+            android:backgroundTint="@color/colorWhite"
+            app:backgroundTint="@color/colorWhite"
+            app:borderWidth="0dp"
+            app:elevation="2dp"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_volume_mute" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/faHangUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="2dp"
+            android:backgroundTint="@color/colorWhite"
+            android:tint="@color/colorRed"
+            app:backgroundTint="@color/colorWhite"
+            app:borderWidth="0dp"
+            app:elevation="2dp"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/ic_call_end"
+            app:tint="@color/colorRed" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabVideo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="12dp"
+            android:backgroundTint="@color/colorWhite"
+            app:backgroundTint="@color/colorWhite"
+            app:borderWidth="0dp"
+            app:elevation="2dp"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_videocam_on" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabMic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:backgroundTint="@color/colorWhite"
+            app:backgroundTint="@color/colorWhite"
+            app:borderWidth="0dp"
+            app:elevation="2dp"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_mic_black" />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

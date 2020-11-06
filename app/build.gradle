@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
@@ -139,9 +140,9 @@ dependencies {
 
     //For Google
     implementation 'com.google.android.gms:play-services-places:17.0.0'
-    api('com.crashlytics.sdk.android:crashlytics:2.10.1@aar') {
+   /* api('com.crashlytics.sdk.android:crashlytics:2.10.1@aar') {
         transitive = true
-    }
+    }*/
 
     implementation 'com.pubnub:pubnub-android:3.7.5'
     implementation 'com.pubnub:pubnub-gson:4.10.0'
@@ -170,6 +171,8 @@ dependencies {
     //implementation 'com.google.android.gms:play-services:17.0.0'
 
     implementation 'devs.mulham.horizontalcalendar:horizontalcalendar:1.3.4'
-    // twilio
-    implementation 'com.twilio:video-android:4.1.2'
+
+    /*VIDEO AND VOICE CHAT DATABASE*/
+    implementation 'com.twilio:video-android:5.8.0'
+    implementation 'com.twilio:audioswitch:0.1.3'
 }

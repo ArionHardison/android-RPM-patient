@@ -52,6 +52,7 @@ class FcmService : FirebaseMessagingService() {
 
     private fun sendNotification(messageBody: String, remoteMessage: RemoteMessage?) {
         val notificationMap: Map<String, String?> = remoteMessage!!.getData()
+        Log.d(tagName, "notificationMap: $notificationMap")
         if (notificationMap.containsKey("message")) {
             if (Objects.requireNonNull(notificationMap["message"]) == "video_call") {
                 val params: Map<String?, String?> = remoteMessage.getData()

@@ -10,106 +10,119 @@
             name="viewmodel"
             type="com.telehealthmanager.app.ui.activity.profile.ProfileViewModel" />
     </data>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout13"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout13"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@={viewmodel.allergies}"
-            android:hint="Allergies" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout14"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout13">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Allergies"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:text="@={viewmodel.allergies}" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout14"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@={viewmodel.current_medications}"
-            android:hint="Current Medications" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout13">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout15"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout14">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Current Medications"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:text="@={viewmodel.current_medications}" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout15"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@={viewmodel.past_medications}"
-            android:hint="Past Medications" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout14">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout16"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout15">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Past Medications"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:text="@={viewmodel.past_medications}" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout16"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@={viewmodel.chronic_diseases}"
-            android:hint="Chronic Diseases" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout15">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout17"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout16">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Chronic Diseases"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:text="@={viewmodel.chronic_diseases}" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout17"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@={viewmodel.injuries}"
-            android:hint="Injuries" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout16">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout18"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout17">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Injuries"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:text="@={viewmodel.injuries}" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout18"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@={viewmodel.surgeries}"
-            android:hint="Surgeries" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout17">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Surgeries"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:text="@={viewmodel.surgeries}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

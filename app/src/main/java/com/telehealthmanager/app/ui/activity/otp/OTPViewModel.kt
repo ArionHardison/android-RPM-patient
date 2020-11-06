@@ -1,5 +1,6 @@
 package com.telehealthmanager.app.ui.activity.otp
 
+import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.BuildConfig
@@ -16,8 +17,8 @@ class OTPViewModel : BaseViewModel<OTPNavigator>() {
     var loginResponse = MutableLiveData<LoginResponse>()
     //val accessTokenResponse = MutableLiveData<AccessTokenResponse>()
     var otp = MutableLiveData<String>().default("")
-    var mobile = MutableLiveData<String?>().default("")
-    var countryCode = MutableLiveData<String>().default("91")
+    var mobile = ObservableField<String?>("")
+    var countryCode = ObservableField<String>("+91")
     var isloginn = MutableLiveData<String>().default("")
     var islogin = MutableLiveData<Boolean>().default(false)
     private val appRepository = AppRepository.instance()
@@ -37,13 +38,13 @@ class OTPViewModel : BaseViewModel<OTPNavigator>() {
    fun otpLogin() {
         val hashMap : HashMap<String,Any> = HashMap()
         hashMap[WebApiConstants.SignIn.OTP] = otp.value!!.trim()
-        hashMap[WebApiConstants.SignIn.MOBILE] =  countryCode.value!!.trim().plus(mobile.value!!.trim())
+        hashMap[WebApiConstants.SignIn.MOBILE] =  countryCode.get()!!.trim().plus(mobile.get()!!.trim())
         //getCompositeDisposable().add(appRepository.otpSignIn(this,hashMap))
     }
     fun verfiyOtp() {
         val hashMap : HashMap<String,Any> = HashMap()
         hashMap[WebApiConstants.SignIn.OTP] = otp.value!!.trim()
-        hashMap[WebApiConstants.SignIn.MOBILE] =  countryCode.value!!.trim().plus(mobile.value!!.trim())
+        hashMap[WebApiConstants.SignIn.MOBILE] =  countryCode.get()!!.trim().plus(mobile.get()!!.trim())
         getCompositeDisposable().add(appRepository.verfiyotp(this,hashMap))
     }
     fun signIn() {
@@ -51,7 +52,7 @@ class OTPViewModel : BaseViewModel<OTPNavigator>() {
         val hashMap : HashMap<String,Any> = HashMap()
         //hashMap[WebApiConstants.SignIn.EMAIL] ="patient@demo.com"
         //hashMap[WebApiConstants.SignIn.PASSWORD] = "123456"
-        hashMap[WebApiConstants.SignIn.MOBILE] =countryCode.value!!.removePrefix("+")+ mobile.value!!.trim()
+        hashMap[WebApiConstants.SignIn.MOBILE] =countryCode.get()!!.removePrefix("+")+ mobile.get()!!.trim()
         //hashMap[WebApiConstants.SignIn.COUNTRY_CODE] = countryCode.value!!.removePrefix("+")
         hashMap[WebApiConstants.SignIn.OTP] =otp.value!!
         hashMap[WebApiConstants.SignIn.GRANT_TYPE] = WebApiConstants.SignIn.OTP

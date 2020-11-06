@@ -3,7 +3,7 @@ package com.telehealthmanager.app.repositary
 import com.telehealthmanager.app.repositary.model.*
 import com.telehealthmanager.app.repositary.model.chatmodel.ChatListResponse
 import com.telehealthmanager.app.repositary.model.chatmodel.ChatStatusResponse
-import com.telehealthmanager.app.ui.twilio.TwilloVideoActivity
+import com.telehealthmanager.app.ui.twilio.AccessToken
 import com.telehealthmanager.doctor.repositary.model.LoginResponse
 
 import com.telehealthmanager.doctor.repositary.model.*
@@ -147,6 +147,6 @@ interface ApiInterface {
     @GET("api/patient/video/call/token")
     fun getTwilloVideoToken(
         @Query("room_id") obj: Any?
-    ): Call<TwilloVideoActivity.AccessToken?>?
+    ): Call<AccessToken>
 
 }

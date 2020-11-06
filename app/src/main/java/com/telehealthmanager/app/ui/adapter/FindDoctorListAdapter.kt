@@ -59,8 +59,6 @@ class FindDoctorListAdapter(
                     else -> {
                         holder.itemBinding.textView51?.visibility = View.GONE;
                     }
-
-
                 }
 
 
