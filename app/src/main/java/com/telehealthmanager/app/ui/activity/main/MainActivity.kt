@@ -16,8 +16,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.telehealthmanager.app.BaseApplication
+import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
 import com.telehealthmanager.app.data.*
@@ -119,7 +121,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
             )
         )
 
-
     }
 
     override fun onPause() {
@@ -164,14 +165,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
             if (it.patient.profile?.profile_pic != null)
                 viewModel.imageurl.set(it.patient.profile?.profile_pic as String?)
 
-            /*viewModel.imageurl.set(BuildConfig.BASE_IMAGE_URL+it.doctor.doctor_profile.profile_pic)
-            if ( it.doctor.doctor_profile.profile_pic!=null) {
-                Glide.with(this)
-                    .load(viewModel.imageurl.get())
-                    .error(R.drawable.app_logo)
-                    .placeholder(R.drawable.app_logo)
-                    .into(mDataBinding.profileIv)
-            }*/
+
 
             preferenceHelper.setValue(PreferenceKey.PATIENT_ID, it.patient.id)
             preferenceHelper.setValue(PreferenceKey.FIRST_NAME, it.patient.first_name)
@@ -195,6 +189,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
                     ).toString()
                 )
             )
+
+            if (it.patient?.profile?.profile_pic != null) {
+                Glide.with(this)
+                    .load(BuildConfig.BASE_IMAGE_URL + it.patient?.profile?.profile_pic)
+                    .error(R.drawable.app_logo)
+                    .placeholder(R.drawable.app_logo)
+                    .into(profile_img)
+            }
 
             viewModel.mVideoIncomingResponse.observe(this, Observer<VideoStatusCheck> {
                 if (it.data != null) {

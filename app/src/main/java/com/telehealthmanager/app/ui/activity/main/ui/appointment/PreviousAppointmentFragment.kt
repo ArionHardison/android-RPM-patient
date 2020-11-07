@@ -1,6 +1,8 @@
 package com.telehealthmanager.app.ui.activity.main.ui.appointment
 
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -14,20 +16,25 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseFragment
 import com.telehealthmanager.app.databinding.FragmentPreviousAppointmentBinding
+import com.telehealthmanager.app.repositary.WebApiConstants
 import com.telehealthmanager.app.repositary.model.AppointmentResponse
+import com.telehealthmanager.app.ui.activity.visitedDoctor.VisitedDoctorsDetailActivity
 import com.telehealthmanager.app.ui.adapter.PreviousAppointmentsListAdapter
 import com.telehealthmanager.app.utils.ViewUtils
 import kotlinx.android.synthetic.main.fragment_previous_appointment.*
+import java.io.Serializable
 
 /**
  * A simple [Fragment] subclass.
  */
-class PreviousAppointmentFragment : BaseFragment<FragmentPreviousAppointmentBinding>(),AppointmentNavigator {
+class PreviousAppointmentFragment : BaseFragment<FragmentPreviousAppointmentBinding>(),AppointmentNavigator,
+    PreviousAppointmentsListAdapter.IAppointmentListener {
 
     val previousAppmts: ArrayList<String> = ArrayList()
     private lateinit var viewModel: AppointmentViewModel
     private lateinit var mDataBinding: FragmentPreviousAppointmentBinding
     private var mAdapter: PreviousAppointmentsListAdapter? = null
+    private val ON_CHANGE_CODE = 100
 
     override fun getLayoutId(): Int = R.layout.fragment_previous_appointment
 
@@ -37,6 +44,7 @@ class PreviousAppointmentFragment : BaseFragment<FragmentPreviousAppointmentBind
         viewModel = ViewModelProviders.of(this).get(AppointmentViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
+        initApiCal()
         initAdapter()
         observeResponse()
 
@@ -51,11 +59,13 @@ class PreviousAppointmentFragment : BaseFragment<FragmentPreviousAppointmentBind
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear();
     }
-
-    private fun initAdapter() {
+    private fun initApiCal() {
         showLoading()
         viewModel.getAppointment()
-        mAdapter = PreviousAppointmentsListAdapter( viewModel.mPreviouslist!!,activity!!)
+    }
+
+    private fun initAdapter() {
+        mAdapter = PreviousAppointmentsListAdapter( viewModel.mPreviouslist!!,activity!!,this)
         mDataBinding.adapter = mAdapter
         mDataBinding.rvPreviousAppointments.addItemDecoration(
             DividerItemDecoration(
@@ -65,8 +75,6 @@ class PreviousAppointmentFragment : BaseFragment<FragmentPreviousAppointmentBind
         )
         mDataBinding.rvPreviousAppointments.layoutManager =LinearLayoutManager(activity!!)
         mAdapter!!.notifyDataSetChanged()
-
-
     }
 
     private fun observeResponse() {
@@ -80,12 +88,11 @@ class PreviousAppointmentFragment : BaseFragment<FragmentPreviousAppointmentBind
             } else {
                 mDataBinding.tvNotFound.visibility = View.VISIBLE
             }
-            mAdapter = PreviousAppointmentsListAdapter(viewModel.mPreviouslist!!,activity!!)
+            mAdapter = PreviousAppointmentsListAdapter(viewModel.mPreviouslist!!,activity!!,this@PreviousAppointmentFragment)
             mDataBinding.adapter = mAdapter
             mAdapter!!.notifyDataSetChanged()
-
-            hideLoading()
         })
+
         viewModel.getErrorObservable().observe(this, Observer<String> { message ->
             hideLoading()
             ViewUtils.showToast(activity!!, message, false)
@@ -99,5 +106,21 @@ class PreviousAppointmentFragment : BaseFragment<FragmentPreviousAppointmentBind
         previousAppmts.add("Dr.Virundha")
         rv_previous_appointments.layoutManager = LinearLayoutManager(context)
         //rv_previous_appointments.adapter = context?.let { PreviousAppointmentsListAdapter(previousAppmts, it) }
+    }
+
+    override fun onitemclick(selectedItem: AppointmentResponse.Previous.Appointment) {
+        val intent = Intent(context, VisitedDoctorsDetailActivity::class.java)
+        intent.putExtra(WebApiConstants.IntentPass.iscancel, false)
+        intent.putExtra(WebApiConstants.IntentPass.Appointment, selectedItem as Serializable)
+        startActivityForResult(intent, ON_CHANGE_CODE);
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == ON_CHANGE_CODE) {
+            if (resultCode != Activity.RESULT_CANCELED) {
+                initAdapter()
+            }
+        }
     }
 }

@@ -35,7 +35,6 @@ import java.util.*
 class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBinding>(),
     SearchNavigator {
 
-
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
     private lateinit var viewModel: SearchViewModel
     private lateinit var mDataBinding: ActivitySearchDoctorDetailBinding
@@ -43,7 +42,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
     private var mAdapterPhotos: Doctors_photoAdapter? = null
     private var mAdapterFeedback: Doctor_feedbackAdapter? = null
     private var mAdapterService: AllServiceAdapter? = null
-    private var mAvailibilityAdapter: AvailabilityAdapter? = null
+    private var mAvailabilityAdapter: AvailabilityAdapter? = null
     override fun getLayoutId(): Int = R.layout.activity_search_doctor_detail
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
@@ -59,12 +58,9 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
     }
 
     private fun initIntentData() {
-        val details =
-            intent.getSerializableExtra(WebApiConstants.IntentPass.DoctorProfile) as? DoctorListResponse.specialities.DoctorProfile
-        val favDoctor =
-            intent.getSerializableExtra(WebApiConstants.IntentPass.FavDoctorProfile) as? MainResponse.Doctor
-        val searchDoctor =
-            intent.getSerializableExtra(WebApiConstants.IntentPass.SearchDoctorProfile) as? Hospital
+        val details = intent.getSerializableExtra(WebApiConstants.IntentPass.DoctorProfile) as? DoctorListResponse.specialities.DoctorProfile
+        val favDoctor = intent.getSerializableExtra(WebApiConstants.IntentPass.FavDoctorProfile) as? MainResponse.Doctor
+        val searchDoctor = intent.getSerializableExtra(WebApiConstants.IntentPass.SearchDoctorProfile) as? Hospital
         if (details != null) {
             viewModel.mDoctorProfile.value = details
             viewModel.id.set(viewModel.mDoctorProfile.value!!.doctor_id)
@@ -76,25 +72,13 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
             if (viewModel.mDoctorProfile.value!!.hospital.size > 0) {
                 viewModel.profile_pic.set(viewModel.mDoctorProfile.value!!.profile_pic)
                 viewModel.favourite.set(viewModel.mDoctorProfile.value!!.hospital[0].is_favourite.toString())
-                viewModel.name.set(
-                    viewModel.mDoctorProfile.value!!.hospital[0]?.first_name.plus(" ").plus(
-                        viewModel.mDoctorProfile.value!!.hospital[0]?.last_name
-                    )
-                )
+                viewModel.name.set(viewModel.mDoctorProfile.value!!.hospital[0]?.first_name.plus(" ").plus(viewModel.mDoctorProfile.value!!.hospital[0]?.last_name))
                 viewModel.specialities.set(viewModel.mDoctorProfile.value!!.speciality?.name ?: "")
-                viewModel.degree.set(viewModel.mDoctorProfile.value!!.certification)
+                viewModel.degree.set(viewModel.mDoctorProfile.value!!.certification.plus(" - "))
                 viewModel.branch.set(viewModel.mDoctorProfile.value!!.hospital[0]?.specialities_name)
-                viewModel.percentage.set(
-                    viewModel.mDoctorProfile.value!!.hospital[0]?.feedback_percentage ?: "0".plus(
-                        "%"
-                    )
-                )
+                viewModel.percentage.set(viewModel.mDoctorProfile.value!!.hospital[0]?.feedback_percentage ?: "0".plus("%"))
                 viewModel.experience.set(viewModel.mDoctorProfile.value!!.experience ?: "0")
-                viewModel.fee.set(
-                    preferenceHelper.getValue(PreferenceKey.CURRENCY, "$").toString()
-                        .plus(viewModel.mDoctorProfile.value!!.fees ?: "0")
-                )
-
+                viewModel.fee.set(preferenceHelper.getValue(PreferenceKey.CURRENCY, "$").toString().plus(viewModel.mDoctorProfile.value!!.fees ?: "0"))
                 viewModel.clinic.set(viewModel.mDoctorProfile.value!!.hospital[0]?.clinic?.name)
                 viewModel.clinic_address.set(viewModel.mDoctorProfile.value!!.hospital[0]?.clinic?.address)
                 if (viewModel.mDoctorProfile.value!!.hospital[0]?.clinic?.static_map != null)
@@ -105,51 +89,29 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
                     )
                 else
                     mDataBinding.imageView27.visibility = View.GONE
-                viewModel.mfeedbacklist =
-                    viewModel.mDoctorProfile.value!!.hospital[0]?.feedback as MutableList<Hospital.Feedback>?
-                viewModel.mservcielist =
-                    viewModel.mDoctorProfile.value!!.hospital[0]?.doctor_service as MutableList<Hospital.DoctorService>?
-                viewModel.mTiminglist =
-                    viewModel.mDoctorProfile.value!!.hospital[0]?.timing as MutableList<Hospital.Timing>?
-                viewModel.mphotoslist =
-                    viewModel.mDoctorProfile.value!!.hospital[0]?.clinic?.clinic_photo as MutableList<Hospital.Clinic.photos>?
+                viewModel.mfeedbacklist = viewModel.mDoctorProfile.value!!.hospital[0]?.feedback as MutableList<Hospital.Feedback>?
+                viewModel.mservcielist = viewModel.mDoctorProfile.value!!.hospital[0]?.doctor_service as MutableList<Hospital.DoctorService>?
+                viewModel.mTiminglist = viewModel.mDoctorProfile.value!!.hospital[0]?.timing as MutableList<Hospital.Timing>?
+                viewModel.mphotoslist = viewModel.mDoctorProfile.value!!.hospital[0]?.clinic?.clinic_photo as MutableList<Hospital.Clinic.photos>?
                 initAdapter()
             }
         } else if (favDoctor != null) {
             viewModel.mfavDoctorProfile.value = favDoctor
             viewModel.id.set(viewModel.mfavDoctorProfile.value!!.id)
-
             ViewUtils.setImageViewGlide(
                 this@SearchDoctorDetailActivity,
                 mDataBinding.imageView25,
                 BuildConfig.BASE_IMAGE_URL.plus(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.profile_pic)
             )
             viewModel.profile_pic.set(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.profile_pic)
-            viewModel.name.set(
-                viewModel.mfavDoctorProfile.value!!.hospital?.first_name.plus(" ").plus(
-                    viewModel.mfavDoctorProfile.value!!.hospital?.last_name
-                )
-            )
-
+            viewModel.name.set(viewModel.mfavDoctorProfile.value!!.hospital?.first_name.plus(" ").plus(viewModel.mfavDoctorProfile.value!!.hospital?.last_name))
             viewModel.favourite.set(viewModel.mfavDoctorProfile.value!!.hospital.is_favourite.toString())
-            viewModel.specialities.set(
-                viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.speciality?.name ?: ""
-            )
-            viewModel.degree.set(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.certification)
+            viewModel.specialities.set(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.speciality?.name ?: "")
+            viewModel.degree.set(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.certification.plus(" - "))
             viewModel.branch.set(viewModel.mfavDoctorProfile.value!!.hospital?.specialities_name)
-            viewModel.percentage.set(
-                viewModel.mfavDoctorProfile.value!!.hospital?.feedback_percentage ?: "0".plus(
-                    "%"
-                )
-            )
-            viewModel.experience.set(
-                viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.experience ?: "0"
-            )
-            viewModel.fee.set(
-                preferenceHelper.getValue(PreferenceKey.CURRENCY, "$").toString()
-                    .plus(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.fees ?: "0")
-            )
-
+            viewModel.percentage.set(viewModel.mfavDoctorProfile.value!!.hospital?.feedback_percentage ?: "0".plus("%"))
+            viewModel.experience.set(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.experience ?: "0")
+            viewModel.fee.set(preferenceHelper.getValue(PreferenceKey.CURRENCY, "$").toString().plus(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.fees ?: "0"))
             viewModel.clinic.set(viewModel.mfavDoctorProfile.value!!.hospital?.clinic?.name)
             viewModel.clinic_address.set(viewModel.mfavDoctorProfile.value!!.hospital?.clinic?.address)
             if (viewModel.mfavDoctorProfile.value!!.hospital?.clinic?.static_map != null)
@@ -160,18 +122,12 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
                 )
             else
                 mDataBinding.imageView27.visibility = View.GONE
-
-            viewModel.mfeedbacklist =
-                viewModel.mfavDoctorProfile.value!!.hospital?.feedback as MutableList<Hospital.Feedback>?
-            viewModel.mservcielist =
-                viewModel.mfavDoctorProfile.value!!.hospital?.doctor_service as MutableList<Hospital.DoctorService>?
-            viewModel.mTiminglist =
-                viewModel.mfavDoctorProfile.value!!.hospital?.timing as MutableList<Hospital.Timing>?
-            viewModel.mphotoslist =
-                viewModel.mfavDoctorProfile.value!!.hospital?.clinic.clinic_photo as MutableList<Hospital.Clinic.photos>?
+            viewModel.mfeedbacklist = viewModel.mfavDoctorProfile.value!!.hospital?.feedback as MutableList<Hospital.Feedback>?
+            viewModel.mservcielist = viewModel.mfavDoctorProfile.value!!.hospital?.doctor_service as MutableList<Hospital.DoctorService>?
+            viewModel.mTiminglist = viewModel.mfavDoctorProfile.value!!.hospital?.timing as MutableList<Hospital.Timing>?
+            viewModel.mphotoslist = viewModel.mfavDoctorProfile.value!!.hospital?.clinic.clinic_photo as MutableList<Hospital.Clinic.photos>?
             initAdapter()
         } else if (searchDoctor != null) {
-
             viewModel.msearchDoctorProfile.value = searchDoctor
             viewModel.id.set(viewModel.msearchDoctorProfile.value!!.id)
 
@@ -181,30 +137,14 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
                 BuildConfig.BASE_IMAGE_URL.plus(viewModel.msearchDoctorProfile.value!!.doctor_profile?.profile_pic)
             )
             viewModel.profile_pic.set(viewModel.msearchDoctorProfile.value!!.doctor_profile?.profile_pic)
-            viewModel.name.set(
-                viewModel.msearchDoctorProfile.value!!.first_name.plus(" ").plus(
-                    viewModel.msearchDoctorProfile.value!!.last_name
-                )
-            )
+            viewModel.name.set(viewModel.msearchDoctorProfile.value!!.first_name.plus(" ").plus(viewModel.msearchDoctorProfile.value!!.last_name))
             viewModel.favourite.set(viewModel.msearchDoctorProfile.value!!.is_favourite.toString())
-            viewModel.specialities.set(
-                viewModel.msearchDoctorProfile.value!!.doctor_profile?.speciality?.name ?: ""
-            )
-            viewModel.degree.set(viewModel.msearchDoctorProfile.value!!.doctor_profile?.certification)
+            viewModel.specialities.set(viewModel.msearchDoctorProfile.value!!.doctor_profile?.speciality?.name ?: "")
+            viewModel.degree.set(viewModel.msearchDoctorProfile.value!!.doctor_profile.certification.plus(" - "))
             viewModel.branch.set(viewModel.msearchDoctorProfile.value!!.specialities_name)
-            viewModel.percentage.set(
-                viewModel.msearchDoctorProfile.value!!.feedback_percentage ?: "0".plus(
-                    "%"
-                )
-            )
-            viewModel.experience.set(
-                viewModel.msearchDoctorProfile.value!!.doctor_profile?.experience ?: "0"
-            )
-            viewModel.fee.set(
-                preferenceHelper.getValue(PreferenceKey.CURRENCY, "$").toString()
-                    .plus(viewModel.msearchDoctorProfile.value!!.doctor_profile?.fees ?: "0")
-            )
-
+            viewModel.percentage.set(viewModel.msearchDoctorProfile.value!!.feedback_percentage ?: "0".plus("%"))
+            viewModel.experience.set(viewModel.msearchDoctorProfile.value!!.doctor_profile?.experience ?: "0")
+            viewModel.fee.set(preferenceHelper.getValue(PreferenceKey.CURRENCY, "$").toString().plus(viewModel.msearchDoctorProfile.value!!.doctor_profile?.fees ?: "0"))
             viewModel.clinic.set(viewModel.msearchDoctorProfile.value!!.clinic?.name)
             viewModel.clinic_address.set(viewModel.msearchDoctorProfile.value!!.clinic?.address)
             if (viewModel.msearchDoctorProfile.value!!.clinic?.static_map != null)
@@ -216,14 +156,10 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
             else
                 mDataBinding.imageView27.visibility = View.GONE
 
-            viewModel.mfeedbacklist =
-                viewModel.msearchDoctorProfile.value!!.feedback as MutableList<Hospital.Feedback>?
-            viewModel.mservcielist =
-                viewModel.msearchDoctorProfile.value!!.doctor_service as MutableList<Hospital.DoctorService>?
-            viewModel.mTiminglist =
-                viewModel.msearchDoctorProfile.value!!.timing as MutableList<Hospital.Timing>?
-            viewModel.mphotoslist =
-                viewModel.msearchDoctorProfile.value!!.clinic?.clinic_photo as MutableList<Hospital.Clinic.photos>?
+            viewModel.mfeedbacklist = viewModel.msearchDoctorProfile.value!!.feedback as MutableList<Hospital.Feedback>?
+            viewModel.mservcielist = viewModel.msearchDoctorProfile.value!!.doctor_service as MutableList<Hospital.DoctorService>?
+            viewModel.mTiminglist = viewModel.msearchDoctorProfile.value!!.timing as MutableList<Hospital.Timing>?
+            viewModel.mphotoslist = viewModel.msearchDoctorProfile.value!!.clinic?.clinic_photo as MutableList<Hospital.Clinic.photos>?
             initAdapter()
 
         }
@@ -261,12 +197,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
                         R.color.colorGreen
                     )
                 )
-                mDataBinding.textViewFri.setTextColor(
-                    ContextCompat.getColor(
-                        applicationContext,
-                        R.color.colorGreen
-                    )
-                )
+                mDataBinding.textViewFri.setTextColor(ContextCompat.getColor(applicationContext, R.color.colorGreen))
                 mDataBinding.textViewSat.setTextColor(
                     ContextCompat.getColor(
                         applicationContext,
@@ -366,16 +297,16 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
         }
 
         if (!CollectionUtils.isEmpty(viewModel.mTiminglist)) {
-            mAvailibilityAdapter =
+            mAvailabilityAdapter =
                 AvailabilityAdapter(viewModel.mTiminglist!!, this@SearchDoctorDetailActivity)
-            mDataBinding.availibilityAdapter = mAvailibilityAdapter
+            mDataBinding.availibilityAdapter = mAvailabilityAdapter
             mDataBinding.rvAvailability.layoutManager =
                 LinearLayoutManager(
                     this@SearchDoctorDetailActivity,
                     LinearLayoutManager.VERTICAL,
                     false
                 )
-            mAvailibilityAdapter!!.notifyDataSetChanged()
+            mAvailabilityAdapter!!.notifyDataSetChanged()
             mDataBinding.textViewNotAvailable.visibility = View.GONE
         } else {
             mDataBinding.textViewNotAvailable.visibility = View.VISIBLE
@@ -429,7 +360,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
         viewModel.mFavResponse.observe(this, Observer<Response> {
             hideLoading()
             ViewUtils.showToast(this@SearchDoctorDetailActivity, it.message, true)
-           // isfavourite(it.is_favourite)
+            isfavourite(it.is_favourite.toString())
         })
 
     }
@@ -444,6 +375,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
     }
 
     override fun onshareclick() {
+
     }
 
     override fun Onbookclick() {

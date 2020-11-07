@@ -101,10 +101,14 @@
     <string name="error_invalid_password">Please enter valid password</string>
     <string name="error_invalid_mobile">Please enter Mobile Number</string>
     <string name="hint_mobile">Enter Mobile Number</string>
-    <string name="error_invalid_mobile_">Please enter valid Mobile Number</string>
     <string name="error_invalid_gender">Please enter Gender</string>
     <string name="error_invalid_age">Please enter age</string>
     <string name="error_invalid_dob">Please enter DOB</string>
+    <string name="error_invalid__blood_group">Please enter Blood Group</string>
+    <string name="error_invalid__marital">Please enter Martial Status</string>
+    <string name="error_invalid__height">Please enter Height</string>
+    <string name="error_invalid__weight">Please enter Weight</string>
+    <string name="error_invalid_mobile_">Please enter valid Emergency contact Number</string>
     <string name="error_invalid_description">Please enter comments</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
@@ -206,7 +210,7 @@
     <string name="all_services">All Services</string>
     <string name="back">Back</string>
     <string name="show_reminder_notification">Show reminder notification</string>
-    <string name="about_mi_dokter">About Mi Dokter</string>
+    <string name="about_mi_dokter">About Teleheatlh</string>
     <string name="rate_us_on_play_store">Rate us on Play Store</string>
     <string name="reminder_added_successfully">Reminder added successfully</string>
     <string name="reminder_name">Reminder name</string>
@@ -257,5 +261,7 @@
     <string name="vp8_simulcast">VP8 Simulcast</string>
     <string name="video_call">Video Call</string>
     <string name="view_amp_edit_profile"><![CDATA[View & Edit Profile >]]></string>
+
+
 
 </resources>

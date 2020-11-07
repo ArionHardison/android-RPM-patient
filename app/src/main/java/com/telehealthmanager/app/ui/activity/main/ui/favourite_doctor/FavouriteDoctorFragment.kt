@@ -93,12 +93,7 @@ class FavouriteDoctorFragment : BaseFragment<FragmentFavouriteDoctorBinding>(),F
     private fun initAdapter() {
         mAdapter = FavDoctorListAdapter( viewModel.mDoctorslist!!,activity!!)
         mDataBinding.adapter = mAdapter
-        mDataBinding.rvFavDoctor.addItemDecoration(
-            DividerItemDecoration(
-                activity!!,
-                DividerItemDecoration.VERTICAL
-            )
-        )
+        mDataBinding.rvFavDoctor.addItemDecoration(DividerItemDecoration(activity!!, DividerItemDecoration.VERTICAL))
         mDataBinding.rvFavDoctor.layoutManager = LinearLayoutManager(activity!!) as RecyclerView.LayoutManager?
         mAdapter!!.notifyDataSetChanged()
 

@@ -61,6 +61,10 @@ class FcmService : FirebaseMessagingService() {
                     json.toString(),
                     ReceiverPushResponse::class.java
                 )
+                val contentIntent = Intent(this, IncomingVideoCallActivity::class.java)
+                contentIntent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT or Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or Intent.FLAG_ACTIVITY_NEW_TASK)
+                contentIntent.putExtra("receiver_push", pushResponse)
+                showNotification("Incoming Video Call",contentIntent)
                 openCallActivity(pushResponse)
             } else if (Objects.requireNonNull(notificationMap["message"]) == "audio_call") {
                 wakeUpScreen()
@@ -70,35 +74,43 @@ class FcmService : FirebaseMessagingService() {
                     json.toString(),
                     ReceiverPushResponse::class.java
                 )
+                val contentIntent = Intent(this, IncomingVideoCallActivity::class.java)
+                contentIntent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT or Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or Intent.FLAG_ACTIVITY_NEW_TASK)
+                contentIntent.putExtra("receiver_push", pushResponse)
+                showNotification("Incoming Audio Call",contentIntent)
                 openCallActivity(pushResponse)
             } else {
                 val intent = Intent(this, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT)
-                val channelId = getString(R.string.app_name)
-                val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-                val notificationBuilder = NotificationCompat.Builder(this, channelId)
-                    .setSmallIcon(R.drawable.app_logo)
-                    .setContentTitle(getString(R.string.app_name))
-                    .setContentText(messageBody)
-                    .setAutoCancel(true)
-                    .setSound(defaultSoundUri)
-                    .setContentIntent(pendingIntent)
-
-                val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-                // Since android Oreo notification channel is needed.
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    val channel = NotificationChannel(channelId,
-                        "Channel human readable title",
-                        NotificationManager.IMPORTANCE_DEFAULT)
-                    notificationManager.createNotificationChannel(channel)
-                }
-
-                notificationManager.notify(0 /* ID of notification */, notificationBuilder.build())
+                showNotification(messageBody, intent)
             }
         }
 
+    }
+
+    private fun showNotification(messageBody: String, contentIntent: Intent){
+        val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, contentIntent, PendingIntent.FLAG_ONE_SHOT)
+        val channelId = getString(R.string.app_name)
+        val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        val notificationBuilder = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.app_logo)
+            .setContentTitle(getString(R.string.app_name))
+            .setContentText(messageBody)
+            .setAutoCancel(true)
+            .setSound(defaultSoundUri)
+            .setContentIntent(pendingIntent)
+
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        // Since android Oreo notification channel is needed.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(channelId,
+                "Channel human readable title",
+                NotificationManager.IMPORTANCE_DEFAULT)
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build())
     }
 
     private fun wakeUpScreen() {

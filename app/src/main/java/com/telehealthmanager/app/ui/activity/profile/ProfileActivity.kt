@@ -154,8 +154,8 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
         }
     }
 
-    private fun validateEditPatient(): Boolean {
-        var isValid: Boolean = true
+    private fun validPersonal(): Boolean {
+        var isValid = true
         if (viewModel.email.get().isNullOrBlank()) {
             ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid_email_address, false)
             isValid = false
@@ -171,12 +171,34 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
         } else if (viewModel.lastName.get().isNullOrBlank()) {
             ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid__last_name, false)
             isValid = false
+        } else if (viewModel.gender.get().isNullOrBlank()) {
+            ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid_gender, false)
+            isValid = false
+        } else if (viewModel.dob.get().isNullOrBlank()) {
+            ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid_dob, false)
+            isValid = false
+        } else if (viewModel.bloodgroup.get().isNullOrBlank()) {
+            ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid__blood_group, false)
+            isValid = false
+        } else if (viewModel.marital.get().isNullOrBlank()) {
+            ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid__marital, false)
+            isValid = false
+        } else if (viewModel.height.get().isNullOrBlank()) {
+            ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid__height, false)
+            isValid = false
+        } else if (viewModel.weight.get().isNullOrBlank()) {
+            ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid__weight, false)
+            isValid = false
+        } else if (viewModel.emgcontact.get().isNullOrBlank()) {
+            ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid_mobile_, false)
+            isValid = false
         }
         return isValid
     }
 
+
     private fun updatePatient() {
-        if (!validateEditPatient())
+        if (!validPersonal())
             return
         if (mCropImageUri?.path != null) {
             val pictureFile = File(mCropImageUri?.path!!)

@@ -1,25 +1,33 @@
 package com.telehealthmanager.app.ui.twilio
 
+import android.Manifest
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.media.Ringtone
 import android.media.RingtoneManager
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.fcm.ReceiverPushResponse
 import com.telehealthmanager.app.repositary.ApiInterface
 import com.telehealthmanager.app.repositary.AppRepository
 import com.telehealthmanager.app.repositary.model.VideoCallCancelResponse
+import kotlinx.android.synthetic.main.activity_incoming_call.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlinx.android.synthetic.main.activity_incoming_call.*
+
 
 class IncomingVideoCallActivity : AppCompatActivity(), View.OnClickListener {
-
+    private val CAMERA_MIC_PERMISSION_REQUEST_CODE = 1
     var chatPath: String? = null
     var name: String? = null
     var sender: String? = null
@@ -39,7 +47,8 @@ class IncomingVideoCallActivity : AppCompatActivity(), View.OnClickListener {
         imgEndCall.setOnClickListener(this)
         imgAcceptCall.setOnClickListener(this)
 
-        val receiverPushResponse: ReceiverPushResponse = intent.getParcelableExtra("receiver_push") as ReceiverPushResponse
+        val receiverPushResponse: ReceiverPushResponse =
+            intent.getParcelableExtra("receiver_push") as ReceiverPushResponse
         name = receiverPushResponse.name
         sender = receiverPushResponse.sender_id
         chatPath = receiverPushResponse.room_id
@@ -61,15 +70,69 @@ class IncomingVideoCallActivity : AppCompatActivity(), View.OnClickListener {
                 cancelVideoCall()
             }
             R.id.imgAcceptCall -> {
-                stopRingtone()
-                val i = Intent(applicationContext, TwilloVideoActivity::class.java)
-                i.putExtra("chat_path", chatPath)
-                i.putExtra("is_video", isVideo)
-                i.putExtra("sender", sender)
-                startActivity(i)
-                finish()
+                if (!checkPermissionForCameraAndMicrophone()) {
+                    requestPermissionForCameraAndMicrophone()
+                } else {
+                    openTwillioCall()
+                }
             }
         }
+    }
+
+
+    private fun checkPermissionForCameraAndMicrophone(): Boolean {
+        val resultCamera = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+        val resultMic = ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+        return resultCamera == PackageManager.PERMISSION_GRANTED && resultMic == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestPermissionForCameraAndMicrophone() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)
+            || ActivityCompat.shouldShowRequestPermissionRationale(
+                this,
+                Manifest.permission.RECORD_AUDIO
+            )
+        ) {
+            Toast.makeText(this, R.string.permissions_needed, Toast.LENGTH_LONG).show()
+        } else {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO),
+                CAMERA_MIC_PERMISSION_REQUEST_CODE
+            )
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == CAMERA_MIC_PERMISSION_REQUEST_CODE) {
+            var cameraAndMicPermissionGranted = true
+            for (grantResult in grantResults) {
+                cameraAndMicPermissionGranted =
+                    cameraAndMicPermissionGranted and (grantResult == PackageManager.PERMISSION_GRANTED)
+            }
+            if (cameraAndMicPermissionGranted) {
+                openTwillioCall()
+            } else {
+                Toast.makeText(this, R.string.permissions_needed, Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun openTwillioCall() {
+        stopRingtone()
+        // Clear all notification
+        val nMgr: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        nMgr.cancelAll()
+        val i = Intent(applicationContext, TwilloVideoActivity::class.java)
+        i.putExtra("chat_path", chatPath)
+        i.putExtra("is_video", isVideo)
+        i.putExtra("sender", sender)
+        startActivity(i)
+        finish()
     }
 
     private fun playRingtone() {

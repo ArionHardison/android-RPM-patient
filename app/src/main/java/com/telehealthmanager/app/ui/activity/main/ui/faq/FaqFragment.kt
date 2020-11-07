@@ -47,8 +47,7 @@ class FaqFragment : BaseFragment<FragmentFaqBinding>(), FaqNavigator {
 object ExpandableListDataPump {
     val data: HashMap<String, List<String>>
         get() {
-            val expandableListDetail =
-                HashMap<String, List<String>>()
+            val expandableListDetail = HashMap<String, List<String>>()
             val cricket: MutableList<String> = ArrayList()
             cricket.add("content description 1")
             val football: MutableList<String> = ArrayList()

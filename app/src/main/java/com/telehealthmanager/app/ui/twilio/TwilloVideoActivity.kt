@@ -543,7 +543,7 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
                 twilioException: TwilioException
             ) {
                 videoStatusTextView!!.text = "onVideoTrackSubscriptionFailed"
-                //   Snackbar.make(fabDisconnectCall!!, String.format("Failed to subscribe to %s video track", remoteParticipant.identity), Snackbar.LENGTH_LONG).show()
+                // Snackbar.make(fabDisconnectCall!!, String.format("Failed to subscribe to %s video track", remoteParticipant.identity), Snackbar.LENGTH_LONG).show()
             }
 
             override fun onAudioTrackEnabled(
