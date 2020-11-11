@@ -13,7 +13,6 @@ import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
 import com.telehealthmanager.app.data.PreferenceHelper
 import com.telehealthmanager.app.databinding.ActivityFindDoctorCategoriesBinding
-import com.telehealthmanager.app.databinding.ActivityProfileBinding
 import com.telehealthmanager.app.repositary.model.CategoryResponse
 import com.telehealthmanager.app.ui.adapter.CategoriesListAdapter
 import com.telehealthmanager.app.utils.ViewUtils
@@ -55,13 +54,13 @@ class FindDoctorCategoriesActivity : BaseActivity<ActivityFindDoctorCategoriesBi
         viewModel.mCategoryResponse.observe(this, Observer<CategoryResponse> {
 
 
-            viewModel.mCategoryslist = it.category as MutableList<CategoryResponse.Category>?
-            if (viewModel.mCategoryslist!!.size > 0) {
+            viewModel.mCategoryList = it.category as MutableList<CategoryResponse.Category>?
+            if (viewModel.mCategoryList!!.size > 0) {
                 mDataBinding.tvNotFound.visibility = View.GONE
             } else {
                 mDataBinding.tvNotFound.visibility = View.VISIBLE
             }
-            mCategoriesAdapter = CategoriesListAdapter( viewModel.mCategoryslist!!,this)
+            mCategoriesAdapter = CategoriesListAdapter( viewModel.mCategoryList!!,this)
             mDataBinding.adapter = mCategoriesAdapter
             mCategoriesAdapter!!.notifyDataSetChanged()
             loadingObservable.value = false
@@ -77,7 +76,7 @@ class FindDoctorCategoriesActivity : BaseActivity<ActivityFindDoctorCategoriesBi
     }
 
     private fun initAdapter() {
-        mCategoriesAdapter = CategoriesListAdapter( viewModel.mCategoryslist!!,this)
+        mCategoriesAdapter = CategoriesListAdapter( viewModel.mCategoryList!!,this)
         mDataBinding.adapter = mCategoriesAdapter
        /* mDataBinding.rvCategories.addItemDecoration(
             DividerItemDecoration(
@@ -100,7 +99,7 @@ class FindDoctorCategoriesActivity : BaseActivity<ActivityFindDoctorCategoriesBi
                 if (s!!.length>0)
                     mDataBinding.adapter!!.filter.filter(s)
                 else{
-                    mCategoriesAdapter = CategoriesListAdapter( viewModel.mCategoryslist!!, this@FindDoctorCategoriesActivity)
+                    mCategoriesAdapter = CategoriesListAdapter( viewModel.mCategoryList!!, this@FindDoctorCategoriesActivity)
                     mDataBinding.adapter = mCategoriesAdapter
                     mDataBinding.adapter!!.notifyDataSetChanged()
                 }

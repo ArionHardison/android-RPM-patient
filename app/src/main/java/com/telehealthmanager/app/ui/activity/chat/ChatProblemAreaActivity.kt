@@ -60,15 +60,15 @@ class ChatProblemAreaActivity : BaseActivity<ActivityChatProblemAreaBinding>(), 
 
         viewModelFindDoctor.mCategoryResponse.observe(this, Observer<CategoryResponse> {
 
-            viewModelFindDoctor.mCategoryslist =
+            viewModelFindDoctor.mCategoryList =
                 it.category as MutableList<CategoryResponse.Category>?
-            if (viewModelFindDoctor.mCategoryslist!!.size > 0) {
+            if (viewModelFindDoctor.mCategoryList!!.size > 0) {
                 mDataBinding.tvNotFound.visibility = View.GONE
             } else {
                 mDataBinding.tvNotFound.visibility = View.VISIBLE
             }
             mCategoriesAdapter =
-                ChatProblemAreasListAdapter(viewModelFindDoctor.mCategoryslist!!, this,this)
+                ChatProblemAreasListAdapter(viewModelFindDoctor.mCategoryList!!, this,this)
             mDataBinding.rvCategories.adapter = mCategoriesAdapter
             mDataBinding.rvCategories.layoutManager = GridLayoutManager(applicationContext, 2)
             mCategoriesAdapter!!.notifyDataSetChanged()
@@ -83,7 +83,7 @@ class ChatProblemAreaActivity : BaseActivity<ActivityChatProblemAreaBinding>(), 
     }
 
     private fun initAdapter() {
-        mCategoriesAdapter = ChatProblemAreasListAdapter(viewModelFindDoctor.mCategoryslist!!, this,this)
+        mCategoriesAdapter = ChatProblemAreasListAdapter(viewModelFindDoctor.mCategoryList!!, this,this)
         mDataBinding.rvCategories.adapter = mCategoriesAdapter
         mDataBinding.rvCategories.layoutManager = GridLayoutManager(applicationContext, 2)
         mCategoriesAdapter!!.notifyDataSetChanged()

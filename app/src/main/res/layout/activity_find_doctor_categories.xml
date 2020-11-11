@@ -50,13 +50,13 @@
             android:layout_margin="@dimen/_8sdp"
             android:background="@drawable/search_bg"
             android:drawableEnd="@drawable/ic_search"
-            android:ems="10"
+            android:ems="3"
             android:focusable="true"
             android:hint="Search for Doctors,Specialities,Symptoms..."
             android:inputType="textPersonName"
             android:padding="@dimen/_8sdp"
+            android:ellipsize="end"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

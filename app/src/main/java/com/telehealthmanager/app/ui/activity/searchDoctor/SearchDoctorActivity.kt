@@ -83,11 +83,8 @@ class SearchDoctorActivity : BaseActivity<ActivitySearchDoctorBinding>(),SearchN
             mDataBinding.adapter = mAdapter
             mAdapter!!.notifyDataSetChanged()
             loadingObservable.value = false
-
-
-
-
         })
+
         viewModel.getErrorObservable().observe(this, Observer<String> { message ->
             loadingObservable.value = false
             ViewUtils.showToast(this@SearchDoctorActivity, message, false)

@@ -154,8 +154,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
             viewModel.revenue.set(preferenceHelper.getValue(PreferenceKey.CURRENCY,"$").toString().plus(it.revenue.toString()))
             viewModel.paid.set(preferenceHelper.getValue(PreferenceKey.CURRENCY,"$").toString().plus(it.paid.toString()))
             viewModel.pending.set(preferenceHelper.getValue(PreferenceKey.CURRENCY,"$").toString().plus(it.pending.toString()))
-
-
         })*/
         viewModel.mProfileResponse.observe(this, Observer<ProfileResponse> {
             loadingObservable.value = false
@@ -164,8 +162,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
             viewModel.profilepercentage.set(it.profile_complete)
             if (it.patient.profile?.profile_pic != null)
                 viewModel.imageurl.set(it.patient.profile?.profile_pic as String?)
-
-
 
             preferenceHelper.setValue(PreferenceKey.PATIENT_ID, it.patient.id)
             preferenceHelper.setValue(PreferenceKey.FIRST_NAME, it.patient.first_name)
@@ -231,7 +227,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
         })
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    /*override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
         return true
@@ -250,7 +246,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
 
             else -> super.onOptionsItemSelected(item)
         }
-    }
+    }*/
 
 
     override fun onSupportNavigateUp(): Boolean {

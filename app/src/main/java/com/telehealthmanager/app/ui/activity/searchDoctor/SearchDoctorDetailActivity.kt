@@ -74,7 +74,10 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
                 viewModel.favourite.set(viewModel.mDoctorProfile.value!!.hospital[0].is_favourite.toString())
                 viewModel.name.set(viewModel.mDoctorProfile.value!!.hospital[0]?.first_name.plus(" ").plus(viewModel.mDoctorProfile.value!!.hospital[0]?.last_name))
                 viewModel.specialities.set(viewModel.mDoctorProfile.value!!.speciality?.name ?: "")
-                viewModel.degree.set(viewModel.mDoctorProfile.value!!.certification.plus(" - "))
+                val doctorDegree=viewModel.mDoctorProfile.value!!
+                if(doctorDegree.certification.isBlank()){
+                    viewModel.degree.set(viewModel.mDoctorProfile.value!!.certification.plus(" - "))
+                }
                 viewModel.branch.set(viewModel.mDoctorProfile.value!!.hospital[0]?.specialities_name)
                 viewModel.percentage.set(viewModel.mDoctorProfile.value!!.hospital[0]?.feedback_percentage ?: "0".plus("%"))
                 viewModel.experience.set(viewModel.mDoctorProfile.value!!.experience ?: "0")
@@ -107,7 +110,11 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
             viewModel.name.set(viewModel.mfavDoctorProfile.value!!.hospital?.first_name.plus(" ").plus(viewModel.mfavDoctorProfile.value!!.hospital?.last_name))
             viewModel.favourite.set(viewModel.mfavDoctorProfile.value!!.hospital.is_favourite.toString())
             viewModel.specialities.set(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.speciality?.name ?: "")
-            viewModel.degree.set(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.certification.plus(" - "))
+            val doctorDegree=viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile
+            if(doctorDegree.certification.isBlank()){
+                viewModel.degree.set(doctorDegree.certification.plus(" - "))
+            }
+
             viewModel.branch.set(viewModel.mfavDoctorProfile.value!!.hospital?.specialities_name)
             viewModel.percentage.set(viewModel.mfavDoctorProfile.value!!.hospital?.feedback_percentage ?: "0".plus("%"))
             viewModel.experience.set(viewModel.mfavDoctorProfile.value!!.hospital?.doctor_profile?.experience ?: "0")
@@ -140,7 +147,10 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
             viewModel.name.set(viewModel.msearchDoctorProfile.value!!.first_name.plus(" ").plus(viewModel.msearchDoctorProfile.value!!.last_name))
             viewModel.favourite.set(viewModel.msearchDoctorProfile.value!!.is_favourite.toString())
             viewModel.specialities.set(viewModel.msearchDoctorProfile.value!!.doctor_profile?.speciality?.name ?: "")
-            viewModel.degree.set(viewModel.msearchDoctorProfile.value!!.doctor_profile.certification.plus(" - "))
+            val doctorDegree=viewModel.msearchDoctorProfile.value!!.doctor_profile
+            if(!doctorDegree.certification.isNullOrBlank()){
+                viewModel.degree.set(doctorDegree.certification.plus(" - "))
+            }
             viewModel.branch.set(viewModel.msearchDoctorProfile.value!!.specialities_name)
             viewModel.percentage.set(viewModel.msearchDoctorProfile.value!!.feedback_percentage ?: "0".plus("%"))
             viewModel.experience.set(viewModel.msearchDoctorProfile.value!!.doctor_profile?.experience ?: "0")

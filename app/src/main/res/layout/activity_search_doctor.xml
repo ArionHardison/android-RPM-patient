@@ -27,8 +27,8 @@
             android:layout_height="@dimen/_200sdp"
             android:fitsSystemWindows="true"
 
-            app:titleTextColor="@color/colorWhite"
-            android:theme="@style/AppTheme.AppBarOverlay">
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:titleTextColor="@color/colorWhite">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/toolbar_layout"
@@ -36,7 +36,6 @@
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
                 app:contentScrim="?attr/colorPrimary"
-
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:toolbarId="@+id/toolbar">
 
@@ -45,91 +44,92 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:layout_collapseMode="pin"
-                    app:title="@string/search_doctor"
-                    app:navigationIcon="@drawable/ic_back"
-                    app:popupTheme="@style/AppTheme.PopupOverlay" />
+                    app:navigationIcon="@drawable/ic_back_new"
+                    app:popupTheme="@style/AppTheme.PopupOverlay"
+                    app:title="@string/search_doctor" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
 
-       <!-- <include layout="@layout/content_search_doctor"
-            app:viewmodel="@{viewmodel}"/>-->
+        <!-- <include layout="@layout/content_search_doctor"
+             app:viewmodel="@{viewmodel}"/>-->
         <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/layout_circle_corner"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".ui.activity.searchDoctor.SearchDoctorActivity"
-        tools:showIn="@layout/activity_search_doctor">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:background="@drawable/layout_circle_corner"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:context=".ui.activity.searchDoctor.SearchDoctorActivity"
+            tools:showIn="@layout/activity_search_doctor">
 
-            <EditText
-                android:id="@+id/editText13"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/search_bg"
-                android:drawableEnd="@drawable/ic_search"
-                android:ems="10"
-                android:focusable="true"
-                android:hint="Search hospital or doctor name"
-                android:inputType="textPersonName"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView88"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                tools:text="Search results for Miot"
-                android:text= "@{@string/search_result(viewmodel.search)}"
-                android:textColor="@color/colorBlack"
-                app:layout_constraintStart_toStartOf="@+id/editText13"
-                app:layout_constraintTop_toBottomOf="@+id/editText13" />
+                <EditText
+                    android:id="@+id/editText13"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/search_bg"
+                    android:drawableEnd="@drawable/ic_search"
+                    android:ems="10"
+                    android:focusable="true"
+                    android:hint="Search hospital or doctor name"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/textView89"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text=" (6 results found)"
-                android:text= "@{@string/result_found(viewmodel.listsize)}"
-                android:textColor="@color/colorButton"
-                app:layout_constraintBottom_toBottomOf="@+id/textView88"
-                app:layout_constraintStart_toEndOf="@+id/textView88"
-                app:layout_constraintTop_toTopOf="@+id/textView88" />
+                <TextView
+                    android:id="@+id/textView88"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@{@string/search_result(viewmodel.search)}"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintStart_toStartOf="@+id/editText13"
+                    app:layout_constraintTop_toBottomOf="@+id/editText13"
+                    tools:text="Search results for Miot" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_serach_doctors"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:adapter="@{adapter}"
-                app:layout_constraintStart_toStartOf="@+id/textView88"
-                app:layout_constraintTop_toBottomOf="@+id/textView89" />
-            <TextView
-                android:id="@+id/tvNotFound"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no_result_found"
-                android:textSize="@dimen/_12sdp"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="parent"
-                android:layout_centerInParent="true"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+                <TextView
+                    android:id="@+id/textView89"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{@string/result_found(viewmodel.listsize)}"
+                    android:textColor="@color/colorButton"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView88"
+                    app:layout_constraintStart_toEndOf="@+id/textView88"
+                    app:layout_constraintTop_toTopOf="@+id/textView88"
+                    tools:text=" (6 results found)" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_serach_doctors"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:adapter="@{adapter}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/textView88"
+                    app:layout_constraintTop_toBottomOf="@+id/textView89" />
+
+                <TextView
+                    android:id="@+id/tvNotFound"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/no_result_found"
+                    android:textSize="@dimen/_12sdp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

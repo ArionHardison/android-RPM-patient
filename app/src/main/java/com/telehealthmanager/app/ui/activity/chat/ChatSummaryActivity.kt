@@ -127,9 +127,9 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
     private fun observeResponse() {
 
         viewModelFindDoctor.mDoctorResponse.observe(this, Observer<DoctorListResponse> {
-            viewModelFindDoctor.mDoctorslist =
+            viewModelFindDoctor.mDoctorList =
                 it.Specialities.doctor_profile as MutableList<DoctorListResponse.specialities.DoctorProfile>?
-            if (viewModelFindDoctor.mDoctorslist!!.size > 0) {
+            if (viewModelFindDoctor.mDoctorList!!.size > 0) {
                 mDataBinding.contentChatSummary.tvSpecialistNotFound.visibility = View.GONE
                 mDataBinding.contentChatSummary.textViewVerifiedText.visibility = View.VISIBLE
                 mDataBinding.contentChatSummary.textViewOneOfThem.visibility = View.VISIBLE
@@ -142,9 +142,9 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
                 mDataBinding.buttonToProceed.setAlpha(.5f);
                 mDataBinding.buttonToProceed.setClickable(false);
             }
-            if (viewModelFindDoctor.mDoctorslist!!.size > 5) {
+            if (viewModelFindDoctor.mDoctorList!!.size > 5) {
                 mDataBinding.contentChatSummary.tvDoctorCount.text =
-                    String.format("+%s", (viewModelFindDoctor.mDoctorslist!!.size - 5))
+                    String.format("+%s", (viewModelFindDoctor.mDoctorList!!.size - 5))
                 mDataBinding.contentChatSummary.tvDoctorCount.visibility = View.VISIBLE
             } else {
                 mDataBinding.contentChatSummary.tvDoctorCount.visibility = View.GONE
@@ -185,7 +185,7 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
     }
 
     private fun initAdapter() {
-        mAdapter = DoctorImageAdapter(viewModelFindDoctor.mDoctorslist!!, this)
+        mAdapter = DoctorImageAdapter(viewModelFindDoctor.mDoctorList!!, this)
         // Set Horizontal Layout Manager
         // for Recycler view
 

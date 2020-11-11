@@ -75,14 +75,14 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
     private fun observeResponse() {
 
         viewModel.mDoctorResponse.observe(this, Observer<DoctorListResponse> {
-            viewModel.mDoctorslist = it.Specialities.doctor_profile as MutableList<DoctorListResponse.specialities.DoctorProfile>?
+            viewModel.mDoctorList = it.Specialities.doctor_profile as MutableList<DoctorListResponse.specialities.DoctorProfile>?
 
-            if (viewModel.mDoctorslist!!.size > 0) {
+            if (viewModel.mDoctorList!!.size > 0) {
                 mDataBinding.tvNotFound.visibility = View.GONE
             } else {
                 mDataBinding.tvNotFound.visibility = View.VISIBLE
             }
-            mAdapter = FindDoctorListAdapter(viewModel.mDoctorslist!!, this@FindDoctorsListActivity, this)
+            mAdapter = FindDoctorListAdapter(viewModel.mDoctorList!!, this@FindDoctorsListActivity, this)
             mDataBinding.adapter = mAdapter
             mAdapter!!.notifyDataSetChanged()
             loadingObservable.value = false
@@ -134,7 +134,7 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
 
     private fun initAdapter() {
         mAdapter =
-            FindDoctorListAdapter(viewModel.mDoctorslist!!, this@FindDoctorsListActivity, this)
+            FindDoctorListAdapter(viewModel.mDoctorList!!, this@FindDoctorsListActivity, this)
         mDataBinding.adapter = mAdapter
         mDataBinding.rvFinddoctorsList.addItemDecoration(
             DividerItemDecoration(

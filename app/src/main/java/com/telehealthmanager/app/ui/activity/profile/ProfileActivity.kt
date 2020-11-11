@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.databinding.ObservableField
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -56,7 +57,6 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
     override fun getLayoutId(): Int = R.layout.activity_profile
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
-
         mDataBinding = mViewDataBinding as ActivityProfileBinding
         viewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
         mDataBinding.viewmodel = viewModel
@@ -64,8 +64,6 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
         initUI()
         initApiCal()
         observeResponse()
-
-
     }
 
     private fun initApiCal() {
@@ -109,31 +107,19 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
         })
 
         button11.setOnClickListener {
-            cutomColorButton(button11)
-            cutomWhiteColorButton(button12)
-            cutomWhiteColorButton(button13)
-            layout_profile_personal.visibility = View.VISIBLE
-            layout_profile_medical.visibility = View.GONE
-            layout_profile_lifestyle.visibility = View.GONE
+            visiblePersonal()
         }
+
         mDataBinding.layoutProfilePersonal.tvDob.setOnClickListener {
             pickDate()
         }
+
         button12.setOnClickListener {
-            cutomColorButton(button12)
-            cutomWhiteColorButton(button11)
-            cutomWhiteColorButton(button13)
-            layout_profile_personal.visibility = View.GONE
-            layout_profile_medical.visibility = View.VISIBLE
-            layout_profile_lifestyle.visibility = View.GONE
+            visibleMedical()
         }
+
         button13.setOnClickListener {
-            cutomColorButton(button13)
-            cutomWhiteColorButton(button11)
-            cutomWhiteColorButton(button12)
-            layout_profile_personal.visibility = View.GONE
-            layout_profile_medical.visibility = View.GONE
-            layout_profile_lifestyle.visibility = View.VISIBLE
+            visibleLifestyle()
         }
 
         mDataBinding.toolbarSubmit.setOnClickListener {
@@ -152,6 +138,33 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
             val radio: RadioButton = group.findViewById(checkedId)
             viewModel.alcohol.set(radio.text.toString().toUpperCase())
         }
+    }
+
+    private fun visiblePersonal() {
+        cutomColorButton(button11)
+        cutomWhiteColorButton(button12)
+        cutomWhiteColorButton(button13)
+        layout_profile_personal.visibility = View.VISIBLE
+        layout_profile_medical.visibility = View.GONE
+        layout_profile_lifestyle.visibility = View.GONE
+    }
+
+    private fun visibleMedical() {
+        cutomColorButton(button12)
+        cutomWhiteColorButton(button11)
+        cutomWhiteColorButton(button13)
+        layout_profile_personal.visibility = View.GONE
+        layout_profile_medical.visibility = View.VISIBLE
+        layout_profile_lifestyle.visibility = View.GONE
+    }
+
+    private fun visibleLifestyle() {
+        cutomColorButton(button13)
+        cutomWhiteColorButton(button11)
+        cutomWhiteColorButton(button12)
+        layout_profile_personal.visibility = View.GONE
+        layout_profile_medical.visibility = View.GONE
+        layout_profile_lifestyle.visibility = View.VISIBLE
     }
 
     private fun validPersonal(): Boolean {
@@ -196,10 +209,63 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
         return isValid
     }
 
+    private fun validMedical(): Boolean {
+        var isValid = true
+        if (viewModel.allergies.get().isNullOrBlank()) {
+            ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid__allergies, false)
+            isValid = false
+        } else if (viewModel.current_medications.get().isNullOrBlank()) {
+            ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid__current_medications, false)
+            isValid = false
+        } else if (viewModel.past_medications.get().isNullOrBlank()) {
+            ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid__past_medications, false)
+            isValid = false
+        } else if (viewModel.chronic_diseases.get().isNullOrBlank()) {
+            ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid__chronic_diseases, false)
+            isValid = false
+        } else if (viewModel.injuries.get().isNullOrBlank()) {
+            ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid_injuries, false)
+            isValid = false
+        } else if (viewModel.gender.get().isNullOrBlank()) {
+            ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid_surgeries, false)
+            isValid = false
+        }
+        return isValid
+    }
+
+    private fun validLifestyle(): Boolean {
+        var isValid = true
+        if (viewModel.smoking.get().isNullOrBlank()) {
+            ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid__smoking, false)
+            isValid = false
+        } else if (viewModel.alcohol.get().isNullOrBlank()) {
+            ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid__alcohol, false)
+            isValid = false
+        } else if (viewModel.activity.get().isNullOrBlank()) {
+            ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid__activity, false)
+            isValid = false
+        } else if (viewModel.food.get().isNullOrBlank()) {
+            ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid__food, false)
+            isValid = false
+        } else if (viewModel.occupation.get().isNullOrBlank()) {
+            ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid_occupation, false)
+            isValid = false
+        }
+        return isValid
+    }
 
     private fun updatePatient() {
-        if (!validPersonal())
+        if (!validPersonal()) {
+            visiblePersonal()
             return
+        } else if (!validMedical()) {
+            visibleMedical()
+            return
+        } else if (!validLifestyle()) {
+            visibleLifestyle()
+            return
+        }
+
         if (mCropImageUri?.path != null) {
             val pictureFile = File(mCropImageUri?.path!!)
             if (pictureFile.exists()) {

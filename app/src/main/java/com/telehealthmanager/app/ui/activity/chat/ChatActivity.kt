@@ -3,6 +3,7 @@ package com.telehealthmanager.app.ui.activity.chat
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Paint
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
@@ -117,9 +118,15 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(), ChatNavigator, IChatCa
                 Constant.CATEGORY_REQUEST_CODE -> {
                     // To retrieve object in second Activity
                     if (data != null) {
-                        category =
-                            data.getSerializableExtra("selectedCategory") as CategoryResponse.Category
+                        category = data.getSerializableExtra("selectedCategory") as CategoryResponse.Category
                         seeAllSelectedCategory = category
+                    }
+                    for (i: Int in mCategoriesAdapter!!.items.indices) {
+                        if (mCategoriesAdapter!!.items[i].id == seeAllSelectedCategory!!.id) {
+                            mCategoriesAdapter!!.setSelectedDoc(i)
+                            mDataBinding.contentChat.llSelectedCategory.visibility = View.GONE
+                            return
+                        }
                     }
                     mDataBinding.contentChat.llSelectedCategory.visibility = View.VISIBLE
                     mDataBinding.contentChat.tvSelectedName.text = category?.name
@@ -178,10 +185,24 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(), ChatNavigator, IChatCa
     private fun observeResponse() {
 
         viewModelFindDoctor.mCategoryResponse.observe(this, Observer<CategoryResponse> {
-            viewModelFindDoctor.mCategoryslist =
+            viewModelFindDoctor.mCategoryList =
                 it.category as MutableList<CategoryResponse.Category>?
-            if (viewModelFindDoctor.mCategoryslist!!.size > 0) {
+            viewModelFindDoctor.mFirstCategoryList!!.clear()
+            if (viewModelFindDoctor.mCategoryList!!.size > 0) {
                 mDataBinding.contentChat.tvNotFound.visibility = View.GONE
+                for (i: Int in it.category.indices) {
+                    when (i) {
+                        0 -> {
+                            viewModelFindDoctor.mFirstCategoryList!!.add(it.category[i])
+                        }
+                        1 -> {
+                            viewModelFindDoctor.mFirstCategoryList!!.add(it.category[i])
+                        }
+                        2 -> {
+                            viewModelFindDoctor.mFirstCategoryList!!.add(it.category[i])
+                        }
+                    }
+                }
             } else {
                 mDataBinding.contentChat.tvNotFound.visibility = View.VISIBLE
             }
@@ -196,7 +217,7 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(), ChatNavigator, IChatCa
 
     private fun initAdapter() {
         mCategoriesAdapter =
-            ChatCategoryAdapter(viewModelFindDoctor.mCategoryslist!!, this, null, this)
+            ChatCategoryAdapter(viewModelFindDoctor.mFirstCategoryList!!, this, null, this)
         mDataBinding.contentChat.rv_categories.adapter = mCategoriesAdapter
         mCategoriesAdapter!!.notifyDataSetChanged()
     }

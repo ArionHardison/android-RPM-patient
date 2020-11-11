@@ -42,7 +42,6 @@ class ProfileViewModel : BaseViewModel<ProfileNavigator>(){
     var occupation : ObservableField<String> = ObservableField("")
 
     fun getprofile() {
-
         getCompositeDisposable().add(appRepository.getProfile(this))
     }
 

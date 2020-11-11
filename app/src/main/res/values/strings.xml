@@ -109,6 +109,21 @@
     <string name="error_invalid__height">Please enter Height</string>
     <string name="error_invalid__weight">Please enter Weight</string>
     <string name="error_invalid_mobile_">Please enter valid Emergency contact Number</string>
+
+    <string name="error_invalid__allergies">Please enter Allergies</string>
+    <string name="error_invalid__current_medications">Please enter Current Medications</string>
+    <string name="error_invalid__past_medications">Please enter Past Medications</string>
+    <string name="error_invalid__chronic_diseases">Please enter Chronic Diseases</string>
+    <string name="error_invalid_injuries">Please enter Injuries</string>
+    <string name="error_invalid_surgeries">Please enter Surgeries</string>
+
+    <string name="error_invalid__smoking">Please select Smoking Habits</string>
+    <string name="error_invalid__alcohol">Please select Alcohol Consumption</string>
+    <string name="error_invalid__activity">Please enter Activity Level</string>
+    <string name="error_invalid__food">Please enter Food Preference</string>
+    <string name="error_invalid_occupation">Please enter Occupation</string>
+
+
     <string name="error_invalid_description">Please enter comments</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
