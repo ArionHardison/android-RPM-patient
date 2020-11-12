@@ -9,6 +9,7 @@
         <variable
             name="viewmodel"
             type="com.telehealthmanager.app.ui.activity.findDoctors.FindDoctorsViewModel" />
+
         <variable
             name="adapter"
             type="com.telehealthmanager.app.ui.adapter.FindDoctorListAdapter" />
@@ -19,37 +20,149 @@
         android:layout_height="match_parent"
         android:background="@color/colorLiteGrey">
 
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:fitsSystemWindows="true"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleTextColor="@color/colorWhite">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:contentInsetStart="0dp"
+                app:contentInsetStartWithNavigation="0dp"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/toolbarVisible"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/clickBackPress1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="?attr/actionBarSize"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:onClick="@{()->viewmodel.clickBackPress()}"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/_25sdp"
+                            android:contentDescription="@string/app_name"
+                            android:padding="@dimen/_5sdp"
+                            app:srcCompat="@drawable/ic_back_new" />
+
+                        <TextView
+                            style="@style/CustomToolBarStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="-10dp"
+                            android:gravity="center_vertical"
+                            android:text="@string/back"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/_15sdp" />
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/titleText2"
+                        android:layout_width="0dp"
+                        android:layout_height="?attr/actionBarSize"
+                        android:gravity="center"
+                        android:text="@{viewmodel.toolBarTile}"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/_15sdp"
+                        app:layout_constraintBottom_toBottomOf="@+id/clickBackPress1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/endView1"
+                        app:layout_constraintStart_toEndOf="@+id/clickBackPress1" />
+
+                    <LinearLayout
+                        android:id="@+id/endView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="?attr/actionBarSize"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent">
+
+                        <ImageView
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="match_parent"
+                            android:contentDescription="@string/app_name"
+                            android:padding="@dimen/_5sdp"
+                            android:tint="@color/colorWhite"
+                            app:srcCompat="@drawable/ic_google_pin" />
+
+                        <TextView
+                            style="@style/CustomToolBarStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="New York"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/_12sdp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="match_parent"
+                            android:contentDescription="@string/app_name"
+                            android:padding="@dimen/_5sdp"
+                            app:srcCompat="@drawable/ic_down_arrow" />
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/search_layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:background="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="parent"
-            android:background="@color/colorWhite">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBar">
 
             <EditText
                 android:id="@+id/editText9"
-                android:layout_width="@dimen/_220sdp"
-                android:layout_height="42dp"
-                app:layout_constraintHorizontal_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
                 android:layout_margin="@dimen/_8sdp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/search_bg"
                 android:drawableEnd="@drawable/ic_search"
                 android:ems="10"
-                android:hint="Search"
                 android:focusable="true"
+                app:layout_constraintEnd_toStartOf="@+id/imageView17"
+                android:hint="Search"
                 android:inputType="textPersonName"
                 android:padding="@dimen/_8sdp"
+                app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/imageView17"
-                android:layout_width="42dp"
+                android:layout_width="40dp"
+                android:layout_marginEnd="@dimen/_8sdp"
                 android:layout_height="42dp"
-                android:background="@color/colorLiteGrey"
+                android:background="@drawable/search_bg"
                 app:layout_constraintBottom_toBottomOf="@+id/editText9"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/editText9"
@@ -62,12 +175,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
-            android:paddingBottom="@dimen/_46sdp"
-            tools:listitem="@layout/find_doctor_list_item"
             android:adapter="@{adapter}"
+            android:paddingBottom="@dimen/_46sdp"
             app:layout_constraintEnd_toEndOf="@+id/search_layout"
             app:layout_constraintStart_toStartOf="@+id/search_layout"
-            app:layout_constraintTop_toBottomOf="@+id/search_layout" />
+            app:layout_constraintTop_toBottomOf="@+id/search_layout"
+            tools:listitem="@layout/find_doctor_list_item" />
 
         <TextView
             android:id="@+id/tvNotFound"

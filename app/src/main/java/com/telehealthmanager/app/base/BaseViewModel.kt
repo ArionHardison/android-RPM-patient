@@ -12,6 +12,7 @@ import com.telehealthmanager.app.data.PreferenceKey
 import com.telehealthmanager.app.data.getValue
 import com.queenbee.app.session.SessionListener
 import com.queenbee.app.session.SessionManager
+import com.telehealthmanager.app.utils.CustomBackClick
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.ResponseBody
 import org.json.JSONObject
@@ -23,7 +24,12 @@ abstract class BaseViewModel<N> : ViewModel() , SessionListener {
     private var compositeDisposable = CompositeDisposable()
     private lateinit var mNavigator: WeakReference<N>
     private var liveErrorResponse = MutableLiveData<String>()
+    var toolBarTile = MutableLiveData<String>("")
+    var customBackClick:CustomBackClick? = null
 
+    fun setOnClickListener(onViewClickListener: CustomBackClick) {
+        this.customBackClick = onViewClickListener
+    }
 
     var navigator: N
         get() = mNavigator.get()!!
@@ -40,6 +46,10 @@ abstract class BaseViewModel<N> : ViewModel() , SessionListener {
 
     fun getErrorObservable(): MutableLiveData<String> {
         return liveErrorResponse
+    }
+
+    fun clickBackPress() {
+        customBackClick!!.clickBackPress()
     }
 
     override fun invalidate() {
@@ -90,6 +100,4 @@ abstract class BaseViewModel<N> : ViewModel() , SessionListener {
             NetworkError.SERVER_EXCEPTION
         }
     }
-
-
 }

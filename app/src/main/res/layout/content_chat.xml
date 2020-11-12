@@ -1,189 +1,213 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/layout_circle_corner"
-    android:paddingBottom="@dimen/_45sdp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".ui.activity.chat.ChatActivity"
-    tools:showIn="@layout/activity_chat">
+    tools:context=".ui.activity.chat.ChatActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView75"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Chat with a doctor"
-            android:textColor="@color/colorBlack"
-            android:textSize="@dimen/_16sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.022"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView76"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Let us know your Symptoms or health problems"
-            app:layout_constraintStart_toStartOf="@+id/textView75"
-            app:layout_constraintTop_toBottomOf="@+id/textView75" />
-
-        <EditText
-            android:id="@+id/etNotes"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/rectangular_box"
-            android:ems="10"
-            android:gravity="start|top"
-            android:hint="Eg: Fever,Cold"
-            android:inputType="textMultiLine"
-            android:minLines="5"
-            android:padding="@dimen/_8sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textView76"
-            app:layout_constraintTop_toBottomOf="@+id/textView76" />
-
-        <TextView
-            android:id="@+id/textView77"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Choose suggested speciality"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.008"
-            app:layout_constraintStart_toStartOf="@+id/etNotes"
-            app:layout_constraintTop_toBottomOf="@+id/etNotes" />
-
-
-        <LinearLayout
-            android:id="@+id/ll_category"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textView77"
-            app:layout_constraintTop_toBottomOf="@+id/textView77">
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toTopOf="@+id/buttonContinue"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_categories"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/textView75"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="12dp"
-                android:scrollbars="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:text="Chat with a doctor"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_16sdp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.022"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView44"
-                tools:itemCount="3"
-                tools:listitem="@layout/list_item_category" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tvNotFound"
-                android:layout_width="wrap_content"
+                android:id="@+id/textView76"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/no_result_found"
-                android:textSize="@dimen/_12sdp"
-                android:visibility="gone" />
-        </LinearLayout>
+                android:layout_marginTop="16dp"
+                android:text="Let us know your Symptoms or health problems"
+                app:layout_constraintStart_toStartOf="@+id/textView75"
+                app:layout_constraintTop_toBottomOf="@+id/textView75" />
 
-        <LinearLayout
-            android:id="@+id/llSelectedCategory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="14dp"
-            android:background="@drawable/bg_color_primary_border"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@+id/ll_category"
-            app:layout_constraintStart_toStartOf="@+id/ll_category"
-            app:layout_constraintTop_toBottomOf="@+id/ll_category">
+            <EditText
+                android:id="@+id/etNotes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/rectangular_box"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="Eg: Fever,Cold"
+                android:inputType="textMultiLine"
+                android:minLines="5"
+                android:padding="@dimen/_8sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textView76"
+                app:layout_constraintTop_toBottomOf="@+id/textView76" />
 
             <TextView
-                android:id="@+id/tvSelectedName"
+                android:id="@+id/textView77"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="@dimen/_6sdp"
-                android:paddingTop="@dimen/_6sdp"
-                android:paddingEnd="@dimen/_6sdp"
-                android:paddingBottom="@dimen/_1sdp"
-                android:textColor="@color/colorButton"
-                android:textSize="@dimen/_12sdp" />
+                android:layout_marginTop="16dp"
+                android:text="Choose suggested speciality"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.008"
+                app:layout_constraintStart_toStartOf="@+id/etNotes"
+                app:layout_constraintTop_toBottomOf="@+id/etNotes" />
+
 
             <LinearLayout
+                android:id="@+id/ll_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textView77"
+                app:layout_constraintTop_toBottomOf="@+id/textView77">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_categories"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="12dp"
+                    android:scrollbars="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView44"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/list_item_category" />
 
                 <TextView
-                    android:id="@+id/tvSelectedStrikePrice"
+                    android:id="@+id/tvNotFound"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/_6sdp"
-                    android:paddingTop="@dimen/_1sdp"
-                    android:paddingEnd="@dimen/_6sdp"
-                    android:paddingBottom="@dimen/_6sdp"
-                    android:textColor="@color/colorButton"
-                    android:textSize="@dimen/_13sdp"
+                    android:text="@string/no_result_found"
+                    android:textSize="@dimen/_12sdp"
                     android:visibility="gone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llSelectedCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="14dp"
+                android:background="@drawable/bg_color_primary_border"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@+id/ll_category"
+                app:layout_constraintStart_toStartOf="@+id/ll_category"
+                app:layout_constraintTop_toBottomOf="@+id/ll_category">
 
                 <TextView
-                    android:id="@+id/tvSelectedPrice"
+                    android:id="@+id/tvSelectedName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/_6sdp"
-                    android:paddingTop="@dimen/_1sdp"
+                    android:paddingTop="@dimen/_6sdp"
                     android:paddingEnd="@dimen/_6sdp"
-                    android:paddingBottom="@dimen/_6sdp"
+                    android:paddingBottom="@dimen/_1sdp"
                     android:textColor="@color/colorButton"
-                    android:textSize="@dimen/_13sdp" />
-            </LinearLayout>
-        </LinearLayout>
+                    android:textSize="@dimen/_12sdp" />
 
-        <LinearLayout
-            android:id="@+id/see_all_specialist"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvSelectedStrikePrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/_6sdp"
+                        android:paddingTop="@dimen/_1sdp"
+                        android:paddingEnd="@dimen/_6sdp"
+                        android:paddingBottom="@dimen/_6sdp"
+                        android:textColor="@color/colorButton"
+                        android:textSize="@dimen/_13sdp"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tvSelectedPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/_6sdp"
+                        android:paddingTop="@dimen/_1sdp"
+                        android:paddingEnd="@dimen/_6sdp"
+                        android:paddingBottom="@dimen/_6sdp"
+                        android:textColor="@color/colorButton"
+                        android:textSize="@dimen/_13sdp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/see_all_specialist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="14dp"
+                android:background="@drawable/bg_color_grey_border"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@+id/llSelectedCategory"
+                app:layout_constraintStart_toStartOf="@+id/llSelectedCategory"
+                app:layout_constraintTop_toBottomOf="@+id/llSelectedCategory">
+
+                <TextView
+                    android:id="@+id/tvCategoryTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:text="@string/see_all_specialities"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_12sdp" />
+                <ImageView
+                    android:id="@+id/arrowIcon"
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:contentDescription="@string/app_name"
+                    android:rotation="180"
+                    android:layout_gravity="center_vertical"
+                    android:paddingTop="@dimen/_6sdp"
+                    android:paddingBottom="@dimen/_8sdp"
+                    app:srcCompat="@drawable/ic_back_new"
+                    android:tint="@color/colorBlack"/>
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/buttonContinue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="14dp"
-            android:background="@drawable/bg_color_grey_border"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="@+id/llSelectedCategory"
-            app:layout_constraintStart_toStartOf="@+id/llSelectedCategory"
-            app:layout_constraintTop_toBottomOf="@+id/llSelectedCategory">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="@dimen/_6sdp"
-                android:paddingTop="@dimen/_8sdp"
-                android:paddingEnd="@dimen/_6sdp"
-                android:paddingBottom="@dimen/_8sdp"
-                android:text="@string/see_all_specialities"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/_12sdp" />
-
-        </LinearLayout>
-
+            android:background="@color/colorButton"
+            android:text="Continue"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

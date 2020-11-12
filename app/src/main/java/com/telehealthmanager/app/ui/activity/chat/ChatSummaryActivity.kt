@@ -21,12 +21,13 @@ import com.telehealthmanager.app.repositary.model.MessageResponse
 import com.telehealthmanager.app.ui.activity.findDoctors.FindDoctorsViewModel
 import com.telehealthmanager.app.ui.activity.success.SuccessActivity
 import com.telehealthmanager.app.ui.adapter.DoctorImageAdapter
+import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ViewUtils
 import kotlinx.android.synthetic.main.content_chat_summary.view.*
 import java.util.HashMap
 
 
-class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavigator {
+class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavigator, CustomBackClick {
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
 
     override fun getLayoutId(): Int = R.layout.activity_chat_summary
@@ -38,7 +39,6 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
     private lateinit var viewModelSummary: ChatSummaryViewModel
     private lateinit var mDataBinding: ActivityChatSummaryBinding
     private var mAdapter: DoctorImageAdapter? = null
-
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivityChatSummaryBinding
@@ -104,9 +104,15 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
         mDataBinding.buttonToProceed.setOnClickListener {
             payForChatRequest()
         }
+        viewModel.setOnClickListener(this@ChatSummaryActivity)
+        viewModel.toolBarTile.value = getString(R.string.chat_summary)
     }
-    private fun payForChatRequest(){
 
+    override fun clickBackPress() {
+        finish()
+    }
+
+    private fun payForChatRequest(){
         val hashMap: HashMap<String, Any> = HashMap()
         hashMap["id"] = category.id
         hashMap["message"] =notes

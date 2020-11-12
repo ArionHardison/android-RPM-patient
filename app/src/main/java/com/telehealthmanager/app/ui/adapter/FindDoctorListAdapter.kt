@@ -41,7 +41,7 @@ class FindDoctorListAdapter(
                 (item.hospital[0].first_name?:"").plus(" ").plus(item.hospital[0].last_name?:"")
             holder.itemBinding.textView52?.text =
                 (item.hospital[0].clinic?.name?:"").plus(" , ").plus(item.hospital[0].clinic?.address?:"")
-            holder.itemBinding.textView46?.text = item.hospital[0].feedback_percentage?:"0".plus("%")
+            holder.itemBinding.textView46?.text = (item.hospital[0].feedback_percentage?:"0").plus("%")
             if (item.hospital[0]?.availability != null)
                 when (item.hospital[0]?.availability) {
 
@@ -54,7 +54,6 @@ class FindDoctorListAdapter(
                         holder.itemBinding.textView51?.visibility = View.VISIBLE
                         holder.itemBinding.textView51?.text =
                             context.getString(R.string.avaliable_tomorrow)
-
                     }
                     else -> {
                         holder.itemBinding.textView51?.visibility = View.GONE;

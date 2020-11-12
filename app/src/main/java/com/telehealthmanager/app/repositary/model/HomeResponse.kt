@@ -16,7 +16,5 @@ data class HomeResponse(
         val imgresouce: Int,
         val name: String,
         val subname: String
-
-
     )
 }

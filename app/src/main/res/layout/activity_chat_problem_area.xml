@@ -9,6 +9,7 @@
         <variable
             name="viewModelDoctor"
             type="com.telehealthmanager.app.ui.activity.findDoctors.FindDoctorsViewModel" />
+
         <variable
             name="viewmodel"
             type="com.telehealthmanager.app.ui.activity.chat.ChatViewModel" />
@@ -19,30 +20,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorBlack"
-        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textViewBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cancel"
-            android:textColor="@color/colorWhite"
-            android:padding="@dimen/_10sdp"
-            android:textSize="@dimen/_14sdp"/>
-        <TextView
-            android:id="@+id/textView78"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/layout_circle_corner_accent"
-            android:padding="@dimen/_10sdp"
-            android:text="Select problem area"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/_14sdp" />
-    </LinearLayout>
+            android:background="@color/colorBlack"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_10sdp"
+                android:text="Cancel"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView78"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/layout_circle_corner_accent"
+                android:padding="@dimen/_10sdp"
+                android:text="Select problem area"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_categories"
@@ -51,13 +56,13 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="4dp"
-            tools:itemCount="3"
             android:scrollbars="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/list_item_category"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView44" />
+            app:layout_constraintTop_toBottomOf="@+id/textView44"
+            tools:itemCount="10"
+            tools:listitem="@layout/list_item_category_with_image" />
 
         <TextView
             android:id="@+id/tvNotFound"
@@ -65,7 +70,7 @@
             android:layout_height="wrap_content"
             android:text="@string/no_result_found"
             android:textSize="@dimen/_12sdp"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
     </LinearLayout>
 </layout>

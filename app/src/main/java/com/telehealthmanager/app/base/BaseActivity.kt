@@ -58,7 +58,6 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
 
         mCustomLoader = CustomLoaderDialog(this, true)
 
-
         try {
             mNoInternetDialog = Dialog(this)
             mNoInternetDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -67,7 +66,6 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
 
         observeLiveData(baseLiveDataLoading) {
             if (it!!) showLoading() else hideLoading()

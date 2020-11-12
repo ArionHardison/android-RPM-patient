@@ -28,12 +28,13 @@ import com.telehealthmanager.app.ui.adapter.AllServiceAdapter
 import com.telehealthmanager.app.ui.adapter.AvailabilityAdapter
 import com.telehealthmanager.app.ui.adapter.Doctor_feedbackAdapter
 import com.telehealthmanager.app.ui.adapter.Doctors_photoAdapter
+import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ViewUtils
 import java.io.Serializable
 import java.util.*
 
 class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBinding>(),
-    SearchNavigator {
+    SearchNavigator, CustomBackClick {
 
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
     private lateinit var viewModel: SearchViewModel
@@ -52,9 +53,12 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
         viewModel.navigator = this
         initIntentData()
         observeResponse()
-        mDataBinding.toolbar2.setNavigationOnClickListener {
-            finish()
-        }
+        viewModel.setOnClickListener(this@SearchDoctorDetailActivity)
+        viewModel.toolBarTile.value = ""
+    }
+
+    override fun clickBackPress() {
+        finish()
     }
 
     private fun initIntentData() {

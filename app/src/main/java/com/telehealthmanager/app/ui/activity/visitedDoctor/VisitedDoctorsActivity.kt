@@ -11,11 +11,13 @@ import com.telehealthmanager.app.base.BaseActivity
 import com.telehealthmanager.app.databinding.ActivityVisitedDoctorsBinding
 import com.telehealthmanager.app.repositary.model.MainResponse
 import com.telehealthmanager.app.ui.adapter.VisitedDoctorsListAdapter
+import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ViewUtils
 import kotlinx.android.synthetic.main.activity_visited_doctors.*
-import java.util.HashMap
+import java.util.*
+import kotlin.collections.ArrayList
 
-class VisitedDoctorsActivity : BaseActivity<ActivityVisitedDoctorsBinding>(),VisitedDoctorsNavigator {
+class VisitedDoctorsActivity : BaseActivity<ActivityVisitedDoctorsBinding>(), VisitedDoctorsNavigator, CustomBackClick {
     override fun onlike() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -33,7 +35,6 @@ class VisitedDoctorsActivity : BaseActivity<ActivityVisitedDoctorsBinding>(),Vis
     private lateinit var mDataBinding: ActivityVisitedDoctorsBinding
     private var mAdapter: VisitedDoctorsListAdapter? = null
 
-
     override fun getLayoutId(): Int = R.layout.activity_visited_doctors
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
@@ -45,37 +46,34 @@ class VisitedDoctorsActivity : BaseActivity<ActivityVisitedDoctorsBinding>(),Vis
         initApiCal()
         initAdapter()
         observeResponse()
-        mDataBinding.toolbar3.setNavigationOnClickListener {
-            finish()
-        }
-
+        viewModel.setOnClickListener(this@VisitedDoctorsActivity)
+        viewModel.toolBarTile.value = resources.getString(R.string.visted_doctor)
     }
+
+    override fun clickBackPress() {
+        finish()
+    }
+
     private fun initApiCal() {
         loadingObservable.value = true
         val hashMap: HashMap<String, Any> = HashMap()
         viewModel.gethome(hashMap)
-
     }
+
     private fun observeResponse() {
-
         viewModel.mDoctorResponse.observe(this, Observer<MainResponse> {
-
-
             viewModel.mDoctorslist = it.visited_doctors as MutableList<MainResponse.VisitedDoctor>?
             if (viewModel.mDoctorslist!!.size > 0) {
                 mDataBinding.tvNotFound.visibility = View.GONE
             } else {
                 mDataBinding.tvNotFound.visibility = View.VISIBLE
             }
-            mAdapter = VisitedDoctorsListAdapter(viewModel.mDoctorslist!!,this@VisitedDoctorsActivity)
+            mAdapter = VisitedDoctorsListAdapter(viewModel.mDoctorslist!!, this@VisitedDoctorsActivity)
             mDataBinding.adapter = mAdapter
             mAdapter!!.notifyDataSetChanged()
             loadingObservable.value = false
-
-
-
-
         })
+
         viewModel.getErrorObservable().observe(this, Observer<String> { message ->
             loadingObservable.value = false
             ViewUtils.showToast(this@VisitedDoctorsActivity, message, false)
@@ -83,7 +81,7 @@ class VisitedDoctorsActivity : BaseActivity<ActivityVisitedDoctorsBinding>(),Vis
     }
 
     private fun initAdapter() {
-        mAdapter = VisitedDoctorsListAdapter( viewModel.mDoctorslist!!,this@VisitedDoctorsActivity)
+        mAdapter = VisitedDoctorsListAdapter(viewModel.mDoctorslist!!, this@VisitedDoctorsActivity)
         mDataBinding.adapter = mAdapter
         mDataBinding.rvVisitedDoctors.addItemDecoration(
             DividerItemDecoration(
@@ -91,11 +89,10 @@ class VisitedDoctorsActivity : BaseActivity<ActivityVisitedDoctorsBinding>(),Vis
                 DividerItemDecoration.VERTICAL
             )
         )
-        mDataBinding.rvVisitedDoctors.layoutManager =LinearLayoutManager(applicationContext)
+        mDataBinding.rvVisitedDoctors.layoutManager = LinearLayoutManager(applicationContext)
         mAdapter!!.notifyDataSetChanged()
-
-
     }
+
     private fun addVisitedDoctors() {
         visitedDoctors.add("Dr.Bretto")
         visitedDoctors.add("Dr.John")
@@ -103,8 +100,10 @@ class VisitedDoctorsActivity : BaseActivity<ActivityVisitedDoctorsBinding>(),Vis
         visitedDoctors.add("Dr.Virundha")
         rv_visited_doctors.layoutManager = LinearLayoutManager(applicationContext)
         rv_visited_doctors.addItemDecoration(
-            DividerItemDecoration(applicationContext,
-                DividerItemDecoration.VERTICAL)
+            DividerItemDecoration(
+                applicationContext,
+                DividerItemDecoration.VERTICAL
+            )
         )
         //rv_visited_doctors.adapter = applicationContext?.let { VisitedDoctorsListAdapter(visitedDoctors, it) }
     }

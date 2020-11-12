@@ -15,9 +15,10 @@ import com.telehealthmanager.app.data.PreferenceHelper
 import com.telehealthmanager.app.databinding.ActivityFindDoctorCategoriesBinding
 import com.telehealthmanager.app.repositary.model.CategoryResponse
 import com.telehealthmanager.app.ui.adapter.CategoriesListAdapter
+import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ViewUtils
 
-class FindDoctorCategoriesActivity : BaseActivity<ActivityFindDoctorCategoriesBinding>(),FindDoctorsNavigator {
+class FindDoctorCategoriesActivity : BaseActivity<ActivityFindDoctorCategoriesBinding>(), FindDoctorsNavigator, CustomBackClick {
 
     val categories: ArrayList<String> = ArrayList()
 
@@ -34,40 +35,34 @@ class FindDoctorCategoriesActivity : BaseActivity<ActivityFindDoctorCategoriesBi
         viewModel = ViewModelProviders.of(this).get(FindDoctorsViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
-
         initApiCal()
         initAdapter()
         observeResponse()
-
-        mDataBinding.toolbar8.setNavigationOnClickListener {
-            finish()
-        }
-
+        viewModel.setOnClickListener(this@FindDoctorCategoriesActivity)
+        viewModel.toolBarTile.value = getString(R.string.find_doctors)
     }
+
+    override fun clickBackPress() {
+        finish()
+    }
+
     private fun initApiCal() {
         loadingObservable.value = true
         viewModel.getCategorys()
-
     }
+
     private fun observeResponse() {
-
         viewModel.mCategoryResponse.observe(this, Observer<CategoryResponse> {
-
-
             viewModel.mCategoryList = it.category as MutableList<CategoryResponse.Category>?
             if (viewModel.mCategoryList!!.size > 0) {
                 mDataBinding.tvNotFound.visibility = View.GONE
             } else {
                 mDataBinding.tvNotFound.visibility = View.VISIBLE
             }
-            mCategoriesAdapter = CategoriesListAdapter( viewModel.mCategoryList!!,this)
+            mCategoriesAdapter = CategoriesListAdapter(viewModel.mCategoryList!!, this)
             mDataBinding.adapter = mCategoriesAdapter
             mCategoriesAdapter!!.notifyDataSetChanged()
             loadingObservable.value = false
-
-
-
-
         })
         viewModel.getErrorObservable().observe(this, Observer<String> { message ->
             loadingObservable.value = false
@@ -76,15 +71,15 @@ class FindDoctorCategoriesActivity : BaseActivity<ActivityFindDoctorCategoriesBi
     }
 
     private fun initAdapter() {
-        mCategoriesAdapter = CategoriesListAdapter( viewModel.mCategoryList!!,this)
+        mCategoriesAdapter = CategoriesListAdapter(viewModel.mCategoryList!!, this)
         mDataBinding.adapter = mCategoriesAdapter
-       /* mDataBinding.rvCategories.addItemDecoration(
-            DividerItemDecoration(
-                applicationContext,
-                DividerItemDecoration.VERTICAL
-            )
-        )*/
-        mDataBinding.rvCategories.layoutManager =GridLayoutManager(applicationContext,2)
+        /* mDataBinding.rvCategories.addItemDecoration(
+             DividerItemDecoration(
+                 applicationContext,
+                 DividerItemDecoration.VERTICAL
+             )
+         )*/
+        mDataBinding.rvCategories.layoutManager = GridLayoutManager(applicationContext, 2)
         mCategoriesAdapter!!.notifyDataSetChanged()
 
         mDataBinding.editText8.addTextChangedListener(object : TextWatcher {
@@ -96,34 +91,16 @@ class FindDoctorCategoriesActivity : BaseActivity<ActivityFindDoctorCategoriesBi
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s!!.length>0)
+                if (s!!.length > 0)
                     mDataBinding.adapter!!.filter.filter(s)
-                else{
-                    mCategoriesAdapter = CategoriesListAdapter( viewModel.mCategoryList!!, this@FindDoctorCategoriesActivity)
+                else {
+                    mCategoriesAdapter = CategoriesListAdapter(viewModel.mCategoryList!!, this@FindDoctorCategoriesActivity)
                     mDataBinding.adapter = mCategoriesAdapter
                     mDataBinding.adapter!!.notifyDataSetChanged()
                 }
-
             }
-
         })
     }
-    private fun categoriesList() {
-        categories.add("Womens Health")
-        categories.add("Skin & Hair")
-        categories.add("Child Specialist")
-        categories.add("General Physician")
-        categories.add("Dental care")
-        categories.add("Ear Nose Throat")
-        categories.add("Ayurveda")
-        categories.add("Bone & Join")
-        categories.add("Sex Specialist")
-        categories.add("Eye Specialist")
-        categories.add("Digestive Issue")
-        categories.add("Mental Wellness")
-        categories.add("Physiotheraphy")
-        categories.add("Diabetes Management")
-        categories.add("Lungs & Breathing")
-        categories.add("Heart")
-    }
+
+
 }

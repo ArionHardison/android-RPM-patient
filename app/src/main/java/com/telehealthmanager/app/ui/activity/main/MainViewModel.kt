@@ -15,16 +15,12 @@ class MainViewModel : BaseViewModel<MainNavigator>(){
     var name : ObservableField<String> = ObservableField("")
     var imageurl : ObservableField<String> = ObservableField("")
     var profilepercentage : ObservableField<String> = ObservableField("")
-    var mLogoutResponse = MutableLiveData<Response>()
     var mVideoIncomingResponse = MutableLiveData<VideoStatusCheck>()
 
     fun getprofile() {
-
         getCompositeDisposable().add(appRepository.getProfile(this))
     }
-    fun logout(hashMap: HashMap<String, Any>) {
-        getCompositeDisposable().add(appRepository.logout(this,hashMap))
-    }
+
 
     fun callCheckVideoAPI() {
         getCompositeDisposable().add(appRepository.videoCheckStatusAPI(this))

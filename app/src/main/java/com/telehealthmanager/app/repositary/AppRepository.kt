@@ -23,6 +23,7 @@ import com.telehealthmanager.app.ui.activity.visitedDoctor.VisitedDoctorsViewMod
 import com.telehealthmanager.app.ui.activity.main.ui.articles.ArticleViewModel
 import com.telehealthmanager.app.ui.activity.main.ui.online_consultation.OnlineConsultationViewModel
 import com.telehealthmanager.app.ui.activity.main.ui.remainder.RemainderViewModel
+import com.telehealthmanager.app.ui.activity.main.ui.settings.SettingViewModel
 import com.telehealthmanager.app.ui.activity.main.ui.wallet.WalletViewModel
 
 
@@ -84,15 +85,15 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun logout(viewModel: ViewModel, params: HashMap<String, Any>): Disposable {
+    fun logout(viewModel: SettingViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .logout(params)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
-
+                viewModel.mLogoutResponse.value=it
             }, {
-
+                viewModel.getErrorObservable().value = getErrorMessage(it)
             })
     }
 /*home*/

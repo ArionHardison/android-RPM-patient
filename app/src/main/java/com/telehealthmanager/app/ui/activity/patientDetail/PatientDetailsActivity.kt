@@ -46,7 +46,6 @@ class PatientDetailsActivity : BaseActivity<ActivityPatientDetailsBinding>(),
         }
 
         mDataBinding.button18.setOnClickListener {
-
             if (mDataBinding.nameEt.text.toString().isNullOrBlank()){
                 Toast.makeText(applicationContext, "Invalid Name", Toast.LENGTH_LONG).show()
             }else if (mDataBinding.emailEt.text.toString().isNullOrBlank()){
@@ -85,8 +84,6 @@ class PatientDetailsActivity : BaseActivity<ActivityPatientDetailsBinding>(),
                 goToBooked()
             }else
                 ViewUtils.showToast(this@PatientDetailsActivity, it.message, false)
-
-
         })
 
         viewModel.getErrorObservable().observe(this, Observer<String> { message ->

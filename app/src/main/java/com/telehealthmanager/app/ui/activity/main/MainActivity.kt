@@ -33,6 +33,7 @@ import com.telehealthmanager.app.ui.twilio.IncomingVideoCallActivity
 import com.telehealthmanager.app.utils.NetworkUtils
 import com.telehealthmanager.app.utils.ViewUtils
 import java.util.*
+import kotlin.collections.HashMap
 
 class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -54,12 +55,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
-
         preferenceHelper.setValue(PreferenceKey.CURRENCY, "$")
         initUI()
         initApiCal()
         observeResponse()
-
 
     }
 
@@ -125,21 +124,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
 
     override fun onPause() {
         super.onPause()
-        if (checkRequestTimer != null) {
+       /* if (checkRequestTimer != null) {
             checkRequestTimer!!.cancel();
             checkRequestTimer = null;
-        }
+        }*/
     }
 
     override fun onResume() {
         super.onResume()
-        checkRequestTimer = Timer()
+        /*checkRequestTimer = Timer()
         checkRequestTimer!!.schedule(object : TimerTask() {
             override fun run() {
                 if (NetworkUtils.isNetworkConnected(this@MainActivity)){}
                     //viewModel.callCheckVideoAPI()
             }
-        }, 0, 5000)
+        }, 0, 5000)*/
     }
 
     private fun observeResponse() {
@@ -211,46 +210,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
             })
         })
 
-        viewModel.mLogoutResponse.observe(this, Observer<Response> {
-
-            hideLoading()
-            preferenceHelper.clearAll()
-            val intent = Intent(this@MainActivity, SplashActivity::class.java)
-            startActivity(intent);
-            finish()
-
-
-        })
         viewModel.getErrorObservable().observe(this, Observer<String> { message ->
             loadingObservable.value = false
             ViewUtils.showToast(this@MainActivity, message, false)
         })
     }
 
-    /*override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_logout -> {
-                preferenceHelper.clearAll()
-                val intent = Intent(this@MainActivity, SplashActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent);
-                finishAffinity()
-                true
-            }
-
-            else -> super.onOptionsItemSelected(item)
-        }
-    }*/
-
-
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
 }

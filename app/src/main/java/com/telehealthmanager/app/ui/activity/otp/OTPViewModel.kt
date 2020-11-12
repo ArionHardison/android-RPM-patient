@@ -52,7 +52,7 @@ class OTPViewModel : BaseViewModel<OTPNavigator>() {
         val hashMap : HashMap<String,Any> = HashMap()
         //hashMap[WebApiConstants.SignIn.EMAIL] ="patient@demo.com"
         //hashMap[WebApiConstants.SignIn.PASSWORD] = "123456"
-        hashMap[WebApiConstants.SignIn.MOBILE] =countryCode.get()!!.removePrefix("+")+ mobile.get()!!.trim()
+        hashMap[WebApiConstants.SignIn.MOBILE] =countryCode.get()!!.toString()+ mobile.get()!!.trim()
         //hashMap[WebApiConstants.SignIn.COUNTRY_CODE] = countryCode.value!!.removePrefix("+")
         hashMap[WebApiConstants.SignIn.OTP] =otp.value!!
         hashMap[WebApiConstants.SignIn.GRANT_TYPE] = WebApiConstants.SignIn.OTP

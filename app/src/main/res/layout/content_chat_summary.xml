@@ -110,6 +110,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:gravity="bottom"
             app:layout_constraintStart_toStartOf="@+id/textView84"
             app:layout_constraintTop_toBottomOf="@+id/textView84">
 
@@ -122,18 +123,41 @@
                 android:paddingBottom="@dimen/_6sdp"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/_13sdp"
+                android:textStyle="bold"
                 android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tvSummaryPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="@dimen/_6sdp"
                 android:paddingTop="@dimen/_1sdp"
                 android:paddingEnd="@dimen/_6sdp"
-                android:paddingBottom="@dimen/_6sdp"
+                android:paddingBottom="@dimen/_5sdp"
                 android:textColor="@color/colorBlack"
-                android:textSize="@dimen/_13sdp" />
+                android:textSize="@dimen/_18sdp"
+                tools:text="$10"/>
+
+            <TextView
+                android:id="@+id/tvOfferPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/_1sdp"
+                android:paddingEnd="@dimen/_6sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:textColor="@color/colorGrey"
+                android:textSize="@dimen/_13sdp"
+                tools:text="$10"/>
+
+            <TextView
+                android:id="@+id/tvOfferPercentage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/_1sdp"
+                android:paddingEnd="@dimen/_6sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:textColor="@color/colorButton"
+                android:textSize="@dimen/_13sdp"
+                tools:text="(30% off)"/>
         </LinearLayout>
 
         <View
@@ -154,6 +178,7 @@
             android:ems="10"
             android:hint="Have a promo code?"
             android:inputType="textPersonName"
+            android:textColorHint="@color/colorGrey"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider9" />
 
@@ -167,16 +192,6 @@
             app:layout_constraintBottom_toBottomOf="@+id/editTextPromoValue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/editTextPromoValue" />
-
-        <TextView
-            android:id="@+id/textView87"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:text="100% Money back if no response. Not for emergency use"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextPromoValue" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

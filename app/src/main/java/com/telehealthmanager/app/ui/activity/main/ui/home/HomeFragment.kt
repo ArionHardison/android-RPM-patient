@@ -18,7 +18,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun getLayoutId(): Int = R.layout.fragment_home
 
     override fun initView(mRootView: View?, mViewDataBinding: ViewDataBinding?) {
-
         recyclerView.layoutManager = LinearLayoutManager(context)
         menus.clear()
         addMenus()

@@ -9,5 +9,4 @@ public interface LocationCallBack {
 
         void onFailure(String messsage);
     }
-
 }

@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.appbar.AppBarLayout
 import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
@@ -21,11 +22,13 @@ import com.telehealthmanager.app.repositary.model.CategoryResponse
 import com.telehealthmanager.app.ui.activity.findDoctors.FindDoctorsViewModel
 import com.telehealthmanager.app.ui.adapter.ChatCategoryAdapter
 import com.telehealthmanager.app.ui.adapter.IChatCategoryListener
+import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ViewUtils
 import kotlinx.android.synthetic.main.content_chat.*
 import kotlinx.android.synthetic.main.content_chat.view.*
+import kotlin.math.abs
 
-class ChatActivity : BaseActivity<ActivityChatBinding>(), ChatNavigator, IChatCategoryListener {
+class ChatActivity : BaseActivity<ActivityChatBinding>(), ChatNavigator, IChatCategoryListener, CustomBackClick {
     override fun getLayoutId(): Int = R.layout.activity_chat
     private lateinit var viewModel: ChatViewModel
     private lateinit var viewModelFindDoctor: FindDoctorsViewModel
@@ -46,12 +49,15 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(), ChatNavigator, IChatCa
         observeResponse()
         initApiCal()
         initAdapter()
+        viewModel.setOnClickListener(this@ChatActivity)
+        viewModel.toolBarTile.value = resources.getString(R.string.chat)
 
         mDataBinding.contentChat.see_all_specialist.setOnClickListener {
             val intent = Intent(applicationContext, ChatProblemAreaActivity::class.java)
             startActivityForResult(intent, Constant.CATEGORY_REQUEST_CODE)
         }
-        mDataBinding.buttonContinue.setOnClickListener {
+
+        mDataBinding.contentChat.buttonContinue.setOnClickListener {
             if (mDataBinding.contentChat.etNotes.text.toString().equals("")) {
                 ViewUtils.showToast(this@ChatActivity, getString(R.string.please_enter_symptoms_health_problem), false)
             } else if (category == null) {
@@ -84,6 +90,10 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(), ChatNavigator, IChatCa
                 initAdapter()
             }
         }
+    }
+
+    override fun clickBackPress() {
+        finish()
     }
 
     override fun onChatCategoryClicked(category: CategoryResponse.Category) {
@@ -125,12 +135,21 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(), ChatNavigator, IChatCa
                         if (mCategoriesAdapter!!.items[i].id == seeAllSelectedCategory!!.id) {
                             mCategoriesAdapter!!.setSelectedDoc(i)
                             mDataBinding.contentChat.llSelectedCategory.visibility = View.GONE
+                            mDataBinding.contentChat.tvCategoryTitle.text = getString(R.string.see_all_specialities)
+                            mDataBinding.contentChat.see_all_specialist.background = ContextCompat.getDrawable(this, R.drawable.bg_color_grey_border)
+                            mDataBinding.contentChat.tvCategoryTitle.setTextColor(
+                                ContextCompat.getColor(
+                                    this,
+                                    R.color.colorBlack
+                                )
+                            )
+                            mDataBinding.contentChat.arrowIcon.setColorFilter(ContextCompat.getColor(this, R.color.colorBlack), android.graphics.PorterDuff.Mode.MULTIPLY);
                             return
                         }
                     }
-                    mDataBinding.contentChat.llSelectedCategory.visibility = View.VISIBLE
-                    mDataBinding.contentChat.tvSelectedName.text = category?.name
-                    mDataBinding.contentChat.tvSelectedStrikePrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG)
+                   // mDataBinding.contentChat.llSelectedCategory.visibility = View.VISIBLE
+                    mDataBinding.contentChat.tvCategoryTitle.text = category?.name
+                    /*mDataBinding.contentChat.tvSelectedStrikePrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG)
                     if (category?.offer_fees == 0.00) {
                         mDataBinding.contentChat.tvSelectedPrice.text = String.format(
                             "%s %s",
@@ -150,16 +169,17 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(), ChatNavigator, IChatCa
                             preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"),
                             category?.fees.toString()
                         )
-                    }
-                    mDataBinding.contentChat.llSelectedCategory.background =
+                    }*/
+                    mDataBinding.contentChat.see_all_specialist.background =
                         ContextCompat.getDrawable(this, R.drawable.bg_color_primary_border)
-                    mDataBinding.contentChat.tvSelectedPrice.setTextColor(
+                    mDataBinding.contentChat.tvCategoryTitle.setTextColor(
                         ContextCompat.getColor(
                             this,
                             R.color.colorButton
                         )
                     )
-                    mDataBinding.contentChat.tvSelectedName.setTextColor(
+                    mDataBinding.contentChat.arrowIcon.setColorFilter(ContextCompat.getColor(this, R.color.colorButton), android.graphics.PorterDuff.Mode.MULTIPLY);
+                    /*mDataBinding.contentChat.tvSelectedName.setTextColor(
                         ContextCompat.getColor(
                             this,
                             R.color.colorButton
@@ -170,7 +190,7 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(), ChatNavigator, IChatCa
                             this,
                             R.color.colorButton
                         )
-                    )
+                    )*/
                     initAdapter()
                 }
             }
@@ -221,4 +241,5 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(), ChatNavigator, IChatCa
         mDataBinding.contentChat.rv_categories.adapter = mCategoriesAdapter
         mCategoriesAdapter!!.notifyDataSetChanged()
     }
+
 }

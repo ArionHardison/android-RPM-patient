@@ -15,12 +15,13 @@ import com.telehealthmanager.app.repositary.model.FeedbackResponse
 import com.telehealthmanager.app.repositary.model.MainResponse
 import com.telehealthmanager.app.repositary.model.Response
 import com.telehealthmanager.app.ui.activity.thankyou.ThankyouActivity
+import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ViewUtils
 import java.util.*
 
 
 class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBinding>(),
-    VisitedDoctorsNavigator {
+    VisitedDoctorsNavigator, CustomBackClick {
 
     private lateinit var viewModel: VisitedDoctorsViewModel
     private lateinit var mDataBinding: ActivityVisitedDoctorsDetailBinding
@@ -34,12 +35,12 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
         viewModel.navigator = this
         initIntentData()
         observeResponse()
+        viewModel.setOnClickListener(this@VisitedDoctorsDetailActivity)
+        viewModel.toolBarTile.value = resources.getString(R.string.visted_doctor)
+
         mDataBinding.button14.setOnClickListener {
             val intent = Intent(applicationContext, ThankyouActivity::class.java)
             startActivity(intent);
-        }
-        mDataBinding.toolbar4.setNavigationOnClickListener {
-            finish()
         }
         mDataBinding.btncancel.setOnClickListener {
             loadingObservable.value = true
@@ -47,6 +48,10 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
             hashMap[WebApiConstants.IntentPass.ID] = viewModel.mupcomingDoctorDetails.value!!.id
             viewModel.cancelclick(hashMap)
         }
+    }
+
+    override fun clickBackPress() {
+        finish()
     }
 
     private fun initIntentData() {
@@ -144,15 +149,15 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
 
     override fun onlike() {
         experiences = "LIKE"
-        mDataBinding.imageView13.setImageResource(R.drawable.like_activ)
-        mDataBinding.imageView14.setImageResource(R.drawable.dislike)
+        mDataBinding.imageView13.setImageResource(R.drawable.ic_gray_like)
+        mDataBinding.imageView14.setImageResource(R.drawable.ic_like_green)
 
     }
 
     override fun onunlike() {
         experiences = "DISLIKE"
-        mDataBinding.imageView13.setImageResource(R.drawable.like)
-        mDataBinding.imageView14.setImageResource(R.drawable.dislike_activ)
+        mDataBinding.imageView13.setImageResource(R.drawable.ic_gray_unlike)
+        mDataBinding.imageView14.setImageResource(R.drawable.ic_like_red)
     }
 
     override fun onSubmit() {

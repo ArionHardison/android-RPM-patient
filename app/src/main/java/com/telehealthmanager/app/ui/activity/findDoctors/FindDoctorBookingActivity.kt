@@ -25,10 +25,11 @@ import java.lang.String
 import java.text.SimpleDateFormat
 import java.util.*
 import androidx.lifecycle.Observer
+import com.telehealthmanager.app.utils.CustomBackClick
 
 
 class FindDoctorBookingActivity : BaseActivity<ActivityFindDoctorBookingBinding>(),
-    FindDoctorsNavigator, TimePickerDialog.OnTimeSetListener {
+    FindDoctorsNavigator, TimePickerDialog.OnTimeSetListener, CustomBackClick {
 
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
     private var horizontalCalendar: HorizontalCalendar? = null
@@ -44,9 +45,7 @@ class FindDoctorBookingActivity : BaseActivity<ActivityFindDoctorBookingBinding>
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
         observeResponse()
-        mDataBinding.toolbar7.setNavigationOnClickListener {
-            finish()
-        }
+
         mDataBinding.searchDocName.text =
             preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_NAME, "").toString()
         if (preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_Special, "").toString().isEmpty())
@@ -105,11 +104,18 @@ class FindDoctorBookingActivity : BaseActivity<ActivityFindDoctorBookingBinding>
             hour = calendar.get(Calendar.HOUR_OF_DAY)
             minute = calendar.get(Calendar.MINUTE)
             val timePickerDialog = TimePickerDialog(
-                this, this@FindDoctorBookingActivity, hour, minute,false
+                this, this@FindDoctorBookingActivity, hour, minute, false
             )
             timePickerDialog.show()
 
         }
+
+        viewModel.setOnClickListener(this@FindDoctorBookingActivity)
+        viewModel.toolBarTile.value = getString(R.string.booking)
+    }
+
+    override fun clickBackPress() {
+        finish()
     }
 
     fun isBeforeToday(d: Calendar): Boolean {
@@ -154,9 +160,9 @@ class FindDoctorBookingActivity : BaseActivity<ActivityFindDoctorBookingBinding>
             )).toString() + " " + selectedhour + ":" + selectedminutes + ":" + "00"
         )
         if (mDataBinding.radioButton.isChecked) {
-            preferenceHelper.setValue(PreferenceKey.VISIT_PURPOSE, "follow_up")
+            preferenceHelper.setValue(PreferenceKey.VISIT_PURPOSE, mDataBinding.radioButton.text.toString())
         } else {
-            preferenceHelper.setValue(PreferenceKey.VISIT_PURPOSE, "consultation")
+            preferenceHelper.setValue(PreferenceKey.VISIT_PURPOSE, mDataBinding.radioButton2.text.toString())
         }
         performclick()
     }

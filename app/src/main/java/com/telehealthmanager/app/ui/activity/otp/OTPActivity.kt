@@ -67,7 +67,6 @@ class OTPActivity : BaseActivity<ActivityOtpBinding>(), OTPNavigator {
     private fun observeResponse() {
         viewModel.loginResponse.observe(this@OTPActivity, Observer<LoginResponse> {
             loadingObservable.value = false
-
             goToHome(it)
         })
 

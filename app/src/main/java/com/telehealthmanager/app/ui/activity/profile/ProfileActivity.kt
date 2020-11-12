@@ -33,6 +33,7 @@ import com.telehealthmanager.app.data.setValue
 import com.telehealthmanager.app.databinding.ActivityProfileBinding
 import com.telehealthmanager.app.repositary.model.ProfileResponse
 import com.telehealthmanager.app.ui.activity.main.MainActivity
+import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ValidationUtils
 import com.telehealthmanager.app.utils.ViewUtils
 import com.theartofdev.edmodo.cropper.CropImage
@@ -45,7 +46,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator {
+class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator, CustomBackClick {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
@@ -64,6 +65,12 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
         initUI()
         initApiCal()
         observeResponse()
+        viewModel.setOnClickListener(this@ProfileActivity)
+        viewModel.toolBarTile.value = getString(R.string.your_profile)
+    }
+
+    override fun clickBackPress() {
+        finish()
     }
 
     private fun initApiCal() {
@@ -96,15 +103,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
     }
 
     private fun initUI() {
-
         profile_img = findViewById(R.id.img_prof)
-        setSupportActionBar(mDataBinding.toolbar9)
-        supportActionBar!!.setHomeButtonEnabled(true)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setDisplayShowHomeEnabled(true)
-        mDataBinding.toolbar9.setNavigationOnClickListener(View.OnClickListener {
-            finish()
-        })
 
         button11.setOnClickListener {
             visiblePersonal()

@@ -242,7 +242,7 @@
     <string name="no_reminder_found">No reminder found</string>
     <string name="save_changes">Save changes</string>
     <string name="edit_reminder">Edit Reminder</string>
-    <string name="see_all_specialities"><![CDATA[See all specialities >]]></string>
+    <string name="see_all_specialities"><![CDATA[See all specialities]]></string>
     <string name="invalid_promo_code">Invalid promo code</string>
     <string name="verified_specialists_online_now">Verified %1$s Specialists online now</string>
     <string name="not_available">Not available</string>
@@ -276,7 +276,9 @@
     <string name="vp8_simulcast">VP8 Simulcast</string>
     <string name="video_call">Video Call</string>
     <string name="view_amp_edit_profile"><![CDATA[View & Edit Profile >]]></string>
-
+    <string name="chat_summary">Summary</string>
+    <string name="your_profile">Your Profile</string>
+    <string name="payment">Payment</string>
 
 
 </resources>

@@ -28,15 +28,15 @@ import com.telehealthmanager.app.repositary.model.DoctorListResponse
 import com.telehealthmanager.app.ui.activity.searchDoctor.SearchDoctorDetailActivity
 import com.telehealthmanager.app.ui.adapter.FindDoctorListAdapter
 import com.telehealthmanager.app.ui.adapter.IDoctorListener
+import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ViewUtils
 import kotlinx.android.synthetic.main.activity_find_doctors_list.*
 import java.io.Serializable
 
 class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
-    FindDoctorsNavigator, IDoctorListener {
+    FindDoctorsNavigator, IDoctorListener, CustomBackClick {
 
-    val doctorList: ArrayList<String> = ArrayList()
-
+    private val doctorList: ArrayList<String> = ArrayList()
     private lateinit var viewModel: FindDoctorsViewModel
     private lateinit var mDataBinding: ActivityFindDoctorsListBinding
     private var mAdapter: FindDoctorListAdapter? = null
@@ -47,7 +47,6 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
     override fun getLayoutId(): Int = R.layout.activity_find_doctors_list
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
-
         mDataBinding = mViewDataBinding as ActivityFindDoctorsListBinding
         viewModel = ViewModelProviders.of(this).get(FindDoctorsViewModel::class.java)
         mDataBinding.viewmodel = viewModel
@@ -58,25 +57,24 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
         observeResponse()
         filterdialog = AlertDialog.Builder(this)
         //categoriesList()
-
+        viewModel.setOnClickListener(this@FindDoctorsListActivity)
         mDataBinding.imageView17.setOnClickListener {
             showFilterDialog(this@FindDoctorsListActivity)
         }
-
     }
 
+    override fun clickBackPress() {
+        finish()
+    }
 
     private fun initApiCal(id: Int) {
         loadingObservable.value = true
         viewModel.getDoctorByCategorys(id)
-
     }
 
     private fun observeResponse() {
-
         viewModel.mDoctorResponse.observe(this, Observer<DoctorListResponse> {
             viewModel.mDoctorList = it.Specialities.doctor_profile as MutableList<DoctorListResponse.specialities.DoctorProfile>?
-
             if (viewModel.mDoctorList!!.size > 0) {
                 mDataBinding.tvNotFound.visibility = View.GONE
             } else {
@@ -131,7 +129,6 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
         ad.show()
     }
 
-
     private fun initAdapter() {
         mAdapter =
             FindDoctorListAdapter(viewModel.mDoctorList!!, this@FindDoctorsListActivity, this)
@@ -154,16 +151,12 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-
                 if (s!!.length > 0)
                     mDataBinding.adapter!!.filter.filter(s)
                 else {
                     initAdapter()
                 }
-
             }
-
         })
     }
 
@@ -194,7 +187,6 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
         val intent = Intent(this@FindDoctorsListActivity, SearchDoctorDetailActivity::class.java)
         intent.putExtra(WebApiConstants.IntentPass.DoctorProfile, selectedItem as Serializable)
         startActivity(intent);
-
     }
 
     override fun oncallclick(phone: String) {

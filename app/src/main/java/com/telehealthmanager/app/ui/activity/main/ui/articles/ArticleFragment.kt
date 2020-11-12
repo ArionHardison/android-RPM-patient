@@ -30,8 +30,6 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>() , ArticleNavigato
     val mViewModel = ArticleViewModel()
     override fun getLayoutId(): Int = R.layout.fragment_article
 
-
-
     override fun initView(mRootView: View?, mViewDataBinding: ViewDataBinding?) {
         this.mViewDataBinding = mViewDataBinding as FragmentArticleBinding
         mViewModel.navigator = this
