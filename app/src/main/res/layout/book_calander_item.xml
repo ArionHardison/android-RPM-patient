@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent"
+    android:layout_width="@dimen/_50sdp"
+    android:layout_height="@dimen/_50sdp"
+    android:layout_margin="5dp"
+    android:layout_marginEnd="1dp"
+    android:background="@drawable/calander_select"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+
+    <TextView
+        android:id="@+id/day"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="@dimen/_2sdp"
+        android:text="Fri"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/_10sdp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="1dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="41"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_8sdp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/month"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingStart="2dp"
+            android:text="Nov"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_8sdp" />
+    </LinearLayout>
+
+
+</LinearLayout>

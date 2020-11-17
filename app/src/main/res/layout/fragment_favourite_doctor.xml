@@ -27,6 +27,8 @@
             android:paddingTop="@dimen/_8sdp"
             android:paddingBottom="@dimen/_8sdp"
             android:adapter="@{adapter}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"
             tools:listitem="@layout/fav_doctor_list_item"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

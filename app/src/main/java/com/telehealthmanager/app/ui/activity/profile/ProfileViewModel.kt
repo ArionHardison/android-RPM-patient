@@ -45,6 +45,9 @@ class ProfileViewModel : BaseViewModel<ProfileNavigator>(){
         getCompositeDisposable().add(appRepository.getProfile(this))
     }
 
+    fun openAllergies(){
+        navigator.onClickAllergies()
+    }
 
     fun editPatient() {
         val hashMap: HashMap<String, Any> = HashMap()

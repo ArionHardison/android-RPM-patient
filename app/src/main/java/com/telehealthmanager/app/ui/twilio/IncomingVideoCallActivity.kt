@@ -47,8 +47,7 @@ class IncomingVideoCallActivity : AppCompatActivity(), View.OnClickListener {
         imgEndCall.setOnClickListener(this)
         imgAcceptCall.setOnClickListener(this)
 
-        val receiverPushResponse: ReceiverPushResponse =
-            intent.getParcelableExtra("receiver_push") as ReceiverPushResponse
+        val receiverPushResponse: ReceiverPushResponse = intent.getParcelableExtra("receiver_push") as ReceiverPushResponse
         name = receiverPushResponse.name
         sender = receiverPushResponse.sender_id
         chatPath = receiverPushResponse.room_id
@@ -131,6 +130,7 @@ class IncomingVideoCallActivity : AppCompatActivity(), View.OnClickListener {
         i.putExtra("chat_path", chatPath)
         i.putExtra("is_video", isVideo)
         i.putExtra("sender", sender)
+        i.putExtra("is_request", false)
         startActivity(i)
         finish()
     }

@@ -1,5 +1,7 @@
 package com.telehealthmanager.app.repositary.model
 
+import android.content.Intent
+
 data class HomeResponse(
     val Specialities: List<Speciality>,
     val favourite_Doctors: List<Any>,
@@ -15,6 +17,7 @@ data class HomeResponse(
     data class Menu(
         val imgresouce: Int,
         val name: String,
-        val subname: String
+        val subname: String,
+        val intent: Intent
     )
 }

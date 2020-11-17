@@ -28,23 +28,26 @@ import kotlin.math.abs
 
 
 class SearchDoctorActivity : BaseActivity<ActivitySearchDoctorBinding>(), SearchNavigator, CustomBackClick {
-    override fun ViewallClick() {
+    override fun viewAllClick() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun onfavclick() {
+    override fun viewCallClick() {
+        TODO("Not yet implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onFavClick() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun onshareclick() {
+    override fun onShareClick() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun Onbookclick() {
+    override fun onBookClick() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    val searchDoctors: ArrayList<String> = ArrayList()
     private lateinit var viewModel: SearchViewModel
     private lateinit var mDataBinding: ActivitySearchDoctorBinding
     private var mAdapter: SearchDoctorsListAdapter? = null
@@ -52,7 +55,6 @@ class SearchDoctorActivity : BaseActivity<ActivitySearchDoctorBinding>(), Search
     override fun getLayoutId(): Int = R.layout.activity_search_doctor
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
-        //  addSearchDoctors()
         mDataBinding = mViewDataBinding as ActivitySearchDoctorBinding
         viewModel = ViewModelProviders.of(this).get(SearchViewModel::class.java)
         mDataBinding.viewmodel = viewModel
@@ -86,14 +88,14 @@ class SearchDoctorActivity : BaseActivity<ActivitySearchDoctorBinding>(), Search
 
     private fun observeResponse() {
         viewModel.mDoctorResponse.observe(this, Observer<MainResponse> {
-            viewModel.mDoctorslist = it.search_doctors as MutableList<Hospital>?
-            if (viewModel.mDoctorslist!!.size > 0) {
+            viewModel.mDoctorList = it.search_doctors as MutableList<Hospital>?
+            if (viewModel.mDoctorList!!.size > 0) {
                 viewModel.listsize.set(it.search_doctors.size.toString())
                 mDataBinding.tvNotFound.visibility = View.GONE
             } else {
                 mDataBinding.tvNotFound.visibility = View.VISIBLE
             }
-            mAdapter = SearchDoctorsListAdapter(viewModel.mDoctorslist!!, this@SearchDoctorActivity)
+            mAdapter = SearchDoctorsListAdapter(viewModel.mDoctorList!!, this@SearchDoctorActivity)
             mDataBinding.adapter = mAdapter
             mAdapter!!.notifyDataSetChanged()
             loadingObservable.value = false
@@ -108,7 +110,7 @@ class SearchDoctorActivity : BaseActivity<ActivitySearchDoctorBinding>(), Search
     private fun initAdapter() {
         val decorator = DividerItemDecoration(applicationContext, LinearLayoutManager.VERTICAL)
         decorator.setDrawable(ContextCompat.getDrawable(applicationContext, R.drawable.divider)!!)
-        mAdapter = SearchDoctorsListAdapter(viewModel.mDoctorslist!!, this@SearchDoctorActivity)
+        mAdapter = SearchDoctorsListAdapter(viewModel.mDoctorList!!, this@SearchDoctorActivity)
         mDataBinding.adapter = mAdapter
         mDataBinding.rvSerachDoctors.addItemDecoration(decorator)
 
@@ -134,20 +136,5 @@ class SearchDoctorActivity : BaseActivity<ActivitySearchDoctorBinding>(), Search
                 }
             }
         })
-    }
-
-    private fun addSearchDoctors() {
-        searchDoctors.add("Dr.Bretto")
-        searchDoctors.add("Dr.John")
-        searchDoctors.add("Dr.Jenifer")
-        searchDoctors.add("Dr.Virundha")
-        rv_serach_doctors.layoutManager = LinearLayoutManager(applicationContext)
-        rv_serach_doctors.addItemDecoration(
-            DividerItemDecoration(
-                applicationContext,
-                DividerItemDecoration.VERTICAL
-            )
-        )
-        // rv_serach_doctors.adapter = applicationContext?.let { SearchDoctorsListAdapter(searchDoctors, it) }
     }
 }

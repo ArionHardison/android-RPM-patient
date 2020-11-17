@@ -140,13 +140,12 @@ interface ApiInterface {
     fun videoCheckStatusAPI(): Observable<VideoStatusCheck>
 
     @GET("api/patient/video/cancel")
-    fun cancelVideoCall(
-        @Query("room_id") room_id: Any?
-    ): Call<VideoCallCancelResponse>?
+    fun cancelVideoCall(@Query("room_id") room_id: Any?): Call<VideoCallCancelResponse>?
 
     @GET("api/patient/video/call/token")
-    fun getTwilloVideoToken(
-        @Query("room_id") obj: Any?
-    ): Call<AccessToken>
+    fun getTwilloVideoToken(@QueryMap hashMap: HashMap<String, Any>): Call<AccessToken>
+
+    @GET("api/patient/video/call/token")
+    fun getCallRequest(@QueryMap hashMap: HashMap<String, Any>): Call<AccessToken>
 
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.activity.patientDetail.PatientDetailsActivity">
 
@@ -11,225 +12,229 @@
             type="com.telehealthmanager.app.ui.activity.patientDetail.PatientDetailViewModel" />
     </data>
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        android:paddingBottom="@dimen/_20sdp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <include
+            android:id="@+id/toolbarBase"
+            layout="@layout/toolbar_base"
+            bind:baseViewModel="@{viewmodel}" />
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/_20sdp">
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/button18"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarBase">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar6"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
-                android:minHeight="?attr/actionBarSize"
-                android:theme="?attr/actionBarTheme"
-                app:title="@string/enter_patient_details"
-                app:titleTextColor="@color/colorWhite"
-                app:navigationIcon="@drawable/ic_back"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:paddingBottom="@dimen/_20sdp">
 
-            <TextView
-                android:id="@+id/textView61"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorLiteGrey"
-                android:paddingStart="@dimen/_5sdp"
-                android:paddingTop="@dimen/_8sdp"
-                android:paddingEnd="@dimen/_3sdp"
-                android:paddingBottom="@dimen/_8sdp"
-                android:text="Patient details"
-                android:textColor="@color/colorBlack"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar6" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="@+id/textView61"
-                app:layout_constraintStart_toStartOf="@+id/textView61"
-                app:layout_constraintTop_toBottomOf="@+id/textView61">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/name_et"
+                <TextView
+                    android:id="@+id/textView61"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:hint="Name" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:background="@color/colorLiteGrey"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_3sdp"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:text="Patient details"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout24"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="@+id/textInputLayout7"
-                app:layout_constraintStart_toStartOf="@+id/textInputLayout7"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout7">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/email_et"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout7"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
-                    android:hint="Email Id" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    app:layout_constraintEnd_toEndOf="@+id/textView61"
+                    app:layout_constraintStart_toStartOf="@+id/textView61"
+                    app:layout_constraintTop_toBottomOf="@+id/textView61">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout25"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="@+id/textInputLayout24"
-                app:layout_constraintStart_toStartOf="@+id/textInputLayout24"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout24">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/name_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Name"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/phone_et"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout24"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:hint="Phone Number" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintEnd_toEndOf="@+id/textInputLayout7"
+                    app:layout_constraintStart_toStartOf="@+id/textInputLayout7"
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout7">
 
-            <TextView
-                android:id="@+id/textView62"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@color/colorLiteGrey"
-                android:paddingStart="@dimen/_5sdp"
-                android:paddingTop="@dimen/_8sdp"
-                android:paddingEnd="@dimen/_3sdp"
-                android:paddingBottom="@dimen/_8sdp"
-                android:text="Booking for"
-                android:textColor="@color/colorBlack"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout25" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/email_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Email Id"
+                        android:inputType="textEmailAddress" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/textView63"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:paddingStart="@dimen/_3sdp"
-                android:paddingTop="@dimen/_12sdp"
-                android:paddingEnd="@dimen/_3sdp"
-                android:paddingBottom="@dimen/_12sdp"
-                android:text="Consultation"
-                app:layout_constraintEnd_toEndOf="@+id/textView62"
-                app:layout_constraintStart_toStartOf="@+id/textView62"
-                app:layout_constraintTop_toBottomOf="@+id/textView62" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout25"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintEnd_toEndOf="@+id/textInputLayout24"
+                    app:layout_constraintStart_toStartOf="@+id/textInputLayout24"
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout24">
 
-            <TextView
-                android:id="@+id/textView64"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@color/colorLiteGrey"
-                android:paddingStart="@dimen/_5sdp"
-                android:paddingTop="@dimen/_8sdp"
-                android:paddingEnd="@dimen/_3sdp"
-                android:paddingBottom="@dimen/_8sdp"
-                android:text="Date &amp; Time"
-                android:textColor="@color/colorBlack"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView63" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/phone_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Phone Number"
+                        android:inputType="number" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/textView65"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:paddingStart="@dimen/_3sdp"
-                android:paddingTop="@dimen/_12sdp"
-                android:paddingEnd="@dimen/_3sdp"
-                android:paddingBottom="@dimen/_12sdp"
-                android:text="Today, 8.30 PM"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView64" />
+                <TextView
+                    android:id="@+id/textView62"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/colorLiteGrey"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_3sdp"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:text="Booking for"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout25" />
 
-            <TextView
-                android:id="@+id/textView66"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@color/colorLiteGrey"
-                android:paddingStart="@dimen/_5sdp"
-                android:paddingTop="@dimen/_8sdp"
-                android:paddingEnd="@dimen/_3sdp"
-                android:paddingBottom="@dimen/_8sdp"
-                android:text="Doctor Info"
-                android:textColor="@color/colorBlack"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView65" />
-
-            <LinearLayout
-                android:id="@+id/llProfileDetails"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorWhite"
-                android:padding="@dimen/_3sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView66">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imageView20"
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_50sdp"
-                    android:layout_marginStart="8dp"
-                    android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/user_placeholder" />
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/textView63"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="8dp"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/textView67"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_4sdp"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="@dimen/_14sdp" />
+                    android:paddingStart="@dimen/_3sdp"
+                    android:paddingTop="@dimen/_12sdp"
+                    android:paddingEnd="@dimen/_3sdp"
+                    android:paddingBottom="@dimen/_12sdp"
+                    android:text="Consultation"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintEnd_toEndOf="@+id/textView62"
+                    app:layout_constraintStart_toStartOf="@+id/textView62"
+                    app:layout_constraintTop_toBottomOf="@+id/textView62" />
 
-                    <TextView
-                        android:id="@+id/textView68"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_4sdp"
-                        android:textSize="@dimen/_12sdp"/>
+                <TextView
+                    android:id="@+id/textView64"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorLiteGrey"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_3sdp"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:text="Date &amp; Time"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView63" />
 
+                <TextView
+                    android:id="@+id/textView65"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/_3sdp"
+                    android:paddingTop="@dimen/_12sdp"
+                    android:paddingEnd="@dimen/_3sdp"
+                    android:paddingBottom="@dimen/_12sdp"
+                    android:text="Today, 8.30 PM"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView64" />
+
+                <TextView
+                    android:id="@+id/textView66"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorLiteGrey"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_3sdp"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:text="Doctor Info"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView65" />
+
+                <LinearLayout
+                    android:id="@+id/llProfileDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:padding="@dimen/_3sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView66">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imageView20"
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="8dp"
+                        app:civ_border_color="@color/colorButton"
+                        app:civ_border_width="1dp"
+                        android:src="@drawable/user_placeholder" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView67"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_4sdp"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/_14sdp" />
+
+                        <TextView
+                            android:id="@+id/textView68"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_4sdp"
+                            android:textSize="@dimen/_12sdp" />
+
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
 
-            <Button
-                android:id="@+id/button18"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="8dp"
-                android:background="@color/colorButton"
-                android:text="Confirm"
-                android:textAllCaps="false"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/_14sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/llProfileDetails" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+        <Button
+            android:id="@+id/button18"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/colorButton"
+            android:text="Confirm"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

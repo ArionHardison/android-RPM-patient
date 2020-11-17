@@ -18,13 +18,7 @@ class MenuAdapter(val items: ArrayList<HomeResponse.Menu>, val context: Context)
     RecyclerView.Adapter<ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            LayoutInflater.from(context).inflate(
-                R.layout.home_list_item,
-                parent,
-                false
-            )
-        )
+        return ViewHolder(LayoutInflater.from(context).inflate(R.layout.home_list_item, parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -33,22 +27,7 @@ class MenuAdapter(val items: ArrayList<HomeResponse.Menu>, val context: Context)
         holder.tvsubMenuName?.text = data.subname
         holder.imgMenu?.setImageResource(data.imgresouce)
         holder.itemView.setOnClickListener {
-            if (holder.tvMenuName.text.toString().equals(context.resources.getString(R.string.find_doctors))) {
-                val intent = Intent(context, FindDoctorCategoriesActivity::class.java)
-                context.startActivity(intent);
-            }
-            if (holder.tvMenuName.text.toString().equals(context.resources.getString(R.string.chat))) {
-                val intent = Intent(context, ChatActivity::class.java)
-                context.startActivity(intent);
-            }
-            if (holder.tvMenuName.text.toString().equals(context.resources.getString(R.string.search_doctor))) {
-                val intent = Intent(context, SearchDoctorActivity::class.java)
-                context.startActivity(intent);
-            }
-            if (holder.tvMenuName.text.toString().equals(context.resources.getString(R.string.visted_doctor))) {
-                val intent = Intent(context, VisitedDoctorsActivity::class.java)
-                context.startActivity(intent);
-            }
+            context.startActivity(data.intent);
         }
     }
 

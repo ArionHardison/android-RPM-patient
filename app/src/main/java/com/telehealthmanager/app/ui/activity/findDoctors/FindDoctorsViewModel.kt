@@ -17,6 +17,7 @@ class FindDoctorsViewModel : BaseViewModel<FindDoctorsNavigator>() {
 
     var selectedDate: Calendar? = Calendar.getInstance()
     var mYearMonth: ObservableField<String> = ObservableField(SimpleDateFormat("MMMM yyyy").format(selectedDate!!.time))
+    var mSelectedScheduleDate: ObservableField<String> = ObservableField("")
     var mDoctorResponse = MutableLiveData<DoctorListResponse>()
     var mDoctorList: MutableList<DoctorListResponse.specialities.DoctorProfile>? = arrayListOf()
 

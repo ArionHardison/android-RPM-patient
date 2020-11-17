@@ -173,13 +173,14 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_finddoctors_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_height="0dp"
             android:adapter="@{adapter}"
-            android:paddingBottom="@dimen/_46sdp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="@+id/search_layout"
             app:layout_constraintStart_toStartOf="@+id/search_layout"
             app:layout_constraintTop_toBottomOf="@+id/search_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
             tools:listitem="@layout/find_doctor_list_item" />
 
         <TextView

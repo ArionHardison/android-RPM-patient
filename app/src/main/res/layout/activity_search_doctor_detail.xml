@@ -33,12 +33,111 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:fitsSystemWindows="true"
+            app:layout_constraintTop_toTopOf="parent"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:titleTextColor="@color/colorWhite">
 
-        <include
-            android:id="@+id/toolBar"
-            layout="@layout/toolbar_base"
-            bind:baseViewModel="@{viewmodel}"
-            app:layout_constraintTop_toTopOf="parent"/>
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:contentInsetStart="0dp"
+                app:contentInsetStartWithNavigation="0dp"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/toolbarVisible"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/clickBackPress1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="?attr/actionBarSize"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:onClick="@{()->viewmodel.clickBackPress()}"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/_25sdp"
+                            android:contentDescription="@string/app_name"
+                            android:padding="@dimen/_5sdp"
+                            app:srcCompat="@drawable/ic_back_new" />
+
+                        <TextView
+                            style="@style/CustomToolBarStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="-10dp"
+                            android:gravity="center_vertical"
+                            android:text="@string/back"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/_15sdp" />
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/titleText2"
+                        android:layout_width="0dp"
+                        android:layout_height="?attr/actionBarSize"
+                        android:gravity="center"
+                        android:text="@{viewmodel.toolBarTile}"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/_15sdp"
+                        app:layout_constraintBottom_toBottomOf="@+id/clickBackPress1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/endView1"
+                        app:layout_constraintStart_toEndOf="@+id/clickBackPress1" />
+
+                    <LinearLayout
+                        android:id="@+id/endView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="?attr/actionBarSize"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent">
+
+                        <TextView
+                            style="@style/CustomToolBarStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="-10dp"
+                            android:gravity="center_vertical"
+                            android:text="@string/back"
+                            android:visibility="invisible"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/_15sdp" />
+
+                        <ImageView
+                            android:layout_width="45dp"
+                            android:layout_height="@dimen/_25sdp"
+                            android:contentDescription="@string/app_name"
+                            android:padding="@dimen/_5sdp"
+                            android:tint="@color/colorWhite"
+                            android:visibility="invisible"
+                            android:onClick="@{()->viewmodel.clickVideoCall()}"
+                            app:srcCompat="@drawable/ic_video_call"/>
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
 
         <ScrollView
             android:id="@+id/topScroll"
@@ -46,7 +145,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolBar">
+            app:layout_constraintTop_toBottomOf="@+id/app_bar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -69,6 +168,8 @@
                         android:layout_height="@dimen/_50sdp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
+                        app:civ_border_color="@color/colorWhite"
+                        app:civ_border_width="1dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/user_placeholder" />
@@ -163,7 +264,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="7dp"
-                        android:onClick="@{()->viewmodel.FavClick()}"
+                        android:onClick="@{()->viewmodel.favClick()}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_fav_unsolid" />
@@ -234,7 +335,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="Mon"
-                    android:textColor="@color/colorBlack"
+                    android:textColor="@color/colorRed"
                     app:layout_constraintStart_toStartOf="@+id/textView101"
                     app:layout_constraintTop_toBottomOf="@+id/textView101" />
 
@@ -244,7 +345,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="Tue"
-                    android:textColor="@color/colorBlack"
+                    android:textColor="@color/colorRed"
                     app:layout_constraintBottom_toBottomOf="@+id/textViewMon"
                     app:layout_constraintStart_toEndOf="@+id/textViewMon"
                     app:layout_constraintTop_toTopOf="@+id/textViewMon" />
@@ -255,7 +356,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="Wed"
-                    android:textColor="@color/colorBlack"
+                    android:textColor="@color/colorRed"
                     app:layout_constraintBottom_toBottomOf="@+id/textViewTue"
                     app:layout_constraintStart_toEndOf="@+id/textViewTue"
                     app:layout_constraintTop_toTopOf="@+id/textViewTue" />
@@ -266,7 +367,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="Thu"
-                    android:textColor="@color/colorBlack"
+                    android:textColor="@color/colorRed"
                     app:layout_constraintBottom_toBottomOf="@+id/textViewWed"
                     app:layout_constraintStart_toEndOf="@+id/textViewWed"
                     app:layout_constraintTop_toTopOf="@+id/textViewWed" />
@@ -277,7 +378,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="Fri"
-                    android:textColor="@color/colorBlack"
+                    android:textColor="@color/colorRed"
                     app:layout_constraintBottom_toBottomOf="@+id/textViewThur"
                     app:layout_constraintStart_toEndOf="@+id/textViewThur"
                     app:layout_constraintTop_toTopOf="@+id/textViewThur" />
@@ -288,7 +389,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="Sat"
-                    android:textColor="@color/colorBlack"
+                    android:textColor="@color/colorRed"
                     app:layout_constraintBottom_toBottomOf="@+id/textViewFri"
                     app:layout_constraintStart_toEndOf="@+id/textViewFri"
                     app:layout_constraintTop_toTopOf="@+id/textViewFri" />
@@ -299,7 +400,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="Sun"
-                    android:textColor="@color/colorBlack"
+                    android:textColor="@color/colorRed"
                     app:layout_constraintBottom_toBottomOf="@+id/textViewSat"
                     app:layout_constraintStart_toEndOf="@+id/textViewSat"
                     app:layout_constraintTop_toTopOf="@+id/textViewSat" />
@@ -311,6 +412,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_4sdp"
                     android:layout_marginTop="8dp"
+                    tools:itemCount="7"
                     android:adapter="@{availibilityAdapter}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintStart_toStartOf="@+id/textViewMon"
@@ -370,7 +472,7 @@
                     android:layout_marginTop="8dp"
                     android:drawableEnd="@drawable/ic_right"
                     android:drawableTint="@color/colorButton"
-                    android:onClick="@{()->viewmodel.ViewallClick()}"
+                    android:onClick="@{()->viewmodel.viewAllClick()}"
                     android:text="View all"
                     android:textColor="@color/colorButton"
                     android:visibility="gone"
@@ -448,10 +550,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="@{viewmodel.clinic_address}"
+                    android:text="@{viewmodel.clinicAddress}"
                     app:layout_constraintStart_toStartOf="@+id/textView117"
                     app:layout_constraintTop_toBottomOf="@+id/textView117"
-                    tools:text="Hospital Address Name" />
+                    tools:text="Hospital Address Name"
+                    android:textColor="@color/colorBlack"/>
 
                 <ImageView
                     android:id="@+id/imageView27"
@@ -534,7 +637,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@color/colorWhite"
-            android:onClick="@{()->viewmodel.ShareClick()}"
+            android:onClick="@{()->viewmodel.shareClick()}"
             android:text="Share Experience"
             android:textAllCaps="false"
             android:textColor="@color/colorButton"
@@ -550,7 +653,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@color/colorButton"
-            android:onClick="@{()->viewmodel.BookClick()}"
+            android:onClick="@{()->viewmodel.bookClick()}"
             android:text="Book"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"

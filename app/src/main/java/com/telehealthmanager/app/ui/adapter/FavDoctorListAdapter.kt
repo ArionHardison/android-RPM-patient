@@ -19,24 +19,24 @@ class FavDoctorListAdapter(val items: MutableList<MainResponse.Doctor>, val cont
     RecyclerView.Adapter<FavDoctorViewHolder>() {
 
     override fun onBindViewHolder(holder: FavDoctorViewHolder, position: Int) {
-        val item= items[position]
-        if (item.hospital!=null){
+        val item = items[position]
+        if (item.hospital != null) {
             holder.itemBinding.favdoctorName.text = item.hospital.first_name.plus(" ").plus(item.hospital.last_name)
             holder.itemBinding.favDrTypeTxt.text = item.hospital.doctor_profile.speciality.name
-            ViewUtils.setImageViewGlide(context,  holder.itemBinding.imageView8, BuildConfig.BASE_IMAGE_URL.plus(item.hospital?.doctor_profile?.profile_pic))
+            ViewUtils.setImageViewGlide(context, holder.itemBinding.imageView8, BuildConfig.BASE_IMAGE_URL.plus(item.hospital?.doctor_profile?.profile_pic))
             holder.itemView.setOnClickListener {
                 val intent = Intent(context, SearchDoctorDetailActivity::class.java)
-                intent.putExtra(WebApiConstants.IntentPass.FavDoctorProfile,item as Serializable)
+                intent.putExtra(WebApiConstants.IntentPass.FavDoctorProfile, item as Serializable)
                 context.startActivity(intent);
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavDoctorViewHolder {
-
         val inflate = DataBindingUtil.inflate<FavDoctorListItemBinding>(
             LayoutInflater.from(parent.context),
-            R.layout.fav_doctor_list_item, parent, false)
+            R.layout.fav_doctor_list_item, parent, false
+        )
         return FavDoctorViewHolder(inflate)
     }
 

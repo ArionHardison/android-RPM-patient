@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.telehealthmanager.app.ui.activity.allergies.AllergiesViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/toolBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBlack"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize">
+
+                <ImageView
+                    android:id="@+id/backImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/app_name"
+                    android:onClick="@{()->viewmodel.clickBackPress()}"
+                    android:padding="@dimen/_5sdp"
+                    app:srcCompat="@drawable/ic_back_new" />
+
+                <TextView
+                    android:id="@+id/textViewBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@+id/endImage"
+                    android:layout_toEndOf="@+id/backImage"
+                    android:gravity="center"
+                    android:padding="@dimen/_10sdp"
+                    android:text="@string/allergies"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_14sdp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/endImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/app_name"
+                    android:padding="@dimen/_5sdp"
+                    android:visibility="invisible"
+                    app:srcCompat="@drawable/ic_back_new" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/textView78"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/layout_circle_corner_accent"
+                android:padding="@dimen/_10sdp"
+                android:text="Are you allergic to anything?"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <RadioButton
+            android:id="@+id/noRadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layoutDirection="rtl"
+            android:onClick="@{()->viewmodel.clickNoAllergies()}"
+            android:padding="@dimen/_10sdp"
+            android:text="No"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolBar" />
+
+        <View
+            android:id="@+id/divider1"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintStart_toStartOf="@+id/noRadioButton"
+            app:layout_constraintTop_toBottomOf="@+id/noRadioButton" />
+
+        <RelativeLayout
+            android:id="@+id/layoutAddAllergies"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->viewmodel.clickAddAllergies()}"
+            app:layout_constraintEnd_toEndOf="@+id/noRadioButton"
+            app:layout_constraintStart_toStartOf="@+id/noRadioButton"
+            app:layout_constraintTop_toBottomOf="@+id/divider1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/arrowImage"
+                android:gravity="center_vertical"
+                android:padding="@dimen/_10sdp"
+                android:text="Allergies"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_14sdp" />
+
+            <ImageView
+                android:id="@+id/arrowImage"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/app_name"
+                android:paddingStart="@dimen/_12sdp"
+                android:tint="@color/grey_700"
+                app:srcCompat="@drawable/ic_arrow_forword" />
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintStart_toStartOf="@+id/layoutAddAllergies"
+            app:layout_constraintTop_toBottomOf="@+id/layoutAddAllergies" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

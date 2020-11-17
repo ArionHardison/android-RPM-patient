@@ -12,7 +12,6 @@ import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.databinding.ObservableField
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -32,6 +31,7 @@ import com.telehealthmanager.app.data.PreferenceKey
 import com.telehealthmanager.app.data.setValue
 import com.telehealthmanager.app.databinding.ActivityProfileBinding
 import com.telehealthmanager.app.repositary.model.ProfileResponse
+import com.telehealthmanager.app.ui.activity.allergies.AllergiesActivity
 import com.telehealthmanager.app.ui.activity.main.MainActivity
 import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ValidationUtils
@@ -48,12 +48,11 @@ import java.util.*
 
 class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator, CustomBackClick {
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
     private lateinit var viewModel: ProfileViewModel
     private lateinit var mDataBinding: ActivityProfileBinding
-    private lateinit var profile_img: ImageView
-
+    private lateinit var profileImg: ImageView
+    private var REQUEST_CODE_ALLERGIES: Int = 100
 
     override fun getLayoutId(): Int = R.layout.activity_profile
 
@@ -103,7 +102,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
     }
 
     private fun initUI() {
-        profile_img = findViewById(R.id.img_prof)
+        profileImg = findViewById(R.id.img_prof)
 
         button11.setOnClickListener {
             visiblePersonal()
@@ -364,7 +363,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
                     .load(BuildConfig.BASE_IMAGE_URL + it.patient?.profile?.profile_pic)
                     .error(R.drawable.app_logo)
                     .placeholder(R.drawable.app_logo)
-                    .into(profile_img)
+                    .into(profileImg)
             }
             preferenceHelper.setValue(PreferenceKey.WALLET_BALANCE, it.patient?.wallet_balance)
             viewModel.firstName.set(it.patient?.first_name ?: "")
@@ -417,5 +416,10 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
     fun cutomWhiteColorButton(button: Button) {
         button.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.colorWhite))
         button.setTextColor(ContextCompat.getColor(applicationContext, R.color.colorBlack))
+    }
+
+    override fun onClickAllergies() {
+        val newIntent = Intent(this, AllergiesActivity::class.java)
+        startActivityForResult(newIntent,REQUEST_CODE_ALLERGIES)
     }
 }

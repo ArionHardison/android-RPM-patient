@@ -69,6 +69,7 @@
                     android:text="@{baseViewModel.toolBarTile}"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/_15sdp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/clickBackPress1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/endView1"
@@ -81,16 +82,8 @@
                     android:background="@color/colorPrimary"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/_25sdp"
-                        android:contentDescription="@string/app_name"
-                        android:padding="@dimen/_5sdp"
-                        app:srcCompat="@drawable/ic_back_new" />
 
                     <TextView
                         style="@style/CustomToolBarStyle"
@@ -99,8 +92,15 @@
                         android:layout_marginStart="-10dp"
                         android:gravity="center_vertical"
                         android:text="@string/back"
+                        android:visibility="invisible"
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/_15sdp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_25sdp"
+                        android:contentDescription="@string/app_name"
+                        android:padding="@dimen/_5sdp" />
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

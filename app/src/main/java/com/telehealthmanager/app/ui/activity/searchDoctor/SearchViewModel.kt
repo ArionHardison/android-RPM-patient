@@ -10,10 +10,10 @@ import com.telehealthmanager.app.repositary.model.MainResponse
 import com.telehealthmanager.app.repositary.model.Response
 
 class SearchViewModel : BaseViewModel<SearchNavigator>() {
-    var mDoctorResponse = MutableLiveData<MainResponse>()
-    var mDoctorslist: MutableList<Hospital>? = arrayListOf()
-
     private val appRepository = AppRepository.instance()
+
+    var mDoctorResponse = MutableLiveData<MainResponse>()
+    var mDoctorList: MutableList<Hospital>? = arrayListOf()
     var mFavResponse = MutableLiveData<Response>()
 
     var listsize: ObservableField<String> = ObservableField("0")
@@ -23,15 +23,14 @@ class SearchViewModel : BaseViewModel<SearchNavigator>() {
     var mfeedbacklist: MutableList<Hospital.Feedback>? = arrayListOf()
     var mphotoslist: MutableList<Hospital.Clinic.photos>? = arrayListOf()
     var mservcielist: MutableList<Hospital.DoctorService>? = arrayListOf()
-    var mTiminglist: MutableList<Hospital.Timing>? = arrayListOf()
+    var mTimingList: MutableList<Hospital.Timing>? = arrayListOf()
 
-
-    var mfavDoctorProfile = MutableLiveData<MainResponse.Doctor>()
-    var msearchDoctorProfile = MutableLiveData<Hospital>()
+    var mFavDoctorProfile = MutableLiveData<MainResponse.Doctor>()
+    var mSearchDoctorProfile = MutableLiveData<Hospital>()
 
     var id: ObservableField<Int> = ObservableField()
     var name: ObservableField<String> = ObservableField("")
-    var profile_pic: ObservableField<String> = ObservableField("")
+    var profilePic: ObservableField<String> = ObservableField("")
     var specialities: ObservableField<String> = ObservableField("")
     var degree: ObservableField<String> = ObservableField("")
     var branch: ObservableField<String> = ObservableField("")
@@ -39,25 +38,30 @@ class SearchViewModel : BaseViewModel<SearchNavigator>() {
     var experience: ObservableField<String> = ObservableField("0")
     var fee: ObservableField<String> = ObservableField()
     var clinic: ObservableField<String> = ObservableField("")
-    var clinic_address: ObservableField<String> = ObservableField("")
+    var clinicAddress: ObservableField<String> = ObservableField("")
     var favourite: ObservableField<String> = ObservableField("false")
-    fun FavClick() {
-        navigator.onfavclick()
+
+    fun favClick() {
+        navigator.onFavClick()
     }
 
-    fun ShareClick() {
-        navigator.onshareclick()
+    fun shareClick() {
+        navigator.onShareClick()
     }
 
-    fun BookClick() {
-        navigator.Onbookclick()
+    fun bookClick() {
+        navigator.onBookClick()
     }
 
-    fun ViewallClick() {
-        navigator.ViewallClick()
+    fun viewAllClick() {
+        navigator.viewAllClick()
     }
 
-    fun addfav(hashMap: HashMap<String, Any>) {
+    fun clickVideoCall() {
+        navigator.viewCallClick()
+    }
+
+    fun addFav(hashMap: HashMap<String, Any>) {
         getCompositeDisposable().add(appRepository.addfav(this, hashMap))
     }
 

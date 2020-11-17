@@ -25,13 +25,11 @@ import java.util.HashMap
 /**
  * A simple [Fragment] subclass.
  */
-class FavouriteDoctorFragment : BaseFragment<FragmentFavouriteDoctorBinding>(),FavouriteDoctorNavigator {
+class FavouriteDoctorFragment : BaseFragment<FragmentFavouriteDoctorBinding>(), FavouriteDoctorNavigator {
 
-    val favDoctors: ArrayList<String> = ArrayList()
     private lateinit var viewModel: FavouriteDoctorViewModel
     private lateinit var mDataBinding: FragmentFavouriteDoctorBinding
     private var mAdapter: FavDoctorListAdapter? = null
-
 
     override fun getLayoutId(): Int = R.layout.fragment_favourite_doctor
 
@@ -44,70 +42,40 @@ class FavouriteDoctorFragment : BaseFragment<FragmentFavouriteDoctorBinding>(),F
         initApiCal()
         initAdapter()
         observeResponse()
-
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        menu.clear();
     }
 
     private fun initApiCal() {
         showLoading()
         val hashMap: HashMap<String, Any> = HashMap()
         viewModel.gethome(hashMap)
-
     }
+
     private fun observeResponse() {
 
         viewModel.mDoctorResponse.observe(this, Observer<MainResponse> {
-
-
             viewModel.mDoctorslist = it.favourite_Doctors as MutableList<MainResponse.Doctor>?
             if (viewModel.mDoctorslist!!.size > 0) {
                 mDataBinding.tvNotFound.visibility = View.GONE
             } else {
                 mDataBinding.tvNotFound.visibility = View.VISIBLE
             }
-            mAdapter = FavDoctorListAdapter(viewModel.mDoctorslist!!,activity!!)
+            mAdapter = FavDoctorListAdapter(viewModel.mDoctorslist!!, activity!!)
             mDataBinding.adapter = mAdapter
             mAdapter!!.notifyDataSetChanged()
-         hideLoading()
-
-
-
-
+            hideLoading()
         })
+
         viewModel.getErrorObservable().observe(this, Observer<String> { message ->
-           hideLoading()
+            hideLoading()
             ViewUtils.showToast(context!!, message, false)
         })
     }
 
     private fun initAdapter() {
-        mAdapter = FavDoctorListAdapter( viewModel.mDoctorslist!!,activity!!)
+        mAdapter = FavDoctorListAdapter(viewModel.mDoctorslist!!, activity!!)
         mDataBinding.adapter = mAdapter
         mDataBinding.rvFavDoctor.addItemDecoration(DividerItemDecoration(activity!!, DividerItemDecoration.VERTICAL))
-        mDataBinding.rvFavDoctor.layoutManager = LinearLayoutManager(activity!!) as RecyclerView.LayoutManager?
+        mDataBinding.rvFavDoctor.layoutManager = LinearLayoutManager(activity!!)
         mAdapter!!.notifyDataSetChanged()
-
-
-    }
-    private fun addFavDoctor() {
-        favDoctors.add("Dr.Alvin")
-        favDoctors.add("Dr.Richard")
-        favDoctors.add("Dr.Glen Stwacy")
-        rv_fav_doctor.layoutManager = LinearLayoutManager(context)
-        rv_fav_doctor.addItemDecoration(
-            DividerItemDecoration(context,
-                DividerItemDecoration.VERTICAL)
-        )
-        //rv_fav_doctor.adapter = context?.let { FavDoctorListAdapter(favDoctors, it) }
     }
 }

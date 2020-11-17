@@ -36,6 +36,8 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="8dp"
                 android:src="@drawable/user_placeholder"
+                app:civ_border_color="@color/colorButton"
+                app:civ_border_width="1dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -65,140 +67,144 @@
                     android:background="@color/colorLiteGrey"
                     android:padding="@dimen/_4sdp"
                     android:textSize="@dimen/_12sdp"
+                    android:visibility="gone"
                     app:layout_constraintStart_toEndOf="@+id/searchDocImg"
                     app:layout_constraintTop_toBottomOf="@+id/searchDocName" />
 
                 <TextView
                     android:id="@+id/searchDocHospName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/_4sdp"
+                    android:textColor="@color/colorDarkGrey"
                     android:textSize="@dimen/_12sdp"
                     app:layout_constraintStart_toEndOf="@+id/searchDocImg"
-                    app:layout_constraintTop_toBottomOf="@+id/searchDocSpec" />
+                    app:layout_constraintTop_toBottomOf="@+id/searchDocSpec"
+                    tools:text="Clinic address, Name" />
 
             </LinearLayout>
 
         </LinearLayout>
 
+        <View
+            android:id="@+id/divider4"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@+id/constraintLayout2"
+            android:layout_marginTop="10dp"
+            android:background="?android:attr/listDivider" />
 
-        <ScrollView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/constraintLayout2">
+            android:layout_below="@+id/divider4">
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout3"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/colorWhite"
+                android:padding="@dimen/_3sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout3"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/textView57"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:background="@color/colorWhite"
-                    android:padding="@dimen/_3sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:text="Purpose of visit"
+                    android:textColor="@color/colorDarkGrey"
+                    android:textSize="@dimen/_15sdp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/textView57"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="4dp"
-                        android:text="Purpose of visit"
-                        android:textSize="@dimen/_12sdp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <RadioGroup
-                        android:id="@+id/radiogroup"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        app:layout_constraintStart_toStartOf="@+id/textView57"
-                        app:layout_constraintTop_toBottomOf="@+id/textView57">
-
-
-                        <RadioButton
-                            android:id="@+id/radioButton"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:checked="true"
-                            android:layoutDirection="rtl"
-                            android:text="Follow Up"
-                            android:textSize="@dimen/_12sdp"
-                            app:layout_constraintStart_toStartOf="@+id/textView57"
-                            app:layout_constraintTop_toBottomOf="@+id/textView57" />
-
-                        <RadioButton
-                            android:id="@+id/radioButton2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:layout_marginTop="8dp"
-                            android:layoutDirection="rtl"
-                            android:text="Consultation"
-                            android:textSize="@dimen/_12sdp"
-                            app:layout_constraintStart_toStartOf="@+id/radioButton"
-                            app:layout_constraintTop_toBottomOf="@+id/radioButton" />
-
-                    </RadioGroup>
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/llDate"
+                <RadioGroup
+                    android:id="@+id/radiogroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorWhite"
-                    android:orientation="vertical"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintStart_toStartOf="@+id/textView57"
+                    app:layout_constraintTop_toBottomOf="@+id/textView57">
 
-                    <TextView
-                        android:id="@+id/tvYearMonth"
+
+                    <RadioButton
+                        android:id="@+id/radioButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:padding="12dp"
-                        android:text="@={viewmodel.mYearMonth}"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="@dimen/_13sdp"
-                        android:textStyle="bold" />
+                        android:layout_marginTop="8dp"
+                        android:checked="true"
+                        android:layoutDirection="rtl"
+                        android:text="Follow Up"
+                        android:textSize="@dimen/_15sdp"
+                        app:layout_constraintStart_toStartOf="@+id/textView57"
+                        app:layout_constraintTop_toBottomOf="@+id/textView57" />
 
-                    <devs.mulham.horizontalcalendar.HorizontalCalendarView
-                        android:id="@+id/calendarView"
+                    <RadioButton
+                        android:id="@+id/radioButton2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/colorWhite"
-                        app:selectedDateBackground="@color/colorButton"
-                        app:selectorColor="@color/colorWhite"
-                        app:sizeBottomText="@dimen/_9sdp"
-                        app:sizeMiddleText="@dimen/_12sdp"
-                        app:sizeTopText="@dimen/_9sdp"
-                        app:textColorNormal="@color/colorBlack"
-                        app:textColorSelected="@color/colorBlack" />
+                        android:layout_gravity="end"
+                        android:layout_marginTop="8dp"
+                        android:layoutDirection="rtl"
+                        android:text="Consultation"
+                        android:textSize="@dimen/_15sdp"
+                        app:layout_constraintStart_toStartOf="@+id/radioButton"
+                        app:layout_constraintTop_toBottomOf="@+id/radioButton" />
 
-                    <View
-                        android:id="@+id/divider5"
-                        android:layout_width="409dp"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="21dp"
-                        android:background="?android:attr/listDivider"
-                        app:layout_constraintStart_toStartOf="@+id/radiogroup"
-                        app:layout_constraintTop_toBottomOf="@+id/radiogroup" />
-                </LinearLayout>
+                </RadioGroup>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
+
+            <View
+                android:id="@+id/divider5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintStart_toStartOf="@+id/constraintLayout3"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
+
+            <LinearLayout
+                android:id="@+id/llDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/colorWhite"
+                android:orientation="vertical"
+                android:padding="@dimen/_3sdp"
+                app:layout_constraintTop_toBottomOf="@+id/divider5">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:text="Day slot"
+                    android:textColor="@color/colorDarkGrey"
+                    android:textSize="@dimen/_15sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.telehealthmanager.app.ui.calander_view.BookingCalanderView
+                    android:id="@+id/calanderView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal" />
+
+
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <LinearLayout

@@ -27,6 +27,7 @@ import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.data.PreferenceHelper
+import com.telehealthmanager.app.data.PreferenceKey
 import com.telehealthmanager.app.repositary.ApiInterface
 import com.telehealthmanager.app.repositary.AppRepository
 import com.telehealthmanager.app.repositary.model.VideoCallCancelResponse
@@ -38,6 +39,7 @@ import kotlinx.android.synthetic.main.twillioi_video_activity.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.HashMap
 import kotlin.properties.Delegates
 
 
@@ -54,7 +56,6 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
     private var dY = 0f
     private var screenWidth = 0
     private var screenHeight = 0
-
 
     private var accessToken: String? = null
     private var room: Room? = null
@@ -74,6 +75,7 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
     private var chatPath = ""
     private var id: String? = null
     private var isVideoCall = "1"
+    private var isCallRequest = false
     private var mPlayer: MediaPlayer? = null
     private var preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
     private val appRepository = AppRepository()
@@ -158,6 +160,7 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
         chatPath = intent.getStringExtra("chat_path") as String
         id = intent.getStringExtra("sender") as String
         isVideoCall = intent.getStringExtra("is_video") as String
+        isCallRequest = intent.getBooleanExtra("is_request", true)
 
         initDisplay()
         cameraCaptureCompat = CameraCaptureCompat(this, availableCameraSource)
@@ -174,7 +177,11 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
                 videoConstraints
             )
         }
-      //  playRingTone()
+
+        if (isCallRequest) {
+            playRingTone()
+        }
+
         if (!checkPermissionForCameraAndMicrophone()) {
             requestPermissionForCameraAndMicrophone()
         } else {
@@ -334,19 +341,28 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
     }
 
     private fun retrieveAccessTokenFromServer() {
-        val call: Call<AccessToken> = appRepository.createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java).getTwilloVideoToken(chatPath)
+        val call: Call<AccessToken>
+        val hashMap: HashMap<String, Any> = HashMap()
+        if(isCallRequest){
+            hashMap["room_id"] = chatPath
+            hashMap["hospital_id"] = preferenceHelper.mPref.getInt(PreferenceKey.DOCTOR_ID, 0)
+            hashMap["patient_id"] = id.toString()
+            hashMap["push_to"] = "patient"
+            call= appRepository.createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java).getTwilloVideoToken(hashMap)
+        }else{
+            hashMap["room_id"] = chatPath
+            hashMap["video"] = "1"
+            call= appRepository.createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java).getTwilloVideoToken(hashMap)
+        }
+
         call.enqueue(object : Callback<AccessToken> {
             override fun onResponse(call: Call<AccessToken>, response: Response<AccessToken>) {
                 if (response.isSuccessful) {
                     this@TwilloVideoActivity.accessToken = response.body()!!.accessToken
-                    // TwilloVideoActivity.this.accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTS2Y1YmQxZGM1NjQ5MTc0MjA4YWRlODI3MmRmNTdlN2NlLTE1NzExMzMxNDIiLCJpc3MiOiJTS2Y1YmQxZGM1NjQ5MTc0MjA4YWRlODI3MmRmNTdlN2NlIiwic3ViIjoiQUNmNDE3YmZkMmY0NGY1ZWJlNjMwOGUzNmIzNGRjNWY5MiIsImV4cCI6MTU3MTEzNjc0MiwiZ3JhbnRzIjp7ImlkZW50aXR5IjoidXNlcl9TYW50aG9zaCIsInZpZGVvIjp7InJvb20iOiIyX2NoYXRzXzEyIn19fQ.jI1mCwN3WvkIX2sF-yuWAnbLqZq15ogZJAoG5U4jJ8s";
                     Log.d(TAG, "token: " + this@TwilloVideoActivity.accessToken)
                     connectToRoom(this@TwilloVideoActivity.accessToken)
                 } else {
-                    Toast.makeText(
-                        this@TwilloVideoActivity,
-                        R.string.error_retrieving_access_token, Toast.LENGTH_LONG
-                    ).show()
+                    Toast.makeText(this@TwilloVideoActivity, R.string.error_retrieving_access_token, Toast.LENGTH_LONG).show()
                 }
             }
 
@@ -357,10 +373,7 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
     }
 
     private fun declinedCall() {
-        val call = appRepository.createApiClient(
-            BuildConfig.BASE_URL,
-            ApiInterface::class.java
-        ).cancelVideoCall(chatPath)
+        val call = appRepository.createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java).cancelVideoCall(chatPath)
         call!!.enqueue(
             object : Callback<VideoCallCancelResponse?> {
                 override fun onResponse(call: Call<VideoCallCancelResponse?>, response: Response<VideoCallCancelResponse?>) {

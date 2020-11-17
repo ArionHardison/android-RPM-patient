@@ -15,7 +15,7 @@
             android:layout_width="@dimen/_50sdp"
             android:layout_height="wrap_content"
             android:padding="@dimen/_5sdp"
-            android:textColor="@color/colorLiteRed"
+            android:textColor="@color/colorBlack"
             tools:text="MON" />
 
         <TextView

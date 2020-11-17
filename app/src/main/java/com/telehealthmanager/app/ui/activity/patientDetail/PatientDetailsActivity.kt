@@ -16,11 +16,12 @@ import com.telehealthmanager.app.databinding.ActivityFindDoctorBookingBinding
 import com.telehealthmanager.app.databinding.ActivityPatientDetailsBinding
 import com.telehealthmanager.app.repositary.model.BookedResponse
 import com.telehealthmanager.app.ui.activity.success.SuccessActivity
+import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ViewUtils
 import java.util.HashMap
 
 class PatientDetailsActivity : BaseActivity<ActivityPatientDetailsBinding>(),
-    PatientDetailNavigator {
+    PatientDetailNavigator, CustomBackClick {
 
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
     private lateinit var viewModel: PatientDetailViewModel
@@ -62,19 +63,17 @@ class PatientDetailsActivity : BaseActivity<ActivityPatientDetailsBinding>(),
                 bookDoctor_Map["service_id"]= "2"
                 bookDoctor_Map["appointment_type"]= "OFFLINE"
                 bookDoctor_Map["description"]= ""
-
-//                loadingObservable.value = true
                 viewModel.BookDoctor(bookDoctor_Map)
-
             }
         }
 
-        mDataBinding.toolbar6.setNavigationOnClickListener {
-            finish()
-        }
-
+        viewModel.setOnClickListener(this@PatientDetailsActivity)
+        viewModel.toolBarTile.value = getString(R.string.enter_patient_details)
         observeResponse()
+    }
 
+    override fun clickBackPress() {
+        finish()
     }
 
     private fun observeResponse() {

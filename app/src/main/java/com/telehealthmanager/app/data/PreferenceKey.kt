@@ -35,6 +35,9 @@ object PreferenceKey {
     const val REFERRAL = "referral"
     const val SOCIAL_LOGIN = "social_login"
     const val PROVIDER_NEGATIVE_BALANCE = "provider_negative_balance"
+
+    const val DOCTOR_ID = "doctor_id"
+
     const val FIRST_NAME = "first_name"
     const val LAST_NAME = "last_name"
     const val PROFILE_PER = "profile_percentage"

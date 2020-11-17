@@ -4,7 +4,8 @@
     package="com.telehealthmanager.app">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
@@ -111,6 +112,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/Base.Theme.AppCompat"
             android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".ui.activity.allergies.AllergiesActivity" />
+        <activity android:name=".ui.activity.allergies.AddAllergiesActivity" />
     </application>
 
 </manifest>
