@@ -78,4 +78,5 @@ class FavouriteDoctorFragment : BaseFragment<FragmentFavouriteDoctorBinding>(), 
         mDataBinding.rvFavDoctor.layoutManager = LinearLayoutManager(activity!!)
         mAdapter!!.notifyDataSetChanged()
     }
+
 }

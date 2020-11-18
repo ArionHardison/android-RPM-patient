@@ -24,12 +24,12 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/img_prof"
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="@dimen/_100sdp"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_80sdp"
                 android:layout_marginTop="16dp"
                 android:src="@drawable/logo_app"
-                app:civ_border_width="1dp"
                 app:civ_border_color="@color/colorButton"
+                app:civ_border_width="1dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -137,8 +137,8 @@
                     android:layout_height="wrap_content"
                     android:hint="Gender"
                     android:imeOptions="actionNext"
-                    android:maxLines="1"
                     android:inputType="text"
+                    android:maxLines="1"
                     android:text="@={viewmodel.gender}" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -175,8 +175,8 @@
                     android:layout_height="wrap_content"
                     android:hint="Blood Group"
                     android:imeOptions="actionNext"
-                    android:maxLines="1"
                     android:inputType="text"
+                    android:maxLines="1"
                     android:text="@={viewmodel.bloodgroup}" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -194,8 +194,8 @@
                     android:layout_height="wrap_content"
                     android:hint="Martial Status"
                     android:imeOptions="actionNext"
-                    android:maxLines="1"
                     android:inputType="text"
+                    android:maxLines="1"
                     android:text="@={viewmodel.marital}" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -213,8 +213,8 @@
                     android:layout_height="wrap_content"
                     android:hint="Height"
                     android:imeOptions="actionNext"
-                    android:maxLines="1"
                     android:inputType="numberDecimal"
+                    android:maxLines="1"
                     android:text="@={viewmodel.height}" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -232,8 +232,8 @@
                     android:layout_height="wrap_content"
                     android:hint="Weight"
                     android:imeOptions="actionNext"
-                    android:maxLines="1"
                     android:inputType="numberDecimal"
+                    android:maxLines="1"
                     android:text="@={viewmodel.weight}" />
             </com.google.android.material.textfield.TextInputLayout>
 

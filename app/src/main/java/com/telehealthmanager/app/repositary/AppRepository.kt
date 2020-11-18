@@ -36,7 +36,7 @@ import retrofit2.http.Part
 
 class AppRepository : BaseRepository() {
 
-   /* singup*/
+    /* singup*/
     fun signup(viewModel: RegisterViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .signup(params)
@@ -91,65 +91,63 @@ class AppRepository : BaseRepository() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
-                viewModel.mLogoutResponse.value=it
+                viewModel.mLogoutResponse.value = it
             }, {
                 viewModel.getErrorObservable().value = getErrorMessage(it)
             })
     }
-/*home*/
-      fun getHome(viewModel: ViewModel, params: HashMap<String, Any>): Disposable {
-          return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
-              .getHome(params)
-              .observeOn(AndroidSchedulers.mainThread())
-              .subscribeOn(Schedulers.io())
-              .subscribe({
-                  if (viewModel is FavouriteDoctorViewModel) {
-                      viewModel.mDoctorResponse.value = it
-                  }
-                 else if (viewModel is SearchViewModel) {
-                      viewModel.mDoctorResponse.value = it
-                  }
-                 else if (viewModel is VisitedDoctorsViewModel) {
-                      viewModel.mDoctorResponse.value = it
-                  }
-              }, {
-                  if (viewModel is FavouriteDoctorViewModel) {
-                      viewModel.getErrorObservable().value = getErrorMessage(it)
-                  }
-                  else if (viewModel is SearchViewModel) {
-                      viewModel.getErrorObservable().value = getErrorMessage(it)
-                  }
-                  else if (viewModel is VisitedDoctorsViewModel) {
-                      viewModel.getErrorObservable().value = getErrorMessage(it)
-                  }
-              })
-      }
-  /*profile*/
-     fun getProfile(viewModel: ViewModel): Disposable {
-          return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
-              .getProfile()
-              .observeOn(AndroidSchedulers.mainThread())
-              .subscribeOn(Schedulers.io())
-              .subscribe({
-                  if (viewModel is MainViewModel) {
-                      viewModel.mProfileResponse.value = it
-                  }else  if (viewModel is ProfileViewModel) {
-                      viewModel.mProfileResponse.value = it
-                  }else  if (viewModel is WalletViewModel) {
-                      viewModel.mProfileResponse.value = it
-                  }
-              }, {
-                  if (viewModel is MainViewModel) {
-                      viewModel.getErrorObservable().value = getErrorMessage(it)
-                  }else  if (viewModel is ProfileViewModel) {
-                      viewModel.getErrorObservable().value = getErrorMessage(it)
-                  }else  if (viewModel is WalletViewModel) {
-                      viewModel.getErrorObservable().value = getErrorMessage(it)
-                  }
-              })
-      }
 
-   /* Category*/
+    /*home*/
+    fun getHome(viewModel: ViewModel, params: HashMap<String, Any>): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .getHome(params)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                if (viewModel is FavouriteDoctorViewModel) {
+                    viewModel.mDoctorResponse.value = it
+                } else if (viewModel is SearchViewModel) {
+                    viewModel.mDoctorResponse.value = it
+                } else if (viewModel is VisitedDoctorsViewModel) {
+                    viewModel.mDoctorResponse.value = it
+                }
+            }, {
+                if (viewModel is FavouriteDoctorViewModel) {
+                    viewModel.getErrorObservable().value = getErrorMessage(it)
+                } else if (viewModel is SearchViewModel) {
+                    viewModel.getErrorObservable().value = getErrorMessage(it)
+                } else if (viewModel is VisitedDoctorsViewModel) {
+                    viewModel.getErrorObservable().value = getErrorMessage(it)
+                }
+            })
+    }
+
+    /*profile*/
+    fun getProfile(viewModel: ViewModel): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .getProfile()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                if (viewModel is MainViewModel) {
+                    viewModel.mProfileResponse.value = it
+                } else if (viewModel is ProfileViewModel) {
+                    viewModel.mProfileResponse.value = it
+                } else if (viewModel is WalletViewModel) {
+                    viewModel.mProfileResponse.value = it
+                }
+            }, {
+                if (viewModel is MainViewModel) {
+                    viewModel.getErrorObservable().value = getErrorMessage(it)
+                } else if (viewModel is ProfileViewModel) {
+                    viewModel.getErrorObservable().value = getErrorMessage(it)
+                } else if (viewModel is WalletViewModel) {
+                    viewModel.getErrorObservable().value = getErrorMessage(it)
+                }
+            })
+    }
+
+    /* Category*/
     fun getCategorys(viewModel: ViewModel): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .getCategorys()
@@ -188,7 +186,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun getDoctorByCategorys(viewModel: ViewModel,id: Int): Disposable {
+    fun getDoctorByCategorys(viewModel: ViewModel, id: Int): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .getDoctorByCategorys(id)
             .observeOn(AndroidSchedulers.mainThread())
@@ -203,7 +201,24 @@ class AppRepository : BaseRepository() {
                 }
             })
     }
-/*Appointments*/
+
+    fun getFiltersDoctors(viewModel: ViewModel, id: Int, hashMap: HashMap<String, Any>): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .getDoctorFilterByCategories(id,hashMap)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                if (viewModel is FindDoctorsViewModel) {
+                    viewModel.mDoctorResponse.value = it
+                }
+            }, {
+                if (viewModel is FindDoctorsViewModel) {
+                    viewModel.getErrorObservable().value = getErrorMessage(it)
+                }
+            })
+    }
+
+    /*Appointments*/
     fun getAppointment(viewModel: ViewModel): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .getAppointment()
@@ -268,7 +283,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-   /*doctorprofile*/
+    /*doctorprofile*/
     fun addfav(viewModel: SearchViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .addfav(params)
@@ -326,7 +341,7 @@ class AppRepository : BaseRepository() {
         private var appRepository: AppRepository? = null
 
         fun instance(): AppRepository {
-            if (appRepository == null) synchronized(AppRepository)  {
+            if (appRepository == null) synchronized(AppRepository) {
                 appRepository = AppRepository()
             }
             return appRepository!!
@@ -383,7 +398,7 @@ class AppRepository : BaseRepository() {
     }
 
     fun getChatStatusAPI(
-        onlineConsultationViewModel: OnlineConsultationViewModel,id:Int
+        onlineConsultationViewModel: OnlineConsultationViewModel, id: Int
     ): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .getChatStatus(id)
@@ -499,6 +514,7 @@ class AppRepository : BaseRepository() {
                 chatViewModel.getErrorObservable().value = getErrorMessage(it)
             })
     }
+
     fun videoCheckStatusAPI(viewModel: MainViewModel): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .videoCheckStatusAPI()

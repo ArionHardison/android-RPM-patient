@@ -44,16 +44,19 @@ interface ApiInterface {
     @GET("api/patient/profile")
     fun getProfile(): Observable<ProfileResponse>
 
-/*home*/
+    /*home*/
     @GET("api/patient/search_doctor")
     fun getHome(@QueryMap hashMap: HashMap<String, Any>): Observable<MainResponse>
 
-  /*  doctor*/
+    /*  doctor*/
     @GET("api/patient/doctor_catagory")
     fun getCategorys(): Observable<CategoryResponse>
 
     @GET("api/patient/doctor_catagory/{id}")
-    fun getDoctorByCategorys(@Path("id") id:Int?): Observable<DoctorListResponse>
+    fun getDoctorByCategorys(@Path("id") id: Int?): Observable<DoctorListResponse>
+
+    @GET("api/patient/doctor_catagory/{id}")
+    fun getDoctorFilterByCategories(@Path("id") id: Int?, @QueryMap hashMap: HashMap<String, Any>): Observable<DoctorListResponse>
 
     @FormUrlEncoded
     @POST("api/hospital/update_profile")
@@ -62,11 +65,11 @@ interface ApiInterface {
 
     @Multipart
     @POST("api/hospital/update_profile")
-    fun profileUpdate(@PartMap params: HashMap<String, RequestBody>, @Part image : MultipartBody.Part): Observable<OtpResponse>
+    fun profileUpdate(@PartMap params: HashMap<String, RequestBody>, @Part image: MultipartBody.Part): Observable<OtpResponse>
 
-   /* Appointment*/
-   @GET("api/patient/appointment")
-   fun getAppointment(): Observable<AppointmentResponse>
+    /* Appointment*/
+    @GET("api/patient/appointment")
+    fun getAppointment(): Observable<AppointmentResponse>
 
     @FormUrlEncoded
     @POST("api/patient/cancel_appointment")
@@ -112,10 +115,9 @@ interface ApiInterface {
     @POST("api/patient/add_wallet")
     fun addMoneyToWallet(@FieldMap hashMap: HashMap<String, Any>): Observable<WalletResponse>
 
-   /* search*/
-   @GET("api/patient/home_search")
-   fun getglobalsearch(@QueryMap hashMap: HashMap<String, Any>): Observable<SearchResponse>
-
+    /* search*/
+    @GET("api/patient/home_search")
+    fun getglobalsearch(@QueryMap hashMap: HashMap<String, Any>): Observable<SearchResponse>
 
 
     @FormUrlEncoded
@@ -133,7 +135,6 @@ interface ApiInterface {
     @FormUrlEncoded
     @POST("api/patient/payment")
     fun payForChatRequest(@FieldMap hashMap: HashMap<String, Any>): Observable<MessageResponse>
-
 
 
     @GET("api/patient/video/call/check")

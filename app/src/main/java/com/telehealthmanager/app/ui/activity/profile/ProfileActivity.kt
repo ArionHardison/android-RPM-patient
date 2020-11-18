@@ -15,7 +15,6 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.ui.AppBarConfiguration
 import com.bumptech.glide.Glide
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -26,6 +25,7 @@ import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
+import com.telehealthmanager.app.data.Constant
 import com.telehealthmanager.app.data.PreferenceHelper
 import com.telehealthmanager.app.data.PreferenceKey
 import com.telehealthmanager.app.data.setValue
@@ -53,6 +53,8 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
     private lateinit var mDataBinding: ActivityProfileBinding
     private lateinit var profileImg: ImageView
     private var REQUEST_CODE_ALLERGIES: Int = 100
+    private var viewType: String = ""
+    private var relativeManagementID: Int = 0
 
     override fun getLayoutId(): Int = R.layout.activity_profile
 
@@ -61,6 +63,8 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
         viewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
+        viewType = intent.getStringExtra(Constant.IntentData.IS_VIEW_TYPE) as String
+        relativeManagementID = intent.getIntExtra(Constant.IntentData.IS_RELATIVE_ID, 0) as Int
         initUI()
         initApiCal()
         observeResponse()
@@ -73,11 +77,16 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
     }
 
     private fun initApiCal() {
-        loadingObservable.value = true
-        viewModel.getprofile()
+        if (viewType == "home") {
+            loadingObservable.value = true
+            viewModel.getprofile()
+        } else if (viewType == "edit_relative") {
+            loadingObservable.value = true
+            viewModel.getRelateProfile(relativeManagementID)
+        }
     }
 
-    fun pickDate() {
+    private fun pickDate() {
         val c = Calendar.getInstance()
         val mYear = c.get(Calendar.YEAR)
         val mMonth = c.get(Calendar.MONTH)
@@ -420,6 +429,6 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
 
     override fun onClickAllergies() {
         val newIntent = Intent(this, AllergiesActivity::class.java)
-        startActivityForResult(newIntent,REQUEST_CODE_ALLERGIES)
+        startActivityForResult(newIntent, REQUEST_CODE_ALLERGIES)
     }
 }

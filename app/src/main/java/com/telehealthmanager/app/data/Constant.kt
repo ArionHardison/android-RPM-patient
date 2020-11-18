@@ -30,6 +30,7 @@ object Constant {
         val ORDER = "ORDER"
         val SERVICE = "SERVICE"
     }
+
     object Gender {
         val MALE = "MALE"
         val FEMALE = "FEMALE"
@@ -136,7 +137,8 @@ object Constant {
         val COUNTRY_CODE = "COUNTRY_CODE"
         val OTP = "OTP"
         val ISLOGIN = "ISLOGIN"
-        val ISLOGINS = "ISLOGINS"
+        val IS_VIEW_TYPE = "VIEW_TYPE"
+        val IS_RELATIVE_ID = "RELATIVE_ID"
     }
 
 }

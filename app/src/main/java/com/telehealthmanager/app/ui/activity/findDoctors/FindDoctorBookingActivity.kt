@@ -133,32 +133,24 @@ class FindDoctorBookingActivity : BaseActivity<ActivityFindDoctorBookingBinding>
 
             } else
                 ViewUtils.showToast(this@FindDoctorBookingActivity, it.message, false)
-
-
         })
         viewModel.getErrorObservable().observe(this, Observer<kotlin.String> { message ->
             loadingObservable.value = false
             ViewUtils.showToast(this@FindDoctorBookingActivity, message, false)
         })
-
-
     }
 
     fun performclick() {
         // loadingObservable.value = true
-        bookDoctor_Map["doctor_id"] =
-            preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_ID, "").toString()
-        bookDoctor_Map["selectedPatient"] =
-            preferenceHelper.getValue(PreferenceKey.PATIENT_ID, 0).toString()
-        bookDoctor_Map["booking_for"] =
-            preferenceHelper.getValue(PreferenceKey.VISIT_PURPOSE, "").toString()
-        bookDoctor_Map["scheduled_at"] =
-            preferenceHelper.getValue(PreferenceKey.SCHEDULED_DATE, "").toString()
+        bookDoctor_Map["doctor_id"] = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_ID, "").toString()
+        bookDoctor_Map["selectedPatient"] = preferenceHelper.getValue(PreferenceKey.PATIENT_ID, 0).toString()
+        bookDoctor_Map["booking_for"] = preferenceHelper.getValue(PreferenceKey.VISIT_PURPOSE, "").toString()
+        bookDoctor_Map["scheduled_at"] = preferenceHelper.getValue(PreferenceKey.SCHEDULED_DATE, "").toString()
         bookDoctor_Map["consult_time"] = "15"
         bookDoctor_Map["appointment_type"] = "OFFLINE"
         bookDoctor_Map["description"] = ""
 
-//                loadingObservable.value = true
+        // loadingObservable.value = true
         // viewModel.BookDoctor(bookDoctor_Map)
         val intent = Intent(this@FindDoctorBookingActivity, PatientDetailsActivity::class.java)
         startActivity(intent);

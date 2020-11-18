@@ -54,4 +54,9 @@
         <item name="android:textColorPrimary">@color/colorBlack</item>
         <item name="fontFamily">@font/montserrat_regular</item>
     </style>
+
+    <style name="NavigationDrawerStyle">
+        <item name="android:textSize">@dimen/_14sdp</item>
+        <item name="android:listPreferredItemHeightSmall">@dimen/_40sdp</item>
+    </style>
 </resources>

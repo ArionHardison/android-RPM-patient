@@ -41,8 +41,7 @@ class MedicalRecordsFragment : BaseFragment<FragmentMedicalRecordsBinding>(),
     }
 
     private fun initAdapter() {
-        rv_medical_records.layoutManager = LinearLayoutManager(context) as RecyclerView.LayoutManager?
-        // rv_medical_records.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        mDataBinding.rvMedicalRecords.layoutManager = LinearLayoutManager(context) as RecyclerView.LayoutManager?
     }
 
     private fun observeResponse() {
@@ -51,9 +50,7 @@ class MedicalRecordsFragment : BaseFragment<FragmentMedicalRecordsBinding>(),
             if (it != null && it.status == 200) {
                 medicalRecords = it.medical
                 if (medicalRecords.isNotEmpty()) {
-                    rv_medical_records.adapter = context?.let { MedicalRecordsListAdapter(medicalRecords, it) }
-                } else {
-                    //ViewUtils.showToast(activity!!, "No Record found", false)
+                    mDataBinding.rvMedicalRecords.adapter = context?.let { MedicalRecordsListAdapter(medicalRecords, it) }
                 }
             }
         })

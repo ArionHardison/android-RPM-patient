@@ -33,7 +33,7 @@ class ChatCategoryAdapter(val items: MutableList<CategoryResponse.Category>, val
 
         val item = SearchList!![position]
         holder.itemBinding.tvName.text = item.name
-        holder.itemBinding.tvStrikePrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG)
+        holder.itemBinding.tvStrikePrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
         if (item.offer_fees == 0.00) {
             holder.itemBinding.tvPrice.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"), item.fees.toString())
             holder.itemBinding.tvStrikePrice.visibility = View.GONE

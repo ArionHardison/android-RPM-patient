@@ -61,6 +61,14 @@ class SearchViewModel : BaseViewModel<SearchNavigator>() {
         navigator.viewCallClick()
     }
 
+    fun clickInfoClick() {
+        navigator.viewInfoClick()
+    }
+
+    fun clickShareClick() {
+        navigator.viewShareClick()
+    }
+
     fun addFav(hashMap: HashMap<String, Any>) {
         getCompositeDisposable().add(appRepository.addfav(this, hashMap))
     }

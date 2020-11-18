@@ -24,14 +24,16 @@ class BookingCalanderAdapter extends RecyclerView.Adapter<BookingCalanderAdapter
     private Context mCtx;
     private BookingCalanderView.OnCalendarListener onCalendarListener;
     private int selectedPosition = 0;
+    private ArrayList<String> currentDate=new ArrayList<>();
 
     public void setOnCalendarListener(BookingCalanderView.OnCalendarListener onCalendarListener) {
         this.onCalendarListener = onCalendarListener;
     }
 
-    public BookingCalanderAdapter(ArrayList<BookingCalanderModel> list, Context mCtx) {
+    public BookingCalanderAdapter(ArrayList<BookingCalanderModel> list, Context mCtx, ArrayList<String> dates) {
         this.list = list;
         this.mCtx = mCtx;
+        this.currentDate = dates;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -70,6 +72,10 @@ class BookingCalanderAdapter extends RecyclerView.Adapter<BookingCalanderAdapter
         holder.date.setText(sdf.format(model.getTimeinmilli()).split(" ")[0]);
         holder.month.setText(sdf.format(model.getTimeinmilli()).split(" ")[1]);
         holder.day.setText(sdf.format(model.getTimeinmilli()).split(" ")[2]);
+
+        if (currentDate.contains(sdf.format(model.getTimeinmilli()))) {
+            holder.date.setText("Today");
+        }
 
         if (model.getStatus() == 0) {
             holder.date.setTextColor(Color.parseColor("#2891fb"));

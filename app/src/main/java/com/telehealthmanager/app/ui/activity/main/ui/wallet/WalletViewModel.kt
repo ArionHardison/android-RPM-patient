@@ -17,13 +17,8 @@ class WalletViewModel : BaseViewModel<WalletNavigator>() {
     var mWalletResponse = MutableLiveData<WalletResponse>()
     var balance : ObservableField<String> = ObservableField("$0")
     var enteredMoney : ObservableField<String> = ObservableField("")
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is tools Fragment"
-    }
-    val text: LiveData<String> = _text
 
-
-    fun getprofile() {
+    fun getProfile() {
         loadingProgress.value=true
         getCompositeDisposable().add(appRepository.getProfile(this))
     }

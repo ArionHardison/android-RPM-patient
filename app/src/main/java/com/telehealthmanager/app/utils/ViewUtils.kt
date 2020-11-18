@@ -67,9 +67,11 @@ object ViewUtils {
             }
             .show()
     }
+
     fun convertRequestBody(data: String): RequestBody {
         return data.toRequestBody("text/plain".toMediaTypeOrNull())
     }
+
     fun showAlert(context: Context, @StringRes messageResId: Int, callBack: ViewCallBack.Alert) {
         AlertDialog.Builder(context)
             .setTitle(R.string.app_name)
@@ -109,7 +111,7 @@ object ViewUtils {
             .show()
     }
 
-    fun getTimeAgoFormat(str: String) : String {
+    fun getTimeAgoFormat(str: String): String {
         val sdf =
             SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         var dateObj: Date? = null
@@ -188,14 +190,14 @@ object ViewUtils {
 
     }
 
-    fun getDayFormat(str: String) : String {
+    fun getDayFormat(str: String): String {
         val formatter = SimpleDateFormat("yyyy-MM-dd ", Locale.ENGLISH)
-        val date =  formatter.parse(str);
+        val date = formatter.parse(str);
         val format = SimpleDateFormat("dd MMM", Locale.ENGLISH)
-        return  format.format(date)
+        return format.format(date)
     }
 
-    fun getDisplayDayFormat(str: String) : String {
+    fun getDisplayDayFormat(str: String): String {
         val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         var dateObj: Date? = null
         try {
@@ -209,7 +211,7 @@ object ViewUtils {
         return ""
     }
 
-    fun getDisplayTimeFormat(str: String) : String {
+    fun getDisplayTimeFormat(str: String): String {
         val formatter = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
         var dateObj: Date? = null
         try {
@@ -224,7 +226,7 @@ object ViewUtils {
     }
 
 
-    fun getDayAndTimeFormat(str: String) : String {
+    fun getDayAndTimeFormat(str: String): String {
         val sdf =
             SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         var dateObj: Date? = null
@@ -241,7 +243,7 @@ object ViewUtils {
         return ""
     }
 
-    fun getScheduleDayFormat(str: String) : String {
+    fun getScheduleDayFormat(str: String): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         var dateObj: Date? = null
         try {
@@ -255,7 +257,7 @@ object ViewUtils {
         return ""
     }
 
-    fun getTimeFormat(str: String) : String {
+    fun getTimeFormat(str: String): String {
         val sdf =
             SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         var dateObj: Date? = null
@@ -270,17 +272,22 @@ object ViewUtils {
         return ""
     }
 
-
-
-    fun getDate(date:Date): String {
-        val sdf = SimpleDateFormat("dd MMM",Locale.ENGLISH)
+    fun getDate(date: Date): String {
+        val sdf = SimpleDateFormat("dd MMM", Locale.ENGLISH)
         return sdf.format(date)
     }
+
     fun getCurrentDate(): String {
         val today = Date()
-        val sdf = SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH)
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
         return sdf.format(today)
     }
 
+    fun getNextDays(dateCount:Int): String {
+        val currentCal = Calendar.getInstance()
+        currentCal.add(Calendar.DATE, dateCount)
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+        return sdf.format(currentCal.time)
+    }
 
 }

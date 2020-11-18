@@ -14,7 +14,7 @@ class AddAllergiesActivity : BaseActivity<ActivityAddAllergiesBinding>(), Allerg
 
     private lateinit var viewModel: AllergiesViewModel
     private lateinit var mDataBinding: ActivityAddAllergiesBinding
-    val allerigiesList: ArrayList<String> = ArrayList()
+    private val allergiesList: ArrayList<String> = ArrayList()
 
     override fun getLayoutId() = R.layout.activity_add_allergies
 
@@ -43,20 +43,18 @@ class AddAllergiesActivity : BaseActivity<ActivityAddAllergiesBinding>(), Allerg
     }
 
     private fun addedAllergies() {
-        allerigiesList.add("Soy")
-        allerigiesList.add("Nuts")
-        allerigiesList.add("Egg")
-        allerigiesList.add("Fish")
-        allerigiesList.add("Sea Food")
-        allerigiesList.add("Mushroom")
-        allerigiesList.add("Other")
+        allergiesList.add("Lacoste")
+        allergiesList.add("Soy")
+        allergiesList.add("Sea Food")
+        allergiesList.add("Nuts")
+        allergiesList.add("Egg")
+        allergiesList.add("Fish")
+        allergiesList.add("Mushroom")
+        allergiesList.add("Gluten")
+        allergiesList.add("Pencillin")
+        allergiesList.add("Other")
         mDataBinding.rvAllergies.layoutManager = LinearLayoutManager(applicationContext)
-        mDataBinding.rvAllergies.addItemDecoration(
-            DividerItemDecoration(
-                applicationContext,
-                DividerItemDecoration.VERTICAL
-            )
-        )
-        mDataBinding.rvAllergies.adapter = applicationContext?.let { AllergiesAdapter(allerigiesList, it) }
+        mDataBinding.rvAllergies.addItemDecoration(DividerItemDecoration(applicationContext, DividerItemDecoration.VERTICAL))
+        mDataBinding.rvAllergies.adapter = applicationContext?.let { AllergiesAdapter(allergiesList, it) }
     }
 }

@@ -1,5 +1,6 @@
 package com.telehealthmanager.app.ui.activity.main.ui.wallet
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -16,14 +17,17 @@ import com.telehealthmanager.app.data.setValue
 import com.telehealthmanager.app.databinding.FragmentWalletBinding
 import com.telehealthmanager.app.repositary.model.ProfileResponse
 import com.telehealthmanager.app.repositary.model.WalletResponse
+import com.telehealthmanager.app.ui.activity.addmoney.AddCardActivity
+import com.telehealthmanager.app.ui.twilio.TwilloVideoActivity
 import com.telehealthmanager.app.utils.ViewUtils
 
-class WalletFragment : BaseFragment<FragmentWalletBinding>(),WalletNavigator {
+class WalletFragment : BaseFragment<FragmentWalletBinding>(), WalletNavigator {
 
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
+    private lateinit var mViewDataBinding: FragmentWalletBinding
+    private val mViewModel = WalletViewModel()
+
     override fun getLayoutId(): Int = R.layout.fragment_wallet
-    lateinit var mViewDataBinding: FragmentWalletBinding
-    val mViewModel = WalletViewModel()
 
     override fun initView(mRootView: View?, mViewDataBinding: ViewDataBinding?) {
         this.mViewDataBinding = mViewDataBinding as FragmentWalletBinding
@@ -32,9 +36,10 @@ class WalletFragment : BaseFragment<FragmentWalletBinding>(),WalletNavigator {
         observeSuccessResponse()
         observeShowLoading()
         observeErrorResponse()
-        mViewModel.balance.set(String.format("%s %s",preferenceHelper.getValue(PreferenceKey.CURRENCY,"$"),preferenceHelper.getValue(PreferenceKey.WALLET_BALANCE,"0").toString()))
+        mViewModel.balance.set(String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"), preferenceHelper.getValue(PreferenceKey.WALLET_BALANCE, "0").toString()))
         initApiCall()
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -45,15 +50,16 @@ class WalletFragment : BaseFragment<FragmentWalletBinding>(),WalletNavigator {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear();
     }
+
     private fun observeErrorResponse() {
         mViewModel.getErrorObservable().observe(this, Observer<String> { message ->
             ViewUtils.showToast(context!!, message, false)
-            mViewModel.loadingProgress.value=false
+            mViewModel.loadingProgress.value = false
         })
     }
 
     private fun initApiCall() {
-        mViewModel.getprofile()
+        mViewModel.getProfile()
     }
 
     private fun observeShowLoading() {
@@ -69,22 +75,23 @@ class WalletFragment : BaseFragment<FragmentWalletBinding>(),WalletNavigator {
     private fun observeSuccessResponse() {
         mViewModel.mProfileResponse.observe(this, Observer<ProfileResponse> {
             preferenceHelper.setValue(PreferenceKey.WALLET_BALANCE, it.patient.wallet_balance)
-            mViewModel.loadingProgress.value=false
-            mViewModel.balance.set(String.format("%s %s",preferenceHelper.getValue(PreferenceKey.CURRENCY,"$"),preferenceHelper.getValue(PreferenceKey.WALLET_BALANCE,"0").toString()))
+            mViewModel.loadingProgress.value = false
+            mViewModel.balance.set(String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"), preferenceHelper.getValue(PreferenceKey.WALLET_BALANCE, "0").toString()))
         })
+
         mViewModel.mWalletResponse.observe(this, Observer<WalletResponse> {
-            ViewUtils.showToast(context!!, getString(R.string.added_to_you_wallet,String.format("%s%s",preferenceHelper.getValue(PreferenceKey.CURRENCY,"$"),mViewModel.enteredMoney.get())), true)
+            ViewUtils.showToast(context!!, getString(R.string.added_to_you_wallet, String.format("%s%s", preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"), mViewModel.enteredMoney.get())), true)
             initApiCall()
         })
     }
 
     override fun onAddMoneyClicked() {
-        if(mViewModel.enteredMoney.get().equals(""))
-        {
+        if (mViewModel.enteredMoney.get().equals("")) {
             ViewUtils.showToast(context!!, getString(R.string.please_enter_amount), false)
-        }
-        else{
-            mViewModel.addMoneyToWallet()
+        } else {
+            /*mViewModel.addMoneyToWallet()*/
+            val callIntent = Intent(activity, AddCardActivity::class.java)
+            startActivity(callIntent)
         }
     }
 }

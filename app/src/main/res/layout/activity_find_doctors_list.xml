@@ -68,9 +68,9 @@
                             android:layout_marginStart="-10dp"
                             android:gravity="center_vertical"
                             android:text="@string/back"
-                            android:textStyle="bold"
                             android:textColor="@color/colorWhite"
-                            android:textSize="@dimen/_15sdp" />
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
 
@@ -149,23 +149,22 @@
                 android:drawableEnd="@drawable/ic_search"
                 android:ems="10"
                 android:focusable="true"
-                app:layout_constraintEnd_toStartOf="@+id/imageView17"
                 android:hint="Search"
                 android:inputType="textPersonName"
                 android:padding="@dimen/_8sdp"
-                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintEnd_toStartOf="@+id/imageView17"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/imageView17"
                 android:layout_width="40dp"
-                android:layout_marginEnd="@dimen/_8sdp"
                 android:layout_height="42dp"
+                android:layout_marginEnd="@dimen/_8sdp"
                 android:background="@drawable/search_bg"
                 app:layout_constraintBottom_toBottomOf="@+id/editText9"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/editText9"
+                app:layout_constraintStart_toEndOf="@id/editText9"
                 app:layout_constraintTop_toTopOf="@+id/editText9"
                 app:srcCompat="@drawable/ic_filter" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -175,12 +174,12 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:adapter="@{adapter}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/search_layout"
             app:layout_constraintStart_toStartOf="@+id/search_layout"
             app:layout_constraintTop_toBottomOf="@+id/search_layout"
-            app:layout_constraintBottom_toBottomOf="parent"
             tools:listitem="@layout/find_doctor_list_item" />
 
         <TextView

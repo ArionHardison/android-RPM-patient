@@ -302,4 +302,12 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
         callIntent.putExtra("is_request", true)
         startActivity(callIntent)
     }
+
+    override fun viewInfoClick() {
+        TODO("Not yet implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun viewShareClick() {
+        TODO("Not yet implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 }

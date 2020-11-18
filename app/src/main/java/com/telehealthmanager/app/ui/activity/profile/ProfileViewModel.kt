@@ -45,6 +45,12 @@ class ProfileViewModel : BaseViewModel<ProfileNavigator>(){
         getCompositeDisposable().add(appRepository.getProfile(this))
     }
 
+
+    fun getRelateProfile(relativeID: Int) {
+        getCompositeDisposable().add(appRepository.getProfile(this))
+    }
+
+
     fun openAllergies(){
         navigator.onClickAllergies()
     }

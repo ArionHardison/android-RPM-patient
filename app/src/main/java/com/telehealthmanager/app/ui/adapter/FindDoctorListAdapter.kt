@@ -1,6 +1,7 @@
 package com.telehealthmanager.app.ui.adapter
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,61 +34,49 @@ class FindDoctorListAdapter(
         this.SearchList = items
     }
 
-
     override fun onBindViewHolder(holder: FindDoctorViewHolder, position: Int) {
-        val item = SearchList!![position]
-        if (item.hospital.size > 0) {
-            holder.itemBinding.textView47?.text =
-                (item.hospital[0].first_name?:"").plus(" ").plus(item.hospital[0].last_name?:"")
-            holder.itemBinding.textView52?.text =
-                (item.hospital[0].clinic?.name?:"").plus(" , ").plus(item.hospital[0].clinic?.address?:"")
-            holder.itemBinding.textView46?.text = (item.hospital[0].feedback_percentage?:"0").plus("%")
-            if (item.hospital[0]?.availability != null)
-                when (item.hospital[0]?.availability) {
-
-                    "today" -> {
-                        holder.itemBinding.textView51?.visibility = View.VISIBLE
-                        holder.itemBinding.textView51?.text =
-                            context.getString(R.string.avaliable_today)
-                    }
-                    "tomorrow" -> {
-                        holder.itemBinding.textView51?.visibility = View.VISIBLE
-                        holder.itemBinding.textView51?.text =
-                            context.getString(R.string.avaliable_tomorrow)
-                    }
-                    else -> {
-                        holder.itemBinding.textView51?.visibility = View.GONE;
-                    }
+        val item = SearchList[position]
+        if (item.hospital.isNotEmpty()) {
+            holder.itemBinding.textView47.text = (item.hospital[0].first_name ?: "").plus(" ").plus(item.hospital[0].last_name ?: "")
+            holder.itemBinding.textView52.text = (item.hospital[0].clinic?.name ?: "").plus(" , ").plus(item.hospital[0].clinic?.address ?: "")
+            holder.itemBinding.textView46.text = (item.hospital[0].feedback_percentage ?: "0").plus("%")
+            when (item.hospital[0].availability) {
+                "today" -> {
+                    holder.itemBinding.textView51.visibility = View.VISIBLE
+                    holder.itemBinding.textView51.text = context.getString(R.string.avaliable_today)
+                    holder.itemBinding.textView51.setTextColor(Color.parseColor("#5AB357"))
+                    holder.itemBinding.textView51.setBackgroundResource(R.drawable.available_today)
                 }
+                "tommorrow" -> {
+                    holder.itemBinding.textView51.visibility = View.VISIBLE
+                    holder.itemBinding.textView51.text = context.getString(R.string.avaliable_tomorrow)
+                    holder.itemBinding.textView51.setTextColor(Color.parseColor("#DC852E"))
+                    holder.itemBinding.textView51.setBackgroundResource(R.drawable.available_tomorrow)
+                }
+                else -> {
+                    holder.itemBinding.textView51.visibility = View.GONE;
+                }
+            }
 
-
-            holder.itemBinding.button15.setOnClickListener(View.OnClickListener {
-                listener.oncallclick(item.hospital[0].mobile)
-            })
+            holder.itemBinding.button15.setOnClickListener {
+                listener.onCallClick(item.hospital[0].mobile)
+            }
         }
-        ViewUtils.setImageViewGlide(
-            context,
-            holder.itemBinding.imageView18,
-            BuildConfig.BASE_IMAGE_URL.plus(item.profile_pic)
-        )
-        holder.itemBinding.textView50?.text =
-            item.experience?:"0".plus(" ").plus(context.getString(R.string.years_of_exp))
-        holder.itemBinding.textView48?.text = item.speciality?.name
-        holder.itemBinding.textView54?.text =
-            preferenceHelper.getValue(PreferenceKey.CURRENCY, "$").toString().plus(item.fees?:"0")
+        ViewUtils.setImageViewGlide(context, holder.itemBinding.imageView18, BuildConfig.BASE_IMAGE_URL.plus(item.profile_pic))
+        holder.itemBinding.textView50.text = item.experience ?: "0".plus(" ").plus(context.getString(R.string.years_of_exp))
+        holder.itemBinding.textView48.text = item.speciality?.name
+        holder.itemBinding.textView54.text = preferenceHelper.getValue(PreferenceKey.CURRENCY, "$").toString().plus(item.fees ?: "0")
 
-        holder.itemBinding.button16.setOnClickListener(View.OnClickListener {
-            listener.onbookclick(item)
-        })
+        holder.itemBinding.button16.setOnClickListener {
+            listener.onBookClick(item)
+        }
 
         holder.itemView.setOnClickListener {
-
-            listener.onitemclick(item)
+            listener.onItemClick(item)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FindDoctorViewHolder {
-
         val inflate = DataBindingUtil.inflate<FindDoctorListItemBinding>(
             LayoutInflater.from(parent.context),
             R.layout.find_doctor_list_item, parent, false
@@ -140,9 +129,9 @@ class FindDoctorListAdapter(
 }
 
 interface IDoctorListener {
-    fun onbookclick(selectedItem: DoctorListResponse.specialities.DoctorProfile)
-    fun onitemclick(selectedItem: DoctorListResponse.specialities.DoctorProfile)
-    fun oncallclick(phone: String)
+    fun onBookClick(selectedItem: DoctorListResponse.specialities.DoctorProfile)
+    fun onItemClick(selectedItem: DoctorListResponse.specialities.DoctorProfile)
+    fun onCallClick(phone: String)
 }
 
 class FindDoctorViewHolder(view: FindDoctorListItemBinding) : RecyclerView.ViewHolder(view.root) {

@@ -5,4 +5,6 @@ interface SearchNavigator {
     fun onBookClick()
     fun viewAllClick()
     fun viewCallClick()
+    fun viewInfoClick()
+    fun viewShareClick()
 }

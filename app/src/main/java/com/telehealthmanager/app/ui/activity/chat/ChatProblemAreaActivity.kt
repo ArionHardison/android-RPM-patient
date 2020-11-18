@@ -33,11 +33,9 @@ class ChatProblemAreaActivity : BaseActivity<ActivityChatProblemAreaBinding>(), 
         viewModelFindDoctor = ViewModelProviders.of(this).get(FindDoctorsViewModel::class.java)
         mDataBinding.viewModelDoctor = viewModelFindDoctor
         viewModel.navigator = this
-
         initApiCal()
         initAdapter()
         observeResponse()
-
         mDataBinding.textViewBack.setOnClickListener {
             finish()
         }
@@ -53,13 +51,11 @@ class ChatProblemAreaActivity : BaseActivity<ActivityChatProblemAreaBinding>(), 
     private fun initApiCal() {
         loadingObservable.value = true
         viewModelFindDoctor.getCategorys()
-
     }
 
     private fun observeResponse() {
 
         viewModelFindDoctor.mCategoryResponse.observe(this, Observer<CategoryResponse> {
-
             viewModelFindDoctor.mCategoryList =
                 it.category as MutableList<CategoryResponse.Category>?
             if (viewModelFindDoctor.mCategoryList!!.size > 0) {
@@ -73,9 +69,8 @@ class ChatProblemAreaActivity : BaseActivity<ActivityChatProblemAreaBinding>(), 
             mDataBinding.rvCategories.layoutManager = GridLayoutManager(applicationContext, 2)
             mCategoriesAdapter!!.notifyDataSetChanged()
             loadingObservable.value = false
-
-
         })
+
         viewModelFindDoctor.getErrorObservable().observe(this, Observer<String> { message ->
             loadingObservable.value = false
             ViewUtils.showToast(this@ChatProblemAreaActivity, message, false)

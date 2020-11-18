@@ -2,21 +2,16 @@ package com.telehealthmanager.app.ui.activity.chat
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Paint
-import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.google.android.material.appbar.AppBarLayout
 import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
 import com.telehealthmanager.app.data.Constant
 import com.telehealthmanager.app.data.PreferenceHelper
-import com.telehealthmanager.app.data.PreferenceKey
-import com.telehealthmanager.app.data.getValue
 import com.telehealthmanager.app.databinding.ActivityChatBinding
 import com.telehealthmanager.app.repositary.model.CategoryResponse
 import com.telehealthmanager.app.ui.activity.findDoctors.FindDoctorsViewModel
@@ -26,7 +21,6 @@ import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ViewUtils
 import kotlinx.android.synthetic.main.content_chat.*
 import kotlinx.android.synthetic.main.content_chat.view.*
-import kotlin.math.abs
 
 class ChatActivity : BaseActivity<ActivityChatBinding>(), ChatNavigator, IChatCategoryListener, CustomBackClick {
     override fun getLayoutId(): Int = R.layout.activity_chat
@@ -72,21 +66,10 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(), ChatNavigator, IChatCa
         mDataBinding.contentChat.llSelectedCategory.setOnClickListener {
             if (seeAllSelectedCategory != null) {
                 category = seeAllSelectedCategory
-                mDataBinding.contentChat.llSelectedCategory.background =
-                    ContextCompat.getDrawable(this, R.drawable.bg_color_primary_border)
+                mDataBinding.contentChat.llSelectedCategory.background = ContextCompat.getDrawable(this, R.drawable.bg_color_primary_border)
                 mDataBinding.contentChat.tvSelectedPrice.setTextColor(ContextCompat.getColor(this, R.color.colorButton))
-                mDataBinding.contentChat.tvSelectedName.setTextColor(
-                    ContextCompat.getColor(
-                        this,
-                        R.color.colorButton
-                    )
-                )
-                mDataBinding.contentChat.tvSelectedStrikePrice.setTextColor(
-                    ContextCompat.getColor(
-                        this,
-                        R.color.colorButton
-                    )
-                )
+                mDataBinding.contentChat.tvSelectedName.setTextColor(ContextCompat.getColor(this, R.color.colorButton))
+                mDataBinding.contentChat.tvSelectedStrikePrice.setTextColor(ContextCompat.getColor(this, R.color.colorButton))
                 initAdapter()
             }
         }
@@ -99,26 +82,10 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(), ChatNavigator, IChatCa
     override fun onChatCategoryClicked(category: CategoryResponse.Category) {
         this.category = category
         mDataBinding.contentChat.tvSelectedName
-        mDataBinding.contentChat.llSelectedCategory.background =
-            ContextCompat.getDrawable(this, R.drawable.bg_color_grey_border)
-        mDataBinding.contentChat.tvSelectedPrice.setTextColor(
-            ContextCompat.getColor(
-                this,
-                R.color.colorBlack
-            )
-        )
-        mDataBinding.contentChat.tvSelectedName.setTextColor(
-            ContextCompat.getColor(
-                this,
-                R.color.colorBlack
-            )
-        )
-        mDataBinding.contentChat.tvSelectedStrikePrice.setTextColor(
-            ContextCompat.getColor(
-                this,
-                R.color.colorBlack
-            )
-        )
+        mDataBinding.contentChat.llSelectedCategory.background = ContextCompat.getDrawable(this, R.drawable.bg_color_grey_border)
+        mDataBinding.contentChat.tvSelectedPrice.setTextColor(ContextCompat.getColor(this, R.color.colorBlack))
+        mDataBinding.contentChat.tvSelectedName.setTextColor(ContextCompat.getColor(this, R.color.colorBlack))
+        mDataBinding.contentChat.tvSelectedStrikePrice.setTextColor(ContextCompat.getColor(this, R.color.colorBlack))
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -137,60 +104,15 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(), ChatNavigator, IChatCa
                             mDataBinding.contentChat.llSelectedCategory.visibility = View.GONE
                             mDataBinding.contentChat.tvCategoryTitle.text = getString(R.string.see_all_specialities)
                             mDataBinding.contentChat.see_all_specialist.background = ContextCompat.getDrawable(this, R.drawable.bg_color_grey_border)
-                            mDataBinding.contentChat.tvCategoryTitle.setTextColor(
-                                ContextCompat.getColor(
-                                    this,
-                                    R.color.colorBlack
-                                )
-                            )
+                            mDataBinding.contentChat.tvCategoryTitle.setTextColor(ContextCompat.getColor(this, R.color.colorBlack))
                             mDataBinding.contentChat.arrowIcon.setColorFilter(ContextCompat.getColor(this, R.color.colorBlack), android.graphics.PorterDuff.Mode.MULTIPLY);
                             return
                         }
                     }
-                   // mDataBinding.contentChat.llSelectedCategory.visibility = View.VISIBLE
                     mDataBinding.contentChat.tvCategoryTitle.text = category?.name
-                    /*mDataBinding.contentChat.tvSelectedStrikePrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG)
-                    if (category?.offer_fees == 0.00) {
-                        mDataBinding.contentChat.tvSelectedPrice.text = String.format(
-                            "%s %s",
-                            preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"),
-                            category?.fees.toString()
-                        )
-                        mDataBinding.contentChat.tvSelectedStrikePrice.visibility = View.GONE
-                    } else {
-                        mDataBinding.contentChat.tvSelectedStrikePrice.visibility = View.VISIBLE
-                        mDataBinding.contentChat.tvSelectedPrice.text = String.format(
-                            "%s %s",
-                            preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"),
-                            category?.offer_fees.toString()
-                        )
-                        mDataBinding.contentChat.tvSelectedStrikePrice.text = String.format(
-                            "%s %s",
-                            preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"),
-                            category?.fees.toString()
-                        )
-                    }*/
-                    mDataBinding.contentChat.see_all_specialist.background =
-                        ContextCompat.getDrawable(this, R.drawable.bg_color_primary_border)
-                    mDataBinding.contentChat.tvCategoryTitle.setTextColor(
-                        ContextCompat.getColor(
-                            this,
-                            R.color.colorButton
-                        )
-                    )
-                    mDataBinding.contentChat.arrowIcon.setColorFilter(ContextCompat.getColor(this, R.color.colorButton), android.graphics.PorterDuff.Mode.MULTIPLY);
-                    /*mDataBinding.contentChat.tvSelectedName.setTextColor(
-                        ContextCompat.getColor(
-                            this,
-                            R.color.colorButton
-                        )
-                    )
-                    mDataBinding.contentChat.tvSelectedStrikePrice.setTextColor(
-                        ContextCompat.getColor(
-                            this,
-                            R.color.colorButton
-                        )
-                    )*/
+                    mDataBinding.contentChat.see_all_specialist.background = ContextCompat.getDrawable(this, R.drawable.bg_color_primary_border)
+                    mDataBinding.contentChat.tvCategoryTitle.setTextColor(ContextCompat.getColor(this, R.color.colorButton))
+                    mDataBinding.contentChat.arrowIcon.setColorFilter(ContextCompat.getColor(this, R.color.colorButton), android.graphics.PorterDuff.Mode.MULTIPLY)
                     initAdapter()
                 }
             }

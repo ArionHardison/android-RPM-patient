@@ -57,46 +57,26 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
         initAdapter()
         observeResponse()
         initApiCal()
-        mDataBinding.contentChatSummary.textViewVerifiedText.text =
-            getString(R.string.verified_specialists_online_now, category.name)
-        mDataBinding.contentChatSummary.tvSummaryStrikePrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG)
-        if (category?.offer_fees == 0.00) {
-            mDataBinding.contentChatSummary.tvSummaryPrice.text = String.format(
-                "%s %s",
-                preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"),
-                category?.fees.toString()
-            )
+        mDataBinding.contentChatSummary.textViewVerifiedText.text = getString(R.string.verified_specialists_online_now, category.name)
+        mDataBinding.contentChatSummary.tvSummaryStrikePrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+        if (category.offer_fees == 0.00) {
+            mDataBinding.contentChatSummary.tvSummaryPrice.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"), category?.fees.toString())
             mDataBinding.contentChatSummary.tvSummaryStrikePrice.visibility = View.GONE
-            fees=category?.fees.toString()
+            fees=category.fees.toString()
         } else {
             mDataBinding.contentChatSummary.tvSummaryStrikePrice.visibility = View.VISIBLE
-            mDataBinding.contentChatSummary.tvSummaryPrice.text = String.format(
-                "%s %s",
-                preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"),
-                category?.offer_fees.toString()
-            )
-            mDataBinding.contentChatSummary.tvSummaryStrikePrice.text = String.format(
-                "%s %s",
-                preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"),
-                category?.fees.toString()
-            )
-            fees=category?.offer_fees.toString()
+            mDataBinding.contentChatSummary.tvSummaryPrice.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"), category?.offer_fees.toString())
+            mDataBinding.contentChatSummary.tvSummaryStrikePrice.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"), category?.fees.toString())
+            fees=category.offer_fees.toString()
         }
 
         mDataBinding.contentChatSummary.textViewApplyPromo.setOnClickListener {
             if (mDataBinding.contentChatSummary.editTextPromoValue.text.toString().equals("")) {
-                ViewUtils.showToast(
-                    this@ChatSummaryActivity,
-                    getString(R.string.please_enter_promo_code),
-                    false
-                )
+                ViewUtils.showToast(this@ChatSummaryActivity, getString(R.string.please_enter_promo_code), false)
             } else {
-
-
                 val hashMap: HashMap<String, Any> = HashMap()
                 hashMap["id"] = category.id
-                hashMap["promocode"] =
-                    mDataBinding.contentChatSummary.editTextPromoValue.text.toString()
+                hashMap["promocode"] = mDataBinding.contentChatSummary.editTextPromoValue.text.toString()
                 viewModelSummary.addPromoCode(hashMap)
             }
         }
@@ -104,6 +84,7 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
         mDataBinding.buttonToProceed.setOnClickListener {
             payForChatRequest()
         }
+
         viewModel.setOnClickListener(this@ChatSummaryActivity)
         viewModel.toolBarTile.value = getString(R.string.chat_summary)
     }
@@ -133,8 +114,8 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
     private fun observeResponse() {
 
         viewModelFindDoctor.mDoctorResponse.observe(this, Observer<DoctorListResponse> {
-            viewModelFindDoctor.mDoctorList =
-                it.Specialities.doctor_profile as MutableList<DoctorListResponse.specialities.DoctorProfile>?
+            viewModelFindDoctor.mDoctorList = it.Specialities.doctor_profile as MutableList<DoctorListResponse.specialities.DoctorProfile>?
+
             if (viewModelFindDoctor.mDoctorList!!.size > 0) {
                 mDataBinding.contentChatSummary.tvSpecialistNotFound.visibility = View.GONE
                 mDataBinding.contentChatSummary.textViewVerifiedText.visibility = View.VISIBLE
@@ -149,8 +130,7 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
                 mDataBinding.buttonToProceed.setClickable(false);
             }
             if (viewModelFindDoctor.mDoctorList!!.size > 5) {
-                mDataBinding.contentChatSummary.tvDoctorCount.text =
-                    String.format("+%s", (viewModelFindDoctor.mDoctorList!!.size - 5))
+                mDataBinding.contentChatSummary.tvDoctorCount.text = String.format("+%s", (viewModelFindDoctor.mDoctorList!!.size - 5))
                 mDataBinding.contentChatSummary.tvDoctorCount.visibility = View.VISIBLE
             } else {
                 mDataBinding.contentChatSummary.tvDoctorCount.visibility = View.GONE
@@ -169,16 +149,15 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
         viewModelSummary.mChatPromoResponse.observe(this, Observer<ChatPromoResponse> {
             if (it != null && it.message != null && !it.message.equals("")) {
                 ViewUtils.showToast(this@ChatSummaryActivity, it.message, true)
-                mDataBinding.contentChatSummary.tvSummaryPrice.text = String.format(
-                    "%s %s",
+                mDataBinding.contentChatSummary.tvSummaryPrice.text = String.format("%s %s",
                     preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"),
-                    it?.finalFees.toString()
+                    it.finalFees.toString()
                 )
-                fees=it?.finalFees.toString()
+                fees=it.finalFees.toString()
             }
         })
         viewModelSummary.mChatRequestResponse.observe(this, Observer<MessageResponse> {
-            if (it != null && it.message != null && !it.message.equals("")) {
+            if (it?.message != null && !it.message.equals("")) {
                 ViewUtils.showToast(this@ChatSummaryActivity, it.message, true)
                 val intent = Intent(applicationContext, SuccessActivity::class.java)
                 intent.putExtra("isFrom","chat")
@@ -192,17 +171,8 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
 
     private fun initAdapter() {
         mAdapter = DoctorImageAdapter(viewModelFindDoctor.mDoctorList!!, this)
-        // Set Horizontal Layout Manager
-        // for Recycler view
-
-        // Set Horizontal Layout Manager
-        // for Recycler view
-        val horizontalLayout: LinearLayoutManager = LinearLayoutManager(
-            this@ChatSummaryActivity,
-            LinearLayoutManager.HORIZONTAL,
-            false
-        )
-        mDataBinding.contentChatSummary.rvSpecialist.setLayoutManager(horizontalLayout)
+        val horizontalLayout = LinearLayoutManager(this@ChatSummaryActivity, LinearLayoutManager.HORIZONTAL, false)
+        mDataBinding.contentChatSummary.rvSpecialist.layoutManager = horizontalLayout
         mDataBinding.contentChatSummary.rvSpecialist.adapter = mAdapter
         mAdapter!!.notifyDataSetChanged()
     }

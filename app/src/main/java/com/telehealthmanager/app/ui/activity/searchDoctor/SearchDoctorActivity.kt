@@ -36,6 +36,14 @@ class SearchDoctorActivity : BaseActivity<ActivitySearchDoctorBinding>(), Search
         TODO("Not yet implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    override fun viewInfoClick() {
+        TODO("Not yet implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun viewShareClick() {
+        TODO("Not yet implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun onFavClick() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

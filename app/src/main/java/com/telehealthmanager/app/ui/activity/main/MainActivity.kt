@@ -78,6 +78,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
         navView.itemIconTintList = null
         navView.getHeaderView(0).setOnClickListener() {
             val intent = Intent(applicationContext, ProfileActivity::class.java)
+            intent.putExtra(Constant.IntentData.IS_VIEW_TYPE, "home")
             startActivity(intent);
         }
         // Passing each menu ID as a set of Ids because each
@@ -124,10 +125,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
 
     override fun onPause() {
         super.onPause()
-       /* if (checkRequestTimer != null) {
-            checkRequestTimer!!.cancel();
-            checkRequestTimer = null;
-        }*/
+        /* if (checkRequestTimer != null) {
+             checkRequestTimer!!.cancel();
+             checkRequestTimer = null;
+         }*/
     }
 
     override fun onResume() {

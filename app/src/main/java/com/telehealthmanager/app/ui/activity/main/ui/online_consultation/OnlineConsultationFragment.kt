@@ -17,15 +17,14 @@ import com.telehealthmanager.app.ui.adapter.IChatListener
 import com.telehealthmanager.app.utils.ViewUtils
 import java.io.Serializable
 
-class OnlineConsultationFragment : BaseFragment<FragmentOnlineConsultationBinding>(),OnlineConsultationNavigator,IChatListener {
+class OnlineConsultationFragment : BaseFragment<FragmentOnlineConsultationBinding>(), OnlineConsultationNavigator, IChatListener {
 
     private lateinit var mViewModel: OnlineConsultationViewModel
     private lateinit var mDataBinding: FragmentOnlineConsultationBinding
     override fun getLayoutId(): Int = R.layout.fragment_online_consultation
     private var mChatAdapter: ChatAdapter? = null
-private var chat: Chat?=null
+    private var chat: Chat? = null
     override fun initView(mRootView: View?, mViewDataBinding: ViewDataBinding?) {
-
         mDataBinding = mViewDataBinding as FragmentOnlineConsultationBinding
         mViewModel = ViewModelProviders.of(this).get(OnlineConsultationViewModel::class.java)
         mDataBinding.viewmodel = mViewModel
@@ -36,7 +35,7 @@ private var chat: Chat?=null
     }
 
     override fun onChatClicked(item: Chat) {
-        chat=item
+        chat = item
         mViewModel.getChatStatus(item.chatRequestsId)
     }
 
@@ -46,13 +45,13 @@ private var chat: Chat?=null
 
     private fun observeSuccessResponse() {
         mViewModel.mChatResponse.observe(this, Observer {
-            if(mViewModel.mChatResponse.value!!.chats.size > 0) {
+            if (mViewModel.mChatResponse.value!!.chats.size > 0) {
                 mDataBinding.tvNotFound.visibility = View.GONE
-            }else{
+            } else {
                 mDataBinding.tvNotFound.visibility = View.VISIBLE
             }
 
-            mChatAdapter = ChatAdapter(activity!!, mViewModel.mChatResponse.value!!.chats!!,this)
+            mChatAdapter = ChatAdapter(activity!!, mViewModel.mChatResponse.value!!.chats!!, this)
             mDataBinding.mChatAdapter = mChatAdapter
 
             mDataBinding.rvOnlineConsultation.addItemDecoration(
@@ -67,22 +66,21 @@ private var chat: Chat?=null
         })
 
         mViewModel.mChatStatusResponse.observe(this, Observer {
-            if (it.checkStatus!=null){
-                if(it.checkStatus.status?.equals("ACCEPTED",true)){
+            if (it.checkStatus != null) {
+                if (it.checkStatus.status?.equals("ACCEPTED", true)) {
                     val intent = Intent(context, PubnubChatActivity::class.java)
                     intent.putExtra("chat_data", chat as Serializable)
                     startActivity(intent)
-                }
-                else if(it.checkStatus.status?.equals("CANCELLED",true)){
+                } else if (it.checkStatus.status?.equals("CANCELLED", true)) {
                     ViewUtils.showToast(activity!!, "Doctor not accepted your request", false)
-                }
-                else if(it.checkStatus.status?.equals("COMPLETED",true)){
+                } else if (it.checkStatus.status?.equals("COMPLETED", true)) {
                     ViewUtils.showToast(activity!!, "Chat time expired, Request again", false)
                 }
             }
             mViewModel.loadingProgress.value = false
         })
     }
+
     private fun observeErrorResponse() {
         mViewModel.getErrorObservable().observe(this, Observer<String> { message ->
             mViewModel.loadingProgress.value = false

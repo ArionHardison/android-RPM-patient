@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
@@ -23,8 +23,8 @@ public class BookingCalanderView extends LinearLayout {
     Context context;
     RecyclerView recyclerView;
 
-    public interface OnCalendarListener{
-        void onDateSelected(Calendar cal,String dateStr);
+    public interface OnCalendarListener {
+        void onDateSelected(Calendar cal, String dateStr);
     }
 
     public BookingCalanderView(Context context, @Nullable AttributeSet attrs) {
@@ -56,32 +56,25 @@ public class BookingCalanderView extends LinearLayout {
         addView(view);
     }
 
-    public void setUpCalendar(long start, long end, ArrayList<String> dates, OnCalendarListener onCalendarListener){
-
+    public void setUpCalendar(long start, long end, ArrayList<String> dates, OnCalendarListener onCalendarListener) {
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(start);
-
         ArrayList<BookingCalanderModel> list = new ArrayList<>();
-
         long today = Tools.getTimeInMillis(Tools.getFormattedDateToday());
 
         long current = start;
-        int i=0;
+        int i = 0;
         int pos = 0;
-        while(current<end){
-
+        while (current < end) {
             Calendar c1 = Calendar.getInstance();
             c1.setTimeInMillis(start);
-            c1.add(Calendar.DATE,i);
-
+            c1.add(Calendar.DATE, i);
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-
-            if(sdf.format(c1.getTimeInMillis()).equalsIgnoreCase(sdf.format(today))){
-                pos =i;
+            if (sdf.format(c1.getTimeInMillis()).equalsIgnoreCase(sdf.format(today))) {
+                pos = i;
             }
-
             BookingCalanderModel model = new BookingCalanderModel(c1.getTimeInMillis());
-            if(dates.contains(sdf.format(c1.getTimeInMillis()))){
+            if (dates.contains(sdf.format(c1.getTimeInMillis()))) {
                 model.setStatus(1);
             }
             list.add(model);
@@ -89,13 +82,12 @@ public class BookingCalanderView extends LinearLayout {
             i++;
         }
 
-        BookingCalanderAdapter adapter = new BookingCalanderAdapter(list,context);
+        BookingCalanderAdapter adapter = new BookingCalanderAdapter(list, context, dates);
         adapter.setOnCalendarListener(onCalendarListener);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, RecyclerView.HORIZONTAL,false);
-        SnapHelper snapHelper = new PagerSnapHelper();
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false);
+        SnapHelper snapHelper = new LinearSnapHelper();
         snapHelper.attachToRecyclerView(recyclerView);
-
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
