@@ -5,28 +5,28 @@ import androidx.lifecycle.ViewModel
 import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
+import com.telehealthmanager.app.ui.activity.addmoney.AddMoneyViewModel
 import com.telehealthmanager.app.ui.activity.addreminder.AddReminderViewModel
 import com.telehealthmanager.app.ui.activity.chat.ChatSummaryViewModel
-import com.telehealthmanager.app.ui.activity.searchGlobal.SearchGlobalViewModel
 import com.telehealthmanager.app.ui.activity.findDoctors.FindDoctorsViewModel
 import com.telehealthmanager.app.ui.activity.login.LoginViewModel
 import com.telehealthmanager.app.ui.activity.main.MainViewModel
 import com.telehealthmanager.app.ui.activity.main.ui.appointment.AppointmentViewModel
+import com.telehealthmanager.app.ui.activity.main.ui.articles.ArticleViewModel
 import com.telehealthmanager.app.ui.activity.main.ui.favourite_doctor.FavouriteDoctorViewModel
 import com.telehealthmanager.app.ui.activity.main.ui.medical_records.MedicalRecordsViewModel
-import com.telehealthmanager.app.ui.activity.otp.OTPViewModel
-import com.telehealthmanager.app.ui.activity.patientDetail.PatientDetailViewModel
-import com.telehealthmanager.app.ui.activity.profile.ProfileViewModel
-import com.telehealthmanager.app.ui.activity.register.RegisterViewModel
-import com.telehealthmanager.app.ui.activity.searchDoctor.SearchViewModel
-import com.telehealthmanager.app.ui.activity.visitedDoctor.VisitedDoctorsViewModel
-import com.telehealthmanager.app.ui.activity.main.ui.articles.ArticleViewModel
 import com.telehealthmanager.app.ui.activity.main.ui.online_consultation.OnlineConsultationViewModel
 import com.telehealthmanager.app.ui.activity.main.ui.remainder.RemainderViewModel
 import com.telehealthmanager.app.ui.activity.main.ui.settings.SettingViewModel
 import com.telehealthmanager.app.ui.activity.main.ui.wallet.WalletViewModel
-
-
+import com.telehealthmanager.app.ui.activity.otp.OTPViewModel
+import com.telehealthmanager.app.ui.activity.patientDetail.PatientDetailViewModel
+import com.telehealthmanager.app.ui.activity.payment.PaymentViewModel
+import com.telehealthmanager.app.ui.activity.profile.ProfileViewModel
+import com.telehealthmanager.app.ui.activity.register.RegisterViewModel
+import com.telehealthmanager.app.ui.activity.searchDoctor.SearchViewModel
+import com.telehealthmanager.app.ui.activity.searchGlobal.SearchGlobalViewModel
+import com.telehealthmanager.app.ui.activity.visitedDoctor.VisitedDoctorsViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -204,7 +204,7 @@ class AppRepository : BaseRepository() {
 
     fun getFiltersDoctors(viewModel: ViewModel, id: Int, hashMap: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
-            .getDoctorFilterByCategories(id,hashMap)
+            .getDoctorFilterByCategories(id, hashMap)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
@@ -255,18 +255,6 @@ class AppRepository : BaseRepository() {
                 if (viewModel is VisitedDoctorsViewModel) {
                     viewModel.getErrorObservable().value = getErrorMessage(it)
                 }
-            })
-    }
-
-    fun addMoneyToWallet(viewModel: WalletViewModel, params: HashMap<String, Any>): Disposable {
-        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
-            .addMoneyToWallet(params)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe({
-                viewModel.mWalletResponse.value = it
-            }, {
-                viewModel.getErrorObservable().value = getErrorMessage(it)
             })
     }
 
@@ -503,15 +491,15 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun payForChatRequest(chatViewModel: ChatSummaryViewModel, hashMap: java.util.HashMap<String, Any>): Disposable {
+    fun payForChatRequest(viewmodel: PaymentViewModel, hashMap: java.util.HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .payForChatRequest(hashMap)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
-                chatViewModel.mChatRequestResponse.value = it
+                viewmodel.mChatRequestResponse.value = it
             }, {
-                chatViewModel.getErrorObservable().value = getErrorMessage(it)
+                viewmodel.getErrorObservable().value = getErrorMessage(it)
             })
     }
 
@@ -528,6 +516,43 @@ class AppRepository : BaseRepository() {
                 if (viewModel is MainViewModel) {
                     viewModel.getErrorObservable().value = getErrorMessage(it)
                 }
+            })
+    }
+
+    /*TODO CARDS*/
+    fun getCardList(viewModel: AddMoneyViewModel): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .getCards()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                viewModel.mCardListResponse.value = it
+            }, {
+                viewModel.getErrorObservable().value = getErrorMessage(it)
+            })
+    }
+
+    fun goToAddAddCard(viewModel: AddMoneyViewModel, hashMap: HashMap<String, Any>): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .addCardDetails(hashMap)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                viewModel.mAddCardSuccess.value = it
+            }, {
+                viewModel.getErrorObservable().value = getErrorMessage(it)
+            })
+    }
+
+    fun goToAddMoney(viewModel: AddMoneyViewModel, hashMap: HashMap<String, Any>): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .addMoney(hashMap)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                viewModel.mAddMoneySuccess.value = it
+            }, {
+                viewModel.getErrorObservable().value = getErrorMessage(it)
             })
     }
 

@@ -36,6 +36,7 @@ class FindDoctorBookingActivity : BaseActivity<ActivityFindDoctorBookingBinding>
     private lateinit var mDataBinding: ActivityFindDoctorBookingBinding
     val bookDoctor_Map: HashMap<kotlin.String, Any> = HashMap()
     val sdf1 = SimpleDateFormat("yyyy-MM-dd")
+
     override fun getLayoutId(): Int = R.layout.activity_find_doctor_booking
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {

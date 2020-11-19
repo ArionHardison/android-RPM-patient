@@ -14,51 +14,49 @@ import com.telehealthmanager.app.databinding.ListItemFinddoctorCategoriesBinding
 import com.telehealthmanager.app.repositary.WebApiConstants
 import com.telehealthmanager.app.repositary.model.CategoryResponse
 import com.telehealthmanager.app.ui.activity.findDoctors.FindDoctorsListActivity
+import com.telehealthmanager.app.utils.ViewUtils
 
 
 class CategoriesListAdapter(val items: MutableList<CategoryResponse.Category>, val context: Context) :
     RecyclerView.Adapter<CategoriesViewHolder>(), Filterable {
 
-
-    private var SearchList: MutableList<CategoryResponse.Category>? = null
+    private var searchList: MutableList<CategoryResponse.Category>? = null
 
     init {
-        this.SearchList = items
+        this.searchList = items
     }
 
     override fun onBindViewHolder(holder: CategoriesViewHolder, position: Int) {
-
-        val item=SearchList!![position]
-        holder.itemBinding.textView45?.text = item.name
-       // ViewUtils.setImageViewGlide(context,  holder.itemBinding.imageView16, BuildConfig.BASE_IMAGE_URL.plus(item?.image!!))
-
+        val item: CategoryResponse.Category = searchList!![position]
+        holder.itemBinding.textView45.text = item.name
+        if (item.image != null) {
+            ViewUtils.setImageViewGlide(context, holder.itemBinding.imageView16, BuildConfig.BASE_IMAGE_URL.plus(item.image))
+        }
         holder.itemView.setOnClickListener {
             val intent = Intent(context, FindDoctorsListActivity::class.java)
-            intent.putExtra(WebApiConstants.IntentPass.ID,item.id)
+            intent.putExtra(WebApiConstants.IntentPass.ID, item.id)
             context.startActivity(intent);
         }
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoriesViewHolder {
         val inflate = DataBindingUtil.inflate<ListItemFinddoctorCategoriesBinding>(
             LayoutInflater.from(parent.context),
-            R.layout.list_item_finddoctor_categories, parent, false)
+            R.layout.list_item_finddoctor_categories, parent, false
+        )
         return CategoriesViewHolder(inflate)
-
     }
-    // Gets the number of animals in the list
+
     override fun getItemCount(): Int {
-        return SearchList!!.size
+        return searchList!!.size
     }
 
     override fun getFilter(): Filter {
-
         return object : Filter() {
             override fun performFiltering(charSequence: CharSequence?): FilterResults {
                 val charString = charSequence.toString()
                 if (charString.isEmpty()) {
-                    SearchList = items
+                    searchList = items
                     notifyDataSetChanged()
                 } else {
                     val filteredList = ArrayList<CategoryResponse.Category>()
@@ -67,17 +65,17 @@ class CategoriesListAdapter(val items: MutableList<CategoryResponse.Category>, v
                             filteredList.add(row)
                         }
                     }
-                    SearchList = filteredList
+                    searchList = filteredList
                 }
 
                 val filterResults = Filter.FilterResults()
-                filterResults.values = SearchList
+                filterResults.values = searchList
                 return filterResults
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
 
-                SearchList = results?.values as MutableList<CategoryResponse.Category>
+                searchList = results?.values as MutableList<CategoryResponse.Category>
                 notifyDataSetChanged()
             }
 
@@ -85,8 +83,6 @@ class CategoriesListAdapter(val items: MutableList<CategoryResponse.Category>, v
     }
 }
 
-class CategoriesViewHolder(view:ListItemFinddoctorCategoriesBinding ) : RecyclerView.ViewHolder(view.root) {
+class CategoriesViewHolder(view: ListItemFinddoctorCategoriesBinding) : RecyclerView.ViewHolder(view.root) {
     val itemBinding = view
-
-
 }

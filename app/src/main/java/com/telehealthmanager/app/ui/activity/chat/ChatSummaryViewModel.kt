@@ -8,18 +8,10 @@ import com.telehealthmanager.app.repositary.model.MessageResponse
 import java.util.HashMap
 
 class ChatSummaryViewModel: BaseViewModel<ChatNavigator>() {
-    var mChatPromoResponse = MutableLiveData<ChatPromoResponse>()
-    var mChatRequestResponse = MutableLiveData<MessageResponse>()
-
     private val appRepository = AppRepository.instance()
+    var mChatPromoResponse = MutableLiveData<ChatPromoResponse>()
 
     fun addPromoCode(hashMap: HashMap<String, Any>) {
         getCompositeDisposable().add(appRepository.addChatPromoCode(this, hashMap))
     }
-
-    fun payForChatRequest(hashMap: HashMap<String, Any>) {
-        getCompositeDisposable().add(appRepository.payForChatRequest(this, hashMap))
-    }
-
-
 }

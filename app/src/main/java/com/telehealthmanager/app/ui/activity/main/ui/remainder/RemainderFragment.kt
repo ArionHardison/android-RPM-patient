@@ -17,24 +17,24 @@ import com.telehealthmanager.app.ui.adapter.RemainderListAdapter
 import com.telehealthmanager.app.utils.ViewUtils
 import java.io.Serializable
 
-class RemainderFragment : BaseFragment<FragmentRemainderBinding>(),RemainderNavigator,
+class RemainderFragment : BaseFragment<FragmentRemainderBinding>(), RemainderNavigator,
     OnReminderClickListener {
 
-    lateinit var mViewDataBinding: FragmentRemainderBinding
-   var mViewModel =RemainderViewModel()
+    private lateinit var mDataBinding: FragmentRemainderBinding
+    private var mViewModel = RemainderViewModel()
+    private var mRemainderAdapter: RemainderListAdapter? = null
+
     override fun getLayoutId(): Int = R.layout.fragment_remainder;
-    private var mReminderdapter: RemainderListAdapter? = null
 
     override fun initView(mRootView: View?, mViewDataBinding: ViewDataBinding?) {
-        this.mViewDataBinding = mViewDataBinding as FragmentRemainderBinding
+        mDataBinding = mViewDataBinding as FragmentRemainderBinding
         mViewModel = ViewModelProviders.of(this).get(RemainderViewModel::class.java)
-        mViewDataBinding.viewmodel = mViewModel
+        mDataBinding.viewmodel = mViewModel
         mViewModel.navigator = this
         initAdapter()
         observeSuccessResponse()
         observeErrorResponse()
         observeShowLoading()
-
     }
 
     private fun observeErrorResponse() {
@@ -67,37 +67,31 @@ class RemainderFragment : BaseFragment<FragmentRemainderBinding>(),RemainderNavi
         mViewModel.mReminderResponse.observe(this, Observer {
             mViewModel.mReminders = it.reminder as MutableList<ReminderResponse.Reminder>?
             if (mViewModel.mReminders!!.size > 0) {
-                mViewDataBinding.tvNotFound.visibility = View.GONE
+                mDataBinding.tvNotFound.visibility = View.GONE
             } else {
-                mViewDataBinding.tvNotFound.visibility = View.VISIBLE
+                mDataBinding.tvNotFound.visibility = View.VISIBLE
             }
 
-            mReminderdapter = RemainderListAdapter(context!!, mViewModel.mReminders!!,this)
-            mViewDataBinding.reminderAdapter = mReminderdapter
-            mReminderdapter!!.notifyDataSetChanged()
+            mRemainderAdapter = RemainderListAdapter(context!!, mViewModel.mReminders!!, this)
+            mDataBinding.reminderAdapter = mRemainderAdapter
+            mRemainderAdapter!!.notifyDataSetChanged()
             mViewModel.loadingProgress.value = false
         })
     }
 
-
     private fun initAdapter() {
-
-        mViewDataBinding.rvRemainder.layoutManager = LinearLayoutManager(context)
-        mViewDataBinding.rvRemainder.addItemDecoration(
-            DividerItemDecoration(context,
-                DividerItemDecoration.VERTICAL)
-        )
-        mReminderdapter = RemainderListAdapter(context!!, mViewModel.mReminders!!, this)
-        mViewDataBinding.reminderAdapter = mReminderdapter
-        mReminderdapter!!.notifyDataSetChanged()
+        mDataBinding.rvRemainder.layoutManager = LinearLayoutManager(context)
+        mDataBinding.rvRemainder.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        mRemainderAdapter = RemainderListAdapter(context!!, mViewModel.mReminders!!, this)
+        mDataBinding.reminderAdapter = mRemainderAdapter
+        mRemainderAdapter!!.notifyDataSetChanged()
     }
 
-
     override fun onReminderClicked(item: ReminderResponse.Reminder) {
-        startActivity(Intent(context, AddReminderActivity::class.java).putExtra("reminder",item as Serializable))
+        startActivity(Intent(context, AddReminderActivity::class.java).putExtra("reminder", item as Serializable))
     }
 
     override fun onNewRemainderClicked() {
-        openNewActivity(activity, AddReminderActivity::class.java,false)
+        openNewActivity(activity, AddReminderActivity::class.java, false)
     }
 }

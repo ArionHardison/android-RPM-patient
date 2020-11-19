@@ -9,6 +9,10 @@
         <variable
             name="viewmodel"
             type="com.telehealthmanager.app.ui.activity.payment.PaymentViewModel" />
+
+        <variable
+            name="addViewModel"
+            type="com.telehealthmanager.app.ui.activity.addmoney.AddMoneyViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -108,59 +112,71 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <TextView
-            android:id="@+id/textView69"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/savecardView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorLiteGrey"
-            android:paddingStart="@dimen/_8sdp"
-            android:paddingTop="@dimen/_8sdp"
-            android:paddingEnd="@dimen/_3sdp"
-            android:paddingBottom="@dimen/_8sdp"
-            android:text="Saved Cards"
-            android:textColor="@color/colorBlack"
-            android:textSize="@dimen/_14sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appBar" />
+            app:layout_constraintTop_toBottomOf="@+id/appBar">
+
+            <TextView
+                android:id="@+id/textView69"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorLiteGrey"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_3sdp"
+                android:paddingBottom="@dimen/_8sdp"
+                android:text="@string/saved_cards"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/addMoneyText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:onClick="@{()->viewmodel.clickAddCardBtn()}"
+                android:paddingTop="@dimen/_5sdp"
+                android:text="@string/add_new_card"
+                android:textColor="@color/colorButton"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/textView69"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView69" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView4"
+            android:id="@+id/rvCardList"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView69"
+            app:layout_constraintTop_toBottomOf="@+id/savecardView"
             tools:visibility="gone" />
 
-        <EditText
-            android:id="@+id/editText10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:ems="10"
-            android:hint="CVV"
-            android:visibility="gone"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.08"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerView4" />
 
         <Button
-            android:id="@+id/button19"
+            android:id="@+id/addCardButtom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@drawable/call_btn_bg"
+            android:onClick="@{()->viewmodel.clickAddCardBtn()}"
             android:paddingStart="@dimen/_8sdp"
             android:paddingEnd="@dimen/_8sdp"
-            android:text="+Add new card"
+            android:text="@string/add_new_card_plus"
             android:textColor="@color/colorButton"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText10" />
+            app:layout_constraintTop_toBottomOf="@+id/savecardView" />
 
         <TextView
             android:id="@+id/textView70"
@@ -175,9 +191,10 @@
             android:text="Pay using"
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/_14sdp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button19" />
+            app:layout_constraintTop_toBottomOf="@+id/addCardButtom" />
 
         <RadioGroup
             android:id="@+id/groupRadio"
@@ -185,6 +202,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:orientation="vertical"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@+id/textView70">
 
             <RadioButton
@@ -220,11 +238,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_20sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/button20"
+                app:layout_constraintEnd_toStartOf="@+id/payBtn"
                 app:layout_constraintStart_toStartOf="parent">
 
                 <TextView
-                    android:id="@+id/textView71"
+                    android:id="@+id/tvConsultationFee"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$8"
@@ -240,22 +258,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Consultation fee"
+                    android:text="@string/consultation_fee"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView71" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvConsultationFee" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Button
-                android:id="@+id/button20"
+                android:id="@+id/payBtn"
                 android:layout_width="@dimen/_150sdp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="@dimen/_20sdp"
-                android:background="@color/colorButton"
-                android:text="Pay now"
+                android:background="@drawable/dark_button"
+                android:clickable="@{addViewModel.mEnablePay}"
+                android:onClick="@{()->viewmodel.clickPayment()}"
+                android:text="@string/pay_now"
                 android:textAllCaps="false"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/_14sdp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/layoutAmount"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/layoutAmount"

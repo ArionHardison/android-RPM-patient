@@ -14,7 +14,6 @@ class WalletViewModel : BaseViewModel<WalletNavigator>() {
     private val appRepository = AppRepository.instance()
     var loadingProgress = MutableLiveData<Boolean>()
     var mProfileResponse = MutableLiveData<ProfileResponse>()
-    var mWalletResponse = MutableLiveData<WalletResponse>()
     var balance : ObservableField<String> = ObservableField("$0")
     var enteredMoney : ObservableField<String> = ObservableField("")
 
@@ -27,10 +26,4 @@ class WalletViewModel : BaseViewModel<WalletNavigator>() {
         navigator.onAddMoneyClicked()
     }
 
-    fun addMoneyToWallet() {
-        val hashMap : HashMap<String,Any> = HashMap()
-        loadingProgress.value=true
-        hashMap[WebApiConstants.Wallet.AMOUNT] =enteredMoney.get()!!
-        getCompositeDisposable().add(appRepository.addMoneyToWallet(this,hashMap))
-    }
 }

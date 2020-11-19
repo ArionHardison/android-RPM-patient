@@ -202,8 +202,7 @@ object ViewUtils {
         var dateObj: Date? = null
         try {
             dateObj = formatter.parse(str)
-            val fmtOutFull =
-                SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault())
+            val fmtOutFull = SimpleDateFormat("dd/MM/yy", Locale.getDefault())
             return String.format("%s", fmtOutFull.format(dateObj!!.time))
         } catch (e: ParseException) {
             e.printStackTrace()
@@ -270,11 +269,6 @@ object ViewUtils {
             e.printStackTrace()
         }
         return ""
-    }
-
-    fun getDate(date: Date): String {
-        val sdf = SimpleDateFormat("dd MMM", Locale.ENGLISH)
-        return sdf.format(date)
     }
 
     fun getCurrentDate(): String {

@@ -115,6 +115,7 @@
         <activity android:name=".ui.activity.allergies.AllergiesActivity" />
         <activity android:name=".ui.activity.allergies.AddAllergiesActivity" />
         <activity android:name=".ui.activity.addmoney.AddCardActivity" />
+        <activity android:name=".ui.activity.addmoney.AddMoneyActivity" />
     </application>
 
 </manifest>

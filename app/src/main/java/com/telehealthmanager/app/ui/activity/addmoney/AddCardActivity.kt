@@ -1,6 +1,6 @@
 package com.telehealthmanager.app.ui.activity.addmoney
 
-import android.util.Log
+import android.content.Intent
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -12,6 +12,7 @@ import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
 import com.telehealthmanager.app.databinding.ActivityAddCardBinding
+import com.telehealthmanager.app.ui.adapter.CardListAdapter
 import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ViewUtils
 
@@ -30,7 +31,7 @@ class AddCardActivity : BaseActivity<ActivityAddCardBinding>(), AddMoneyNavigato
         mDataBinding.viewmodel = mViewModel
 
         observeShowLoading()
-
+        observeSuccessResponse()
         mDataBinding.cardForm.cardRequired(true)
             .expirationRequired(true)
             .cvvRequired(true)
@@ -56,7 +57,11 @@ class AddCardActivity : BaseActivity<ActivityAddCardBinding>(), AddMoneyNavigato
                         stripe.createToken(card, object : TokenCallback {
                             override fun onSuccess(token: Token) {
                                 mViewModel.loadingProgress.value = false
-                                Log.e(TAG + "createToken==>", "" + token.id)
+                                val hashMap: HashMap<String, Any> = HashMap()
+                                hashMap["stripe_token"] = token.id
+                                hashMap["user_type"] = "patient"
+                                hashMap["status"] = "active"
+                                mViewModel.addCard(hashMap)
                             }
 
                             override fun onError(error: Exception) {
@@ -75,6 +80,10 @@ class AddCardActivity : BaseActivity<ActivityAddCardBinding>(), AddMoneyNavigato
         mViewModel.toolBarTile.value = getString(R.string.add_card)
     }
 
+    override fun clickBackPress() {
+        finish()
+    }
+
     private fun observeShowLoading() {
         mViewModel.loadingProgress.observe(this, Observer {
             if (!it) {
@@ -85,8 +94,20 @@ class AddCardActivity : BaseActivity<ActivityAddCardBinding>(), AddMoneyNavigato
         })
     }
 
-    override fun clickBackPress() {
-        finish()
+    private fun observeSuccessResponse() {
+        mViewModel.mCardListResponse.observe(this, Observer {
+            mViewModel.loadingProgress.value = false
+            val intent = Intent()
+            setResult(RESULT_OK, intent)
+            finish()
+        })
     }
 
+    override fun openAddCard() {
+        TODO("Not yet implemented")
+    }
+
+    override fun addMoney() {
+        TODO("Not yet implemented")
+    }
 }

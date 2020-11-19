@@ -21,7 +21,6 @@ class RemainderListAdapter(val mContext : Context, val list: MutableList<Reminde
                 listener.onReminderClicked(item)
             }
         }
-
         holder.mReminderBinding.remainderName.text=item.name
         holder.mReminderBinding.dateTxt.text= ViewUtils.getDayAndTimeFormat(String.format("%s %s",item.date,item.time))
     }
@@ -33,7 +32,6 @@ class RemainderListAdapter(val mContext : Context, val list: MutableList<Reminde
         return RemainderViewHolder(inflate)
     }
 
-    // Gets the number of animals in the list
     override fun getItemCount(): Int {
         return list.size
     }
@@ -42,7 +40,6 @@ class RemainderListAdapter(val mContext : Context, val list: MutableList<Reminde
 interface OnReminderClickListener{
     fun onReminderClicked(item:ReminderResponse.Reminder)
 }
-
 
 class RemainderViewHolder(view : RemainderListItemBinding) : RecyclerView.ViewHolder(view.root) {
     val mReminderBinding = view

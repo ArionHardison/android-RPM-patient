@@ -282,6 +282,17 @@
     <string name="allergies">Allergies</string>
     <string name="card_details_not_valid">Card details not valid</string>
     <string name="add_card">Add card</string>
+    <string name="add_new_remainder">New</string>
+    <string name="new_remainder">New Remainder</string>
+    <string name="notify_message">A notification will appear on the day</string>
+    <string name="add_money">Add Money</string>
+    <string name="no_cards_found">No cards found</string>
+    <string name="add_new_card">Add New Card</string>
+    <string name="please_select_card">Please select the card first</string>
+    <string name="consultation_fee">Consultation fee</string>
+    <string name="pay_now">Pay now</string>
+    <string name="saved_cards">Saved Cards</string>
+    <string name="add_new_card_plus">+Add new card</string>
 
 
 </resources>

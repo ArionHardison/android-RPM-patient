@@ -10,16 +10,10 @@ import java.nio.charset.Charset
 
 object Constant {
     const val M_TOKEN = "Bearer "
-    const val APP_REQUEST_CODE = 99
-    const val FILTERTYPE_CODE = 110
-    const val STATELIST_REQUEST_CODE = 101
-    const val COUNTRYLIST_REQUEST_CODE = 100
-    const val CITYLIST_REQUEST_CODE = 102
-    const val COUNTRYCODE_PICKER_REQUEST_CODE = 111
-    const val PAYMENT_TYPE_REQUEST_CODE = 201
-    const val CHANGE_ADDRESS_TYPE_REQUEST_CODE = 202
+
     const val CATEGORY_REQUEST_CODE = 210
-    const val ADDCARD = 125
+    const val REQUEST_CODE_ADD_CARD = 100
+    const val REQUEST_CODE_ADD_MONEY = 101
     const val CUSTOM_PREFERENCE: String = "BaseConfigSetting"
     const val storetype = "Restaurant"
     const val CHAT = "/chat"
@@ -139,6 +133,7 @@ object Constant {
         val ISLOGIN = "ISLOGIN"
         val IS_VIEW_TYPE = "VIEW_TYPE"
         val IS_RELATIVE_ID = "RELATIVE_ID"
+        val WALLET_AMOUNT = "WALLET_AMOUNT"
     }
 
 }

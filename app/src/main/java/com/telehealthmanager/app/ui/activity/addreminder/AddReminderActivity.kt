@@ -9,26 +9,31 @@ import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
 import com.telehealthmanager.app.databinding.ActivityAddReminderBinding
 import com.telehealthmanager.app.repositary.model.ReminderResponse
+import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ViewUtils
 import java.text.Format
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AddReminderActivity : BaseActivity<ActivityAddReminderBinding>(), AddReminderNavigator {
+class AddReminderActivity : BaseActivity<ActivityAddReminderBinding>(), AddReminderNavigator, CustomBackClick {
 
-    var fromCalendar = Calendar.getInstance()
-    var dateSetListener: DatePickerDialog.OnDateSetListener? = null
-    lateinit var mViewDataBinding: ActivityAddReminderBinding
+    private var fromCalendar: Calendar = Calendar.getInstance()
+    private var dateSetListener: DatePickerDialog.OnDateSetListener? = null
+    lateinit var mDataBinding: ActivityAddReminderBinding
     lateinit var mViewModel: AddReminderViewModel
+    private var isEdit: Boolean = false
+
     override fun getLayoutId(): Int = R.layout.activity_add_reminder
-    var isEdit: Boolean = false
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
-        this.mViewDataBinding = mViewDataBinding as ActivityAddReminderBinding
+        mDataBinding = mViewDataBinding as ActivityAddReminderBinding
         mViewModel = ViewModelProviders.of(this).get(AddReminderViewModel::class.java)
         mViewModel.navigator = this
-        mViewDataBinding.viewmodel = mViewModel
+        mDataBinding.viewmodel = mViewModel
+
+        mViewModel.setOnClickListener(this@AddReminderActivity)
+        mViewModel.toolBarTile.value = getString(R.string.add_new_remainder)
 
         initializing()
         observeSuccessResponse()
@@ -37,17 +42,20 @@ class AddReminderActivity : BaseActivity<ActivityAddReminderBinding>(), AddRemin
         initIntentData()
     }
 
+    override fun clickBackPress() {
+        finish()
+    }
+
     private fun initIntentData() {
-        val reminder =
-            intent.getSerializableExtra("reminder") as ReminderResponse.Reminder?
+        val reminder: ReminderResponse.Reminder? = intent.getSerializableExtra("reminder") as ReminderResponse.Reminder?
         if (reminder != null) {
             isEdit = true
             mViewModel.name.set(reminder.name)
             mViewModel.patientId.set(reminder.patientId)
-            val notify = if (reminder.notifyMe == 0) false else true
+            val notify = reminder.notifyMe != 0
             mViewModel.notifyme.set(notify)
             mViewModel.notifymeValue.set(reminder.notifyMe)
-            val alarm = if (reminder.alarm == 0) false else true
+            val alarm = reminder.alarm != 0
             mViewModel.alarm.set(alarm)
             mViewModel.alarmValue.set(reminder.alarm)
             mViewModel.id.set(reminder.id)
@@ -56,8 +64,8 @@ class AddReminderActivity : BaseActivity<ActivityAddReminderBinding>(), AddRemin
             mViewModel.displayfromTime.set(ViewUtils.getDisplayTimeFormat(reminder.time))
             mViewModel.fromDate.value = reminder.date
             mViewModel.fromTime.value = reminder.time
-            mViewDataBinding.btnSubmit.text = getString(R.string.save_changes)
-            mViewDataBinding.tvReminderTitle.text = getString(R.string.edit_reminder)
+            mDataBinding.btnSubmit.text = getString(R.string.save_changes)
+            mViewModel.toolBarTile.value = reminder.name
         }
     }
 
@@ -70,10 +78,10 @@ class AddReminderActivity : BaseActivity<ActivityAddReminderBinding>(), AddRemin
 
     private fun initializing() {
 
-        mViewModel.fromDate.value = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(fromCalendar.getTime())
-        mViewModel.displayFromDate.set(SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault()).format(fromCalendar.getTime()))
+        mViewModel.fromDate.value = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(fromCalendar.time)
+        mViewModel.displayFromDate.set(SimpleDateFormat("dd/MM/yy", Locale.getDefault()).format(fromCalendar.time))
         val f: Format = SimpleDateFormat("HH:mm:ss")
-        mViewModel.fromTime.value = f.format(fromCalendar.getTime())
+        mViewModel.fromTime.value = f.format(fromCalendar.time)
         try {
             mViewModel.displayfromTime.set(SimpleDateFormat("h:mm a", Locale.getDefault()).format(SimpleDateFormat("HH:mm:ss", Locale.getDefault()).parse(mViewModel.fromTime.value)))
         } catch (e: ParseException) {
@@ -86,10 +94,10 @@ class AddReminderActivity : BaseActivity<ActivityAddReminderBinding>(), AddRemin
                 fromCalendar.set(Calendar.MONTH, monthOfYear)
                 fromCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
                 val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                mViewModel.fromTime.value = sdf.format(fromCalendar.getTime())
+                mViewModel.fromTime.value = sdf.format(fromCalendar.time)
                 //scheduleDate.setText(schedule_date);
-                val fmtOut = SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault())
-                mViewModel.displayFromDate.set(fmtOut.format(fromCalendar.getTime()))
+                val fmtOut = SimpleDateFormat("dd/mm/yy", Locale.getDefault())
+                mViewModel.displayFromDate.set(fmtOut.format(fromCalendar.time))
             }
     }
 
@@ -136,12 +144,12 @@ class AddReminderActivity : BaseActivity<ActivityAddReminderBinding>(), AddRemin
                 fromCalendar.set(Calendar.MINUTE, selectedMinute)
                 val currentTimeTwoHours = Calendar.getInstance()
                 currentTimeTwoHours.add(Calendar.MINUTE, -1)
-                if (fromCalendar.getTimeInMillis() < currentTimeTwoHours.timeInMillis) {
+                if (fromCalendar.timeInMillis < currentTimeTwoHours.timeInMillis) {
                     ViewUtils.showToast(this@AddReminderActivity, getString(R.string.past_time_error), false)
                     return@OnTimeSetListener
                 }
                 val f: Format = SimpleDateFormat("HH:mm:ss")
-                mViewModel.fromTime.value = f.format(fromCalendar.getTime())
+                mViewModel.fromTime.value = f.format(fromCalendar.time)
                 val sdf = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
                 var dateObj: Date? = null
                 try {
@@ -162,7 +170,7 @@ class AddReminderActivity : BaseActivity<ActivityAddReminderBinding>(), AddRemin
             currentTimeTwoHours.add(Calendar.MINUTE, -5)
             if (mViewModel.name.get()!!.equals("")) {
                 ViewUtils.showToast(this, getString(R.string.please_enter_reminder_name), false)
-            } else if (fromCalendar.getTimeInMillis() < currentTimeTwoHours.timeInMillis) {
+            } else if (fromCalendar.timeInMillis < currentTimeTwoHours.timeInMillis) {
                 ViewUtils.showToast(this@AddReminderActivity, getString(R.string.past_time_error), false)
             } else {
                 mViewModel.addReminderAPI()

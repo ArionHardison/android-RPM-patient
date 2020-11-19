@@ -78,9 +78,10 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_below="@+id/search_layout"
             android:layout_marginBottom="@dimen/_20sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/search_layout"
             app:layout_constraintStart_toStartOf="@+id/search_layout"
             app:layout_constraintTop_toBottomOf="@+id/search_layout">
@@ -105,6 +106,7 @@
                         android:background="@color/colorLiteGrey"
                         android:padding="@dimen/_8sdp"
                         android:text="@string/Specialities"
+                        android:textStyle="bold"
                         android:textColor="@color/colorBlack" />
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -112,10 +114,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
-                        tools:itemCount="2"
+                        tools:itemCount="3"
                         android:nestedScrollingEnabled="false"
                         android:adapter="@{Specialitiesadapter}"
-                        tools:listitem="@layout/fav_doctor_list_item" />
+                        tools:listitem="@layout/list_item_search_category" />
 
                 </LinearLayout>
 
@@ -133,6 +135,7 @@
                         android:background="@color/colorLiteGrey"
                         android:padding="@dimen/_8sdp"
                         android:text="@string/clinic"
+                        android:textStyle="bold"
                         android:textColor="@color/colorBlack" />
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -143,7 +146,7 @@
                         tools:itemCount="2"
                         android:nestedScrollingEnabled="false"
                         android:adapter="@{clinicadapter}"
-                        tools:listitem="@layout/fav_doctor_list_item" />
+                        tools:listitem="@layout/list_item_search_clinic" />
 
                 </LinearLayout>
 
@@ -161,6 +164,7 @@
                         android:background="@color/colorLiteGrey"
                         android:padding="@dimen/_8sdp"
                         android:text="@string/doctor"
+                        android:textStyle="bold"
                         android:textColor="@color/colorBlack" />
 
                     <androidx.recyclerview.widget.RecyclerView

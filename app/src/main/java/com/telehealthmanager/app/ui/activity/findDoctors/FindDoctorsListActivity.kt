@@ -102,16 +102,13 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
             val hashMap: HashMap<String, Any> = HashMap()
             when {
                 view.findViewById<RadioButton>(R.id.radioAvailabilityAnyDay).isChecked -> {
-                    hashMap["availability_from"] = ViewUtils.getCurrentDate()
-                    hashMap["availability_to"] = ViewUtils.getCurrentDate()
+                    hashMap["availability_type"] = "today"
                 }
                 view.findViewById<RadioButton>(R.id.radioAvailabilityNext3).isChecked -> {
-                    hashMap["availability_from"] = ViewUtils.getCurrentDate()
-                    hashMap["availability_to"] = ViewUtils.getNextDays(3)
+                    hashMap["availability_type"] = "3w"
                 }
                 view.findViewById<RadioButton>(R.id.radioAvailabilityWeek).isChecked -> {
-                    hashMap["availability_from"] = ViewUtils.getCurrentDate()
-                    hashMap["availability_to"] = ViewUtils.getNextDays(7)
+                    hashMap["availability_type"] = "week"
                 }
             }
 

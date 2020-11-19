@@ -7,6 +7,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.appbar.AppBarLayout
 import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
@@ -19,11 +20,14 @@ import com.telehealthmanager.app.repositary.model.ChatPromoResponse
 import com.telehealthmanager.app.repositary.model.DoctorListResponse
 import com.telehealthmanager.app.repositary.model.MessageResponse
 import com.telehealthmanager.app.ui.activity.findDoctors.FindDoctorsViewModel
+import com.telehealthmanager.app.ui.activity.payment.PaymentActivity
 import com.telehealthmanager.app.ui.activity.success.SuccessActivity
 import com.telehealthmanager.app.ui.adapter.DoctorImageAdapter
 import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ViewUtils
+import kotlinx.android.synthetic.main.content_chat.*
 import kotlinx.android.synthetic.main.content_chat_summary.view.*
+import java.lang.Math.abs
 import java.util.HashMap
 
 
@@ -81,6 +85,15 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
             }
         }
 
+        mDataBinding.toolBar.appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            if (abs(verticalOffset) == appBarLayout.totalScrollRange) {
+                mDataBinding.toolBar.scrollToolbarBar.visibility = View.GONE
+                mDataBinding.toolBar.toolbarVisible.visibility = View.VISIBLE
+            } else if (verticalOffset == 0) {
+                mDataBinding.toolBar.scrollToolbarBar.visibility = View.VISIBLE
+                mDataBinding.toolBar.toolbarVisible.visibility = View.GONE
+            }
+        })
         mDataBinding.buttonToProceed.setOnClickListener {
             payForChatRequest()
         }
@@ -94,16 +107,10 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
     }
 
     private fun payForChatRequest(){
-        val hashMap: HashMap<String, Any> = HashMap()
-        hashMap["id"] = category.id
-        hashMap["message"] =notes
-        hashMap["Amount"] =fees
-        hashMap["pay_for"] ="CHAT"
-        hashMap["promo_id"] = 1
-        hashMap["speciality_id"] = category.id
-        hashMap["payment_mode"] = "CARD"
-        hashMap["use_wallet"] = false
-        viewModelSummary.payForChatRequest(hashMap)
+        val intent = Intent(this@ChatSummaryActivity, PaymentActivity::class.java)
+        intent.putExtra("category", category)
+        intent.putExtra("notes", notes)
+        startActivity(intent)
     }
 
     private fun initApiCal() {
@@ -154,17 +161,6 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
                     it.finalFees.toString()
                 )
                 fees=it.finalFees.toString()
-            }
-        })
-        viewModelSummary.mChatRequestResponse.observe(this, Observer<MessageResponse> {
-            if (it?.message != null && !it.message.equals("")) {
-                ViewUtils.showToast(this@ChatSummaryActivity, it.message, true)
-                val intent = Intent(applicationContext, SuccessActivity::class.java)
-                intent.putExtra("isFrom","chat")
-                intent.putExtra("title",getString(R.string.chat_thank_title,category.name))
-                intent.putExtra("description",getString(R.string.chat_thank_desc))
-                startActivity(intent);
-                finishAffinity()
             }
         })
     }

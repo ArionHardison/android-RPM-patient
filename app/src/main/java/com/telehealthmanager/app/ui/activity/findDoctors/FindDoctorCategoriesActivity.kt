@@ -73,12 +73,6 @@ class FindDoctorCategoriesActivity : BaseActivity<ActivityFindDoctorCategoriesBi
     private fun initAdapter() {
         mCategoriesAdapter = CategoriesListAdapter(viewModel.mCategoryList!!, this)
         mDataBinding.adapter = mCategoriesAdapter
-        /* mDataBinding.rvCategories.addItemDecoration(
-             DividerItemDecoration(
-                 applicationContext,
-                 DividerItemDecoration.VERTICAL
-             )
-         )*/
         mDataBinding.rvCategories.layoutManager = GridLayoutManager(applicationContext, 2)
         mCategoriesAdapter!!.notifyDataSetChanged()
 

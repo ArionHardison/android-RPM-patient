@@ -13,6 +13,8 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
+import java.util.*
+import kotlin.collections.HashMap
 
 interface ApiInterface {
 
@@ -111,10 +113,6 @@ interface ApiInterface {
         @Part image: MultipartBody.Part?
     ): Observable<ProfileResponse>
 
-    @FormUrlEncoded
-    @POST("api/patient/add_wallet")
-    fun addMoneyToWallet(@FieldMap hashMap: HashMap<String, Any>): Observable<WalletResponse>
-
     /* search*/
     @GET("api/patient/home_search")
     fun getglobalsearch(@QueryMap hashMap: HashMap<String, Any>): Observable<SearchResponse>
@@ -148,5 +146,18 @@ interface ApiInterface {
 
     @GET("api/patient/video/call/token")
     fun getCallRequest(@QueryMap hashMap: HashMap<String, Any>): Call<AccessToken>
+
+
+    /* TODO CARD */
+    @GET("api/patient/card")
+    fun getCards(): Observable<List<CardList>>
+
+    @FormUrlEncoded
+    @POST("api/patient/card")
+    fun addCardDetails(@FieldMap hashMap: HashMap<String, Any>): Observable<CardSuccessMessage>
+
+    @FormUrlEncoded
+    @POST("api/patient/add_money")
+    fun addMoney(@FieldMap hashMap: HashMap<String, Any>): Observable<WalletAddSuccess>
 
 }

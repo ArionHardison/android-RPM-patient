@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.activity.chat.ChatSummaryActivity">
 
     <data>
@@ -29,7 +29,7 @@
         <include
             android:id="@+id/toolBar"
             layout="@layout/toolbar_backpress_scroll"
-            bind:baseViewModel="@{viewmodel}"/>
+            bind:baseViewModel="@{viewmodel}" />
 
         <include
             android:id="@+id/content_chat_summary"
@@ -39,21 +39,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:orientation="vertical"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
-            android:gravity="bottom">
+            android:gravity="bottom"
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/textView87"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:text="100% Money back if no response. Not for emergency use"
+                android:textSize="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:textSize="@dimen/_10sdp"
                 app:layout_constraintTop_toBottomOf="@+id/editTextPromoValue" />
+
             <Button
                 android:id="@+id/buttonToProceed"
                 android:layout_width="match_parent"
