@@ -52,6 +52,8 @@ object WebApiConstants {
         const val experiences = "experiences"
         const val visited_for="visited_for"
         const val comments="comments"
+        const val rating="rating"
+        const val title="title"
     }
 
     object Favourite {

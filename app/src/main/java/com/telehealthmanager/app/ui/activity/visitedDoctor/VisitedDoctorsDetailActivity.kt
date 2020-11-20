@@ -1,7 +1,6 @@
 package com.telehealthmanager.app.ui.activity.visitedDoctor
 
 import android.content.Intent
-import android.util.Log
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -56,7 +55,6 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
 
     private fun initIntentData() {
         if (intent.getBooleanExtra(WebApiConstants.IntentPass.iscancel, false)) {
-
             val details = intent.getSerializableExtra(WebApiConstants.IntentPass.Appointment) as? AppointmentResponse.Upcomming.Appointment
             viewModel.mupcomingDoctorDetails.value = details
             viewModel.id.set(viewModel.mupcomingDoctorDetails.value!!.id)
@@ -74,8 +72,7 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
                 )
             if (details!!.hospital?.doctor_profile?.profile_pic != "") {
                 ViewUtils.setImageViewGlide(
-                    this@VisitedDoctorsDetailActivity,
-                    mDataBinding.imageView12,
+                    this@VisitedDoctorsDetailActivity, mDataBinding.imageView12,
                     BuildConfig.BASE_IMAGE_URL + viewModel.mupcomingDoctorDetails.value!!.hospital?.doctor_profile?.profile_pic
                 )
             }
@@ -149,23 +146,32 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
 
     override fun onlike() {
         experiences = "LIKE"
-        mDataBinding.imageView13.setImageResource(R.drawable.ic_gray_like)
-        mDataBinding.imageView14.setImageResource(R.drawable.ic_like_green)
-
+        mDataBinding.imageView13.setImageResource(R.drawable.ic_like_green)
+        mDataBinding.imageView14.setImageResource(R.drawable.ic_gray_unlike)
     }
 
     override fun onunlike() {
         experiences = "DISLIKE"
-        mDataBinding.imageView13.setImageResource(R.drawable.ic_gray_unlike)
+        mDataBinding.imageView13.setImageResource(R.drawable.ic_gray_like)
         mDataBinding.imageView14.setImageResource(R.drawable.ic_like_red)
     }
 
     override fun onSubmit() {
+        if (mDataBinding.divider2.text.toString().equals("")) {
+            ViewUtils.showToast(this@VisitedDoctorsDetailActivity, "Please enter " + resources.getString(R.string.consulted_for), false)
+            return
+        }
+        if (mDataBinding.editText7.text.toString().equals("")) {
+            ViewUtils.showToast(this@VisitedDoctorsDetailActivity, "Please enter comment", false)
+            return
+        }
         loadingObservable.value = true
         val hashMap: HashMap<String, Any> = HashMap()
         hashMap[WebApiConstants.Feedback.hospital_id] = viewModel.id.get().toString()
         hashMap[WebApiConstants.Feedback.experiences] = experiences
-        hashMap[WebApiConstants.Feedback.visited_for] = mDataBinding.divider2.text.toString()
+        hashMap[WebApiConstants.Feedback.visited_for] = viewModel.bookfor.get().toString()
+        hashMap[WebApiConstants.Feedback.rating] = mDataBinding.rbRatingBar.rating.toInt().toString()
+        hashMap[WebApiConstants.Feedback.title] = mDataBinding.divider2.text.toString()
         hashMap[WebApiConstants.Feedback.comments] = mDataBinding.editText7.text.toString()
         viewModel.postfeedback(hashMap)
     }

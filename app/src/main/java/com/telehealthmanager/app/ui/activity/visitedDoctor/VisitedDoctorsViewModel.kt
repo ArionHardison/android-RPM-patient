@@ -26,6 +26,8 @@ class VisitedDoctorsViewModel : BaseViewModel<VisitedDoctorsNavigator>(){
     var bookfor : ObservableField<String> = ObservableField("")
     var scheduled_at : ObservableField<String> = ObservableField("")
     var status : ObservableField<String> = ObservableField("")
+    var mComment : ObservableField<String> = ObservableField("")
+    var mTitle : ObservableField<String> = ObservableField("")
 
 
 

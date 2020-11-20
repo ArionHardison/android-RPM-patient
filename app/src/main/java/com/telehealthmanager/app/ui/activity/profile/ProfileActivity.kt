@@ -16,6 +16,10 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -65,6 +69,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
         viewModel.navigator = this
         viewType = intent.getStringExtra(Constant.IntentData.IS_VIEW_TYPE) as String
         relativeManagementID = intent.getIntExtra(Constant.IntentData.IS_RELATIVE_ID, 0) as Int
+        Places.initialize(this@ProfileActivity, resources.getString(R.string.google_map_api))
         initUI()
         initApiCal()
         observeResponse()
@@ -317,19 +322,26 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode != Activity.RESULT_CANCELED) {
-            if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE) {
-                val imageUri = CropImage.getPickImageResultUri(this, data)
-                // For API >= 23 we need to check specifically that we have permissions to read external storage.
-                startCropImageActivity(imageUri)
-            }
+            when (requestCode) {
+                CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE -> {
+                    val imageUri = CropImage.getPickImageResultUri(this, data)
+                    // For API >= 23 we need to check specifically that we have permissions to read external storage.
+                    startCropImageActivity(imageUri)
+                }
 
-            if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-                val result = CropImage.getActivityResult(data)
-                if (resultCode == Activity.RESULT_OK) {
-                    mDataBinding.layoutProfilePersonal.imgProf.setImageURI(result.uri)
-                    mCropImageUri = result.uri
-                } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                    Toast.makeText(this, "Cropping failed: ", Toast.LENGTH_LONG).show()
+                CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+                    val result = CropImage.getActivityResult(data)
+                    if (resultCode == Activity.RESULT_OK) {
+                        mDataBinding.layoutProfilePersonal.imgProf.setImageURI(result.uri)
+                        mCropImageUri = result.uri
+                    } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                        Toast.makeText(this, "Cropping failed: ", Toast.LENGTH_LONG).show()
+                    }
+                }
+
+                Constant.REQUEST_AUTOCOMPLETE -> {
+                    val place: Place = Autocomplete.getPlaceFromIntent(data!!)
+                    viewModel.location.set(place.name.toString().plus(", ").plus(place.address.toString()))
                 }
             }
         }
@@ -351,13 +363,9 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
 
     private fun observeResponse() {
 
-        viewModel.mEditpatientResponse.observe(this, androidx.lifecycle.Observer {
+        viewModel.mEditPatientResponse.observe(this, androidx.lifecycle.Observer {
             //if (it.isStatus) {
-            ViewUtils.showToast(
-                this@ProfileActivity,
-                getString(R.string.profile_successfully_edited),
-                true
-            )
+            ViewUtils.showToast(this@ProfileActivity, getString(R.string.profile_successfully_edited), true)
             val newIntent = Intent(this, MainActivity::class.java)
             startActivity(newIntent)
             finishAffinity()
@@ -430,5 +438,11 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
     override fun onClickAllergies() {
         val newIntent = Intent(this, AllergiesActivity::class.java)
         startActivityForResult(newIntent, REQUEST_CODE_ALLERGIES)
+    }
+
+    override fun onClickLocation() {
+        val fields: List<Place.Field> = listOf(Place.Field.ID, Place.Field.LAT_LNG, Place.Field.NAME, Place.Field.ADDRESS)
+        val intent: Intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
+        startActivityForResult(intent, Constant.REQUEST_AUTOCOMPLETE)
     }
 }

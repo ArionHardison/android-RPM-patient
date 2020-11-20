@@ -16,6 +16,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
+import com.google.android.libraries.places.api.Places
 import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.data.PreferenceHelper
@@ -144,10 +145,7 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
                 // Do something useful withe the position of the selected radio button
                 //Toast.LENGTH_LONG
                 val newIntent = Intent(this!!, SplashActivity::class.java)
-                newIntent.addFlags(
-                    Intent.FLAG_ACTIVITY_CLEAR_TASK or
-                            Intent.FLAG_ACTIVITY_NEW_TASK
-                )
+                newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(newIntent)
             })
             .show()

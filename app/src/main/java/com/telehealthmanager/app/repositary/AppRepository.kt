@@ -363,7 +363,7 @@ class AppRepository : BaseRepository() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
-                editPatientViewModel.mEditpatientResponse.value = it
+                editPatientViewModel.mEditPatientResponse.value = it
             }, {
                 editPatientViewModel.getErrorObservable().value = getErrorMessage(it)
             })
@@ -411,7 +411,7 @@ class AppRepository : BaseRepository() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
-                editPatientViewModel.mEditpatientResponse.value = it
+                editPatientViewModel.mEditPatientResponse.value = it
             }, {
                 editPatientViewModel.getErrorObservable().value = getErrorMessage(it)
             })

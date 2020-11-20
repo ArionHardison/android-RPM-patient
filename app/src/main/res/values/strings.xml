@@ -293,6 +293,8 @@
     <string name="pay_now">Pay now</string>
     <string name="saved_cards">Saved Cards</string>
     <string name="add_new_card_plus">+Add new card</string>
+    <string name="consulted_for">Consulted for</string>
+    <string name="cancel_appointment">Cancel appointment</string>
 
 
 </resources>

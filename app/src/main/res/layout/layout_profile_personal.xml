@@ -272,7 +272,8 @@
                     android:hint="Location"
                     android:imeOptions="actionDone"
                     android:inputType="none"
-                    android:maxLines="1"
+                    android:onClick="@{()->viewmodel.openLocation()}"
+                    android:maxLines="2"
                     android:text="@={viewmodel.location}" />
             </com.google.android.material.textfield.TextInputLayout>
 

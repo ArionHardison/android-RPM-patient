@@ -2,11 +2,13 @@ package com.telehealthmanager.app.ui.calander_view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
@@ -22,6 +24,9 @@ import java.util.Calendar;
 public class BookingCalanderView extends LinearLayout {
     Context context;
     RecyclerView recyclerView;
+    ArrayList<BookingCalanderModel> list = new ArrayList<>();
+    private int mFirstCompleteVisibleItemPosition = -1;
+    private int mLastCompleteVisibleItemPosition = -1;
 
     public interface OnCalendarListener {
         void onDateSelected(Calendar cal, String dateStr);
@@ -59,7 +64,7 @@ public class BookingCalanderView extends LinearLayout {
     public void setUpCalendar(long start, long end, ArrayList<String> dates, OnCalendarListener onCalendarListener) {
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(start);
-        ArrayList<BookingCalanderModel> list = new ArrayList<>();
+
         long today = Tools.getTimeInMillis(Tools.getFormattedDateToday());
 
         long current = start;
@@ -91,7 +96,50 @@ public class BookingCalanderView extends LinearLayout {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-
         recyclerView.scrollToPosition(pos);
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                RecyclerView.LayoutManager layoutManagerForPos = recyclerView.getLayoutManager();
+
+                if (layoutManagerForPos instanceof LinearLayoutManager) {
+                    mFirstCompleteVisibleItemPosition = ((LinearLayoutManager) layoutManagerForPos).findFirstVisibleItemPosition();
+                    mLastCompleteVisibleItemPosition =((LinearLayoutManager) layoutManagerForPos).findLastCompletelyVisibleItemPosition();
+                }
+                int totalItemCount = layoutManagerForPos.getItemCount();
+                if (mFirstCompleteVisibleItemPosition == 0) {
+                    if (dy < 0 || dx < 0) {
+                        if (dx < 0) {
+                            Log.d("status", "Scrolled LEFT");
+                        }
+                    }
+                } else {
+                    if (mLastCompleteVisibleItemPosition == totalItemCount - 1) {
+                        if (dy > 0 || dx > 0) {
+                            if (dy > 0) {
+                                Log.d("status", "Scrolled TOP");
+                            }
+                            if (dx > 0) {
+                                Log.d("status", "Scrolled RIGHT");
+                            }
+                        }
+                    } else {
+                        if (dx < 0) {
+                            Log.d("status", "Scrolled LEFT");
+                        } else {
+
+                        }
+                    }
+                }
+            }
+        });
+
     }
 }

@@ -12,6 +12,8 @@ object Constant {
     const val M_TOKEN = "Bearer "
 
     const val CATEGORY_REQUEST_CODE = 210
+    const val REQUEST_AUTOCOMPLETE = 201
+    private const val PLACE_AUTOCOMPLETE_REQUEST_CODE = 1
     const val REQUEST_CODE_ADD_CARD = 100
     const val REQUEST_CODE_ADD_MONEY = 101
     const val CUSTOM_PREFERENCE: String = "BaseConfigSetting"

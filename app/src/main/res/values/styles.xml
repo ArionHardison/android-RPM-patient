@@ -59,4 +59,10 @@
         <item name="android:textSize">@dimen/_14sdp</item>
         <item name="android:listPreferredItemHeightSmall">@dimen/_40sdp</item>
     </style>
+
+    <style name="RatingBarTheam" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/colorGrey</item>
+        <item name="colorControlActivated">@color/colorYellow</item>
+    </style>
+
 </resources>

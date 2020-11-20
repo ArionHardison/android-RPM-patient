@@ -26,7 +26,7 @@ class ProfileViewModel : BaseViewModel<ProfileNavigator>(){
     var weight : ObservableField<String> = ObservableField("")
     var emgcontact : ObservableField<String> = ObservableField("")
     var location : ObservableField<String> = ObservableField("")
-    var mEditpatientResponse = MutableLiveData<ProfileResponse>()
+    var mEditPatientResponse = MutableLiveData<ProfileResponse>()
 
     var allergies : ObservableField<String> = ObservableField("")
     var current_medications : ObservableField<String> = ObservableField("")
@@ -50,9 +50,12 @@ class ProfileViewModel : BaseViewModel<ProfileNavigator>(){
         getCompositeDisposable().add(appRepository.getProfile(this))
     }
 
-
     fun openAllergies(){
         navigator.onClickAllergies()
+    }
+
+    fun openLocation(){
+        navigator.onClickLocation()
     }
 
     fun editPatient() {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.activity.visitedDoctor.VisitedDoctorsDetailActivity">
 
     <data>
@@ -29,8 +29,8 @@
             <include
                 android:id="@+id/toolBar"
                 layout="@layout/toolbar_base"
-                bind:baseViewModel="@{viewmodel}"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                bind:baseViewModel="@{viewmodel}" />
 
             <LinearLayout
                 android:id="@+id/llHeaderProfile"
@@ -52,15 +52,15 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:padding="@dimen/_6sdp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="@dimen/_6sdp">
 
                     <TextView
                         android:id="@+id/textView29"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{viewmodel.name}"
                         android:padding="@dimen/_2sdp"
+                        android:text="@{viewmodel.name}"
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/_14sdp"
                         tools:text="Dr.Alvin" />
@@ -71,16 +71,18 @@
                         android:layout_height="wrap_content"
                         android:background="@color/colorLiteGrey"
                         android:padding="@dimen/_2sdp"
-                        tools:text="General Physician"
                         android:text="@{viewmodel.catagiery}"
-                        android:visibility="gone"/>
+                        android:visibility="gone"
+                        tools:text="General Physician" />
+
                     <TextView
                         android:id="@+id/textView32"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{viewmodel.specialit}"
                         android:padding="@dimen/_2sdp"
+                        android:text="@{viewmodel.specialit}"
                         tools:text="General Physician" />
+
                     <TextView
                         android:id="@+id/textView31"
                         android:layout_width="wrap_content"
@@ -207,17 +209,33 @@
                     android:layout_height="@dimen/_35sdp"
                     android:layout_marginTop="32dp"
                     android:onClick="@{() -> viewmodel.onlike()}"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView14"
                     app:layout_constraintStart_toStartOf="@+id/textView39"
                     app:layout_constraintTop_toBottomOf="@+id/textView39"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView14"
                     app:srcCompat="@drawable/ic_gray_like" />
+
+                <androidx.appcompat.widget.AppCompatRatingBar
+                    android:id="@+id/rbRatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:numStars="5"
+                    android:rating="1"
+                    android:scaleX="0.7"
+                    android:scaleY="0.7"
+                    android:stepSize="1"
+                    android:theme="@style/RatingBarTheam"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView13" />
 
                 <ImageView
                     android:id="@+id/imageView14"
                     android:layout_width="@dimen/_35sdp"
                     android:layout_height="@dimen/_35sdp"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView13"
                     android:onClick="@{() -> viewmodel.onunlike()}"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView13"
                     app:layout_constraintEnd_toEndOf="@+id/textView39"
                     app:layout_constraintStart_toEndOf="@+id/imageView13"
                     app:srcCompat="@drawable/ic_gray_unlike" />
@@ -227,37 +245,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="Consulted for"
+                    android:text="@string/consulted_for"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.045"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView14" />
+                    app:layout_constraintTop_toBottomOf="@+id/rbRatingBar" />
 
-                <!--    <View
-
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginTop="8dp"
-                        android:background="?android:attr/listDivider"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="@+id/textView40"
-                        app:layout_constraintTop_toBottomOf="@+id/textView40" />-->
                 <EditText
                     android:id="@+id/divider2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
                     android:ems="10"
                     android:focusable="true"
                     android:gravity="start"
                     android:inputType="textMultiLine"
                     android:minLines="1"
+                    android:layout_marginEnd="@dimen/_10sdp"
                     android:padding="@dimen/_8sdp"
+                    android:text="@{viewmodel.mTitle}"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/textView40"
                     app:layout_constraintTop_toBottomOf="@+id/textView40" />
 
@@ -266,7 +272,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:layout_marginEnd="8dp"
                     android:background="@drawable/rectangular_box"
                     android:ems="10"
                     android:focusable="true"
@@ -275,27 +280,28 @@
                     android:inputType="textMultiLine"
                     android:minLines="5"
                     android:padding="@dimen/_8sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="@{viewmodel.mComment}"
+                    app:layout_constraintEnd_toEndOf="@+id/divider2"
                     app:layout_constraintStart_toStartOf="@+id/divider2"
                     app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
-                <Button
+                <TextView
                     android:id="@+id/button14"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
                     android:layout_marginTop="32dp"
-                    android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
                     android:background="@color/colorButton"
+                    android:gravity="center"
                     android:onClick="@{() -> viewmodel.onSubmit()}"
+                    android:padding="@dimen/_10sdp"
                     android:text="Submit"
                     android:textAllCaps="false"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/_14sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/divider2"
+                    app:layout_constraintStart_toStartOf="@+id/divider2"
                     app:layout_constraintTop_toBottomOf="@+id/editText7" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -309,7 +315,7 @@
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/cancel_btn_bg"
                 android:padding="@dimen/_3sdp"
-                android:text="Cancel"
+                android:text="@string/cancel_appointment"
                 android:textAllCaps="false"
                 android:textColor="@color/colorRed"
                 android:textSize="@dimen/_14sdp"

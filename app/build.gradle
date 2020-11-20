@@ -181,4 +181,7 @@ dependencies {
     /*Stripe payment*/
     implementation 'com.stripe:stripe-android:8.7.0'
     implementation 'com.braintreepayments:card-form:3.5.0'
+
+    /*Place Pick*/
+    implementation 'com.google.android.libraries.places:places:2.4.0'
 }
