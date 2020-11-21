@@ -69,7 +69,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
         if (details != null) {
             viewModel.mDoctorProfile.value = details
             viewModel.id.set(viewModel.mDoctorProfile.value!!.doctor_id)
-            ViewUtils.setImageViewGlide(
+            ViewUtils.setDocViewGlide(
                 this@SearchDoctorDetailActivity,
                 mDataBinding.imageView25,
                 BuildConfig.BASE_IMAGE_URL.plus(viewModel.mDoctorProfile.value!!.profile_pic)
@@ -90,7 +90,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
                 viewModel.clinic.set(viewModel.mDoctorProfile.value!!.hospital[0]?.clinic?.name)
                 viewModel.clinicAddress.set(viewModel.mDoctorProfile.value!!.hospital[0]?.clinic?.address)
                 if (viewModel.mDoctorProfile.value!!.hospital[0]?.clinic?.static_map != null)
-                    ViewUtils.setImageViewGlide(this@SearchDoctorDetailActivity, mDataBinding.imageView27, viewModel.mDoctorProfile.value!!.hospital[0]?.clinic?.static_map)
+                    ViewUtils.setDocViewGlide(this@SearchDoctorDetailActivity, mDataBinding.imageView27, viewModel.mDoctorProfile.value!!.hospital[0]?.clinic?.static_map)
                 else
                     mDataBinding.imageView27.visibility = View.GONE
                 viewModel.mfeedbacklist = viewModel.mDoctorProfile.value!!.hospital[0]?.feedback as MutableList<Hospital.Feedback>?
@@ -102,7 +102,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
         } else if (favDoctor != null) {
             viewModel.mFavDoctorProfile.value = favDoctor
             viewModel.id.set(viewModel.mFavDoctorProfile.value!!.id)
-            ViewUtils.setImageViewGlide(
+            ViewUtils.setDocViewGlide(
                 this@SearchDoctorDetailActivity,
                 mDataBinding.imageView25,
                 BuildConfig.BASE_IMAGE_URL.plus(viewModel.mFavDoctorProfile.value!!.hospital?.doctor_profile?.profile_pic)
@@ -122,7 +122,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
             viewModel.clinic.set(viewModel.mFavDoctorProfile.value!!.hospital?.clinic?.name)
             viewModel.clinicAddress.set(viewModel.mFavDoctorProfile.value!!.hospital?.clinic?.address)
             if (viewModel.mFavDoctorProfile.value!!.hospital?.clinic?.static_map != null)
-                ViewUtils.setImageViewGlide(this@SearchDoctorDetailActivity, mDataBinding.imageView27, viewModel.mFavDoctorProfile.value!!.hospital?.clinic?.static_map)
+                ViewUtils.setDocViewGlide(this@SearchDoctorDetailActivity, mDataBinding.imageView27, viewModel.mFavDoctorProfile.value!!.hospital?.clinic?.static_map)
             else
                 mDataBinding.imageView27.visibility = View.GONE
             viewModel.mfeedbacklist = viewModel.mFavDoctorProfile.value!!.hospital?.feedback as MutableList<Hospital.Feedback>?
@@ -133,7 +133,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
         } else if (searchDoctor != null) {
             viewModel.mSearchDoctorProfile.value = searchDoctor
             viewModel.id.set(viewModel.mSearchDoctorProfile.value!!.id)
-            ViewUtils.setImageViewGlide(this@SearchDoctorDetailActivity, mDataBinding.imageView25, BuildConfig.BASE_IMAGE_URL.plus(viewModel.mSearchDoctorProfile.value!!.doctor_profile?.profile_pic))
+            ViewUtils.setDocViewGlide(this@SearchDoctorDetailActivity, mDataBinding.imageView25, BuildConfig.BASE_IMAGE_URL.plus(viewModel.mSearchDoctorProfile.value!!.doctor_profile?.profile_pic))
             viewModel.profilePic.set(viewModel.mSearchDoctorProfile.value!!.doctor_profile?.profile_pic)
             viewModel.name.set(viewModel.mSearchDoctorProfile.value!!.first_name.plus(" ").plus(viewModel.mSearchDoctorProfile.value!!.last_name))
             viewModel.favourite.set(viewModel.mSearchDoctorProfile.value!!.is_favourite.toString())
@@ -149,7 +149,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
             viewModel.clinic.set(viewModel.mSearchDoctorProfile.value!!.clinic?.name)
             viewModel.clinicAddress.set(viewModel.mSearchDoctorProfile.value!!.clinic?.address)
             if (viewModel.mSearchDoctorProfile.value!!.clinic?.static_map != null)
-                ViewUtils.setImageViewGlide(this@SearchDoctorDetailActivity, mDataBinding.imageView27, viewModel.mSearchDoctorProfile.value!!.clinic?.static_map)
+                ViewUtils.setDocViewGlide(this@SearchDoctorDetailActivity, mDataBinding.imageView27, viewModel.mSearchDoctorProfile.value!!.clinic?.static_map)
             else
                 mDataBinding.imageView27.visibility = View.GONE
             viewModel.mfeedbacklist = viewModel.mSearchDoctorProfile.value!!.feedback as MutableList<Hospital.Feedback>?

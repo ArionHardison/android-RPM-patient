@@ -18,22 +18,22 @@ public class HealthFeedAdapter (val mContext : Context, val list: MutableList<Ar
     RecyclerView.Adapter<HealthFeedAdapter.ViewHolder>() {
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HealthFeedAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflate = DataBindingUtil.inflate<ItemHealthFeedBinding>(
             LayoutInflater.from(parent.context),
             R.layout.item_health_feed, parent, false)
-        return HealthFeedAdapter.ViewHolder(inflate)
+        return ViewHolder(inflate)
     }
 
     override fun getItemCount(): Int = list.size
 
 
-    override fun onBindViewHolder(holder: HealthFeedAdapter.ViewHolder, position: Int) {
-        val mList = list[position]
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val mList: ArticleResponse.Article = list[position]
         initUI(holder,mList)
     }
 
-    private fun initUI(holder: HealthFeedAdapter.ViewHolder, item: ArticleResponse.Article) {
+    private fun initUI(holder: ViewHolder, item: ArticleResponse.Article) {
         holder.mHealthFeedBinding.itemClickListener = object : CustomClickListener {
             override fun onItemClickListener() {
                 listener.onHealthFeedClicked(item)
@@ -44,7 +44,6 @@ public class HealthFeedAdapter (val mContext : Context, val list: MutableList<Ar
         holder.mHealthFeedBinding.tvFeedDescription.text=item.description
         holder.mHealthFeedBinding.tvFeedDay.text=ViewUtils.getTimeAgoFormat(item.updatedAt)
         if (item.coverPhoto != null && item.coverPhoto != "") {
-            //ViewUtils.setImageViewGlide(mContext, holder.mHealthFeedBinding.imgFeed, BuildConfig.BASE_IMAGE_URL+item.coverPhoto)
             Glide.with(mContext)
                 .load(BuildConfig.BASE_IMAGE_URL + item.coverPhoto)
                 .placeholder(R.drawable.leaderboard)

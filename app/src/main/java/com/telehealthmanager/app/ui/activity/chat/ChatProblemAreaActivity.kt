@@ -25,7 +25,6 @@ class ChatProblemAreaActivity : BaseActivity<ActivityChatProblemAreaBinding>(), 
     private lateinit var mDataBinding: ActivityChatProblemAreaBinding
     private var mCategoriesAdapter: ChatProblemAreasListAdapter? = null
 
-
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivityChatProblemAreaBinding
         viewModel = ViewModelProviders.of(this).get(ChatViewModel::class.java)

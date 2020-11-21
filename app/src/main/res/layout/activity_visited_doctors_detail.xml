@@ -88,7 +88,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/_2sdp"
-                        android:text="@{viewmodel.Clinic}"
+                        android:text="@{viewmodel.MClinic}"
                         android:textColor="@color/colorBlack"
                         tools:text="The Apollo Clinic" />
                 </LinearLayout>
@@ -141,7 +141,7 @@
                 android:paddingTop="@dimen/_12sdp"
                 android:paddingEnd="@dimen/_8sdp"
                 android:paddingBottom="@dimen/_12sdp"
-                android:text="@{viewmodel.scheduled_at}"
+                android:text="@{viewmodel.scheduledAt}"
                 android:textColor="@color/colorBlack"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -225,9 +225,9 @@
                     android:scaleY="0.7"
                     android:stepSize="1"
                     android:theme="@style/RatingBarTheam"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@+id/imageView13" />
 
                 <ImageView
@@ -255,12 +255,12 @@
                     android:id="@+id/divider2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_10sdp"
                     android:ems="10"
                     android:focusable="true"
                     android:gravity="start"
                     android:inputType="textMultiLine"
                     android:minLines="1"
-                    android:layout_marginEnd="@dimen/_10sdp"
                     android:padding="@dimen/_8sdp"
                     android:text="@{viewmodel.mTitle}"
                     app:layout_constraintEnd_toEndOf="parent"

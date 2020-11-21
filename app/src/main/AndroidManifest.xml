@@ -93,7 +93,7 @@
             </intent-filter>
         </service>
 
-        <activity android:name="com.telehealthmanager.doctor.ui.activity.healthfeeddetails.HealthFeedDetailsActivity" />
+        <activity android:name="com.telehealthmanager.app.ui.activity.healthfeeddetails.HealthFeedDetailsActivity" />
 
         <activity
             android:name="com.telehealthmanager.app.ui.activity.splash.SplashActivity"

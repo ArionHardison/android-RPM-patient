@@ -79,9 +79,9 @@
                     android:id="@+id/img_feed"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_130sdp"
-                    android:contentDescription="@string/app_name"
-                    android:scaleType="fitXY"
                     android:layout_margin="@dimen/_6sdp"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/leaderboard"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -107,7 +107,14 @@
                     android:textAllCaps="false"
                     android:textColor="@color/grey_800"
                     android:textSize="@dimen/_12sdp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    tools:text="Title " />
+
+                <View
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="5dp"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:background="@drawable/background_title_below" />
 
                 <TextView
                     android:id="@+id/tv_feed_description"
@@ -117,8 +124,7 @@
                     android:paddingBottom="@dimen/_8sdp"
                     android:text="@={viewmodel.description}"
                     android:textColor="@color/grey_700"
-                    android:textSize="@dimen/_12sdp"
-                    />
+                    android:textSize="@dimen/_12sdp" />
             </LinearLayout>
 
 

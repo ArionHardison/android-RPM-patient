@@ -59,7 +59,7 @@ class ChatCategoryAdapter(val items: MutableList<CategoryResponse.Category>, val
             holder.itemView.background = ContextCompat.getDrawable(context, R.drawable.bg_color_grey_border)
             holder.itemBinding.tvPrice.setTextColor(ContextCompat.getColor(context, R.color.colorBlack))
             holder.itemBinding.tvName.setTextColor(ContextCompat.getColor(context, R.color.colorBlack))
-            holder.itemBinding.tvStrikePrice.setTextColor(ContextCompat.getColor(context, R.color.colorBlack))
+            holder.itemBinding.tvStrikePrice.setTextColor(ContextCompat.getColor(context, R.color.colorDarkGrey))
         }
     }
 

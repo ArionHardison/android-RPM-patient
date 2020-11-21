@@ -108,15 +108,11 @@ class AppRepository : BaseRepository() {
                     viewModel.mDoctorResponse.value = it
                 } else if (viewModel is SearchViewModel) {
                     viewModel.mDoctorResponse.value = it
-                } else if (viewModel is VisitedDoctorsViewModel) {
-                    viewModel.mDoctorResponse.value = it
                 }
             }, {
                 if (viewModel is FavouriteDoctorViewModel) {
                     viewModel.getErrorObservable().value = getErrorMessage(it)
                 } else if (viewModel is SearchViewModel) {
-                    viewModel.getErrorObservable().value = getErrorMessage(it)
-                } else if (viewModel is VisitedDoctorsViewModel) {
                     viewModel.getErrorObservable().value = getErrorMessage(it)
                 }
             })
@@ -235,7 +231,21 @@ class AppRepository : BaseRepository() {
             })
     }
 
-
+    fun getVisitedDoc(viewModel: ViewModel): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .getVisitedDoc()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                if (viewModel is VisitedDoctorsViewModel) {
+                    viewModel.mVisitedAppointmentDoc.value = it
+                }
+            }, {
+                if (viewModel is VisitedDoctorsViewModel) {
+                    viewModel.getErrorObservable().value = getErrorMessage(it)
+                }
+            })
+    }
     fun cancelAppointment(viewModel: ViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .cancelAppointment(params)
@@ -539,6 +549,18 @@ class AppRepository : BaseRepository() {
             .subscribeOn(Schedulers.io())
             .subscribe({
                 viewModel.mAddCardSuccess.value = it
+            }, {
+                viewModel.getErrorObservable().value = getErrorMessage(it)
+            })
+    }
+
+    fun goToDeleteCard(viewModel: AddMoneyViewModel, hashMap: HashMap<String, Any>): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .deleteCardDetails(hashMap)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                viewModel.mDeletedSuccess.value = it
             }, {
                 viewModel.getErrorObservable().value = getErrorMessage(it)
             })

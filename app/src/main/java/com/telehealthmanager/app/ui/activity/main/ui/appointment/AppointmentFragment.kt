@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseFragment
 import com.telehealthmanager.app.databinding.FragmentAppointmentBinding
+import com.telehealthmanager.app.repositary.model.Appointment
 import com.telehealthmanager.app.repositary.model.AppointmentResponse
 import com.telehealthmanager.app.ui.adapter.MyPagerAdapter
 import com.telehealthmanager.app.utils.ViewUtils
@@ -61,8 +62,8 @@ class AppointmentFragment : BaseFragment<FragmentAppointmentBinding>(),Appointme
 
         viewModel.mResponse.observe(this, Observer<AppointmentResponse> {
             hideLoading()
-            viewModel.mUpcominglist = it.upcomming.appointments as MutableList<AppointmentResponse.Upcomming.Appointment>?
-            viewModel.mPreviouslist = it.previous.appointments as MutableList<AppointmentResponse.Previous.Appointment>?
+            viewModel.mUpcominglist = it.upcomming.appointments as MutableList<Appointment>?
+            viewModel.mPreviouslist = it.previous.appointments as MutableList<Appointment>?
         })
         viewModel.getErrorObservable().observe(this, Observer<String> { message ->
            hideLoading()

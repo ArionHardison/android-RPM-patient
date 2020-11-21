@@ -21,16 +21,6 @@
             android:layout_height="wrap_content"
             android:background="@color/colorWhite">
 
-            <!--<androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar2"
-                android:layout_width="409dp"
-                android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
-                android:minHeight="?attr/actionBarSize"
-                android:theme="?attr/actionBarTheme"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />-->
 
             <EditText
                 android:id="@+id/editText5"
@@ -47,6 +37,7 @@
                 android:hint="@string/home_search"
                 android:inputType="textPersonName"
                 android:padding="@dimen/_8sdp"
+                android:textSize="@dimen/_12sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -58,11 +49,11 @@
                 android:layout_marginTop="10dp"
                 android:background="@color/colorWhite"
                 android:paddingBottom="@dimen/_8sdp"
-                tools:listitem="@layout/home_list_item"
-                tools:itemCount="4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editText5" />
+                app:layout_constraintTop_toBottomOf="@+id/editText5"
+                tools:itemCount="4"
+                tools:listitem="@layout/home_list_item" />
 
             <ImageView
                 android:id="@+id/imageView5"

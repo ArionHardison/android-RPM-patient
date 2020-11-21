@@ -77,7 +77,7 @@ class AddMoneyActivity : BaseActivity<ActivityAddMoneyBinding>(), AddMoneyNaviga
         mViewModel.mCardListResponse.observe(this, Observer {
             mViewModel.loadingProgress.value = false
             if (!it.isNullOrEmpty()) {
-                mCardListAdapter = CardListAdapter(it, this@AddMoneyActivity, this)
+                mCardListAdapter = CardListAdapter(it, this@AddMoneyActivity, this, mViewModel)
                 mDataBinding.rvCardList.adapter = mCardListAdapter
                 mCardListAdapter!!.notifyDataSetChanged()
                 alreadyAddedCards()
@@ -92,6 +92,12 @@ class AddMoneyActivity : BaseActivity<ActivityAddMoneyBinding>(), AddMoneyNaviga
             val intent = Intent()
             setResult(RESULT_OK, intent)
             finish()
+        })
+
+        mViewModel.mDeletedSuccess.observe(this, Observer {
+            mViewModel.loadingProgress.value = false
+            ViewUtils.showToast(this, it.message, true)
+            initApiCall()
         })
     }
 
@@ -133,6 +139,13 @@ class AddMoneyActivity : BaseActivity<ActivityAddMoneyBinding>(), AddMoneyNaviga
         mViewModel.mSelectedCard.set(item.card_id.toString())
         mDataBinding.addMoneyBtn.alpha = 1f
         mViewModel.mEnablePay.set(true)
+    }
+
+    override fun onItemDelete(item: CardList) {
+        val hashMap: HashMap<String, Any> = HashMap()
+        hashMap["card_id"] = mViewModel.mDeletedCard.get().toString()
+        mViewModel.loadingProgress.value = true
+        mViewModel.deleteCard(hashMap)
     }
 
     override fun addMoney() {

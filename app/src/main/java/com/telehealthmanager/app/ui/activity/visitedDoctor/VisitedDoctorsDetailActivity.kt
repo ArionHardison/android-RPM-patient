@@ -9,9 +9,8 @@ import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
 import com.telehealthmanager.app.databinding.ActivityVisitedDoctorsDetailBinding
 import com.telehealthmanager.app.repositary.WebApiConstants
-import com.telehealthmanager.app.repositary.model.AppointmentResponse
+import com.telehealthmanager.app.repositary.model.Appointment
 import com.telehealthmanager.app.repositary.model.FeedbackResponse
-import com.telehealthmanager.app.repositary.model.MainResponse
 import com.telehealthmanager.app.repositary.model.Response
 import com.telehealthmanager.app.ui.activity.thankyou.ThankyouActivity
 import com.telehealthmanager.app.utils.CustomBackClick
@@ -44,8 +43,8 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
         mDataBinding.btncancel.setOnClickListener {
             loadingObservable.value = true
             val hashMap: HashMap<String, Any> = HashMap()
-            hashMap[WebApiConstants.IntentPass.ID] = viewModel.mupcomingDoctorDetails.value!!.id
-            viewModel.cancelclick(hashMap)
+            hashMap[WebApiConstants.IntentPass.ID] = viewModel.mAppointmentDetails.value!!.id.toString()
+            viewModel.cancelClick(hashMap)
         }
     }
 
@@ -55,71 +54,41 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
 
     private fun initIntentData() {
         if (intent.getBooleanExtra(WebApiConstants.IntentPass.iscancel, false)) {
-            val details = intent.getSerializableExtra(WebApiConstants.IntentPass.Appointment) as? AppointmentResponse.Upcomming.Appointment
-            viewModel.mupcomingDoctorDetails.value = details
-            viewModel.id.set(viewModel.mupcomingDoctorDetails.value!!.id)
-            viewModel.name.set(viewModel.mupcomingDoctorDetails.value!!.hospital?.first_name.plus(" ").plus(viewModel.mupcomingDoctorDetails.value!!.hospital?.last_name))
-            viewModel.bookfor.set(viewModel.mupcomingDoctorDetails.value!!.booking_for ?: "")
-            viewModel.scheduled_at.set(ViewUtils.getDayAndTimeFormat(viewModel.mupcomingDoctorDetails.value!!.scheduled_at ?: ""))
-            viewModel.status.set(viewModel.mupcomingDoctorDetails.value!!.status ?: "")
-            viewModel.specialit.set(viewModel.mupcomingDoctorDetails.value!!.hospital?.doctor_profile?.certification ?: "")
-            viewModel.catagiery.set(viewModel.mupcomingDoctorDetails.value!!.hospital?.doctor_profile?.speciality?.name ?: "")
-            if (viewModel.mupcomingDoctorDetails.value!!.hospital?.clinic != null)
-                viewModel.Clinic.set(
-                    viewModel.mupcomingDoctorDetails.value!!.hospital?.clinic?.name.plus(
-                        ","
-                    ).plus(viewModel.mupcomingDoctorDetails.value!!.hospital?.clinic?.address ?: "")
-                )
-            if (details!!.hospital?.doctor_profile?.profile_pic != "") {
-                ViewUtils.setImageViewGlide(
-                    this@VisitedDoctorsDetailActivity, mDataBinding.imageView12,
-                    BuildConfig.BASE_IMAGE_URL + viewModel.mupcomingDoctorDetails.value!!.hospital?.doctor_profile?.profile_pic
-                )
-            }
+            val details = intent.getSerializableExtra(WebApiConstants.IntentPass.Appointment) as? Appointment
+            initData(details!!)
             mDataBinding.iscancel = true
         } else {
             mDataBinding.iscancel = false
             if (intent.getSerializableExtra(WebApiConstants.IntentPass.Appointment) != null) {
-                val Appointment = intent.getSerializableExtra(WebApiConstants.IntentPass.Appointment) as? AppointmentResponse.Previous.Appointment
-                viewModel.mPastDoctorDetails.value = Appointment
-                viewModel.id.set(viewModel.mPastDoctorDetails.value!!.id)
-                viewModel.name.set(viewModel.mPastDoctorDetails.value!!.hospital?.first_name?.plus(" ").plus(viewModel.mPastDoctorDetails.value!!.hospital?.last_name))
-                viewModel.bookfor.set(viewModel.mPastDoctorDetails.value!!.booking_for ?: "")
-                viewModel.scheduled_at.set(ViewUtils.getDayAndTimeFormat(viewModel.mPastDoctorDetails.value!!.scheduled_at ?: ""))
-                viewModel.status.set(viewModel.mPastDoctorDetails.value!!.status ?: "")
-                viewModel.specialit.set(viewModel.mPastDoctorDetails.value!!.hospital?.doctor_profile?.speciality?.name ?: "")
-                viewModel.catagiery.set(viewModel.mPastDoctorDetails.value!!.hospital?.doctor_profile?.speciality?.name ?: "")
-                if (viewModel.mPastDoctorDetails.value!!.hospital?.clinic != null)
-                    viewModel.Clinic.set(viewModel.mPastDoctorDetails.value!!.hospital?.clinic?.name.plus(",").plus(viewModel.mPastDoctorDetails.value!!.hospital?.clinic?.address))
-                if (Appointment!!.hospital?.doctor_profile != null && Appointment!!.hospital?.doctor_profile.profile_pic != "") {
-                    ViewUtils.setImageViewGlide(
-                        this@VisitedDoctorsDetailActivity,
-                        mDataBinding.imageView12,
-                        BuildConfig.BASE_IMAGE_URL + viewModel.mPastDoctorDetails.value!!.hospital.doctor_profile?.profile_pic
-                    )
-                }
+                val mAppointment = intent.getSerializableExtra(WebApiConstants.IntentPass.Appointment) as? Appointment
+                initData(mAppointment!!)
             } else if (intent.getSerializableExtra(WebApiConstants.IntentPass.VisitedDoctor) != null) {
-                val VisitedDoctor = intent.getSerializableExtra(WebApiConstants.IntentPass.VisitedDoctor) as? MainResponse.VisitedDoctor
-                viewModel.mVisitedDoctorDetails.value = VisitedDoctor
-                viewModel.id.set(viewModel.mVisitedDoctorDetails.value!!.id)
-                viewModel.name.set(viewModel.mVisitedDoctorDetails.value!!.hospital?.first_name.plus(" ").plus(viewModel.mVisitedDoctorDetails.value!!.hospital?.last_name))
-                viewModel.bookfor.set(viewModel.mVisitedDoctorDetails.value!!.booking_for ?: "")
-                viewModel.scheduled_at.set(ViewUtils.getDayAndTimeFormat(viewModel.mVisitedDoctorDetails.value!!.scheduled_at ?: ""))
-                viewModel.status.set(viewModel.mVisitedDoctorDetails.value!!.status ?: "")
-                viewModel.catagiery.set(viewModel.mVisitedDoctorDetails.value!!.hospital?.doctor_profile?.speciality?.name ?: "")
-                viewModel.specialit.set(viewModel.mVisitedDoctorDetails.value!!.hospital?.doctor_profile?.speciality?.name ?: "")
-                if (viewModel.mVisitedDoctorDetails.value!!.hospital?.clinic != null)
-                    viewModel.Clinic.set(viewModel.mVisitedDoctorDetails.value!!.hospital?.clinic?.name?.plus(",").plus(viewModel.mVisitedDoctorDetails.value!!.hospital?.clinic?.address!!))
-                if (VisitedDoctor!!.hospital.doctor_profile != null && VisitedDoctor!!.hospital.doctor_profile.profile_pic != "") {
-                    ViewUtils.setImageViewGlide(
-                        this@VisitedDoctorsDetailActivity,
-                        mDataBinding.imageView12,
-                        BuildConfig.BASE_IMAGE_URL + viewModel.mVisitedDoctorDetails.value!!.hospital.doctor_profile?.profile_pic
-                    )
-
-                }
+                val mAppointment = intent.getSerializableExtra(WebApiConstants.IntentPass.VisitedDoctor) as? Appointment
+                initData(mAppointment!!)
             }
+        }
+    }
 
+    private fun initData(mAppointment: Appointment) {
+        viewModel.mAppointmentDetails.value = mAppointment
+        viewModel.id.set(viewModel.mAppointmentDetails.value!!.id)
+        viewModel.status.set(viewModel.mAppointmentDetails.value!!.status ?: "")
+        if (mAppointment.hospital != null) {
+            viewModel.mDoctorID.set(viewModel.mAppointmentDetails.value!!.hospital?.id.toString())
+            viewModel.name.set(viewModel.mAppointmentDetails.value!!.hospital?.first_name?.plus(" ").plus(viewModel.mAppointmentDetails.value!!.hospital?.last_name))
+            viewModel.bookfor.set(viewModel.mAppointmentDetails.value!!.booking_for ?: "")
+            viewModel.scheduledAt.set(ViewUtils.getDayAndTimeFormat(viewModel.mAppointmentDetails.value!!.scheduled_at ?: ""))
+            viewModel.specialit.set(viewModel.mAppointmentDetails.value!!.hospital?.doctor_profile?.speciality?.name ?: "")
+            viewModel.catagiery.set(viewModel.mAppointmentDetails.value!!.hospital?.doctor_profile?.speciality?.name ?: "")
+            if (viewModel.mAppointmentDetails.value!!.hospital?.clinic != null)
+                viewModel.mClinic.set(viewModel.mAppointmentDetails.value!!.hospital?.clinic?.name.plus(",").plus(viewModel.mAppointmentDetails.value!!.hospital?.clinic?.address))
+            if (mAppointment.hospital?.doctor_profile != null && mAppointment.hospital.doctor_profile!!.profile_pic != "") {
+                ViewUtils.setDocViewGlide(
+                    this@VisitedDoctorsDetailActivity,
+                    mDataBinding.imageView12,
+                    BuildConfig.BASE_IMAGE_URL + viewModel.mAppointmentDetails.value!!.hospital!!.doctor_profile?.profile_pic
+                )
+            }
         }
     }
 
@@ -157,23 +126,23 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
     }
 
     override fun onSubmit() {
-        if (mDataBinding.divider2.text.toString().equals("")) {
+        if (mDataBinding.divider2.text.toString() == "") {
             ViewUtils.showToast(this@VisitedDoctorsDetailActivity, "Please enter " + resources.getString(R.string.consulted_for), false)
             return
         }
-        if (mDataBinding.editText7.text.toString().equals("")) {
+        if (mDataBinding.editText7.text.toString() == "") {
             ViewUtils.showToast(this@VisitedDoctorsDetailActivity, "Please enter comment", false)
             return
         }
         loadingObservable.value = true
         val hashMap: HashMap<String, Any> = HashMap()
-        hashMap[WebApiConstants.Feedback.hospital_id] = viewModel.id.get().toString()
+        hashMap[WebApiConstants.Feedback.hospital_id] = viewModel.mDoctorID.get().toString()
         hashMap[WebApiConstants.Feedback.experiences] = experiences
         hashMap[WebApiConstants.Feedback.visited_for] = viewModel.bookfor.get().toString()
         hashMap[WebApiConstants.Feedback.rating] = mDataBinding.rbRatingBar.rating.toInt().toString()
         hashMap[WebApiConstants.Feedback.title] = mDataBinding.divider2.text.toString()
         hashMap[WebApiConstants.Feedback.comments] = mDataBinding.editText7.text.toString()
-        viewModel.postfeedback(hashMap)
+        viewModel.postFeedback(hashMap)
     }
 
 }

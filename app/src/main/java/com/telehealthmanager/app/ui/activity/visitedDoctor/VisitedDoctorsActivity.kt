@@ -1,5 +1,6 @@
 package com.telehealthmanager.app.ui.activity.visitedDoctor
 
+import android.content.Intent
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
@@ -9,15 +10,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
 import com.telehealthmanager.app.databinding.ActivityVisitedDoctorsBinding
-import com.telehealthmanager.app.repositary.model.MainResponse
+import com.telehealthmanager.app.repositary.WebApiConstants
+import com.telehealthmanager.app.repositary.model.Appointment
 import com.telehealthmanager.app.ui.adapter.VisitedDoctorsListAdapter
 import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ViewUtils
-import kotlinx.android.synthetic.main.activity_visited_doctors.*
-import java.util.*
-import kotlin.collections.ArrayList
+import java.io.Serializable
 
-class VisitedDoctorsActivity : BaseActivity<ActivityVisitedDoctorsBinding>(), VisitedDoctorsNavigator, CustomBackClick {
+class VisitedDoctorsActivity : BaseActivity<ActivityVisitedDoctorsBinding>(), VisitedDoctorsNavigator, CustomBackClick, VisitedDoctorsListAdapter.IAppointmentListener {
     override fun onlike() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -38,13 +38,11 @@ class VisitedDoctorsActivity : BaseActivity<ActivityVisitedDoctorsBinding>(), Vi
     override fun getLayoutId(): Int = R.layout.activity_visited_doctors
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
-        //addVisitedDoctors()
         mDataBinding = mViewDataBinding as ActivityVisitedDoctorsBinding
         viewModel = ViewModelProviders.of(this).get(VisitedDoctorsViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
         initApiCal()
-        initAdapter()
         observeResponse()
         viewModel.setOnClickListener(this@VisitedDoctorsActivity)
         viewModel.toolBarTile.value = resources.getString(R.string.visted_doctor)
@@ -56,22 +54,27 @@ class VisitedDoctorsActivity : BaseActivity<ActivityVisitedDoctorsBinding>(), Vi
 
     private fun initApiCal() {
         loadingObservable.value = true
-        val hashMap: HashMap<String, Any> = HashMap()
-        viewModel.gethome(hashMap)
+        viewModel.getListVisitedDoc()
     }
 
     private fun observeResponse() {
-        viewModel.mDoctorResponse.observe(this, Observer<MainResponse> {
-            viewModel.mDoctorslist = it.visited_doctors as MutableList<MainResponse.VisitedDoctor>?
-            if (viewModel.mDoctorslist!!.size > 0) {
-                mDataBinding.tvNotFound.visibility = View.GONE
-            } else {
-                mDataBinding.tvNotFound.visibility = View.VISIBLE
-            }
-            mAdapter = VisitedDoctorsListAdapter(viewModel.mDoctorslist!!, this@VisitedDoctorsActivity)
-            mDataBinding.adapter = mAdapter
-            mAdapter!!.notifyDataSetChanged()
+        viewModel.mVisitedAppointmentDoc.observe(this, Observer {
             loadingObservable.value = false
+            if (it != null) {
+                if (it.visited_doctors != null) {
+                    if (!it.visited_doctors.appointments.isNullOrEmpty()) {
+                        mDataBinding.tvNotFound.visibility = View.GONE
+                        mAdapter = VisitedDoctorsListAdapter(it.visited_doctors.appointments, this@VisitedDoctorsActivity, this)
+                        mDataBinding.rvVisitedDoctors.layoutManager = LinearLayoutManager(applicationContext)
+                        mDataBinding.rvVisitedDoctors.addItemDecoration(DividerItemDecoration(applicationContext, DividerItemDecoration.VERTICAL))
+                        mDataBinding.adapter = mAdapter
+                        mAdapter!!.notifyDataSetChanged()
+                        loadingObservable.value = false
+                    } else {
+                        mDataBinding.tvNotFound.visibility = View.VISIBLE
+                    }
+                }
+            }
         })
 
         viewModel.getErrorObservable().observe(this, Observer<String> { message ->
@@ -80,31 +83,10 @@ class VisitedDoctorsActivity : BaseActivity<ActivityVisitedDoctorsBinding>(), Vi
         })
     }
 
-    private fun initAdapter() {
-        mAdapter = VisitedDoctorsListAdapter(viewModel.mDoctorslist!!, this@VisitedDoctorsActivity)
-        mDataBinding.adapter = mAdapter
-        mDataBinding.rvVisitedDoctors.addItemDecoration(
-            DividerItemDecoration(
-                applicationContext,
-                DividerItemDecoration.VERTICAL
-            )
-        )
-        mDataBinding.rvVisitedDoctors.layoutManager = LinearLayoutManager(applicationContext)
-        mAdapter!!.notifyDataSetChanged()
-    }
-
-    private fun addVisitedDoctors() {
-        visitedDoctors.add("Dr.Bretto")
-        visitedDoctors.add("Dr.John")
-        visitedDoctors.add("Dr.Jenifer")
-        visitedDoctors.add("Dr.Virundha")
-        rv_visited_doctors.layoutManager = LinearLayoutManager(applicationContext)
-        rv_visited_doctors.addItemDecoration(
-            DividerItemDecoration(
-                applicationContext,
-                DividerItemDecoration.VERTICAL
-            )
-        )
-        //rv_visited_doctors.adapter = applicationContext?.let { VisitedDoctorsListAdapter(visitedDoctors, it) }
+    override fun onItemClick(selectedItem: Appointment) {
+        val intent = Intent(this@VisitedDoctorsActivity, VisitedDoctorsDetailActivity::class.java)
+        intent.putExtra(WebApiConstants.IntentPass.iscancel, false)
+        intent.putExtra(WebApiConstants.IntentPass.VisitedDoctor, selectedItem as Serializable)
+        startActivity(intent);
     }
 }

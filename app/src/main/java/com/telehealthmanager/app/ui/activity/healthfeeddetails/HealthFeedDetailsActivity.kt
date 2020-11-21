@@ -1,4 +1,4 @@
-package com.telehealthmanager.doctor.ui.activity.healthfeeddetails
+package com.telehealthmanager.app.ui.activity.healthfeeddetails
 
 import android.os.Build
 import android.text.Layout.JUSTIFICATION_MODE_INTER_WORD
@@ -10,6 +10,8 @@ import com.telehealthmanager.app.base.BaseActivity
 import com.telehealthmanager.app.databinding.ActivityHealthFeedDetailsBinding
 import com.telehealthmanager.app.repositary.model.ArticleResponse
 import com.telehealthmanager.app.utils.ViewUtils
+import com.telehealthmanager.doctor.ui.activity.healthfeeddetails.HealthFeedDetailsNavigator
+import com.telehealthmanager.doctor.ui.activity.healthfeeddetails.HealthFeedDetailsViewModel
 
 
 class HealthFeedDetailsActivity : BaseActivity<ActivityHealthFeedDetailsBinding>(),

@@ -27,6 +27,7 @@
                 android:text="Chat with a doctor"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/_16sdp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.022"
                 app:layout_constraintStart_toStartOf="parent"
@@ -37,6 +38,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:textColor="@color/colorBlack"
                 android:text="Let us know your Symptoms or health problems"
                 app:layout_constraintStart_toStartOf="@+id/textView75"
                 app:layout_constraintTop_toBottomOf="@+id/textView75" />
@@ -65,6 +67,7 @@
                 android:layout_marginTop="16dp"
                 android:text="Choose suggested speciality"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/colorBlack"
                 app:layout_constraintHorizontal_bias="0.008"
                 app:layout_constraintStart_toStartOf="@+id/etNotes"
                 app:layout_constraintTop_toBottomOf="@+id/etNotes" />

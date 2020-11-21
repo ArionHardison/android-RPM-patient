@@ -73,6 +73,9 @@ interface ApiInterface {
     @GET("api/patient/appointment")
     fun getAppointment(): Observable<AppointmentResponse>
 
+    @GET("api/patient/visited_doctors")
+    fun getVisitedDoc(): Observable<VisitedAppointmentDoc>
+
     @FormUrlEncoded
     @POST("api/patient/cancel_appointment")
     fun cancelAppointment(@FieldMap hashMap: HashMap<String, Any>): Observable<Response>
@@ -155,6 +158,10 @@ interface ApiInterface {
     @FormUrlEncoded
     @POST("api/patient/card")
     fun addCardDetails(@FieldMap hashMap: HashMap<String, Any>): Observable<CardSuccessMessage>
+
+    @FormUrlEncoded
+    @POST("api/patient/delete/card")
+    fun deleteCardDetails(@FieldMap hashMap: HashMap<String, Any>): Observable<CardSuccessMessage>
 
     @FormUrlEncoded
     @POST("api/patient/add_money")

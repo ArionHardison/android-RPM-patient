@@ -20,10 +20,10 @@ import com.telehealthmanager.app.utils.ViewUtils
 
 class ChatProblemAreasListAdapter(val items: MutableList<CategoryResponse.Category>, val context: Context,val listener:IChatProblemAreaListener) :
     RecyclerView.Adapter<ChatProblemsViewHolder>() {
+
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
 
     override fun onBindViewHolder(holder: ChatProblemsViewHolder, position: Int) {
-
         val item=items[position]
         holder.itemBinding.tvName.text = item.name
         holder.itemBinding.tvStrikePrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG)
@@ -43,7 +43,6 @@ class ChatProblemAreasListAdapter(val items: MutableList<CategoryResponse.Catego
         }
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatProblemsViewHolder {
         val inflate = DataBindingUtil.inflate<ListItemCategoryWithImageBinding>(
             LayoutInflater.from(parent.context),
@@ -52,7 +51,6 @@ class ChatProblemAreasListAdapter(val items: MutableList<CategoryResponse.Catego
         return ChatProblemsViewHolder(inflate)
     }
 
-    // Gets the number of animals in the list
     override fun getItemCount(): Int {
         return items.size
     }
@@ -63,6 +61,5 @@ interface IChatProblemAreaListener{
 }
 
 class ChatProblemsViewHolder(view: ListItemCategoryWithImageBinding) : RecyclerView.ViewHolder(view.root) {
-    // Holds the TextView that will add each animal to
     val itemBinding = view
 }

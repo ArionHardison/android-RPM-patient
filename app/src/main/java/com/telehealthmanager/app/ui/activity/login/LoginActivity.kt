@@ -25,7 +25,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(), LoginNavigator {
     private lateinit var viewModel: LoginViewModel
     private lateinit var mDataBinding: ActivityLoginBinding
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
-    private var COUNTRY_CODE: String = "+91"
 
     override fun getLayoutId(): Int = R.layout.activity_login;
 

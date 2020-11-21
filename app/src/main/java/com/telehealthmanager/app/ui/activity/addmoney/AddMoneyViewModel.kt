@@ -16,9 +16,11 @@ class AddMoneyViewModel : BaseViewModel<AddMoneyNavigator>() {
     var loadingProgress = MutableLiveData<Boolean>()
     var mCardListResponse = MutableLiveData<List<CardList>>()
     var mAddCardSuccess = MutableLiveData<CardSuccessMessage>()
+    var mDeletedSuccess = MutableLiveData<CardSuccessMessage>()
     var mAddMoneySuccess = MutableLiveData<WalletAddSuccess>()
     var mWalletAmount: ObservableField<String> = ObservableField("")
     var mSelectedCard: ObservableField<String> = ObservableField("")
+    var mDeletedCard: ObservableField<String> = ObservableField("")
     var mEnablePay: ObservableField<Boolean> = ObservableField(false)
 
     fun clickAddCardBtn() {
@@ -41,6 +43,11 @@ class AddMoneyViewModel : BaseViewModel<AddMoneyNavigator>() {
     fun addMoneyWallet(hashMap: HashMap<String,Any>){
         loadingProgress.value = true
         getCompositeDisposable().add(appRepository.goToAddMoney(this, hashMap))
+    }
+
+    fun deleteCard(hashMap: HashMap<String,Any>){
+        loadingProgress.value = true
+        getCompositeDisposable().add(appRepository.goToDeleteCard(this, hashMap))
     }
 
 }

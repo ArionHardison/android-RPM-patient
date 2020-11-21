@@ -19,7 +19,7 @@ class DoctorImageAdapter(
 
     override fun onBindViewHolder(holder: DoctorImageViewHolder, position: Int) {
         val item = items!![position]
-        ViewUtils.setImageViewGlide(
+        ViewUtils.setDocViewGlide(
             context,
             holder.itemBinding.imgItem,
             BuildConfig.BASE_IMAGE_URL.plus(item?.profile_pic?:"")

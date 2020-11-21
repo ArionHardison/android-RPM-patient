@@ -18,17 +18,14 @@ import com.telehealthmanager.app.databinding.ActivityChatSummaryBinding
 import com.telehealthmanager.app.repositary.model.CategoryResponse
 import com.telehealthmanager.app.repositary.model.ChatPromoResponse
 import com.telehealthmanager.app.repositary.model.DoctorListResponse
-import com.telehealthmanager.app.repositary.model.MessageResponse
 import com.telehealthmanager.app.ui.activity.findDoctors.FindDoctorsViewModel
 import com.telehealthmanager.app.ui.activity.payment.PaymentActivity
-import com.telehealthmanager.app.ui.activity.success.SuccessActivity
 import com.telehealthmanager.app.ui.adapter.DoctorImageAdapter
 import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ViewUtils
-import kotlinx.android.synthetic.main.content_chat.*
 import kotlinx.android.synthetic.main.content_chat_summary.view.*
 import java.lang.Math.abs
-import java.util.HashMap
+import java.util.*
 
 
 class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavigator, CustomBackClick {
@@ -56,7 +53,7 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
         val data = intent.extras
         if (data != null) {
             category = intent.getSerializableExtra("category") as CategoryResponse.Category
-            notes = intent.getStringExtra("notes")?:""
+            notes = intent.getStringExtra("notes") ?: ""
         }
         initAdapter()
         observeResponse()
@@ -66,12 +63,12 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
         if (category.offer_fees == 0.00) {
             mDataBinding.contentChatSummary.tvSummaryPrice.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"), category?.fees.toString())
             mDataBinding.contentChatSummary.tvSummaryStrikePrice.visibility = View.GONE
-            fees=category.fees.toString()
+            fees = category.fees.toString()
         } else {
             mDataBinding.contentChatSummary.tvSummaryStrikePrice.visibility = View.VISIBLE
             mDataBinding.contentChatSummary.tvSummaryPrice.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"), category?.offer_fees.toString())
             mDataBinding.contentChatSummary.tvSummaryStrikePrice.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"), category?.fees.toString())
-            fees=category.offer_fees.toString()
+            fees = category.offer_fees.toString()
         }
 
         mDataBinding.contentChatSummary.textViewApplyPromo.setOnClickListener {
@@ -81,6 +78,7 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
                 val hashMap: HashMap<String, Any> = HashMap()
                 hashMap["id"] = category.id
                 hashMap["promocode"] = mDataBinding.contentChatSummary.editTextPromoValue.text.toString()
+                loadingObservable.value = true
                 viewModelSummary.addPromoCode(hashMap)
             }
         }
@@ -106,7 +104,7 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
         finish()
     }
 
-    private fun payForChatRequest(){
+    private fun payForChatRequest() {
         val intent = Intent(this@ChatSummaryActivity, PaymentActivity::class.java)
         intent.putExtra("category", category)
         intent.putExtra("notes", notes)
@@ -145,22 +143,23 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
             initAdapter()
             loadingObservable.value = false
         })
+
         viewModel.getErrorObservable().observe(this, Observer<String> { message ->
             loadingObservable.value = false
             ViewUtils.showToast(this@ChatSummaryActivity, message, false)
         })
+
         viewModelSummary.getErrorObservable().observe(this, Observer<String> { message ->
             loadingObservable.value = false
             ViewUtils.showToast(this@ChatSummaryActivity, message, false)
         })
+
         viewModelSummary.mChatPromoResponse.observe(this, Observer<ChatPromoResponse> {
+            loadingObservable.value = false
             if (it != null && it.message != null && !it.message.equals("")) {
                 ViewUtils.showToast(this@ChatSummaryActivity, it.message, true)
-                mDataBinding.contentChatSummary.tvSummaryPrice.text = String.format("%s %s",
-                    preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"),
-                    it.finalFees.toString()
-                )
-                fees=it.finalFees.toString()
+                mDataBinding.contentChatSummary.tvSummaryPrice.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"), it.finalFees.toString())
+                fees = it.finalFees.toString()
             }
         })
     }

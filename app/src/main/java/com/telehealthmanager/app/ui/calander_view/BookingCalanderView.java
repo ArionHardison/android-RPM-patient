@@ -98,48 +98,5 @@ public class BookingCalanderView extends LinearLayout {
         adapter.notifyDataSetChanged();
         recyclerView.scrollToPosition(pos);
 
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                RecyclerView.LayoutManager layoutManagerForPos = recyclerView.getLayoutManager();
-
-                if (layoutManagerForPos instanceof LinearLayoutManager) {
-                    mFirstCompleteVisibleItemPosition = ((LinearLayoutManager) layoutManagerForPos).findFirstVisibleItemPosition();
-                    mLastCompleteVisibleItemPosition =((LinearLayoutManager) layoutManagerForPos).findLastCompletelyVisibleItemPosition();
-                }
-                int totalItemCount = layoutManagerForPos.getItemCount();
-                if (mFirstCompleteVisibleItemPosition == 0) {
-                    if (dy < 0 || dx < 0) {
-                        if (dx < 0) {
-                            Log.d("status", "Scrolled LEFT");
-                        }
-                    }
-                } else {
-                    if (mLastCompleteVisibleItemPosition == totalItemCount - 1) {
-                        if (dy > 0 || dx > 0) {
-                            if (dy > 0) {
-                                Log.d("status", "Scrolled TOP");
-                            }
-                            if (dx > 0) {
-                                Log.d("status", "Scrolled RIGHT");
-                            }
-                        }
-                    } else {
-                        if (dx < 0) {
-                            Log.d("status", "Scrolled LEFT");
-                        } else {
-
-                        }
-                    }
-                }
-            }
-        });
-
     }
 }

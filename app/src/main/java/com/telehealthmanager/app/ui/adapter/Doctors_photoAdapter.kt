@@ -18,7 +18,7 @@ class Doctors_photoAdapter(val items: MutableList<Hospital.Clinic.photos>, val c
     override fun onBindViewHolder(holder: PhotosViewHolder, position: Int) {
         val item=items!![position]
 
-             ViewUtils.setImageViewGlide(context,  holder.itemBinding.imageView28, BuildConfig.BASE_IMAGE_URL.plus(item?.image!!))
+             ViewUtils.setDocViewGlide(context,  holder.itemBinding.imageView28, BuildConfig.BASE_IMAGE_URL.plus(item?.image!!))
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotosViewHolder {

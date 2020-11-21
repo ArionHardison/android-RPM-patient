@@ -82,10 +82,7 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(), ChatNavigator, IChatCa
     override fun onChatCategoryClicked(category: CategoryResponse.Category) {
         this.category = category
         mDataBinding.contentChat.tvSelectedName
-        mDataBinding.contentChat.llSelectedCategory.background = ContextCompat.getDrawable(this, R.drawable.bg_color_grey_border)
-        mDataBinding.contentChat.tvSelectedPrice.setTextColor(ContextCompat.getColor(this, R.color.colorBlack))
-        mDataBinding.contentChat.tvSelectedName.setTextColor(ContextCompat.getColor(this, R.color.colorBlack))
-        mDataBinding.contentChat.tvSelectedStrikePrice.setTextColor(ContextCompat.getColor(this, R.color.colorBlack))
+        initUpdateText()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -101,11 +98,7 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(), ChatNavigator, IChatCa
                     for (i: Int in mCategoriesAdapter!!.items.indices) {
                         if (mCategoriesAdapter!!.items[i].id == seeAllSelectedCategory!!.id) {
                             mCategoriesAdapter!!.setSelectedDoc(i)
-                            mDataBinding.contentChat.llSelectedCategory.visibility = View.GONE
-                            mDataBinding.contentChat.tvCategoryTitle.text = getString(R.string.see_all_specialities)
-                            mDataBinding.contentChat.see_all_specialist.background = ContextCompat.getDrawable(this, R.drawable.bg_color_grey_border)
-                            mDataBinding.contentChat.tvCategoryTitle.setTextColor(ContextCompat.getColor(this, R.color.colorBlack))
-                            mDataBinding.contentChat.arrowIcon.setColorFilter(ContextCompat.getColor(this, R.color.colorBlack), android.graphics.PorterDuff.Mode.MULTIPLY);
+                            initUpdateText()
                             return
                         }
                     }
@@ -117,6 +110,14 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(), ChatNavigator, IChatCa
                 }
             }
         }
+    }
+
+    private fun initUpdateText() {
+        mDataBinding.contentChat.llSelectedCategory.visibility = View.GONE
+        mDataBinding.contentChat.tvCategoryTitle.text = getString(R.string.see_all_specialities)
+        mDataBinding.contentChat.see_all_specialist.background = ContextCompat.getDrawable(this, R.drawable.bg_color_grey_border)
+        mDataBinding.contentChat.tvCategoryTitle.setTextColor(ContextCompat.getColor(this, R.color.colorBlack))
+        mDataBinding.contentChat.arrowIcon.setColorFilter(ContextCompat.getColor(this, R.color.colorBlack), android.graphics.PorterDuff.Mode.MULTIPLY);
     }
 
     private fun initApiCal() {

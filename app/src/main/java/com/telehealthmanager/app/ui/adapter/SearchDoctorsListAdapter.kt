@@ -31,7 +31,7 @@ class SearchDoctorsListAdapter(val items: MutableList<Hospital>, val context: Co
             holder.itemBinding.textView92?.visibility = View.GONE
 
         holder.itemBinding.textView91?.text = item.doctor_profile?.certification
-        ViewUtils.setImageViewGlide(
+        ViewUtils.setDocViewGlide(
             context,
             holder.itemBinding.imageView23,
             BuildConfig.BASE_IMAGE_URL.plus(item.doctor_profile?.profile_pic)

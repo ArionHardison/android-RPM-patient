@@ -1,56 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-<LinearLayout
-    android:id="@+id/item_view"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/_4sdp"
-    android:background="@drawable/bg_color_grey_border"
-    android:orientation="vertical"
-    android:gravity="center">
-
-    <TextView
-        android:id="@+id/tvName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/_6sdp"
-        android:paddingEnd="@dimen/_6sdp"
-        android:paddingBottom="@dimen/_1sdp"
-        android:paddingTop="@dimen/_6sdp"
-        android:text="Pediatrics"
-        android:textColor="@color/colorBlack"
-        android:textSize="@dimen/_12sdp" />
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
+        android:id="@+id/item_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
-    <TextView
-        android:id="@+id/tvStrikePrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/_6sdp"
-        android:paddingEnd="@dimen/_6sdp"
-        android:paddingBottom="@dimen/_6sdp"
-        android:paddingTop="@dimen/_1sdp"
-        android:visibility="gone"
-        android:textColor="@color/colorBlack"
-        android:text="$10"
-        android:textSize="@dimen/_13sdp" />
-    <TextView
-        android:id="@+id/tvPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/_6sdp"
-        android:paddingEnd="@dimen/_6sdp"
-        android:paddingBottom="@dimen/_6sdp"
-        android:paddingTop="@dimen/_1sdp"
-        android:textColor="@color/colorBlack"
-        android:text="$10"
-        android:textSize="@dimen/_13sdp" />
+        android:layout_margin="@dimen/_4sdp"
+        android:background="@drawable/bg_color_grey_border"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/_6sdp"
+            android:paddingTop="@dimen/_6sdp"
+            android:paddingEnd="@dimen/_6sdp"
+            android:paddingBottom="@dimen/_1sdp"
+            android:text="Pediatrics"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/_12sdp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvStrikePrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:paddingStart="@dimen/_6sdp"
+                android:paddingTop="@dimen/_1sdp"
+                android:paddingEnd="@dimen/_6sdp"
+                android:paddingBottom="@dimen/_8sdp"
+                android:text="$10"
+                android:textColor="@color/colorDarkGrey"
+                android:textSize="@dimen/_8sdp" />
+
+            <TextView
+                android:id="@+id/tvPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="@dimen/_6sdp"
+                android:paddingBottom="@dimen/_6sdp"
+                android:text="$10"
+                android:textStyle="bold"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_16sdp" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
 </layout>

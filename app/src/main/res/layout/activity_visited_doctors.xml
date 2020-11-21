@@ -34,6 +34,8 @@
             android:background="@color/colorWhite"
             android:adapter="@{adapter}"
             android:paddingBottom="@dimen/_46sdp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"
             tools:listitem="@layout/visited_doctors_list_item"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

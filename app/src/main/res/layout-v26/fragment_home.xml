@@ -14,17 +14,6 @@
         android:layout_height="match_parent"
         android:background="@color/colorPrimary">
 
-        <!--  <androidx.appcompat.widget.Toolbar
-              android:id="@+id/toolbar2"
-              android:layout_width="409dp"
-              android:layout_height="wrap_content"
-              android:background="?attr/colorPrimary"
-              android:minHeight="?attr/actionBarSize"
-              android:theme="?attr/actionBarTheme"
-              app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintStart_toStartOf="parent"
-              app:layout_constraintTop_toTopOf="parent" />-->
-
         <EditText
             android:id="@+id/editText5"
             android:layout_width="0dp"
@@ -40,9 +29,10 @@
             android:hint="@string/home_search"
             android:inputType="textPersonName"
             android:padding="@dimen/_8sdp"
-            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="@dimen/_12sdp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"

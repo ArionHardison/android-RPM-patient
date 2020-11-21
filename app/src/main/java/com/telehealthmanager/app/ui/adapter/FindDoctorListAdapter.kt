@@ -62,7 +62,7 @@ class FindDoctorListAdapter(
                 listener.onCallClick(item.hospital[0].mobile)
             }
         }
-        ViewUtils.setImageViewGlide(context, holder.itemBinding.imageView18, BuildConfig.BASE_IMAGE_URL.plus(item.profile_pic))
+        ViewUtils.setDocViewGlide(context, holder.itemBinding.imageView18, BuildConfig.BASE_IMAGE_URL.plus(item.profile_pic))
         holder.itemBinding.textView50.text = item.experience ?: "0".plus(" ").plus(context.getString(R.string.years_of_exp))
         holder.itemBinding.textView48.text = item.speciality?.name
         holder.itemBinding.textView54.text = preferenceHelper.getValue(PreferenceKey.CURRENCY, "$").toString().plus(item.fees ?: "0")

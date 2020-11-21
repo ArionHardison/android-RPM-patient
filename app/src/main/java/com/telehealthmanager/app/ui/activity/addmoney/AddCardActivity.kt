@@ -12,7 +12,6 @@ import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
 import com.telehealthmanager.app.databinding.ActivityAddCardBinding
-import com.telehealthmanager.app.ui.adapter.CardListAdapter
 import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ViewUtils
 
@@ -95,7 +94,7 @@ class AddCardActivity : BaseActivity<ActivityAddCardBinding>(), AddMoneyNavigato
     }
 
     private fun observeSuccessResponse() {
-        mViewModel.mCardListResponse.observe(this, Observer {
+        mViewModel.mAddCardSuccess.observe(this, Observer {
             mViewModel.loadingProgress.value = false
             val intent = Intent()
             setResult(RESULT_OK, intent)

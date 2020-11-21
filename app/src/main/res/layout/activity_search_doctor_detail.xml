@@ -178,7 +178,7 @@
                         app:civ_border_width="1dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/user_placeholder" />
+                        app:srcCompat="@drawable/doc_place_holder" />
 
                     <TextView
                         android:id="@+id/textView93"
@@ -347,7 +347,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="8dp"
                     android:text="Availability"
-                    android:textColor="@color/colorBlack"
+                    android:textColor="@color/grey_700"
                     android:textSize="@dimen/_14sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -471,7 +471,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:text="Services"
-                    android:textColor="@color/colorBlack"
+                    android:textColor="@color/grey_700"
                     android:textSize="@dimen/_14sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider12" />
@@ -496,10 +496,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:drawableEnd="@drawable/ic_right"
-                    android:drawableTint="@color/colorButton"
+                    android:drawableTint="@color/colorPrimary"
                     android:onClick="@{()->viewmodel.viewAllClick()}"
                     android:text="View all"
-                    android:textColor="@color/colorButton"
+                    android:textColor="@color/colorPrimary"
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -522,7 +522,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:text="Specializations"
-                    android:textColor="@color/colorBlack"
+                    android:textColor="@color/grey_700"
                     android:textSize="@dimen/_14sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider13" />
@@ -554,7 +554,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:text="Location"
-                    android:textColor="@color/colorBlack"
+                    android:textColor="@color/grey_700"
                     android:textSize="@dimen/_14sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider14" />
@@ -566,6 +566,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:text="Hospital Name"
+                    android:textColor="@color/colorBlack"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/locations"
                     tools:text="@{viewmodel.clinic}" />
@@ -578,8 +579,7 @@
                     android:text="@{viewmodel.clinicAddress}"
                     app:layout_constraintStart_toStartOf="@+id/textView117"
                     app:layout_constraintTop_toBottomOf="@+id/textView117"
-                    tools:text="Hospital Address Name"
-                    android:textColor="@color/colorBlack"/>
+                    tools:text="Hospital Address Name" />
 
                 <ImageView
                     android:id="@+id/imageView27"

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.telehealthmanager.app.base.BaseViewModel
 import com.telehealthmanager.app.repositary.AppRepository
+import com.telehealthmanager.app.repositary.model.Appointment
 import com.telehealthmanager.app.repositary.model.AppointmentResponse
 import com.telehealthmanager.app.repositary.model.Response
 
@@ -15,8 +16,8 @@ class AppointmentViewModel : BaseViewModel<AppointmentNavigator>() {
     val text: LiveData<String> = _text
     var mResponse = MutableLiveData<AppointmentResponse>()
     var mCancelResponse = MutableLiveData<Response>()
-    var mUpcominglist: MutableList<AppointmentResponse.Upcomming.Appointment>? = arrayListOf()
-    var mPreviouslist: MutableList<AppointmentResponse.Previous.Appointment>? = arrayListOf()
+    var mUpcominglist: MutableList<Appointment>? = arrayListOf()
+    var mPreviouslist: MutableList<Appointment>? = arrayListOf()
     private val appRepository = AppRepository.instance()
 
     fun getAppointment() {

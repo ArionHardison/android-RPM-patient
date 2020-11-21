@@ -1,5 +1,6 @@
 package com.telehealthmanager.app.ui.adapter
 
+import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +10,15 @@ import android.widget.RadioButton
 import androidx.recyclerview.widget.RecyclerView
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.repositary.model.CardList
+import com.telehealthmanager.app.ui.activity.addmoney.AddMoneyViewModel
 import kotlinx.android.synthetic.main.list_item_card_list.view.*
 
-class CardListAdapter(val items: List<CardList>, val context: Context, val listener: ICardItemClick) :
+class CardListAdapter(
+    val items: List<CardList>,
+    val context: Context,
+    val listener: ICardItemClick,
+    val addMoneyModel: AddMoneyViewModel
+) :
     RecyclerView.Adapter<CardViewHolder>() {
     private var selectedPosition = ""
 
@@ -33,6 +40,20 @@ class CardListAdapter(val items: List<CardList>, val context: Context, val liste
             selectedPosition = position.toString()
             notifyDataSetChanged()
         }
+        holder.tvCardNumber.setOnLongClickListener {
+            val selectedItem: CardList = items[position]
+            addMoneyModel.mDeletedCard.set(selectedItem.card_id.toString())
+            val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+            builder.setMessage(context.getString(R.string.delete_card_info))
+                .setCancelable(false)
+                .setPositiveButton(R.string.yes) { dialog, id ->
+                    listener.onItemDelete(selectedItem)
+                    dialog.dismiss()
+                }.setNegativeButton(R.string.no) { dialog, id -> dialog.dismiss() }
+            val alert: AlertDialog = builder.create()
+            alert.show()
+            return@setOnLongClickListener true
+        }
     }
 
     override fun getItemCount(): Int = items.size
@@ -40,6 +61,7 @@ class CardListAdapter(val items: List<CardList>, val context: Context, val liste
 
 interface ICardItemClick {
     fun onItemClickCard(item: CardList)
+    fun onItemDelete(item: CardList)
 }
 
 class CardViewHolder(view: View) : RecyclerView.ViewHolder(view) {

@@ -17,6 +17,7 @@ import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseFragment
 import com.telehealthmanager.app.databinding.FragmentUpcomingAppointmentBinding
 import com.telehealthmanager.app.repositary.WebApiConstants
+import com.telehealthmanager.app.repositary.model.Appointment
 import com.telehealthmanager.app.repositary.model.AppointmentResponse
 import com.telehealthmanager.app.repositary.model.Response
 import com.telehealthmanager.app.ui.activity.visitedDoctor.VisitedDoctorsDetailActivity
@@ -35,7 +36,6 @@ import kotlin.collections.set
 class UpcomingAppointmentFragment : BaseFragment<FragmentUpcomingAppointmentBinding>(),
     AppointmentNavigator, IAppointmentListener {
 
-    val upcomingAppmts: ArrayList<String> = ArrayList()
     private lateinit var viewModel: AppointmentViewModel
     private lateinit var mDataBinding: FragmentUpcomingAppointmentBinding
     private var mAdapter: UpcomingAppointmentsListAdapter? = null
@@ -44,7 +44,6 @@ class UpcomingAppointmentFragment : BaseFragment<FragmentUpcomingAppointmentBind
     override fun getLayoutId(): Int = R.layout.fragment_upcoming_appointment
 
     override fun initView(mRootView: View?, mViewDataBinding: ViewDataBinding?) {
-        //addMenus()
         mDataBinding = mViewDataBinding as FragmentUpcomingAppointmentBinding
         viewModel = ViewModelProviders.of(this).get(AppointmentViewModel::class.java)
         mDataBinding.viewmodel = viewModel
@@ -52,13 +51,11 @@ class UpcomingAppointmentFragment : BaseFragment<FragmentUpcomingAppointmentBind
         initApiCal()
         initAdapter()
         observeResponse()
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -74,24 +71,16 @@ class UpcomingAppointmentFragment : BaseFragment<FragmentUpcomingAppointmentBind
     private fun initAdapter() {
         mAdapter = UpcomingAppointmentsListAdapter(viewModel.mUpcominglist!!, activity!!, this)
         mDataBinding.adapter = mAdapter
-        mDataBinding.rvUpcomingAppointments.addItemDecoration(
-            DividerItemDecoration(
-                activity!!,
-                DividerItemDecoration.VERTICAL
-            )
-        )
+        mDataBinding.rvUpcomingAppointments.addItemDecoration(DividerItemDecoration(activity!!, DividerItemDecoration.VERTICAL))
         mDataBinding.rvUpcomingAppointments.layoutManager = LinearLayoutManager(activity!!)
         mAdapter!!.notifyDataSetChanged()
     }
 
     private fun observeResponse() {
-
         viewModel.mResponse.observe(this, Observer<AppointmentResponse> {
             hideLoading()
-            viewModel.mUpcominglist =
-                it.upcomming.appointments as MutableList<AppointmentResponse.Upcomming.Appointment>?
-            viewModel.mPreviouslist =
-                it.previous.appointments as MutableList<AppointmentResponse.Previous.Appointment>?
+            viewModel.mUpcominglist = it.upcomming.appointments as MutableList<Appointment>?
+            viewModel.mPreviouslist = it.previous.appointments as MutableList<Appointment>?
             if (viewModel.mUpcominglist!!.size > 0) {
                 mDataBinding.tvNotFound.visibility = View.GONE
             } else {
@@ -116,7 +105,7 @@ class UpcomingAppointmentFragment : BaseFragment<FragmentUpcomingAppointmentBind
         })
     }
 
-    override fun onitemclick(selectedItem: AppointmentResponse.Upcomming.Appointment) {
+    override fun onItemClick(selectedItem: Appointment) {
         val intent = Intent(activity!!, VisitedDoctorsDetailActivity::class.java)
         intent.putExtra(WebApiConstants.IntentPass.iscancel, true)
         intent.putExtra(WebApiConstants.IntentPass.Appointment, selectedItem as Serializable)
@@ -132,16 +121,10 @@ class UpcomingAppointmentFragment : BaseFragment<FragmentUpcomingAppointmentBind
         }
     }
 
-    override fun onCancelclick(selectedItem: AppointmentResponse.Upcomming.Appointment) {
+    override fun onCancelClick(selectedItem: Appointment) {
         showLoading()
         val hashMap: HashMap<String, Any> = HashMap()
-        hashMap[WebApiConstants.AddAppointment.ID] = selectedItem.id
+        hashMap[WebApiConstants.AddAppointment.ID] = selectedItem.id.toString()
         viewModel.cancelAppointment(hashMap)
-    }
-
-    private fun addMenus() {
-        upcomingAppmts.add("Dr.Bretto")
-        rv_upcoming_appointments.layoutManager = LinearLayoutManager(context)
-        //rv_upcoming_appointments.adapter = context?.let { UpcomingAppointmentsListAdapter(upcomingAppmts, it) }
     }
 }

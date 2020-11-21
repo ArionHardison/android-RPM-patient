@@ -180,14 +180,21 @@ object ViewUtils {
     }
 
     fun setImageViewGlide(context: Context, imageView: ImageView, imagePath: String) {
-
         Glide.with(context)
             .load(imagePath)
             .thumbnail(0.5f)
             .error(R.drawable.app_logo)
             .placeholder(R.drawable.app_logo)
             .into(imageView)
+    }
 
+    fun setDocViewGlide(context: Context, imageView: ImageView, imagePath: String) {
+        Glide.with(context)
+            .load(imagePath)
+            .thumbnail(0.5f)
+            .error(R.drawable.doc_place_holder)
+            .placeholder(R.drawable.doc_place_holder)
+            .into(imageView)
     }
 
     fun getDayFormat(str: String): String {
