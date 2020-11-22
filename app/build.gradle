@@ -40,6 +40,7 @@ android {
             resValue "integer", "default_country_dial_code", "1"
             resValue "string", "default_country_code", "US"
             resValue "string", "default_country_iso", "USA"
+
             buildConfigField "String", "BASE_URL", '"https://telehealthmanager.net/"'
             buildConfigField "String", "BASE_IMAGE_URL", '"https://telehealthmanager.net/storage/"'
             buildConfigField "String", "CLIENT_SECRET", '"FUKbf4dklbxmZJ+09YPAtfKFh341TNP8HGUU8PFl"'
