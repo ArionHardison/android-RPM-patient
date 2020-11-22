@@ -47,16 +47,16 @@ class IncomingVideoCallActivity : AppCompatActivity(), View.OnClickListener {
         imgEndCall.setOnClickListener(this)
         imgAcceptCall.setOnClickListener(this)
 
-        val receiverPushResponse: ReceiverPushResponse = intent.getParcelableExtra("receiver_push") as ReceiverPushResponse
+        val receiverPushResponse: ReceiverPushResponse = intent.getParcelableExtra<ReceiverPushResponse>("receiver_push") as ReceiverPushResponse
         name = receiverPushResponse.name
         sender = receiverPushResponse.sender_id
         chatPath = receiverPushResponse.room_id
         isVideo = "1"
         lblName.setText(name)
         if (isVideo.equals("1", ignoreCase = true)) {
-            callType.setText("Incoming video call...")
+            callType.text = "Incoming video call..."
         } else {
-            callType.setText("Incoming audio call...")
+            callType.text = "Incoming audio call..."
         }
         playRingtone()
     }

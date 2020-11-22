@@ -83,14 +83,26 @@
                         android:text="@{viewmodel.specialit}"
                         tools:text="General Physician" />
 
-                    <TextView
-                        android:id="@+id/textView31"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/_2sdp"
-                        android:text="@{viewmodel.MClinic}"
-                        android:textColor="@color/colorBlack"
-                        tools:text="The Apollo Clinic" />
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:background="@drawable/ic_location" />
+
+                        <TextView
+                            android:id="@+id/textView31"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewmodel.MClinic}"
+                            android:textColor="@color/colorBlack"
+                            tools:text="12/43 Lakshmi nagar second street, velachery, chennai - 624588" />
+                    </LinearLayout>
+
                 </LinearLayout>
             </LinearLayout>
 

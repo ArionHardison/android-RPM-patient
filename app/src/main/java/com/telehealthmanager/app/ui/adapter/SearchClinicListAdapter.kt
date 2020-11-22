@@ -17,9 +17,7 @@ class SearchClinicListAdapter(val items: MutableList<SearchResponse.Clinic>, val
     RecyclerView.Adapter<SearchClinicViewHolder>() {
 
     override fun onBindViewHolder(holder:SearchClinicViewHolder, position: Int) {
-
         val item=items!![position]
-
         holder.itemBinding.textView90?.text = item.name
         holder.itemBinding.textView92?.text = item.address
         //ViewUtils.setImageViewGlide(context,  holder.itemBinding.imageView23, BuildConfig.BASE_IMAGE_URL.plus( item.hospitals[0]?.clinic?.clinic_photo))

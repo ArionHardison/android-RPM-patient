@@ -3,10 +3,12 @@ package com.telehealthmanager.app.ui.activity.otp
 
 import android.annotation.SuppressLint
 import android.util.Log
+import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.telehealthmanager.app.BaseApplication
+import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
 import com.telehealthmanager.app.data.Constant
@@ -17,9 +19,7 @@ import com.telehealthmanager.app.databinding.ActivityOtpBinding
 import com.telehealthmanager.app.ui.activity.main.MainActivity
 import com.telehealthmanager.app.ui.activity.register.RegisterNameActivity
 import com.telehealthmanager.app.utils.ViewUtils
-
 import com.telehealthmanager.doctor.repositary.model.LoginResponse
-import kotlinx.android.synthetic.main.activity_otp.*
 
 
 class OTPActivity : BaseActivity<ActivityOtpBinding>(), OTPNavigator {
@@ -37,18 +37,18 @@ class OTPActivity : BaseActivity<ActivityOtpBinding>(), OTPNavigator {
         viewModel = ViewModelProviders.of(this).get(OTPViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
-
         mDataBinding.backarrow.setOnClickListener {
             finish()
         }
         getIntentData()
-
-
         observeResponse()
-        mDataBinding.mobile.setText(viewModel.otp.value.toString())
 
+        if (BuildConfig.DEBUG) {
+            mDataBinding.mobile.text = viewModel.otp.value.toString()
+        } else {
+            mDataBinding.mobile.visibility = View.GONE
+        }
     }
-
 
     @SuppressLint("SetTextI18n")
     private fun getIntentData() {
@@ -58,9 +58,7 @@ class OTPActivity : BaseActivity<ActivityOtpBinding>(), OTPNavigator {
             viewModel.mobile.set(intent.getStringExtra(Constant.IntentData.MOBILE_NUMBER))
             viewModel.otp.value = intent.getStringExtra(Constant.IntentData.OTP)
             viewModel.islogin.value = intent.getBooleanExtra(Constant.IntentData.ISLOGIN, false)
-            mDataBinding.textInfo.text =
-                resources.getString(R.string.we_just_otp) + viewModel.countryCode.get()
-                    .toString() + viewModel.mobile.get().toString()
+            mDataBinding.textInfo.text = resources.getString(R.string.we_just_otp) + viewModel.countryCode.get().toString() + viewModel.mobile.get().toString()
         }
     }
 
@@ -87,7 +85,7 @@ class OTPActivity : BaseActivity<ActivityOtpBinding>(), OTPNavigator {
             //openNewActivity(this@OTPActivity, RegisterNameActivity::class.java, false)
         } else {
             preferenceHelper.setValue(PreferenceKey.ACCESS_TOKEN, data.getToken())
-            Log.e("ACCESS_TOKEN", data.getToken())
+            Log.e("ACCESS_TOKEN", data.getToken()!!)
             openNewActivity(this@OTPActivity, MainActivity::class.java, true)
             finishAffinity()
         }
@@ -102,7 +100,7 @@ class OTPActivity : BaseActivity<ActivityOtpBinding>(), OTPNavigator {
 
         if (mDataBinding.pinEntry.text.isNullOrBlank()) {
             ViewUtils.showToast(this@OTPActivity, getString(R.string.enter_otp), false)
-        } else if (mDataBinding.pinEntry.text.toString().equals(viewModel.otp.value.toString())) {
+        } else if (mDataBinding.pinEntry.text.toString() == viewModel.otp.value.toString()) {
             if (viewModel.islogin.value?.equals(true)!!) {
                 loadingObservable.value = true
                 viewModel.signIn()

@@ -194,21 +194,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
                     .into(profile_img)
             }
 
-            viewModel.mVideoIncomingResponse.observe(this, Observer<VideoStatusCheck> {
-                if (it.data != null) {
-                    val mainIntent = Intent(
-                        this,
-                        IncomingVideoCallActivity::class.java
-                    )
-                    mainIntent.flags =
-                        Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-                    mainIntent.putExtra("chat_path", it.data.roomId)
-                    mainIntent.putExtra("name", "Doctor")
-                    mainIntent.putExtra("is_video", "1")
-                    startActivity(mainIntent)
-                } else {
-                }
-            })
         })
 
         viewModel.getErrorObservable().observe(this, Observer<String> { message ->

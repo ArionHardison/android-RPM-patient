@@ -27,7 +27,6 @@ class ChatAdapter(val context: Context, val list: List<Chat>,val listener:IChatL
                 holder.listItemChat.imgProfilePic,
                 item.hospital.doctor_profile?.profile_pic.toString()
             )
-
         holder.listItemChat.cardViewChatItem.setOnClickListener {
             listener.onChatClicked(item)
         }

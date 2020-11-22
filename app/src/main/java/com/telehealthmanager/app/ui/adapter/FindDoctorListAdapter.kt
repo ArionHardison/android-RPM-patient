@@ -35,26 +35,28 @@ class FindDoctorListAdapter(
     }
 
     override fun onBindViewHolder(holder: FindDoctorViewHolder, position: Int) {
-        val item = SearchList[position]
-        if (item.hospital.isNotEmpty()) {
+        val item: DoctorListResponse.specialities.DoctorProfile = SearchList[position]
+        if (!item.hospital.isNullOrEmpty()) {
             holder.itemBinding.textView47.text = (item.hospital[0].first_name ?: "").plus(" ").plus(item.hospital[0].last_name ?: "")
-            holder.itemBinding.textView52.text = (item.hospital[0].clinic?.name ?: "").plus(" , ").plus(item.hospital[0].clinic?.address ?: "")
+            holder.itemBinding.textView52.text = (item.hospital[0].clinic.name ?: "").plus(" , ").plus(item.hospital[0].clinic?.address ?: "")
             holder.itemBinding.textView46.text = (item.hospital[0].feedback_percentage ?: "0").plus("%")
-            when (item.hospital[0].availability) {
-                "today" -> {
-                    holder.itemBinding.textView51.visibility = View.VISIBLE
-                    holder.itemBinding.textView51.text = context.getString(R.string.avaliable_today)
-                    holder.itemBinding.textView51.setTextColor(Color.parseColor("#5AB357"))
-                    holder.itemBinding.textView51.setBackgroundResource(R.drawable.available_today)
-                }
-                "tommorrow" -> {
-                    holder.itemBinding.textView51.visibility = View.VISIBLE
-                    holder.itemBinding.textView51.text = context.getString(R.string.avaliable_tomorrow)
-                    holder.itemBinding.textView51.setTextColor(Color.parseColor("#DC852E"))
-                    holder.itemBinding.textView51.setBackgroundResource(R.drawable.available_tomorrow)
-                }
-                else -> {
-                    holder.itemBinding.textView51.visibility = View.GONE;
+            if (item.hospital[0].availability != null) {
+                when (item.hospital[0].availability) {
+                    "today" -> {
+                        holder.itemBinding.textView51.visibility = View.VISIBLE
+                        holder.itemBinding.textView51.text = context.getString(R.string.avaliable_today)
+                        holder.itemBinding.textView51.setTextColor(Color.parseColor("#5AB357"))
+                        holder.itemBinding.textView51.setBackgroundResource(R.drawable.available_today)
+                    }
+                    "tommorrow" -> {
+                        holder.itemBinding.textView51.visibility = View.VISIBLE
+                        holder.itemBinding.textView51.text = context.getString(R.string.avaliable_tomorrow)
+                        holder.itemBinding.textView51.setTextColor(Color.parseColor("#DC852E"))
+                        holder.itemBinding.textView51.setBackgroundResource(R.drawable.available_tomorrow)
+                    }
+                    else -> {
+                        holder.itemBinding.textView51.visibility = View.GONE;
+                    }
                 }
             }
 
@@ -118,9 +120,7 @@ class FindDoctorListAdapter(
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-
-                SearchList =
-                    results?.values as MutableList<DoctorListResponse.specialities.DoctorProfile>
+                SearchList = results?.values as MutableList<DoctorListResponse.specialities.DoctorProfile>
                 notifyDataSetChanged()
             }
 

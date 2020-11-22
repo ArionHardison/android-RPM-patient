@@ -60,12 +60,11 @@ class NetworkModule {
         override fun intercept(chain: Interceptor.Chain): Response {
             val builder = chain.request().newBuilder()
             builder.addHeader("X-Requested-With", "XMLHttpRequest")
-            val token = Objects.requireNonNull(
+            val token: String =
                 PreferenceManager.getDefaultSharedPreferences(BaseApplication.baseApplication).getString(
                     PreferenceKey.ACCESS_TOKEN,
                     ""
-                )
-            )
+                )!!
             builder.addHeader("Authorization", M_TOKEN + token)
             Log.d("TTT access_token", token)
             return chain.proceed(builder.build())

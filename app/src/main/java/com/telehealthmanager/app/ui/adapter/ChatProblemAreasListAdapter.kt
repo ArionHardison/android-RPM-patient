@@ -30,8 +30,7 @@ class ChatProblemAreasListAdapter(val items: MutableList<CategoryResponse.Catego
         if(item.offer_fees==0.00){
             holder.itemBinding.tvPrice.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY,"$"),item.fees.toString())
             holder.itemBinding.tvStrikePrice.visibility=View.GONE
-        }
-        else{
+        } else{
             holder.itemBinding.tvStrikePrice.visibility=View.VISIBLE
             holder.itemBinding.tvPrice.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY,"$"),item.offer_fees.toString())
             holder.itemBinding.tvStrikePrice.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY,"$"),item.fees.toString())

@@ -74,14 +74,17 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
                 mDataBinding.imageView25,
                 BuildConfig.BASE_IMAGE_URL.plus(viewModel.mDoctorProfile.value!!.profile_pic)
             )
-            if (viewModel.mDoctorProfile.value!!.hospital.size > 0) {
+            if (viewModel.mDoctorProfile.value!!.hospital.isNotEmpty()) {
                 viewModel.profilePic.set(viewModel.mDoctorProfile.value!!.profile_pic)
                 viewModel.favourite.set(viewModel.mDoctorProfile.value!!.hospital[0].is_favourite.toString())
                 viewModel.name.set(viewModel.mDoctorProfile.value!!.hospital[0]?.first_name.plus(" ").plus(viewModel.mDoctorProfile.value!!.hospital[0]?.last_name))
                 viewModel.specialities.set(viewModel.mDoctorProfile.value!!.speciality?.name ?: "")
                 val doctorDegree = viewModel.mDoctorProfile.value!!
                 if (doctorDegree.certification != null) {
-                    viewModel.degree.set(viewModel.mDoctorProfile.value!!.certification.plus(" - "))
+                    viewModel.degree.set(doctorDegree.certification.plus(" - "))
+                }
+                if (doctorDegree.speciality?.name != null) {
+                    viewModel.branch.set(doctorDegree.speciality.name)
                 }
                 viewModel.branch.set(doctorDegree.speciality.name)
                 viewModel.percentage.set(viewModel.mDoctorProfile.value!!.hospital[0]?.feedback_percentage ?: "0".plus("%"))
@@ -113,9 +116,12 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
             viewModel.specialities.set(viewModel.mFavDoctorProfile.value!!.hospital?.doctor_profile?.speciality?.name ?: "")
             val doctorDegree = viewModel.mFavDoctorProfile.value!!.hospital?.doctor_profile
             if (doctorDegree.certification != null) {
-                viewModel.degree.set(viewModel.mDoctorProfile.value!!.certification.plus(" - "))
+                viewModel.degree.set(doctorDegree.certification.plus(" - "))
             }
-            viewModel.branch.set(viewModel.mFavDoctorProfile.value!!.hospital?.specialities_name)
+            if (doctorDegree.speciality?.name != null) {
+                viewModel.branch.set(doctorDegree.speciality.name)
+            }
+
             viewModel.percentage.set(viewModel.mFavDoctorProfile.value!!.hospital?.feedback_percentage ?: "0".plus("%"))
             viewModel.experience.set(viewModel.mFavDoctorProfile.value!!.hospital?.doctor_profile?.experience ?: "0")
             viewModel.fee.set(preferenceHelper.getValue(PreferenceKey.CURRENCY, "$").toString().plus(viewModel.mFavDoctorProfile.value!!.hospital?.doctor_profile?.fees ?: "0"))
@@ -132,32 +138,33 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
             initAdapter()
         } else if (searchDoctor != null) {
             viewModel.mSearchDoctorProfile.value = searchDoctor
-            viewModel.id.set(viewModel.mSearchDoctorProfile.value!!.id)
-            ViewUtils.setDocViewGlide(this@SearchDoctorDetailActivity, mDataBinding.imageView25, BuildConfig.BASE_IMAGE_URL.plus(viewModel.mSearchDoctorProfile.value!!.doctor_profile?.profile_pic))
-            viewModel.profilePic.set(viewModel.mSearchDoctorProfile.value!!.doctor_profile?.profile_pic)
-            viewModel.name.set(viewModel.mSearchDoctorProfile.value!!.first_name.plus(" ").plus(viewModel.mSearchDoctorProfile.value!!.last_name))
-            viewModel.favourite.set(viewModel.mSearchDoctorProfile.value!!.is_favourite.toString())
-            viewModel.specialities.set(viewModel.mSearchDoctorProfile.value!!.doctor_profile?.speciality?.name ?: "")
-            val doctorDegree = viewModel.mSearchDoctorProfile.value!!.doctor_profile
+            viewModel.id.set(searchDoctor.id)
+            ViewUtils.setDocViewGlide(this@SearchDoctorDetailActivity, mDataBinding.imageView25, BuildConfig.BASE_IMAGE_URL.plus(searchDoctor.doctor_profile?.profile_pic))
+            viewModel.profilePic.set(searchDoctor.doctor_profile?.profile_pic)
+            viewModel.name.set(searchDoctor.first_name.plus(" ").plus(searchDoctor.last_name))
+            viewModel.favourite.set(searchDoctor.is_favourite.toString())
+            viewModel.specialities.set(searchDoctor.doctor_profile?.speciality?.name ?: "")
+            val doctorDegree = searchDoctor.doctor_profile
             if (doctorDegree.certification != null) {
-                viewModel.degree.set(viewModel.mDoctorProfile.value!!.certification.plus(" - "))
+                viewModel.degree.set(doctorDegree.certification.plus(" - "))
             }
-            viewModel.branch.set(viewModel.mSearchDoctorProfile.value!!.specialities_name)
-            viewModel.percentage.set(viewModel.mSearchDoctorProfile.value!!.feedback_percentage ?: "0".plus("%"))
-            viewModel.experience.set(viewModel.mSearchDoctorProfile.value!!.doctor_profile?.experience ?: "0")
-            viewModel.fee.set(preferenceHelper.getValue(PreferenceKey.CURRENCY, "$").toString().plus(viewModel.mSearchDoctorProfile.value!!.doctor_profile?.fees ?: "0"))
-            viewModel.clinic.set(viewModel.mSearchDoctorProfile.value!!.clinic?.name)
-            viewModel.clinicAddress.set(viewModel.mSearchDoctorProfile.value!!.clinic?.address)
-            if (viewModel.mSearchDoctorProfile.value!!.clinic?.static_map != null)
-                ViewUtils.setDocViewGlide(this@SearchDoctorDetailActivity, mDataBinding.imageView27, viewModel.mSearchDoctorProfile.value!!.clinic?.static_map)
+            if (doctorDegree.speciality?.name != null) {
+                viewModel.branch.set(doctorDegree.speciality.name)
+            }
+            viewModel.percentage.set(searchDoctor.feedback_percentage ?: "0".plus("%"))
+            viewModel.experience.set(searchDoctor.doctor_profile?.experience ?: "0")
+            viewModel.fee.set(preferenceHelper.getValue(PreferenceKey.CURRENCY, "$").toString().plus(searchDoctor.doctor_profile?.fees ?: "0"))
+            viewModel.clinic.set(searchDoctor.clinic?.name)
+            viewModel.clinicAddress.set(searchDoctor.clinic?.address)
+            if (searchDoctor.clinic?.static_map != null)
+                ViewUtils.setDocViewGlide(this@SearchDoctorDetailActivity, mDataBinding.imageView27, searchDoctor.clinic?.static_map)
             else
                 mDataBinding.imageView27.visibility = View.GONE
-            viewModel.mfeedbacklist = viewModel.mSearchDoctorProfile.value!!.feedback as MutableList<Hospital.Feedback>?
-            viewModel.mservcielist = viewModel.mSearchDoctorProfile.value!!.doctor_service as MutableList<Hospital.DoctorService>?
-            viewModel.mTimingList = viewModel.mSearchDoctorProfile.value!!.timing as MutableList<Hospital.Timing>?
-            viewModel.mphotoslist = viewModel.mSearchDoctorProfile.value!!.clinic?.clinic_photo as MutableList<Hospital.Clinic.photos>?
+            viewModel.mfeedbacklist = searchDoctor.feedback as MutableList<Hospital.Feedback>?
+            viewModel.mservcielist = searchDoctor.doctor_service as MutableList<Hospital.DoctorService>?
+            viewModel.mTimingList = searchDoctor.timing as MutableList<Hospital.Timing>?
+            viewModel.mphotoslist = searchDoctor.clinic?.clinic_photo as MutableList<Hospital.Clinic.photos>?
             initAdapter()
-
         }
         if (viewModel.mTimingList != null) {
             for (item in viewModel.mTimingList!!) {

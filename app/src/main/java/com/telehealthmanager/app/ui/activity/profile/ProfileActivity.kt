@@ -340,8 +340,10 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
                 }
 
                 Constant.REQUEST_AUTOCOMPLETE -> {
-                    val place: Place = Autocomplete.getPlaceFromIntent(data!!)
-                    viewModel.location.set(place.name.toString().plus(", ").plus(place.address.toString()))
+                    if(resultCode == Activity.RESULT_OK){
+                        val place: Place = Autocomplete.getPlaceFromIntent(data!!)
+                        viewModel.location.set(place.name.toString().plus(", ").plus(place.address.toString()))
+                    }
                 }
             }
         }
@@ -356,7 +358,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
                 .setMultiTouchEnabled(true)
                 .start(this)
         } catch (ex: Exception) {
-            Log.e("CropImage", ex.message)
+            Log.e("CropImage", ex.message!!)
         }
     }
 

@@ -2,6 +2,7 @@ package com.telehealthmanager.app.ui.activity.searchGlobal
 
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
@@ -51,39 +52,51 @@ class SearchGlobalActivity : BaseActivity<ActivityGlobalSearchBinding>(), Search
         viewModel.search.set("")
         loadingObservable.value = true
         val hashMap: HashMap<String, Any> = HashMap()
-        viewModel.getgloblsearch(hashMap)
+        viewModel.getGlobalSearch(hashMap)
     }
 
     private fun observeResponse() {
+        viewModel.loadingProgress.observe(this, Observer {
+            if (it) {
+                mDataBinding.searchProgress.visibility = View.VISIBLE
+                mDataBinding.searchImage.visibility = View.GONE
+            } else {
+                mDataBinding.searchProgress.visibility = View.GONE
+                mDataBinding.searchImage.visibility = View.VISIBLE
+            }
+        })
+
         viewModel.mResponse.observe(this, Observer<SearchResponse> {
-            viewModel.mDoctorslist = it.doctors as MutableList<Hospital>?
-            if (viewModel.mDoctorslist!!.size > 0) {
+            viewModel.mDoctorsList = it.doctors as MutableList<Hospital>?
+            if (viewModel.mDoctorsList!!.size > 0) {
                 viewModel.listsize.set(it.doctors.size.toString())
                 mDataBinding.isdoctor = true
             } else {
                 mDataBinding.isdoctor = false
             }
-            mAdapter = SearchDoctorsListAdapter(viewModel.mDoctorslist!!, this@SearchGlobalActivity)
+            mAdapter = SearchDoctorsListAdapter(viewModel.mDoctorsList!!, this@SearchGlobalActivity)
             mDataBinding.doctoradapter = mAdapter
             mAdapter!!.notifyDataSetChanged()
             //catagory
-            viewModel.mCatagorylist = it.specialities as MutableList<SearchResponse.Specialities>?
-            mDataBinding.iscatagory = viewModel.mCatagorylist!!.size > 0
-            mcatagoryAdapter = SearchcatagoryListAdapter(viewModel.mCatagorylist!!, this@SearchGlobalActivity)
+            viewModel.mCategoryList = it.specialities as MutableList<SearchResponse.Specialities>?
+            mDataBinding.iscatagory = viewModel.mCategoryList!!.size > 0
+            mcatagoryAdapter = SearchcatagoryListAdapter(viewModel.mCategoryList!!, this@SearchGlobalActivity)
             mDataBinding.specialitiesadapter = mcatagoryAdapter
             mcatagoryAdapter!!.notifyDataSetChanged()
 
             //clinic
-            viewModel.mCliniclist = it.clinic as MutableList<SearchResponse.Clinic>?
-            mDataBinding.isclinic = viewModel.mCliniclist!!.size > 0
-            mclinicAdapter = SearchClinicListAdapter(viewModel.mCliniclist!!, this@SearchGlobalActivity)
+            viewModel.mClinicList = it.clinic as MutableList<SearchResponse.Clinic>?
+            mDataBinding.isclinic = viewModel.mClinicList!!.size > 0
+            mclinicAdapter = SearchClinicListAdapter(viewModel.mClinicList!!, this@SearchGlobalActivity)
             mDataBinding.clinicadapter = mclinicAdapter
             mclinicAdapter!!.notifyDataSetChanged()
             loadingObservable.value = false
+            viewModel.loadingProgress.value=false
         })
 
         viewModel.getErrorObservable().observe(this, Observer<String> { message ->
             loadingObservable.value = false
+            viewModel.loadingProgress.value=false
             ViewUtils.showToast(this@SearchGlobalActivity, message, false)
         })
     }
@@ -92,7 +105,7 @@ class SearchGlobalActivity : BaseActivity<ActivityGlobalSearchBinding>(), Search
         decorator = DividerItemDecoration(applicationContext, LinearLayoutManager.VERTICAL)
         decorator.setDrawable(ContextCompat.getDrawable(applicationContext, R.drawable.divider)!!)
 
-        mAdapter = SearchDoctorsListAdapter(viewModel.mDoctorslist!!, this@SearchGlobalActivity)
+        mAdapter = SearchDoctorsListAdapter(viewModel.mDoctorsList!!, this@SearchGlobalActivity)
         mDataBinding.doctoradapter = mAdapter
 
         mDataBinding.rvDoctorsList.addItemDecoration(decorator)
@@ -101,7 +114,7 @@ class SearchGlobalActivity : BaseActivity<ActivityGlobalSearchBinding>(), Search
         mAdapter!!.notifyDataSetChanged()
 
         //catagory
-        mcatagoryAdapter = SearchcatagoryListAdapter(viewModel.mCatagorylist!!, this@SearchGlobalActivity)
+        mcatagoryAdapter = SearchcatagoryListAdapter(viewModel.mCategoryList!!, this@SearchGlobalActivity)
         mDataBinding.specialitiesadapter = mcatagoryAdapter
 
         mDataBinding.rvSpecialities.addItemDecoration(decorator)
@@ -109,7 +122,7 @@ class SearchGlobalActivity : BaseActivity<ActivityGlobalSearchBinding>(), Search
         mcatagoryAdapter!!.notifyDataSetChanged()
 
         //clinic
-        mclinicAdapter = SearchClinicListAdapter(viewModel.mCliniclist!!, this@SearchGlobalActivity)
+        mclinicAdapter = SearchClinicListAdapter(viewModel.mClinicList!!, this@SearchGlobalActivity)
         mDataBinding.clinicadapter = mclinicAdapter
         mDataBinding.rvClinic.addItemDecoration(decorator)
         mDataBinding.rvClinic.layoutManager = LinearLayoutManager(applicationContext)
@@ -123,10 +136,11 @@ class SearchGlobalActivity : BaseActivity<ActivityGlobalSearchBinding>(), Search
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s!!.length > 0) {
+                if (s!!.isNotEmpty()) {
                     val hashMap: HashMap<String, Any> = HashMap()
                     hashMap[WebApiConstants.Home.SEARCH] = s.toString()
-                    viewModel.getgloblsearch(hashMap)
+                    viewModel.getGlobalSearch(hashMap)
+                    viewModel.loadingProgress.value=true
                     viewModel.search.set(s.toString())
                 } else {
                     initApiCal()

@@ -246,6 +246,7 @@ class AppRepository : BaseRepository() {
                 }
             })
     }
+
     fun cancelAppointment(viewModel: ViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .cancelAppointment(params)
@@ -451,7 +452,6 @@ class AppRepository : BaseRepository() {
                 if (viewModel is SearchGlobalViewModel) {
                     viewModel.mResponse.value = it
                 }
-
             }, {
                 if (viewModel is SearchGlobalViewModel) {
                     viewModel.getErrorObservable().value = getErrorMessage(it)

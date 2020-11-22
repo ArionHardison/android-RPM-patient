@@ -5,14 +5,30 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    compileSdkVersion 30
+
+    signingConfigs {
+        release {
+            keyAlias 'telehealth_android_patient'
+            keyPassword 'telehealth_android_patient'
+            storeFile file('jks/telehealth_android_patient.jks')
+            storePassword 'telehealth_android_patient'
+        }
+        debug {
+            keyAlias 'telehealth_android_patient'
+            keyPassword 'telehealth_android_patient'
+            storeFile file('jks/telehealth_android_patient.jks')
+            storePassword 'telehealth_android_patient'
+        }
+    }
+
+
     defaultConfig {
         applicationId "com.telehealthmanager.app"
         minSdkVersion 17
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
@@ -20,12 +36,10 @@ android {
     }
     buildTypes {
         debug {
-
             resValue "string", "google_map_api", "AIzaSyB7ls-7iiB5vM9BDxHnMcD6khxv4a_S06Q"
             resValue "integer", "default_country_dial_code", "1"
             resValue "string", "default_country_code", "US"
             resValue "string", "default_country_iso", "USA"
-
             buildConfigField "String", "BASE_URL", '"https://telehealthmanager.net/"'
             buildConfigField "String", "BASE_IMAGE_URL", '"https://telehealthmanager.net/storage/"'
             buildConfigField "String", "CLIENT_SECRET", '"FUKbf4dklbxmZJ+09YPAtfKFh341TNP8HGUU8PFl"'
@@ -35,7 +49,7 @@ android {
             buildConfigField "String", "STRIPE_KEY", '"pk_test_EacUddWKtq5XqAt3dGdpr0YW"'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-
+            signingConfig signingConfigs.release
         }
         release {
 
@@ -45,7 +59,7 @@ android {
                 abortOnError false
             }
 
-            resValue "string", "google_map_api", "AIzaSyB7ls-7iiB5vM9BDxHnMcD6khxv4a_S06Q"
+            resValue "string", "google_map_api", "AIzaSyDek9B5Yg-08qkb-72W-Uiz4joQN1BJM0w"
             resValue "integer", "default_country_dial_code", "1"
             resValue "string", "default_country_code", "US"
             resValue "string", "default_country_iso", "USA"
@@ -59,7 +73,6 @@ android {
             buildConfigField "String", "STRIPE_KEY", '"pk_test_EacUddWKtq5XqAt3dGdpr0YW"'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            //signingConfig signingConfigs.release
         }
     }
 

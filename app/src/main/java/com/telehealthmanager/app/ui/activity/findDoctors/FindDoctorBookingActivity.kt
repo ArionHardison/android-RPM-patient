@@ -61,9 +61,9 @@ class FindDoctorBookingActivity : BaseActivity<ActivityFindDoctorBookingBinding>
                     ""
                 ).toString()
             )
-            .placeholder(R.drawable.user_placeholder)
-            .error(R.drawable.user_placeholder)
-            .fallback(R.drawable.user_placeholder)
+            .placeholder(R.drawable.doc_place_holder)
+            .error(R.drawable.doc_place_holder)
+            .fallback(R.drawable.doc_place_holder)
             .into(mDataBinding.searchDocImg)
 
 

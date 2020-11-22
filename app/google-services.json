@@ -15,10 +15,63 @@
       },
       "oauth_client": [
         {
+          "client_id": "599024491005-rjrf52hpm8to8nrf5l5ai0rd3kurfpqd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.telehealthmanager.app",
+            "certificate_hash": "973fc4b1d031acf8e23d209bf450cf9e5045e1ee"
+          }
+        },
+        {
           "client_id": "599024491005-4tt4bn8afsrc58dnrlt76iatst4do5k9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.telehealthmanager.app",
+            "certificate_hash": "078c0d83833f89a2719dc9bb68dd54278548c635"
+          }
+        },
+        {
+          "client_id": "599024491005-1h0bpi5iuc0c2me5kp6i15vefibjmju8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7ls-7iiB5vM9BDxHnMcD6khxv4a_S06Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "599024491005-1h0bpi5iuc0c2me5kp6i15vefibjmju8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:599024491005:android:05eca3fd666632e518e194",
+        "android_client_info": {
+          "package_name": "com.telehealthmanager.doctor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "599024491005-uvc8lcm1gvf1fjl0mqljdc01fg2n4g6d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.telehealthmanager.doctor",
+            "certificate_hash": "753aa151c812591af6b10119b4195b172b366701"
+          }
+        },
+        {
+          "client_id": "599024491005-h1gs9pu5ovu2n1ur35si8t867qv294ed.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.telehealthmanager.doctor",
             "certificate_hash": "078c0d83833f89a2719dc9bb68dd54278548c635"
           }
         },

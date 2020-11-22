@@ -22,7 +22,7 @@ class FavDoctorListAdapter(val items: MutableList<MainResponse.Doctor>, val cont
         val item = items[position]
         if (item.hospital != null) {
             holder.itemBinding.favdoctorName.text = item.hospital.first_name.plus(" ").plus(item.hospital.last_name)
-            holder.itemBinding.favDrTypeTxt.text = item.hospital.doctor_profile.speciality.name
+            holder.itemBinding.favDrTypeTxt.text = item.hospital.doctor_profile.speciality?.name
             ViewUtils.setDocViewGlide(context, holder.itemBinding.imageView8, BuildConfig.BASE_IMAGE_URL.plus(item.hospital?.doctor_profile?.profile_pic))
             holder.itemView.setOnClickListener {
                 val intent = Intent(context, SearchDoctorDetailActivity::class.java)

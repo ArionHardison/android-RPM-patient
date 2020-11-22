@@ -21,8 +21,7 @@ class SearchDoctorsListAdapter(val items: MutableList<Hospital>, val context: Co
     RecyclerView.Adapter<SearchDoctorsViewHolder>() {
 
     override fun onBindViewHolder(holder: SearchDoctorsViewHolder, position: Int) {
-
-        val item = items!![position]
+        val item = items[position]
         holder.itemBinding.textView90?.text = item.first_name.plus(" ").plus(item.last_name)
         if (item.doctor_profile?.speciality?.name != null) {
             holder.itemBinding.textView92?.text = item.doctor_profile?.speciality?.name
