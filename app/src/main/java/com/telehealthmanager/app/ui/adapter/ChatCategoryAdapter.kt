@@ -34,12 +34,12 @@ class ChatCategoryAdapter(val items: MutableList<CategoryResponse.Category>, val
         val item = SearchList!![position]
         holder.itemBinding.tvName.text = item.name
         holder.itemBinding.tvStrikePrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-        if (item.offer_fees == 0.00) {
+        if (item.discount == 0.00) {
             holder.itemBinding.tvPrice.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"), item.fees.toString())
             holder.itemBinding.tvStrikePrice.visibility = View.GONE
         } else {
             holder.itemBinding.tvStrikePrice.visibility = View.VISIBLE
-            holder.itemBinding.tvPrice.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"), item.offer_fees.toString())
+            holder.itemBinding.tvPrice.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"), item.discount.toString())
             holder.itemBinding.tvStrikePrice.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"), item.fees.toString())
         }
         // ViewUtils.setImageViewGlide(context,  holder.itemBinding.imageView16, BuildConfig.BASE_IMAGE_URL.plus(item?.image!!))

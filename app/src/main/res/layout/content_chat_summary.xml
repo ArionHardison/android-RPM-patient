@@ -28,7 +28,6 @@
             android:drawableStart="@drawable/ic_check_black_18dp"
             android:drawablePadding="@dimen/_6sdp"
             android:text="@string/verified_specialists_online_now"
-            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,29 +36,43 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewVerifiedText">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvSpecialist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:background="@null"
+                android:orientation="horizontal"
+                android:scrollbars="none"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="5"
+                android:visibility="gone"
+                tools:listitem="@layout/list_item_doctor_image" />
+
+            <include
+                android:id="@+id/doctorRow"
+                layout="@layout/list_item_doctor_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal"
-                android:scrollbars="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:itemCount="5"
-                tools:listitem="@layout/list_item_doctor_image" />
+                android:layout_marginStart="20dp" />
 
             <TextView
                 android:id="@+id/tvDoctorCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/_5sdp"
                 android:gravity="center"
                 android:padding="@dimen/_4sdp"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:text="+120 More" />
+
         </LinearLayout>
 
         <LinearLayout

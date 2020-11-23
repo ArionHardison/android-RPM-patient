@@ -50,7 +50,7 @@ android {
             buildConfigField "String", "STRIPE_KEY", '"pk_test_EacUddWKtq5XqAt3dGdpr0YW"'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            //signingConfig signingConfigs.release
         }
         release {
 

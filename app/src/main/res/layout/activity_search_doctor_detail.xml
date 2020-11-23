@@ -665,6 +665,7 @@
             android:onClick="@{()->viewmodel.shareClick()}"
             android:text="Share Experience"
             android:textAllCaps="false"
+            android:visibility="gone"
             android:textColor="@color/colorButton"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button28"
@@ -685,8 +686,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/button27"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintStart_toEndOf="@+id/button27"
-            app:layout_constraintTop_toTopOf="@+id/button27" />
+            app:layout_constraintStart_toEndOf="@+id/button27" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

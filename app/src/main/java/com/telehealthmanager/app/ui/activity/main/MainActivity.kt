@@ -1,8 +1,6 @@
 package com.telehealthmanager.app.ui.activity.main
 
 import android.content.Intent
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -25,15 +23,9 @@ import com.telehealthmanager.app.base.BaseActivity
 import com.telehealthmanager.app.data.*
 import com.telehealthmanager.app.databinding.ActivityMainBinding
 import com.telehealthmanager.app.repositary.model.ProfileResponse
-import com.telehealthmanager.app.repositary.model.Response
-import com.telehealthmanager.app.repositary.model.VideoStatusCheck
 import com.telehealthmanager.app.ui.activity.profile.ProfileActivity
-import com.telehealthmanager.app.ui.activity.splash.SplashActivity
-import com.telehealthmanager.app.ui.twilio.IncomingVideoCallActivity
-import com.telehealthmanager.app.utils.NetworkUtils
 import com.telehealthmanager.app.utils.ViewUtils
 import java.util.*
-import kotlin.collections.HashMap
 
 class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -44,8 +36,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
     private lateinit var navView: NavigationView
     private lateinit var headerview: View
     private lateinit var name: TextView
-    private lateinit var profile_completed: TextView
-    private lateinit var profile_img: ImageView
+    private lateinit var profileCompleted: TextView
+    private lateinit var profileImg: ImageView
     private var checkRequestTimer: Timer? = null
 
     override fun getLayoutId(): Int = R.layout.activity_main
@@ -59,7 +51,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
         initUI()
         initApiCal()
         observeResponse()
-
     }
 
     private fun initApiCal() {
@@ -102,8 +93,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
         navView.setupWithNavController(navController)
 
         name = headerview.findViewById(R.id.name)
-        profile_completed = headerview.findViewById(R.id.profile_completed)
-        profile_img = headerview.findViewById(R.id.profile_img)
+        profileCompleted = headerview.findViewById(R.id.profile_completed)
+        profileImg = headerview.findViewById(R.id.profile_img)
         name.setText(
             preferenceHelper.getValue(PreferenceKey.FIRST_NAME, "Test").toString().plus(" ").plus(
                 preferenceHelper.getValue(
@@ -112,7 +103,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
                 ).toString()
             )
         )
-        profile_completed.setText(
+        profileCompleted.setText(
             getString(R.string.profile_completed).plus(" ").plus(
                 preferenceHelper.getValue(
                     PreferenceKey.PROFILE_PER,
@@ -177,7 +168,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
                     " "
                 ).plus(preferenceHelper.getValue(PreferenceKey.LAST_NAME, "Test").toString())
             )
-            profile_completed.setText(
+            profileCompleted.setText(
                 getString(R.string.profile_completed).plus(" ").plus(
                     preferenceHelper.getValue(
                         PreferenceKey.PROFILE_PER,
@@ -191,7 +182,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
                     .load(BuildConfig.BASE_IMAGE_URL + it.patient?.profile?.profile_pic)
                     .error(R.drawable.app_logo)
                     .placeholder(R.drawable.app_logo)
-                    .into(profile_img)
+                    .into(profileImg)
             }
 
         })

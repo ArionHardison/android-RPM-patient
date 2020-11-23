@@ -3,6 +3,7 @@ package com.telehealthmanager.app.ui.activity.splash
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.data.PreferenceHelper
@@ -20,7 +21,7 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         //Initialize the Handler
-        mDelayHandler = Handler()
+        mDelayHandler = Handler(Looper.myLooper()!!)
 
         //Navigate with delay
         mDelayHandler!!.postDelayed(mRunnable, SPLASH_DELAY)

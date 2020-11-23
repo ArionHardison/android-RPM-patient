@@ -90,6 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:focusable="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/llPatientName">
@@ -97,9 +98,10 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="false"
                     android:hint="Contact Number"
                     android:imeOptions="actionNext"
-                    android:inputType="phone"
+                    android:inputType="none"
                     android:maxLines="1"
                     android:text="@={viewmodel.number}" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -272,8 +274,8 @@
                     android:hint="Location"
                     android:imeOptions="actionDone"
                     android:inputType="none"
-                    android:onClick="@{()->viewmodel.openLocation()}"
                     android:maxLines="2"
+                    android:onClick="@{()->viewmodel.openLocation()}"
                     android:text="@={viewmodel.location}" />
             </com.google.android.material.textfield.TextInputLayout>
 

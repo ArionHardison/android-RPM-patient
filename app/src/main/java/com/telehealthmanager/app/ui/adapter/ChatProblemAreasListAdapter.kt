@@ -13,30 +13,29 @@ import com.telehealthmanager.app.R
 import com.telehealthmanager.app.data.PreferenceHelper
 import com.telehealthmanager.app.data.PreferenceKey
 import com.telehealthmanager.app.data.getValue
-import com.telehealthmanager.app.databinding.ListItemCategoryBinding
 import com.telehealthmanager.app.databinding.ListItemCategoryWithImageBinding
 import com.telehealthmanager.app.repositary.model.CategoryResponse
 import com.telehealthmanager.app.utils.ViewUtils
 
-class ChatProblemAreasListAdapter(val items: MutableList<CategoryResponse.Category>, val context: Context,val listener:IChatProblemAreaListener) :
+class ChatProblemAreasListAdapter(val items: MutableList<CategoryResponse.Category>, val context: Context, val listener: IChatProblemAreaListener) :
     RecyclerView.Adapter<ChatProblemsViewHolder>() {
 
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
 
     override fun onBindViewHolder(holder: ChatProblemsViewHolder, position: Int) {
-        val item=items[position]
+        val item = items[position]
         holder.itemBinding.tvName.text = item.name
         holder.itemBinding.tvStrikePrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG)
-        if(item.offer_fees==0.00){
-            holder.itemBinding.tvPrice.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY,"$"),item.fees.toString())
-            holder.itemBinding.tvStrikePrice.visibility=View.GONE
-        } else{
-            holder.itemBinding.tvStrikePrice.visibility=View.VISIBLE
-            holder.itemBinding.tvPrice.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY,"$"),item.offer_fees.toString())
-            holder.itemBinding.tvStrikePrice.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY,"$"),item.fees.toString())
+        if (item.discount == 0.00) {
+            holder.itemBinding.tvPrice.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"), item.fees.toString())
+            holder.itemBinding.tvStrikePrice.visibility = View.GONE
+        } else {
+            holder.itemBinding.tvStrikePrice.visibility = View.VISIBLE
+            holder.itemBinding.tvPrice.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"), item.discount.toString())
+            holder.itemBinding.tvStrikePrice.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"), item.fees.toString())
         }
-        if(item.image!=null)
-            ViewUtils.setImageViewGlide(context,  holder.itemBinding.imageView22, BuildConfig.BASE_IMAGE_URL.plus(item.image))
+        if (item.image != null)
+            ViewUtils.setImageViewGlide(context, holder.itemBinding.imageView22, BuildConfig.BASE_IMAGE_URL.plus(item.image))
         holder.itemBinding.itemView.setOnClickListener {
             listener.onChatProblemAreaClicked(item)
         }
@@ -55,8 +54,8 @@ class ChatProblemAreasListAdapter(val items: MutableList<CategoryResponse.Catego
     }
 }
 
-interface IChatProblemAreaListener{
-   fun onChatProblemAreaClicked(category:CategoryResponse.Category)
+interface IChatProblemAreaListener {
+    fun onChatProblemAreaClicked(category: CategoryResponse.Category)
 }
 
 class ChatProblemsViewHolder(view: ListItemCategoryWithImageBinding) : RecyclerView.ViewHolder(view.root) {
