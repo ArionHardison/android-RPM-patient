@@ -30,8 +30,7 @@
                 app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/logo_app"
-                android:tint="@color/colorWhite"/>
+                app:srcCompat="@drawable/logo_app" />
 
             <TextView
                 android:id="@+id/textView"
@@ -53,8 +52,8 @@
                 android:gravity="center"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/right_rectangular_box"
-                app:ccp_defaultPhoneCode="@integer/default_country_dial_code"
                 app:ccp_showNameCode="false"
+                app:ccp_defaultNameCode="@string/default_country_code"
                 app:ccpDialog_textColor="@color/colorBlack"
                 app:ccp_textSize="@dimen/_12sdp"
                 app:layout_constraintStart_toStartOf="parent"

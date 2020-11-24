@@ -1,25 +1,24 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:background="@drawable/bg_call_gradient">
+    android:background="@drawable/bg_call_gradient"
+    android:fitsSystemWindows="true">
 
     <include layout="@layout/twillio_content_video" />
 
     <TextView
-        android:id="@+id/videoStatusTextView"
+        android:id="@+id/tvCallStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/call_connecting"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/_18sdp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="Connecting..." />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <LinearLayout
@@ -103,6 +102,8 @@
             app:srcCompat="@drawable/ic_mic_black" />
 
     </LinearLayout>
+
+    <include layout="@layout/twillio_incoming_view" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

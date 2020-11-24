@@ -14,8 +14,13 @@
         <import type="android.view.View" />
 
         <variable
-            name="iscancel"
+            name="isCancel"
             type="java.lang.Boolean" />
+
+        <variable
+            name="isVideo"
+            type="java.lang.Boolean" />
+
     </data>
 
     <ScrollView
@@ -118,20 +123,41 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/llHeaderProfile" />
 
-            <TextView
-                android:id="@+id/textView34"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/dislpayName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="@dimen/_8sdp"
-                android:paddingTop="@dimen/_12sdp"
-                android:paddingEnd="@dimen/_8sdp"
-                android:paddingBottom="@dimen/_12sdp"
-                android:text="@{viewmodel.bookfor}"
-                android:textColor="@color/colorBlack"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textView33"
-                app:layout_constraintTop_toBottomOf="@+id/textView33"
-                tools:text="John Doe" />
+                app:layout_constraintTop_toBottomOf="@+id/textView33">
+
+                <TextView
+                    android:id="@+id/textView34"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_12sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_12sdp"
+                    android:text="@{viewmodel.bookfor}"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintEnd_toStartOf="@+id/callVideo"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="John Doe" />
+
+                <ImageView
+                    android:id="@+id/callVideo"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="0dp"
+                    android:padding="@dimen/_10sdp"
+                    android:tint="@color/colorPrimary"
+                    android:onClick="@{()->viewmodel.onClickVideo()}"
+                    android:visibility="@{isVideo? View.VISIBLE : View.GONE, default=gone}"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView34"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView34"
+                    app:srcCompat="@drawable/ic_video_call" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/textView35"
@@ -143,7 +169,7 @@
                 android:textColor="@color/colorBlack"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView34" />
+                app:layout_constraintTop_toBottomOf="@+id/dislpayName" />
 
             <TextView
                 android:id="@+id/textView36"
@@ -164,7 +190,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="@{iscancel ? View.GONE : View.VISIBLE}"
+                android:visibility="@{isCancel ? View.GONE : View.VISIBLE,default=gone}"
                 app:layout_constraintTop_toBottomOf="@+id/textView36">
 
                 <TextView
@@ -220,7 +246,7 @@
                     android:layout_width="@dimen/_35sdp"
                     android:layout_height="@dimen/_35sdp"
                     android:layout_marginTop="32dp"
-                    android:onClick="@{() -> viewmodel.onlike()}"
+                    android:onClick="@{() -> viewmodel.onLike()}"
                     app:layout_constraintEnd_toStartOf="@+id/imageView14"
                     app:layout_constraintStart_toStartOf="@+id/textView39"
                     app:layout_constraintTop_toBottomOf="@+id/textView39"
@@ -246,7 +272,7 @@
                     android:id="@+id/imageView14"
                     android:layout_width="@dimen/_35sdp"
                     android:layout_height="@dimen/_35sdp"
-                    android:onClick="@{() -> viewmodel.onunlike()}"
+                    android:onClick="@{() -> viewmodel.onUnLike()}"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView13"
                     app:layout_constraintEnd_toEndOf="@+id/textView39"
                     app:layout_constraintStart_toEndOf="@+id/imageView13"
@@ -331,7 +357,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/colorRed"
                 android:textSize="@dimen/_14sdp"
-                android:visibility="@{iscancel ? View.VISIBLE : View.GONE}"
+                android:visibility="@{isCancel ? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

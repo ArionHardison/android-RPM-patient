@@ -28,6 +28,7 @@ import com.telehealthmanager.app.ui.adapter.AllServiceAdapter
 import com.telehealthmanager.app.ui.adapter.AvailabilityAdapter
 import com.telehealthmanager.app.ui.adapter.Doctor_feedbackAdapter
 import com.telehealthmanager.app.ui.adapter.Doctors_photoAdapter
+import com.telehealthmanager.app.ui.twilio.CallRequest
 import com.telehealthmanager.app.ui.twilio.TwilloVideoActivity
 import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ViewUtils
@@ -299,15 +300,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
     }
 
     override fun viewCallClick() {
-        preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_ID, viewModel.id.get().toString())
-        val chatPath = preferenceHelper.mPref.getInt(PreferenceKey.DOCTOR_ID, 0).toString() +
-                "_video_" + preferenceHelper.getValue(PreferenceKey.PATIENT_ID, 1).toString()
-        val callIntent = Intent(applicationContext, TwilloVideoActivity::class.java)
-        callIntent.putExtra("chat_path", chatPath)
-        callIntent.putExtra("sender", "" + preferenceHelper.getValue(PreferenceKey.PATIENT_ID, 1).toString())
-        callIntent.putExtra("is_video", "1")
-        callIntent.putExtra("is_request", true)
-        startActivity(callIntent)
+        TODO("Not yet implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun viewInfoClick() {

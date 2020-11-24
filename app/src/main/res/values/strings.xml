@@ -305,6 +305,7 @@
     <string name="categories">Categories</string>
     <string name="follow_up">Follow Up</string>
     <string name="consultation">Consultation</string>
+    <string name="call_connecting">Connecting...</string>
 
 
 </resources>

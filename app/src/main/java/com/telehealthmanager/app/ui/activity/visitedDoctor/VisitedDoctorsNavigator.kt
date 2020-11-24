@@ -4,4 +4,5 @@ interface VisitedDoctorsNavigator {
     fun onlike()
     fun onunlike()
     fun onSubmit()
+    fun videoCallClick()
 }

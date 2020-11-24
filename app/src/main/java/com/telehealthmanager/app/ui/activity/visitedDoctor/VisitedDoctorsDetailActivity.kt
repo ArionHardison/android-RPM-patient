@@ -4,15 +4,21 @@ import android.content.Intent
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
+import com.telehealthmanager.app.data.PreferenceHelper
+import com.telehealthmanager.app.data.PreferenceKey
+import com.telehealthmanager.app.data.getValue
 import com.telehealthmanager.app.databinding.ActivityVisitedDoctorsDetailBinding
 import com.telehealthmanager.app.repositary.WebApiConstants
 import com.telehealthmanager.app.repositary.model.Appointment
 import com.telehealthmanager.app.repositary.model.FeedbackResponse
 import com.telehealthmanager.app.repositary.model.Response
 import com.telehealthmanager.app.ui.activity.thankyou.ThankyouActivity
+import com.telehealthmanager.app.ui.twilio.CallRequest
+import com.telehealthmanager.app.ui.twilio.TwilloVideoActivity
 import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ViewUtils
 import java.util.*
@@ -24,6 +30,8 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
     private lateinit var viewModel: VisitedDoctorsViewModel
     private lateinit var mDataBinding: ActivityVisitedDoctorsDetailBinding
     private var experiences: String = "UNLIKE"
+    private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
+
     override fun getLayoutId(): Int = R.layout.activity_visited_doctors_detail
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
@@ -56,9 +64,10 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
         if (intent.getBooleanExtra(WebApiConstants.IntentPass.iscancel, false)) {
             val details = intent.getSerializableExtra(WebApiConstants.IntentPass.Appointment) as? Appointment
             initData(details!!)
-            mDataBinding.iscancel = true
+            mDataBinding.isCancel = true
+            mDataBinding.isVideo = true
         } else {
-            mDataBinding.iscancel = false
+            mDataBinding.isCancel = false
             if (intent.getSerializableExtra(WebApiConstants.IntentPass.Appointment) != null) {
                 val mAppointment = intent.getSerializableExtra(WebApiConstants.IntentPass.Appointment) as? Appointment
                 initData(mAppointment!!)
@@ -143,6 +152,19 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
         hashMap[WebApiConstants.Feedback.title] = mDataBinding.divider2.text.toString()
         hashMap[WebApiConstants.Feedback.comments] = mDataBinding.editText7.text.toString()
         viewModel.postFeedback(hashMap)
+    }
+
+    override fun videoCallClick() {
+        val chatPath = viewModel.mDoctorID.get().toString() + "_video_" + viewModel.id.get().toString()
+        val callIntent = Intent(applicationContext, TwilloVideoActivity::class.java)
+        val callRequest = CallRequest(
+            "" + viewModel.mDoctorID.get().toString(),
+            "" + preferenceHelper.getValue(PreferenceKey.PATIENT_ID, 1),
+            "" + chatPath,
+            "1"
+        )
+        callIntent.putExtra(TwilloVideoActivity.CALL_REQUEST, callRequest)
+        startActivity(callIntent)
     }
 
 }

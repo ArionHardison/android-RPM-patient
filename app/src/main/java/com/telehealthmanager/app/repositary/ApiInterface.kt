@@ -147,7 +147,7 @@ interface ApiInterface {
     @GET("api/patient/video/call/token")
     fun getTwilloVideoToken(@QueryMap hashMap: HashMap<String, Any>): Call<AccessToken>
 
-    @GET("api/patient/video/call/token")
+    @GET("api/patient/video/call")
     fun getCallRequest(@QueryMap hashMap: HashMap<String, Any>): Call<AccessToken>
 
 

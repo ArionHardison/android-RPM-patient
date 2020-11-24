@@ -6,42 +6,42 @@ import com.telehealthmanager.app.base.BaseViewModel
 import com.telehealthmanager.app.repositary.AppRepository
 import com.telehealthmanager.app.repositary.model.*
 
-class VisitedDoctorsViewModel : BaseViewModel<VisitedDoctorsNavigator>(){
-
+class VisitedDoctorsViewModel : BaseViewModel<VisitedDoctorsNavigator>() {
+    private val appRepository = AppRepository.instance()
     var mVisitedAppointmentDoc = MutableLiveData<VisitedAppointmentDoc>()
     var mAppointmentDetails = MutableLiveData<Appointment>()
-    var mVisitedDoctorDetails = MutableLiveData<Appointment>()
     var mCancelResponse = MutableLiveData<Response>()
     var mFeedbackResponse = MutableLiveData<FeedbackResponse>()
 
-    var id : ObservableField<Int> = ObservableField()
-    var mDoctorID : ObservableField<String> = ObservableField("")
-    var name : ObservableField<String> = ObservableField("")
-    var specialit : ObservableField<String> = ObservableField("")
-    var catagiery : ObservableField<String> = ObservableField("")
-    var mClinic : ObservableField<String> = ObservableField("")
-    var bookfor : ObservableField<String> = ObservableField("")
-    var scheduledAt : ObservableField<String> = ObservableField("")
-    var status : ObservableField<String> = ObservableField("")
-    var mComment : ObservableField<String> = ObservableField("")
-    var mTitle : ObservableField<String> = ObservableField("")
+    var id: ObservableField<Int> = ObservableField()
+    var mDoctorID: ObservableField<String> = ObservableField("")
+    var name: ObservableField<String> = ObservableField("")
+    var specialit: ObservableField<String> = ObservableField("")
+    var catagiery: ObservableField<String> = ObservableField("")
+    var mClinic: ObservableField<String> = ObservableField("")
+    var bookfor: ObservableField<String> = ObservableField("")
+    var scheduledAt: ObservableField<String> = ObservableField("")
+    var status: ObservableField<String> = ObservableField("")
+    var mComment: ObservableField<String> = ObservableField("")
+    var mTitle: ObservableField<String> = ObservableField("")
 
-    private val appRepository = AppRepository.instance()
-
-    fun onlike() {
+    fun onLike() {
         navigator.onlike()
     }
 
-    fun onunlike() {
+    fun onUnLike() {
         navigator.onunlike()
     }
 
     fun onSubmit() {
         navigator.onSubmit()
     }
+    fun onClickVideo() {
+        navigator.videoCallClick()
+    }
 
     fun postFeedback(hashMap: HashMap<String, Any>) {
-        getCompositeDisposable().add(appRepository.postfeedback(this,hashMap))
+        getCompositeDisposable().add(appRepository.postfeedback(this, hashMap))
     }
 
     fun getListVisitedDoc() {
@@ -49,6 +49,6 @@ class VisitedDoctorsViewModel : BaseViewModel<VisitedDoctorsNavigator>(){
     }
 
     fun cancelClick(hashMap: HashMap<String, Any>) {
-        getCompositeDisposable().add(appRepository.cancelAppointment(this,hashMap))
+        getCompositeDisposable().add(appRepository.cancelAppointment(this, hashMap))
     }
 }

@@ -30,6 +30,10 @@ class VisitedDoctorsActivity : BaseActivity<ActivityVisitedDoctorsBinding>(), Vi
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    override fun videoCallClick() {
+
+    }
+
     val visitedDoctors: ArrayList<String> = ArrayList()
     private lateinit var viewModel: VisitedDoctorsViewModel
     private lateinit var mDataBinding: ActivityVisitedDoctorsBinding

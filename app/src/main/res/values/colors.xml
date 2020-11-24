@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#1b2f5e</color>
     <color name="colorAccent">#1b2f5e</color>
     <color name="colorAccentTransparent">#80216081</color>
+    <color name="appLogoColor">#1554a2</color>
 
     <color name="colorRegisterText">#5b769e</color>
     <color name="colorWhite">#ffffff</color>

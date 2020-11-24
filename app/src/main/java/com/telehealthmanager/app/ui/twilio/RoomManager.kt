@@ -1,6 +1,8 @@
 package com.telehealthmanager.app.ui.twilio
 
 import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.os.CountDownTimer
 import android.util.Log
 import com.twilio.video.*
@@ -76,7 +78,7 @@ object RoomManager {
                 Log.d(TAG, "onConnected: ")
                 localParticipant = room.localParticipant
                 roomEventListener?.onConnected(room)
-                //  startNotificationService(context, roomName)
+                startNotificationService(context, roomName)
             }
 
             override fun onDisconnected(room: Room, twilioException: TwilioException?) {
@@ -126,17 +128,15 @@ object RoomManager {
         return localAudioTrack!!
     }
 
-    /*fun startNotificationService(context: Context, callConnected: ConnectedStatus) {
+    fun startNotificationService(context: Context, callConnected: ConnectedStatus) {
         val intent = Intent(context, TwilioCallService::class.java)
-        intent.putExtra(TwilioCallActivity.ROOM_CONNECTED_STATE, callConnected)
-        intent.putExtra(TwilioCallActivity.RECEIVE_PUSH_INFO, receiverPushResponse)
-        intent.putExtra(TwilioCallActivity.CALL_REQUEST, callRequest)
+        intent.putExtra(TwilloVideoActivity.CALL_CONNECTED_STATUS, callConnected)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.startForegroundService(intent)
         } else {
             context.startService(intent)
         }
-    }*/
+    }
 
     fun resetRoomManager() {
         localAudioTrack?.release()

@@ -22,12 +22,10 @@ import java.util.*
 
 class RegisterFinalActivity : BaseActivity<ActivityRegisterFinalBinding>(), RegisterNavigator {
 
-
     private lateinit var viewModel: RegisterViewModel
     private lateinit var mDataBinding: ActivityRegisterFinalBinding
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
-    private var mdobDate: String? = null
-
+    private var mDobDate: String? = null
 
     override fun getLayoutId(): Int = R.layout.activity_register_final
 
@@ -36,7 +34,6 @@ class RegisterFinalActivity : BaseActivity<ActivityRegisterFinalBinding>(), Regi
         viewModel = ViewModelProviders.of(this).get(RegisterViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
-
         observeResponse()
         mDataBinding.backarrow.setOnClickListener {
             finish()
@@ -47,7 +44,6 @@ class RegisterFinalActivity : BaseActivity<ActivityRegisterFinalBinding>(), Regi
         viewModel.mRegisterResponse.observe(this@RegisterFinalActivity, Observer<RegisterResponse> {
             loadingObservable.value = false
             goToHome(it)
-
         })
 
         viewModel.getErrorObservable().observe(this, Observer<String> { message ->
@@ -57,7 +53,6 @@ class RegisterFinalActivity : BaseActivity<ActivityRegisterFinalBinding>(), Regi
     }
 
     private fun goToHome(data: RegisterResponse) {
-
         if (data.token_type.isNullOrBlank())
             ViewUtils.showToast(this@RegisterFinalActivity, "Login Failed", false)
         else {
@@ -81,7 +76,7 @@ class RegisterFinalActivity : BaseActivity<ActivityRegisterFinalBinding>(), Regi
                 { view, year, monthOfYear, dayOfMonth ->
                     view.minDate = System.currentTimeMillis() - 1000
                     view.maxDate = maxDate - 1000
-                    mdobDate =
+                    mDobDate =
                         year.toString() + "-" + (monthOfYear + 1) + "-" + dayOfMonth.toString()
                     mDataBinding.dob.setText(dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year)
                 }, mYear, mMonth, mDay
@@ -95,42 +90,22 @@ class RegisterFinalActivity : BaseActivity<ActivityRegisterFinalBinding>(), Regi
         if (mDataBinding.dob.text.toString().isNullOrBlank()) {
             ViewUtils.showToast(this@RegisterFinalActivity, R.string.error_invalid_dob, false)
         } else {
-            Register_Map[WebApiConstants.SignUp.COUNTRY_CODE] =
-                preferenceHelper.getValue(PreferenceKey.COUNTRY_CODE, "91")!!
-            Register_Map[WebApiConstants.SignUp.PHONE] =
-                preferenceHelper.getValue(PreferenceKey.COUNTRY_CODE, "91")!!
-                    .toString() + preferenceHelper.getValue(PreferenceKey.PHONE, "91")!!
-            Register_Map[WebApiConstants.SignUp.OTP] =
-                preferenceHelper.getValue(PreferenceKey.OTP, "91")!!
-            Register_Map[WebApiConstants.SignUp.EMAIL] =
-                preferenceHelper.getValue(PreferenceKey.EMAIL, "demo@demo.com")!!
-            Register_Map[WebApiConstants.SignUp.GENDER] =
-                preferenceHelper.getValue(PreferenceKey.GENDER, "MALE")!!
-            Register_Map[WebApiConstants.SignUp.DOB] = mdobDate!!
-            Register_Map[WebApiConstants.SignUp.FIRST_NAME] =
-                preferenceHelper.getValue(PreferenceKey.FIRST_NAME, "demo")!!
-            Register_Map[WebApiConstants.SignUp.LAST_NAME] =
-                preferenceHelper.getValue(PreferenceKey.LAST_NAME, "demo")!!
+            Register_Map[WebApiConstants.SignUp.COUNTRY_CODE] = preferenceHelper.getValue(PreferenceKey.COUNTRY_CODE, "+1")!!
+            Register_Map[WebApiConstants.SignUp.PHONE] = preferenceHelper.getValue(PreferenceKey.COUNTRY_CODE, "+1")!!.toString() + preferenceHelper.getValue(PreferenceKey.PHONE, "")!!
+            Register_Map[WebApiConstants.SignUp.OTP] = preferenceHelper.getValue(PreferenceKey.OTP, "+1")!!
+            Register_Map[WebApiConstants.SignUp.EMAIL] = preferenceHelper.getValue(PreferenceKey.EMAIL, "demo@demo.com")!!
+            Register_Map[WebApiConstants.SignUp.GENDER] = preferenceHelper.getValue(PreferenceKey.GENDER, "MALE")!!
+            Register_Map[WebApiConstants.SignUp.DOB] = mDobDate!!
+            Register_Map[WebApiConstants.SignUp.FIRST_NAME] = preferenceHelper.getValue(PreferenceKey.FIRST_NAME, "demo")!!
+            Register_Map[WebApiConstants.SignUp.LAST_NAME] = preferenceHelper.getValue(PreferenceKey.LAST_NAME, "demo")!!
             Register_Map[WebApiConstants.SignUp.GRANDTYPE] = "password"
-            Register_Map[WebApiConstants.SignUp.DEVICE_TOKEN] =
-                BaseApplication.getCustomPreference!!.getString(
-                    PreferenceKey.DEVICE_TOKEN,
-                    "111"
-                ) as String
-            Register_Map[WebApiConstants.SignUp.DEVICE_ID] =
-                BaseApplication.getCustomPreference!!.getString(
-                    PreferenceKey.DEVICE_ID,
-                    "111"
-                ) as String
+            Register_Map[WebApiConstants.SignUp.DEVICE_TOKEN] = BaseApplication.getCustomPreference!!.getString(PreferenceKey.DEVICE_TOKEN, "No Device Token") as String
+            Register_Map[WebApiConstants.SignUp.DEVICE_ID] = BaseApplication.getCustomPreference!!.getString(PreferenceKey.DEVICE_ID, "No Device ID") as String
             Register_Map[WebApiConstants.SignUp.DEVICE_TYPE] = BuildConfig.DEVICE_TYPE
             Register_Map[WebApiConstants.SignIn.CLIENT_ID] = BuildConfig.CLIENT_ID
             Register_Map[WebApiConstants.SignIn.CLIENT_SECRET] = BuildConfig.CLIENT_SECRET
-
             loadingObservable.value = true
             viewModel.Signup(Register_Map)
-
         }
     }
-
-
 }

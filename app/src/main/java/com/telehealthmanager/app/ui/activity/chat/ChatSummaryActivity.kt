@@ -72,7 +72,7 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
             fees = category.fees.toString()
         } else {
             mDataBinding.contentChatSummary.tvSummaryStrikePrice.visibility = View.VISIBLE
-            mDataBinding.contentChatSummary.tvSummaryPrice.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"), category?.discount.toString())
+            mDataBinding.contentChatSummary.tvSummaryPrice.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"), category?.offer_fees.toString())
             mDataBinding.contentChatSummary.tvSummaryStrikePrice.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"), category?.fees.toString())
             fees = category.offer_fees.toString()
         }

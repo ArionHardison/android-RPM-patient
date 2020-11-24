@@ -31,7 +31,7 @@ class ChatProblemAreasListAdapter(val items: MutableList<CategoryResponse.Catego
             holder.itemBinding.tvStrikePrice.visibility = View.GONE
         } else {
             holder.itemBinding.tvStrikePrice.visibility = View.VISIBLE
-            holder.itemBinding.tvPrice.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"), item.discount.toString())
+            holder.itemBinding.tvPrice.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"), item.offer_fees.toString())
             holder.itemBinding.tvStrikePrice.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"), item.fees.toString())
         }
         if (item.image != null)

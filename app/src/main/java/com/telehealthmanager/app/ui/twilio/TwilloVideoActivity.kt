@@ -4,8 +4,9 @@ import android.Manifest
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
+import android.app.ActivityManager
 import android.content.Context
-import android.content.pm.PackageManager
+import android.content.Intent
 import android.media.AudioAttributes
 import android.media.AudioFocusRequest
 import android.media.AudioManager
@@ -15,19 +16,18 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
+import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import androidx.core.content.PermissionChecker
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
-import com.telehealthmanager.app.data.PreferenceHelper
-import com.telehealthmanager.app.data.PreferenceKey
+import com.telehealthmanager.app.fcm.ReceiverPushResponse
 import com.telehealthmanager.app.repositary.ApiInterface
 import com.telehealthmanager.app.repositary.AppRepository
 import com.telehealthmanager.app.repositary.model.VideoCallCancelResponse
@@ -35,11 +35,12 @@ import com.twilio.audioswitch.selection.AudioDevice
 import com.twilio.audioswitch.selection.AudioDeviceSelector
 import com.twilio.video.*
 import kotlinx.android.synthetic.main.twillio_content_video.*
+import kotlinx.android.synthetic.main.twillio_incoming_view.*
 import kotlinx.android.synthetic.main.twillioi_video_activity.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.HashMap
+import java.util.*
 import kotlin.properties.Delegates
 
 
@@ -48,6 +49,20 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
     private val LOCAL_VIDEO_TRACK_NAME = "camera"
     private val CAMERA_MIC_PERMISSION_REQUEST_CODE = 1
     private val TAG = "FragmentActivity"
+
+    companion object {
+        const val CALL_REQUEST = "CALL_REQUEST"
+        const val CALL_CONNECTED_STATUS = "CALL_STATUS"
+        const val RECEIVE_PUSH_INFO = "RECEIVE_PUSH_INFO"
+        const val ROOM_INFO = "ROOM_INFO"
+        private const val PERMISSIONS_REQUEST_CODE = 35
+        const val MISSED_CALL = "MISSED_CALL"
+        const val END_CALL = "END_CALL"
+        const val DECLINE = "DECLINE"
+        const val ACTION_CALL_OTHER_END_STATUS = "ACTION_CALL_OTHER_END_STATUS"
+        const val ACTION_CALL_ROOM_NAME = "ACTION_CALL_ROOM_NAME"
+        const val ACTION_CALL_STATUS = "ACTION_CALL_STATUS"
+    }
 
     /**
      * DRAGGABLE USER VIDEO VIEW HANDLE
@@ -73,11 +88,15 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
 
     private var call_type = ""
     private var chatPath = ""
+    private var callerName = ""
     private var id: String? = null
-    private var isVideoCall = "1"
-    private var isCallRequest = false
+    private var hospital_id: String? = null
+    private var isCallAccepted = false
     private var mPlayer: MediaPlayer? = null
-    private var preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
+    private var pushRequest: ReceiverPushResponse? = null
+    private var callConnectedStatus: ConnectedStatus? = null
+    private var callRequest: CallRequest? = null
+
     private val appRepository = AppRepository()
 
     private lateinit var cameraCaptureCompat: CameraCaptureCompat
@@ -87,49 +106,70 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
         .maxVideoDimensions(VideoDimensions.VGA_VIDEO_DIMENSIONS)
         .build()
 
-    private val availableCameraSource: CameraCapturer.CameraSource
-        get() = if (CameraCapturer.isSourceAvailable(CameraCapturer.CameraSource.FRONT_CAMERA)) CameraCapturer.CameraSource.FRONT_CAMERA else CameraCapturer.CameraSource.BACK_CAMERA
 
-
-    private fun checkPermissionForCameraAndMicrophone(): Boolean {
-        val resultCamera = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-        val resultMic = ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
-        return resultCamera == PackageManager.PERMISSION_GRANTED && resultMic == PackageManager.PERMISSION_GRANTED
+    private fun getAvailableCameraSource(): CameraCapturer.CameraSource {
+        return if (CameraCapturer.isSourceAvailable(CameraCapturer.CameraSource.FRONT_CAMERA))
+            CameraCapturer.CameraSource.FRONT_CAMERA
+        else
+            CameraCapturer.CameraSource.BACK_CAMERA
     }
 
+
+    private fun isPermissionEnabled(): Boolean {
+        return (PermissionChecker.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+                == PermissionChecker.PERMISSION_GRANTED) &&
+                (PermissionChecker.checkSelfPermission(this, Manifest.permission.CAMERA)
+                        == PermissionChecker.PERMISSION_GRANTED)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun requestPermissionForCameraAndMicrophone() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)
-            || ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.RECORD_AUDIO)
-        ) {
-            Toast.makeText(this, R.string.permissions_needed, Toast.LENGTH_LONG).show()
-        } else {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO),
-                CAMERA_MIC_PERMISSION_REQUEST_CODE
-            )
-        }
+        requestPermissions(
+            arrayOf(
+                Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.CAMERA
+            ), PERMISSIONS_REQUEST_CODE
+        )
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        if (requestCode == CAMERA_MIC_PERMISSION_REQUEST_CODE) {
-            var cameraAndMicPermissionGranted = true
-            for (grantResult in grantResults) {
-                cameraAndMicPermissionGranted = cameraAndMicPermissionGranted and (grantResult == PackageManager.PERMISSION_GRANTED)
-            }
-            if (cameraAndMicPermissionGranted) {
-                createAudioAndVideoTracks()
-                retrieveAccessTokenFromServer()
-            } else {
-                Toast.makeText(this, R.string.permissions_needed, Toast.LENGTH_LONG).show()
-            }
+    @RequiresApi(Build.VERSION_CODES.M)
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSIONS_REQUEST_CODE && grantResults.size == 2) {
+            createAudioAndVideoTracks()
+            initDisplay()
+        } else {
+            requestPermissionForCameraAndMicrophone()
         }
     }
 
 
     private fun createAudioAndVideoTracks() {
+        if (localVideoTrack == null) {
+            localVideoTrack = LocalVideoTrack.create(
+                this,
+                true,
+                cameraCaptureCompat.videoCapturer,
+                videoConstraints
+            )
+        }
+
+        savedVolumeControlStream = volumeControlStream
+        volumeControlStream = AudioManager.STREAM_VOICE_CALL
+        audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        audioManager!!.isSpeakerphoneOn = true
+
+        audioDeviceSelector = AudioDeviceSelector(applicationContext)
+        audioDeviceSelector.start { audioDevices, audioDevice ->
+            updateAudioDeviceIcon(audioDevice)
+        }
+        audioDeviceSelector.activate()
+        audioDeviceSelector.availableAudioDevices.find { it is AudioDevice.Earpiece }?.let { audioDeviceSelector.selectDevice(it) }
+        setPrimaryVideoTrack(localVideoTrack)
+        localVideoTrack?.enable(true)
+        audioDeviceSelector.availableAudioDevices.find { it is AudioDevice.Speakerphone }?.let { audioDeviceSelector.selectDevice(it) }
+
         localAudioTrack = LocalAudioTrack.create(this, true, LOCAL_AUDIO_TRACK_NAME)
-        cameraCaptureCompat = CameraCaptureCompat(this, availableCameraSource)
         localVideoTrack = LocalVideoTrack.create(
             this,
             true,
@@ -148,66 +188,123 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.twillioi_video_activity)
-        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController!!.hide(WindowInsets.Type.statusBars())
+        } else {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
+        }
+        window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD)
         window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)
         window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
 
+        cameraCaptureCompat = CameraCaptureCompat(this, getAvailableCameraSource())
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
         screenHeight = displayMetrics.heightPixels
         screenWidth = displayMetrics.widthPixels
-        chatPath = intent.getStringExtra("chat_path") as String
-        id = intent.getStringExtra("sender") as String
-        isVideoCall = intent.getStringExtra("is_video") as String
-        isCallRequest = intent.getBooleanExtra("is_request", true)
 
-        initDisplay()
-        cameraCaptureCompat = CameraCaptureCompat(this, availableCameraSource)
-        savedVolumeControlStream = volumeControlStream
-        volumeControlStream = AudioManager.STREAM_VOICE_CALL
-        audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        audioManager!!.isSpeakerphoneOn = true
-
-        if (localVideoTrack == null) {
-            localVideoTrack = LocalVideoTrack.create(
-                this,
-                true,
-                cameraCaptureCompat.videoCapturer,
-                videoConstraints
-            )
-        }
-
-        if (isCallRequest) {
-            playRingTone()
-        }
-
-        if (!checkPermissionForCameraAndMicrophone()) {
-            requestPermissionForCameraAndMicrophone()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (isPermissionEnabled()) {
+                createAudioAndVideoTracks()
+                initDisplay()
+            } else {
+                requestPermissionForCameraAndMicrophone()
+            }
         } else {
             createAudioAndVideoTracks()
-            retrieveAccessTokenFromServer()
+            initDisplay()
         }
-
     }
 
     private fun initDisplay() {
-        audioDeviceSelector = AudioDeviceSelector(applicationContext)
-        audioDeviceSelector.start { audioDevices, audioDevice ->
-            updateAudioDeviceIcon(audioDevice)
+        pushRequest = intent.getParcelableExtra(RECEIVE_PUSH_INFO)
+        callConnectedStatus = intent.getParcelableExtra(CALL_CONNECTED_STATUS)
+        callRequest = intent.getParcelableExtra(CALL_REQUEST)
+        if (callConnectedStatus != null) {
+            room = RoomManager.getRoom()
+            if (room !== null) {
+                incomingAlert.visibility = View.GONE
+                RoomManager.setRoomEventListener(this)
+                RoomManager.setLocalTrackListener(this)
+                localAudioTrack = RoomManager.getLocalAudioTrack()
+                localParticipant = room!!.localParticipant
+                if (localVideoTrack != null) {
+                    localVideoTrack?.let { localParticipant?.unpublishTrack(it) }
+                } else {
+                    localVideoTrack?.let { localParticipant?.publishTrack(it) }
+                }
+                localVideoTrack?.enable(true)
+            } else {
+                prepareRoomManager()
+            }
+        } else if (pushRequest != null) {
+            val isAccept = intent.getBooleanExtra(CallReceiveService.CALL_IS_ACCEPTED, false)
+            isCallAccepted = pushRequest!!.connectedCall
+            chatPath = pushRequest!!.room_id.toString()
+            id = pushRequest!!.sender_id.toString()
+            callerName = pushRequest!!.name.toString()
+            if (isAccept) {
+                onCallPicked()
+            } else {
+                incomingAlert.visibility = View.VISIBLE
+            }
+        } else if (callRequest != null) {
+            chatPath = callRequest!!.room_id
+            id = callRequest!!.patient_id
+            hospital_id = callRequest!!.hospital_id
+            incomingAlert.visibility = View.GONE
+            playRingTone()
+            updateCall()
         }
-        audioDeviceSelector.activate()
-        audioDeviceSelector.availableAudioDevices.find { it is AudioDevice.Earpiece }?.let { audioDeviceSelector.selectDevice(it) }
-        setPrimaryVideoTrack(localVideoTrack)
-        localVideoTrack?.enable(true)
-        audioDeviceSelector.availableAudioDevices.find { it is AudioDevice.Speakerphone }?.let { audioDeviceSelector.selectDevice(it) }
 
+        setNameAndImage();
         faHangUp.setOnClickListener(this)
         secondaryVideoView.setOnClickListener(this)
         fabSwitchCamera.setOnClickListener(this)
         fabSpeaker.setOnClickListener(this)
         fabVideo.setOnClickListener(this)
         fabMic.setOnClickListener(this)
+        imgEndCall.setOnClickListener(this)
+        imgAcceptCall.setOnClickListener(this)
+    }
+
+    private fun onCallPicked() {
+        stopService(Intent(this, CallReceiveService::class.java))
+        incomingAlert.visibility = View.GONE
+        pushRequest!!.connectedCall = true
+        tvCallStatus.text = "Connecting..."
+    }
+
+
+    private fun stopNotificationService() {
+        stopService(Intent(this, TwilioCallService::class.java))
+    }
+
+    private fun isMyServiceRunning(): Boolean {
+        val manager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        for (service in manager.getRunningServices(Int.MAX_VALUE)) {
+            if (CallReceiveService::class.java.name == service.service.className) {
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun stopCallReceiveService() {
+        if (isMyServiceRunning()) {
+            val it = Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
+            sendBroadcast(it)
+            stopService(Intent(this, CallReceiveService::class.java))
+        }
+    }
+
+    private fun setNameAndImage() {
+        lblName.text = callerName
+        tvCallStatus.text = getString(R.string.call_connecting)
     }
 
     private fun updateAudioDeviceIcon(selectedAudioDevice: AudioDevice?) {
@@ -239,11 +336,22 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
 
     override fun onClick(view: View?) {
         when (view?.id) {
+            R.id.imgAcceptCall -> {
+                stopCallReceiveService()
+                onCallPicked()
+                updateCall()
+            }
+
+            R.id.imgEndCall -> {
+                stopCallReceiveService()
+                declinedCall()
+            }
+
             R.id.faHangUp -> {
-                // stopCallReceiveService()
+                stopCallReceiveService()
                 stopRingTone()
                 declinedCall()
-                // stopNotificationService()
+                stopNotificationService()
             }
 
             R.id.fabSwitchCamera -> {
@@ -295,6 +403,7 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
                         flipAnimateSetImageToFabButton(view, R.drawable.ic_mic_off_black)
                 }
             }
+
         }
     }
 
@@ -325,7 +434,7 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
         }
     }
 
-    fun resetRoomManager() {
+    private fun resetRoomManager() {
         stopRingTone()
         declinedCall()
     }
@@ -340,21 +449,21 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
         }
     }
 
-    private fun retrieveAccessTokenFromServer() {
+
+    private fun updateCall() {
         val call: Call<AccessToken>
         val hashMap: HashMap<String, Any> = HashMap()
-        if(isCallRequest){
-            hashMap["room_id"] = chatPath
-            hashMap["hospital_id"] = preferenceHelper.mPref.getInt(PreferenceKey.DOCTOR_ID, 0)
+        hashMap["room_id"] = chatPath
+        hashMap["video"] = "1"
+        if (callRequest != null) {
+            hashMap["hospital_id"] = hospital_id.toString()
             hashMap["patient_id"] = id.toString()
             hashMap["push_to"] = "patient"
-            call= appRepository.createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java).getTwilloVideoToken(hashMap)
-        }else{
-            hashMap["room_id"] = chatPath
+            call = appRepository.createApiClient(ApiInterface::class.java).getCallRequest(hashMap)
+        } else {
             hashMap["video"] = "1"
-            call= appRepository.createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java).getTwilloVideoToken(hashMap)
+            call = appRepository.createApiClient(ApiInterface::class.java).getTwilloVideoToken(hashMap)
         }
-
         call.enqueue(object : Callback<AccessToken> {
             override fun onResponse(call: Call<AccessToken>, response: Response<AccessToken>) {
                 if (response.isSuccessful) {
@@ -396,10 +505,25 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
         configureAudio(true)
         RoomManager.setRoomEventListener(this)
         RoomManager.setLocalTrackListener(this)
-        val connectedStatus = accessToken?.let { ConnectedStatus(chatPath, it) }
+        val connectedStatus = ConnectedStatus(chatPath, accessToken!!, true)
         RoomManager.connectRoom(this, connectedStatus!!, localVideoTrack)
         val cameraSource = cameraCaptureCompat.cameraSource
         primaryVideoView.mirror = cameraSource == CameraCapturer.CameraSource.BACK_CAMERA
+    }
+
+
+    //WHEN API ROOM RESPONSE AVAILABLE
+    private fun prepareRoomManager() {
+        if (incomingAlert.visibility == View.VISIBLE) {
+            incomingAlert.visibility = View.GONE
+        }
+        RoomManager.setRoomEventListener(this)
+        RoomManager.setLocalTrackListener(this)
+        RoomManager.connectRoom(this, callConnectedStatus!!, localVideoTrack)
+        val cameraSource = cameraCaptureCompat.cameraSource
+        primaryVideoView.mirror = cameraSource == CameraCapturer.CameraSource.BACK_CAMERA
+        secondaryVideoView.visibility = View.VISIBLE
+        setPrimaryVideoTrack(localVideoTrack)
     }
 
     private fun configureAudio(enable: Boolean) {
@@ -446,7 +570,7 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
                 remoteParticipant: RemoteParticipant,
                 remoteAudioTrackPublication: RemoteAudioTrackPublication
             ) {
-                videoStatusTextView!!.text = "onAudioTrackPublished"
+                tvCallStatus!!.text = "onAudioTrackPublished"
                 Log.e(TAG, "onAudioTrackPublished")
             }
 
@@ -454,21 +578,21 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
                 remoteParticipant: RemoteParticipant,
                 remoteAudioTrackPublication: RemoteAudioTrackPublication
             ) {
-                videoStatusTextView!!.text = "onAudioTrackUnpublished"
+                tvCallStatus!!.text = "onAudioTrackUnpublished"
             }
 
             override fun onDataTrackPublished(
                 remoteParticipant: RemoteParticipant,
                 remoteDataTrackPublication: RemoteDataTrackPublication
             ) {
-                videoStatusTextView!!.text = "onDataTrackPublished"
+                tvCallStatus!!.text = "onDataTrackPublished"
             }
 
             override fun onDataTrackUnpublished(
                 remoteParticipant: RemoteParticipant,
                 remoteDataTrackPublication: RemoteDataTrackPublication
             ) {
-                videoStatusTextView!!.text = "onDataTrackUnpublished"
+                tvCallStatus!!.text = "onDataTrackUnpublished"
             }
 
             override fun onVideoTrackPublished(
@@ -481,7 +605,7 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
                 remoteParticipant: RemoteParticipant,
                 remoteVideoTrackPublication: RemoteVideoTrackPublication
             ) {
-                videoStatusTextView!!.text = "onVideoTrackUnpublished"
+                tvCallStatus!!.text = "onVideoTrackUnpublished"
             }
 
             override fun onAudioTrackSubscribed(
@@ -489,7 +613,7 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
                 remoteAudioTrackPublication: RemoteAudioTrackPublication,
                 remoteAudioTrack: RemoteAudioTrack
             ) {
-                videoStatusTextView!!.text = "onAudioTrackSubscribed"
+                tvCallStatus!!.text = "onAudioTrackSubscribed"
             }
 
             override fun onAudioTrackUnsubscribed(
@@ -497,7 +621,7 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
                 remoteAudioTrackPublication: RemoteAudioTrackPublication,
                 remoteAudioTrack: RemoteAudioTrack
             ) {
-                videoStatusTextView!!.text = "onAudioTrackUnsubscribed"
+                tvCallStatus!!.text = "onAudioTrackUnsubscribed"
             }
 
             override fun onAudioTrackSubscriptionFailed(
@@ -505,7 +629,7 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
                 remoteAudioTrackPublication: RemoteAudioTrackPublication,
                 twilioException: TwilioException
             ) {
-                videoStatusTextView!!.text = "onAudioTrackSubscriptionFailed"
+                tvCallStatus!!.text = "onAudioTrackSubscriptionFailed"
             }
 
             override fun onDataTrackSubscribed(
@@ -513,7 +637,7 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
                 remoteDataTrackPublication: RemoteDataTrackPublication,
                 remoteDataTrack: RemoteDataTrack
             ) {
-                videoStatusTextView!!.text = "onDataTrackSubscribed"
+                tvCallStatus!!.text = "onDataTrackSubscribed"
             }
 
             override fun onDataTrackUnsubscribed(
@@ -521,7 +645,7 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
                 remoteDataTrackPublication: RemoteDataTrackPublication,
                 remoteDataTrack: RemoteDataTrack
             ) {
-                videoStatusTextView!!.text = "onDataTrackUnsubscribed"
+                tvCallStatus!!.text = "onDataTrackUnsubscribed"
             }
 
             override fun onDataTrackSubscriptionFailed(
@@ -529,7 +653,7 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
                 remoteDataTrackPublication: RemoteDataTrackPublication,
                 twilioException: TwilioException
             ) {
-                videoStatusTextView!!.text = "onDataTrackSubscriptionFailed"
+                tvCallStatus!!.text = "onDataTrackSubscriptionFailed"
             }
 
             override fun onVideoTrackSubscribed(
@@ -537,7 +661,7 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
                 remoteVideoTrackPublication: RemoteVideoTrackPublication,
                 remoteVideoTrack: RemoteVideoTrack
             ) {
-                videoStatusTextView!!.text = "onVideoTrackSubscribed"
+                tvCallStatus!!.text = "onVideoTrackSubscribed"
                 addRemoteParticipantVideo(remoteVideoTrack)
             }
 
@@ -546,7 +670,7 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
                 remoteVideoTrackPublication: RemoteVideoTrackPublication,
                 remoteVideoTrack: RemoteVideoTrack
             ) {
-                videoStatusTextView!!.text = "onVideoTrackUnsubscribed"
+                tvCallStatus!!.text = "onVideoTrackUnsubscribed"
                 removeRemoteParticipant(remoteParticipant)
             }
 
@@ -555,7 +679,7 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
                 remoteVideoTrackPublication: RemoteVideoTrackPublication,
                 twilioException: TwilioException
             ) {
-                videoStatusTextView!!.text = "onVideoTrackSubscriptionFailed"
+                tvCallStatus!!.text = "onVideoTrackSubscriptionFailed"
                 // Snackbar.make(fabDisconnectCall!!, String.format("Failed to subscribe to %s video track", remoteParticipant.identity), Snackbar.LENGTH_LONG).show()
             }
 
@@ -612,7 +736,7 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
     }
 
     private fun removeRemoteParticipant(remoteParticipant: RemoteParticipant) {
-        videoStatusTextView!!.text = "RemoteParticipant " + remoteParticipant.identity + " left."
+        tvCallStatus!!.text = "RemoteParticipant " + remoteParticipant.identity + " left."
         finish()
         if (remoteParticipant.identity != remoteParticipantIdentity) {
             return
@@ -638,7 +762,7 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
 
     private fun addRemoteParticipant(remoteParticipant: RemoteParticipant) {
         remoteParticipantIdentity = remoteParticipant.identity
-        videoStatusTextView!!.text = "RemoteParticipant $remoteParticipantIdentity joined"
+        tvCallStatus!!.text = "RemoteParticipant $remoteParticipantIdentity joined"
         if (remoteParticipant.remoteVideoTracks.size > 0) {
             val remoteVideoTrackPublication = remoteParticipant.remoteVideoTracks[0]
             remoteVideoTrack = remoteVideoTrackPublication.remoteVideoTrack
@@ -651,12 +775,16 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
 
     override fun onResume() {
         super.onResume()
-        localVideoTrack =
-            LocalVideoTrack.create(this, true, cameraCaptureCompat.videoCapturer, videoConstraints)
+        /*localVideoTrack =
+            LocalVideoTrack.create(this, true, cameraCaptureCompat.videoCapturer, videoConstraints)*/
         room = RoomManager.getRoom()
         if (room != null) {
             localParticipant = room!!.localParticipant
             localParticipant?.setEncodingParameters(EncodingParameters(0, 0))
+            if (localVideoTrack != null) {
+                localVideoTrack?.let { localParticipant?.unpublishTrack(it) }
+            } else
+                localVideoTrack?.let { localParticipant?.publishTrack(it) }
         }
     }
 
@@ -676,8 +804,8 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
     }
 
     override fun onCallDurationUpdate(duration: String) {
-        videoStatusTextView.text = duration
-        videoStatusTextView.visibility = View.GONE
+        tvCallStatus.text = duration
+        tvCallStatus.visibility = View.GONE
         viewConnectedCall.visibility = View.VISIBLE
     }
 
@@ -733,7 +861,7 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
         }
 
         if (room.remoteParticipants.size == 0)
-            videoStatusTextView.text = "Connecting..."
+            tvCallStatus.text = "Connecting..."
         else {
             RoomManager.startCallDurationTimer()
         }
@@ -741,7 +869,7 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
 
     override fun onDisconnected(room: Room, twilioException: TwilioException?) {
         localParticipant = null
-        videoStatusTextView!!.text = "Disconnected from " + room.name
+        tvCallStatus!!.text = "Disconnected from " + room.name
         Log.e(TAG, "onDisconnected")
         finish()
     }

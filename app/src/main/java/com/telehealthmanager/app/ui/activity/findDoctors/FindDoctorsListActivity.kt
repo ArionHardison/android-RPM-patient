@@ -159,7 +159,7 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s!!.length > 0)
+                if (s!!.isNotEmpty())
                     mDataBinding.adapter!!.filter.filter(s)
                 else {
                     initAdapter()

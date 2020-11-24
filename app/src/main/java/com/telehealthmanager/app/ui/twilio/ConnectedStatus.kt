@@ -7,5 +7,6 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 class ConnectedStatus(
     var room_name: String = "",
-    var accessToken: String = ""
+    var accessToken: String = "",
+    var isConnected: Boolean = false
 ) : Parcelable
