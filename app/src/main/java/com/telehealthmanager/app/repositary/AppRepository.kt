@@ -13,9 +13,11 @@ import com.telehealthmanager.app.ui.activity.login.LoginViewModel
 import com.telehealthmanager.app.ui.activity.main.MainViewModel
 import com.telehealthmanager.app.ui.activity.main.ui.appointment.AppointmentViewModel
 import com.telehealthmanager.app.ui.activity.main.ui.articles.ArticleViewModel
+import com.telehealthmanager.app.ui.activity.main.ui.faq.FaqViewModel
 import com.telehealthmanager.app.ui.activity.main.ui.favourite_doctor.FavouriteDoctorViewModel
 import com.telehealthmanager.app.ui.activity.main.ui.medical_records.MedicalRecordsViewModel
 import com.telehealthmanager.app.ui.activity.main.ui.online_consultation.OnlineConsultationViewModel
+import com.telehealthmanager.app.ui.activity.main.ui.relative_management.RelativeMgmtViewModel
 import com.telehealthmanager.app.ui.activity.main.ui.remainder.RemainderViewModel
 import com.telehealthmanager.app.ui.activity.main.ui.settings.SettingViewModel
 import com.telehealthmanager.app.ui.activity.main.ui.wallet.WalletViewModel
@@ -365,7 +367,6 @@ class AppRepository : BaseRepository() {
     }
 
     fun editPatientApi(
-        id: Int,
         editPatientViewModel: ProfileViewModel,
         hashMap: HashMap<String, Any>
     ): Disposable {
@@ -380,6 +381,106 @@ class AppRepository : BaseRepository() {
             })
 
     }
+
+    fun getRelativeLists(
+        editPatientViewModel: RelativeMgmtViewModel,
+        hashMap: HashMap<String, Any>
+    ): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .getRelativeList(hashMap)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                editPatientViewModel.mRelativeResponse.value = it
+            }, {
+                editPatientViewModel.getErrorObservable().value = getErrorMessage(it)
+            })
+
+    }
+
+
+    fun addRelativePatientApi(
+        editPatientViewModel: ProfileViewModel,
+        hashMap: HashMap<String, RequestBody>,
+        @Part image: MultipartBody.Part
+    ): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .addPatientRelative(hashMap, image)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                editPatientViewModel.mAddRelativeResponse.value = it
+            }, {
+                editPatientViewModel.getErrorObservable().value = getErrorMessage(it)
+            })
+    }
+
+    fun addRelativePatientApi(
+        editPatientViewModel: ProfileViewModel,
+        hashMap: HashMap<String, Any>
+    ): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .addPatientRelative(hashMap)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                editPatientViewModel.mAddRelativeResponse.value = it
+            }, {
+                editPatientViewModel.getErrorObservable().value = getErrorMessage(it)
+            })
+
+    }
+
+
+    fun updateRelativePatientApi(
+        editPatientViewModel: ProfileViewModel,
+        relativeID: String,
+        hashMap: HashMap<String, RequestBody>,
+        @Part image: MultipartBody.Part
+    ): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .updateRelativePatient(relativeID, hashMap, image)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                editPatientViewModel.mAddRelativeResponse.value = it
+            }, {
+                editPatientViewModel.getErrorObservable().value = getErrorMessage(it)
+            })
+    }
+
+    fun updateRelativePatientApi(
+        editPatientViewModel: ProfileViewModel,
+        relativeID: String,
+        hashMap: HashMap<String, Any>
+    ): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .updateRelativePatient(relativeID, hashMap)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                editPatientViewModel.mAddRelativeResponse.value = it
+            }, {
+                editPatientViewModel.getErrorObservable().value = getErrorMessage(it)
+            })
+    }
+
+    fun getRelativePatientApi(
+        editPatientViewModel: ProfileViewModel,
+        relativeID: String
+    ): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .getPatientRelatives(relativeID)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                editPatientViewModel.mRelativeResponse.value = it
+            }, {
+                editPatientViewModel.getErrorObservable().value = getErrorMessage(it)
+            })
+
+    }
+
 
     fun getChatsAPI(
         onlineConsultationViewModel: OnlineConsultationViewModel
@@ -576,6 +677,19 @@ class AppRepository : BaseRepository() {
             }, {
                 viewModel.getErrorObservable().value = getErrorMessage(it)
             })
+    }
+
+    fun getFaqCall(viewModel: FaqViewModel): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .getFaqList()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                viewModel.mFaqResponse.value = it
+            }, {
+                viewModel.getErrorObservable().value = getErrorMessage(it)
+            })
+
     }
 
 }

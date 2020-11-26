@@ -1,6 +1,8 @@
 package com.telehealthmanager.app.ui.adapter
 
 import android.content.Context
+import android.os.Build
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,6 +42,12 @@ class FaqAdapter(
             val expandedListTextView = convertView
                 .findViewById<View>(R.id.child_text) as TextView
             expandedListTextView.setText(expandedListText)
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                expandedListTextView.text = Html.fromHtml(expandedListText, Html.FROM_HTML_MODE_COMPACT);
+            } else {
+                expandedListTextView.text = Html.fromHtml(expandedListText);
+            }
         }
         return convertView
     }

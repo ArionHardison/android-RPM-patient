@@ -263,7 +263,6 @@
                     android:scaleY="0.7"
                     android:stepSize="1"
                     android:theme="@style/RatingBarTheam"
-                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView13" />

@@ -9,6 +9,11 @@
         <variable
             name="viewmodel"
             type="com.telehealthmanager.app.ui.activity.main.ui.relative_management.RelativeMgmtViewModel" />
+
+        <variable
+            name="adapter"
+            type="com.telehealthmanager.app.ui.adapter.RelativemanagerAdapter" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,12 +22,29 @@
         android:background="@color/colorWhite">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_remainder"
+            android:id="@+id/rvRelative"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:adapter="@{adapter}"
             android:background="@color/colorWhite"
             android:paddingTop="@dimen/_8sdp"
             android:paddingBottom="@dimen/_8sdp"
+            app:layout_constraintBottom_toTopOf="@+id/addRelateLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:itemCount="5"
+            tools:listitem="@layout/list_item_relative_mang" />
+
+        <TextView
+            android:id="@+id/tvNotFound"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_centerInParent="true"
+            android:text="@string/no_result_found"
+            android:textSize="@dimen/_12sdp"
+            android:visibility="gone"
+            android:gravity="center"
             app:layout_constraintBottom_toTopOf="@+id/addRelateLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:onClick="@{()->viewmodel.clickAddRelative()}"
-                android:text="Add Relative"
+                android:text="@string/add_relative"
                 android:textColor="@color/colorButton"
                 android:textSize="@dimen/_10sdp"
                 app:layout_constraintBottom_toBottomOf="parent"

@@ -62,8 +62,8 @@ class AppointmentFragment : BaseFragment<FragmentAppointmentBinding>(),Appointme
 
         viewModel.mResponse.observe(this, Observer<AppointmentResponse> {
             hideLoading()
-            viewModel.mUpcominglist = it.upcomming.appointments as MutableList<Appointment>?
-            viewModel.mPreviouslist = it.previous.appointments as MutableList<Appointment>?
+            viewModel.mUpcomingList = it.upcomming.appointments as MutableList<Appointment>?
+            viewModel.mPreviousList = it.previous.appointments as MutableList<Appointment>?
         })
         viewModel.getErrorObservable().observe(this, Observer<String> { message ->
            hideLoading()

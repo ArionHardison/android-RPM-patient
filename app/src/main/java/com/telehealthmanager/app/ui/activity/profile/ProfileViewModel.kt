@@ -5,60 +5,125 @@ import androidx.lifecycle.MutableLiveData
 import com.telehealthmanager.app.base.BaseViewModel
 import com.telehealthmanager.app.repositary.AppRepository
 import com.telehealthmanager.app.repositary.WebApiConstants
+import com.telehealthmanager.app.repositary.model.AddUpdateRelative
 import com.telehealthmanager.app.repositary.model.ProfileResponse
+import com.telehealthmanager.app.repositary.model.RelativeResponse
 import com.telehealthmanager.app.utils.ViewUtils
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
-class ProfileViewModel : BaseViewModel<ProfileNavigator>(){
+class ProfileViewModel : BaseViewModel<ProfileNavigator>() {
     private val appRepository = AppRepository.instance()
     var mProfileResponse = MutableLiveData<ProfileResponse>()
-    var firstName : ObservableField<String> = ObservableField("")
-    var id : ObservableField<Int> = ObservableField()
-    var lastName : ObservableField<String> = ObservableField("")
-    var number : ObservableField<String> = ObservableField("")
-    var email : ObservableField<String> = ObservableField("")
-    var gender : ObservableField<String> = ObservableField("")
-    var dob : ObservableField<String> = ObservableField("")
-    var bloodgroup : ObservableField<String> = ObservableField("")
-    var marital : ObservableField<String> = ObservableField("")
-    var height : ObservableField<String> = ObservableField("")
-    var weight : ObservableField<String> = ObservableField("")
-    var emgcontact : ObservableField<String> = ObservableField("")
-    var location : ObservableField<String> = ObservableField("")
+    var mAddRelativeResponse = MutableLiveData<AddUpdateRelative>()
+    var mRelativeResponse = MutableLiveData<RelativeResponse>()
     var mEditPatientResponse = MutableLiveData<ProfileResponse>()
 
-    var allergies : ObservableField<String> = ObservableField("")
-    var current_medications : ObservableField<String> = ObservableField("")
-    var past_medications : ObservableField<String> = ObservableField("")
-    var chronic_diseases : ObservableField<String> = ObservableField("")
-    var injuries : ObservableField<String> = ObservableField("")
-    var surgeries : ObservableField<String> = ObservableField("")
+    var firstName: ObservableField<String> = ObservableField("")
+    var patientId: ObservableField<String> = ObservableField()
+    var id: ObservableField<Int> = ObservableField()
+    var lastName: ObservableField<String> = ObservableField("")
+    var number: ObservableField<String> = ObservableField("")
+    var email: ObservableField<String> = ObservableField("")
+    var gender: ObservableField<String> = ObservableField("")
+    var dob: ObservableField<String> = ObservableField("")
+    var bloodgroup: ObservableField<String> = ObservableField("")
+    var marital: ObservableField<String> = ObservableField("")
+    var height: ObservableField<String> = ObservableField("")
+    var weight: ObservableField<String> = ObservableField("")
+    var emgcontact: ObservableField<String> = ObservableField("")
+    var location: ObservableField<String> = ObservableField("")
 
-    var smoking : ObservableField<String> = ObservableField("")
-    var alcohol : ObservableField<String> = ObservableField("")
-    var activity : ObservableField<String> = ObservableField("")
-    var food : ObservableField<String> = ObservableField("")
-    var occupation : ObservableField<String> = ObservableField("")
+    var allergies: ObservableField<String> = ObservableField("")
+    var current_medications: ObservableField<String> = ObservableField("")
+    var past_medications: ObservableField<String> = ObservableField("")
+    var chronic_diseases: ObservableField<String> = ObservableField("")
+    var injuries: ObservableField<String> = ObservableField("")
+    var surgeries: ObservableField<String> = ObservableField("")
 
-    fun getprofile() {
+    var smoking: ObservableField<String> = ObservableField("")
+    var alcohol: ObservableField<String> = ObservableField("")
+    var activity: ObservableField<String> = ObservableField("")
+    var food: ObservableField<String> = ObservableField("")
+    var occupation: ObservableField<String> = ObservableField("")
+    var relativeId: ObservableField<String> = ObservableField("")
+    var viewType: ObservableField<String> = ObservableField("")
+
+    var updateText: ObservableField<String> = ObservableField("")
+
+    fun getProfile() {
         getCompositeDisposable().add(appRepository.getProfile(this))
     }
 
-
-    fun getRelateProfile(relativeID: Int) {
-        getCompositeDisposable().add(appRepository.getProfile(this))
-    }
-
-    fun openAllergies(){
+    fun openAllergies() {
         navigator.onClickAllergies()
     }
 
-    fun openLocation(){
+    fun openLocation() {
         navigator.onClickLocation()
     }
 
-    fun editPatient() {
+
+    fun updatePatient() {
+        getCompositeDisposable().add(appRepository.editPatientApi(this, requestWithOutImage()))
+    }
+
+    fun updatePatientWithImage(fileBody: MultipartBody.Part) {
+        getCompositeDisposable().add(appRepository.editPatientWithImageApi(id.get()!!, this, requestWithImage(), fileBody))
+    }
+
+
+    fun getRelateProfile() {
+        getCompositeDisposable().add(appRepository.getRelativePatientApi(this, relativeId.get().toString()))
+    }
+
+
+    fun addRelative() {
+        val hashMap: HashMap<String, Any> = requestWithOutImage()
+        hashMap["patient_id"] = patientId.get().toString()
+        getCompositeDisposable().add(
+            appRepository.addRelativePatientApi(
+                this,
+                hashMap
+            )
+        )
+    }
+
+    fun addRelativeWithImage(fileBody: MultipartBody.Part?) {
+        val hashMap: HashMap<String, RequestBody> = requestWithImage()
+        hashMap["patient_id"] = ViewUtils.convertRequestBody(patientId.get().toString())
+        getCompositeDisposable().add(
+            appRepository.addRelativePatientApi(
+                this,
+                hashMap,
+                fileBody!!
+            )
+        )
+    }
+
+
+    fun updateRelative() {
+        getCompositeDisposable().add(
+            appRepository.updateRelativePatientApi(
+                this,
+                relativeId.get()!!.toString(),
+                requestWithOutImage()
+            )
+        )
+    }
+
+    fun updateRelativeWithImage(fileBody: MultipartBody.Part?) {
+        getCompositeDisposable().add(
+            appRepository.updateRelativePatientApi(
+                this,
+                relativeId.get()!!.toString(),
+                requestWithImage(),
+                fileBody!!
+            )
+        )
+    }
+
+    private fun requestWithOutImage(): HashMap<String, Any> {
         val hashMap: HashMap<String, Any> = HashMap()
         hashMap[WebApiConstants.EditPatient.FIRST_NAME] = firstName.get()!!
         hashMap[WebApiConstants.EditPatient.LAST_NAME] = lastName.get()!!
@@ -83,11 +148,10 @@ class ProfileViewModel : BaseViewModel<ProfileNavigator>(){
         hashMap[WebApiConstants.EditPatient.ACTIVITY] = activity.get()!!
         hashMap[WebApiConstants.EditPatient.FOOD] = food.get()!!
         hashMap[WebApiConstants.EditPatient.OCCUPATION] = occupation.get()!!
-        getCompositeDisposable().add(appRepository.editPatientApi(id.get()!!,this, hashMap))
+        return hashMap
     }
 
-
-    fun editPatientWithImage(fileBody: MultipartBody.Part) {
+    private fun requestWithImage(): HashMap<String, RequestBody> {
         val hashMap: HashMap<String, RequestBody> = HashMap()
         hashMap[WebApiConstants.EditPatient.FIRST_NAME] = ViewUtils.convertRequestBody(firstName.get()!!)
         hashMap[WebApiConstants.EditPatient.LAST_NAME] = ViewUtils.convertRequestBody(lastName.get()!!)
@@ -112,6 +176,6 @@ class ProfileViewModel : BaseViewModel<ProfileNavigator>(){
         hashMap[WebApiConstants.EditPatient.ACTIVITY] = ViewUtils.convertRequestBody(activity.get()!!)
         hashMap[WebApiConstants.EditPatient.FOOD] = ViewUtils.convertRequestBody(food.get()!!)
         hashMap[WebApiConstants.EditPatient.OCCUPATION] = ViewUtils.convertRequestBody(occupation.get()!!)
-        getCompositeDisposable().add(appRepository.editPatientWithImageApi(id.get()!!,this, hashMap,fileBody))
+        return hashMap
     }
 }

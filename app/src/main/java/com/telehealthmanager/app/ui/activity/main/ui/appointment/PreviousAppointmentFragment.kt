@@ -22,7 +22,6 @@ import com.telehealthmanager.app.repositary.model.AppointmentResponse
 import com.telehealthmanager.app.ui.activity.visitedDoctor.VisitedDoctorsDetailActivity
 import com.telehealthmanager.app.ui.adapter.PreviousAppointmentsListAdapter
 import com.telehealthmanager.app.utils.ViewUtils
-import kotlinx.android.synthetic.main.fragment_previous_appointment.*
 import java.io.Serializable
 
 /**
@@ -64,7 +63,7 @@ class PreviousAppointmentFragment : BaseFragment<FragmentPreviousAppointmentBind
     }
 
     private fun initAdapter() {
-        mAdapter = PreviousAppointmentsListAdapter( viewModel.mPreviouslist!!,activity!!,this)
+        mAdapter = PreviousAppointmentsListAdapter( viewModel.mPreviousList!!,activity!!,this)
         mDataBinding.adapter = mAdapter
         mDataBinding.rvPreviousAppointments.addItemDecoration(DividerItemDecoration(activity!!, DividerItemDecoration.VERTICAL))
         mDataBinding.rvPreviousAppointments.layoutManager =LinearLayoutManager(activity!!)
@@ -74,14 +73,14 @@ class PreviousAppointmentFragment : BaseFragment<FragmentPreviousAppointmentBind
     private fun observeResponse() {
         viewModel.mResponse.observe(this, Observer<AppointmentResponse> {
             hideLoading()
-            viewModel.mUpcominglist = it.upcomming.appointments as MutableList<Appointment>?
-            viewModel.mPreviouslist = it.previous.appointments as MutableList<Appointment>?
-            if (viewModel.mPreviouslist!!.size > 0) {
+            viewModel.mUpcomingList = it.upcomming.appointments as MutableList<Appointment>?
+            viewModel.mPreviousList = it.previous.appointments as MutableList<Appointment>?
+            if (viewModel.mPreviousList!!.size > 0) {
                 mDataBinding.tvNotFound.visibility = View.GONE
             } else {
                 mDataBinding.tvNotFound.visibility = View.VISIBLE
             }
-            mAdapter = PreviousAppointmentsListAdapter(viewModel.mPreviouslist!!,activity!!,this@PreviousAppointmentFragment)
+            mAdapter = PreviousAppointmentsListAdapter(viewModel.mPreviousList!!,activity!!,this@PreviousAppointmentFragment)
             mDataBinding.adapter = mAdapter
             mAdapter!!.notifyDataSetChanged()
         })

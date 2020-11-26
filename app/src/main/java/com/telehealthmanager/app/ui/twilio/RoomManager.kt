@@ -8,6 +8,7 @@ import android.util.Log
 import com.twilio.video.*
 import java.util.*
 
+
 object RoomManager {
 
     private val TAG = "RoomManager======>"
@@ -37,6 +38,10 @@ object RoomManager {
             ConnectOptions.Builder(roomName.accessToken).roomName(roomName.room_name)
         localAudioTrack?.let { connectOptionsBuilder.audioTracks(listOf(it)) }
         localVideoTrack?.let { connectOptionsBuilder.videoTracks(listOf(it)) }
+        val configuration = NetworkQualityConfiguration(
+            NetworkQualityVerbosity.NETWORK_QUALITY_VERBOSITY_MINIMAL,
+            NetworkQualityVerbosity.NETWORK_QUALITY_VERBOSITY_MINIMAL
+        )
 
 
         // DEFAULT AUDIO CODEC
@@ -46,6 +51,7 @@ object RoomManager {
         // DEFAULT ENCODE
         connectOptionsBuilder.encodingParameters(EncodingParameters(0, 0))
         connectOptionsBuilder.enableAutomaticSubscription(true)
+        connectOptionsBuilder.networkQualityConfiguration(configuration)
 
         room = Video.connect(context, connectOptionsBuilder.build(), object : Room.Listener {
             override fun onParticipantDisconnected(

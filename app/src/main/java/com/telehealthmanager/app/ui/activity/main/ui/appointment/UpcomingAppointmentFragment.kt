@@ -24,10 +24,8 @@ import com.telehealthmanager.app.ui.activity.visitedDoctor.VisitedDoctorsDetailA
 import com.telehealthmanager.app.ui.adapter.IAppointmentListener
 import com.telehealthmanager.app.ui.adapter.UpcomingAppointmentsListAdapter
 import com.telehealthmanager.app.utils.ViewUtils
-import kotlinx.android.synthetic.main.fragment_upcoming_appointment.*
 import java.io.Serializable
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.collections.set
 
 /**
@@ -69,7 +67,7 @@ class UpcomingAppointmentFragment : BaseFragment<FragmentUpcomingAppointmentBind
     }
 
     private fun initAdapter() {
-        mAdapter = UpcomingAppointmentsListAdapter(viewModel.mUpcominglist!!, activity!!, this)
+        mAdapter = UpcomingAppointmentsListAdapter(viewModel.mUpcomingList!!, activity!!, this)
         mDataBinding.adapter = mAdapter
         mDataBinding.rvUpcomingAppointments.addItemDecoration(DividerItemDecoration(activity!!, DividerItemDecoration.VERTICAL))
         mDataBinding.rvUpcomingAppointments.layoutManager = LinearLayoutManager(activity!!)
@@ -79,14 +77,14 @@ class UpcomingAppointmentFragment : BaseFragment<FragmentUpcomingAppointmentBind
     private fun observeResponse() {
         viewModel.mResponse.observe(this, Observer<AppointmentResponse> {
             hideLoading()
-            viewModel.mUpcominglist = it.upcomming.appointments as MutableList<Appointment>?
-            viewModel.mPreviouslist = it.previous.appointments as MutableList<Appointment>?
-            if (viewModel.mUpcominglist!!.size > 0) {
+            viewModel.mUpcomingList = it.upcomming.appointments as MutableList<Appointment>?
+            viewModel.mPreviousList = it.previous.appointments as MutableList<Appointment>?
+            if (viewModel.mUpcomingList!!.size > 0) {
                 mDataBinding.tvNotFound.visibility = View.GONE
             } else {
                 mDataBinding.tvNotFound.visibility = View.VISIBLE
             }
-            mAdapter = UpcomingAppointmentsListAdapter(viewModel.mUpcominglist!!, activity!!, this)
+            mAdapter = UpcomingAppointmentsListAdapter(viewModel.mUpcomingList!!, activity!!, this)
             mDataBinding.adapter = mAdapter
             mAdapter!!.notifyDataSetChanged()
             hideLoading()

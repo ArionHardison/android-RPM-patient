@@ -306,6 +306,9 @@
     <string name="follow_up">Follow Up</string>
     <string name="consultation">Consultation</string>
     <string name="call_connecting">Connecting...</string>
+    <string name="add_relative">Add Relative</string>
+    <string name="no_faq_found">No Faq Found</string>
+    <string name="change_password">Change Password</string>
 
 
 </resources>

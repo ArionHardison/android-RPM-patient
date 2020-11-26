@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.net.Uri
+import android.text.InputType
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -29,10 +30,7 @@ import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
-import com.telehealthmanager.app.data.Constant
-import com.telehealthmanager.app.data.PreferenceHelper
-import com.telehealthmanager.app.data.PreferenceKey
-import com.telehealthmanager.app.data.setValue
+import com.telehealthmanager.app.data.*
 import com.telehealthmanager.app.databinding.ActivityProfileBinding
 import com.telehealthmanager.app.repositary.model.ProfileResponse
 import com.telehealthmanager.app.ui.activity.allergies.AllergiesActivity
@@ -56,7 +54,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
     private lateinit var viewModel: ProfileViewModel
     private lateinit var mDataBinding: ActivityProfileBinding
     private lateinit var profileImg: ImageView
-    private var REQUEST_CODE_ALLERGIES: Int = 100
+    private var REQUEST_CODE_ALLERGIES: Int = 150
     private var viewType: String = ""
     private var relativeManagementID: Int = 0
 
@@ -69,12 +67,13 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
         viewModel.navigator = this
         viewType = intent.getStringExtra(Constant.IntentData.IS_VIEW_TYPE) as String
         relativeManagementID = intent.getIntExtra(Constant.IntentData.IS_RELATIVE_ID, 0) as Int
+        viewModel.patientId.set(preferenceHelper.getValue(PreferenceKey.PATIENT_ID, 1).toString())
         Places.initialize(this@ProfileActivity, resources.getString(R.string.google_map_api))
+        viewModel.setOnClickListener(this@ProfileActivity)
+        viewModel.toolBarTile.value = getString(R.string.your_profile)
         initUI()
         initApiCal()
         observeResponse()
-        viewModel.setOnClickListener(this@ProfileActivity)
-        viewModel.toolBarTile.value = getString(R.string.your_profile)
     }
 
     override fun clickBackPress() {
@@ -82,12 +81,28 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
     }
 
     private fun initApiCal() {
-        if (viewType == "home") {
-            loadingObservable.value = true
-            viewModel.getprofile()
-        } else if (viewType == "edit_relative") {
-            loadingObservable.value = true
-            viewModel.getRelateProfile(relativeManagementID)
+        viewModel.viewType.set(viewType)
+        when (viewType) {
+            "home" -> {
+                loadingObservable.value = true
+                viewModel.getProfile()
+                viewModel.updateText.set("Done")
+            }
+            "edit_relative" -> {
+                loadingObservable.value = true
+                viewModel.updateText.set("Updated")
+                viewModel.relativeId.set(relativeManagementID.toString())
+                viewModel.getRelateProfile()
+            }
+            "add_relative" -> {
+                viewModel.updateText.set("Add")
+                mDataBinding.layoutProfilePersonal.edPhoneNumber.inputType = InputType.TYPE_CLASS_NUMBER
+            }
+            else -> {
+                viewModel.updateText.set("Done")
+                loadingObservable.value = true
+                viewModel.getProfile()
+            }
         }
     }
 
@@ -282,14 +297,40 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
             val pictureFile = File(mCropImageUri?.path!!)
             if (pictureFile.exists()) {
                 val requestFile = pictureFile.asRequestBody("*/*".toMediaTypeOrNull())
-                val fileBody =
-                    MultipartBody.Part.createFormData("profile_pic", pictureFile.name, requestFile)
+                val fileBody = MultipartBody.Part.createFormData("profile_pic", pictureFile.name, requestFile)
                 loadingObservable.value = true
-                viewModel.editPatientWithImage(fileBody)
+                when (viewType) {
+                    "home" -> {
+                        viewModel.updatePatientWithImage(fileBody)
+                    }
+                    "edit_relative" -> {
+                        viewModel.updateRelativeWithImage(fileBody)
+                    }
+                    "add_relative" -> {
+                        viewModel.addRelativeWithImage(fileBody)
+                    }
+                    else -> {
+                        viewModel.updatePatientWithImage(fileBody)
+                    }
+                }
             }
         } else {
             loadingObservable.value = true
-            viewModel.editPatient()
+            when (viewType) {
+                "home" -> {
+                    viewModel.updatePatient()
+                }
+                "edit_relative" -> {
+                    viewModel.updateRelative()
+                }
+                "add_relative" -> {
+                    viewModel.addRelative()
+                }
+                else -> {
+                    viewModel.updatePatient()
+                }
+            }
+
         }
     }
 
@@ -340,9 +381,15 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
                 }
 
                 Constant.REQUEST_AUTOCOMPLETE -> {
-                    if(resultCode == Activity.RESULT_OK){
+                    if (resultCode == Activity.RESULT_OK) {
                         val place: Place = Autocomplete.getPlaceFromIntent(data!!)
                         viewModel.location.set(place.name.toString().plus(", ").plus(place.address.toString()))
+                    }
+                }
+                REQUEST_CODE_ALLERGIES -> {
+                    if (resultCode == Activity.RESULT_OK) {
+                        val allergies = data!!.getStringExtra("select_allergies") as String
+                        viewModel.allergies.set(allergies)
                     }
                 }
             }
@@ -366,17 +413,14 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
     private fun observeResponse() {
 
         viewModel.mEditPatientResponse.observe(this, androidx.lifecycle.Observer {
-            //if (it.isStatus) {
             ViewUtils.showToast(this@ProfileActivity, getString(R.string.profile_successfully_edited), true)
             val newIntent = Intent(this, MainActivity::class.java)
             startActivity(newIntent)
             finishAffinity()
-            //}
         })
 
         viewModel.mProfileResponse.observe(this, Observer<ProfileResponse> {
             loadingObservable.value = false
-
             if (it.patient?.profile?.profile_pic != null) {
                 Glide.with(this)
                     .load(BuildConfig.BASE_IMAGE_URL + it.patient?.profile?.profile_pic)
@@ -398,7 +442,6 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
             viewModel.weight.set(it.patient?.profile?.weight ?: "")
             viewModel.emgcontact.set(it.patient?.profile?.emergency_contact ?: "")
             viewModel.location.set(it.patient?.profile?.address ?: "")
-
             viewModel.allergies.set(it.patient.profile?.allergies ?: "")
             viewModel.current_medications.set(it.patient.profile?.current_medications ?: "")
             viewModel.past_medications.set(it.patient.profile?.past_medications ?: "")
@@ -418,9 +461,60 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
             viewModel.activity.set(it.patient.profile?.activity ?: "")
             viewModel.food.set(it.patient.profile?.food ?: "")
             viewModel.occupation.set(it.patient.profile?.occupation ?: "")
-
-
         })
+
+        viewModel.mAddRelativeResponse.observe(this, Observer {
+            loadingObservable.value = false
+            ViewUtils.showToast(this@ProfileActivity, it.message, true)
+            val intent = Intent()
+            setResult(RESULT_OK, intent)
+            finish()
+        })
+
+        viewModel.mRelativeResponse.observe(this, Observer {
+            loadingObservable.value = false
+            if (it.relative_detail?.profile?.profile_pic != null) {
+                Glide.with(this)
+                    .load(BuildConfig.BASE_IMAGE_URL + it.relative_detail?.profile?.profile_pic)
+                    .error(R.drawable.app_logo)
+                    .placeholder(R.drawable.app_logo)
+                    .into(profileImg)
+            }
+            viewModel.toolBarTile.value = it.relative_detail?.first_name ?: "".plus(" ").plus(it.relative_detail?.last_name ?: "")
+            viewModel.firstName.set(it.relative_detail?.first_name ?: "")
+            viewModel.id.set(it.relative_detail?.id)
+            viewModel.lastName.set(it.relative_detail?.last_name ?: "")
+            viewModel.number.set(it.relative_detail?.phone ?: "")
+            viewModel.email.set(it.relative_detail?.email ?: "")
+            viewModel.gender.set(it.relative_detail?.profile?.gender ?: "")
+            viewModel.dob.set(it.relative_detail?.profile?.dob ?: "")
+            viewModel.bloodgroup.set(it.relative_detail?.profile?.blood_group ?: "")
+            viewModel.marital.set(it.relative_detail?.profile?.merital_status ?: "")
+            viewModel.height.set(it.relative_detail?.profile?.height ?: "")
+            viewModel.weight.set(it.relative_detail?.profile?.weight ?: "")
+            viewModel.emgcontact.set(it.relative_detail?.profile?.emergency_contact ?: "")
+            viewModel.location.set(it.relative_detail?.profile?.address ?: "")
+            viewModel.allergies.set(it.relative_detail?.profile?.allergies ?: "")
+            viewModel.current_medications.set(it.relative_detail?.profile?.current_medications ?: "")
+            viewModel.past_medications.set(it.relative_detail?.profile?.past_medications ?: "")
+            viewModel.chronic_diseases.set(it.relative_detail?.profile?.chronic_diseases ?: "")
+            viewModel.injuries.set(it.relative_detail?.profile?.injuries ?: "")
+            viewModel.surgeries.set(it.relative_detail?.profile?.surgeries ?: "")
+            if (it.relative_detail?.profile?.alcohol != null && it.relative_detail?.profile?.alcohol.equals("YES"))
+                mDataBinding.layoutProfileLifestyle.alcoholYes.isChecked = true
+            else if (it.relative_detail?.profile?.alcohol != null && it.relative_detail?.profile?.alcohol.equals("NO"))
+                mDataBinding.layoutProfileLifestyle.alcoholNo.isChecked = true
+            if (it.relative_detail?.profile?.smoking != null && it.relative_detail?.profile?.smoking.equals("YES"))
+                mDataBinding.layoutProfileLifestyle.smokingYes.isChecked = true
+            else if (it.relative_detail?.profile?.smoking != null && it.relative_detail?.profile?.smoking.equals("NO"))
+                mDataBinding.layoutProfileLifestyle.smokingNo.isChecked = true
+            viewModel.smoking.set(it.relative_detail?.profile?.smoking ?: "")
+            viewModel.alcohol.set(it.relative_detail?.profile?.alcohol ?: "")
+            viewModel.activity.set(it.relative_detail?.profile?.activity ?: "")
+            viewModel.food.set(it.relative_detail?.profile?.food ?: "")
+            viewModel.occupation.set(it.relative_detail?.profile?.occupation ?: "")
+        })
+
         viewModel.getErrorObservable().observe(this, Observer<String> { message ->
             loadingObservable.value = false
             ViewUtils.showToast(this@ProfileActivity, message, false)

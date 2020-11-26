@@ -37,6 +37,7 @@ class AllergiesActivity : BaseActivity<ActivityAllergiesBinding>(), AllergiesNav
 
     override fun noAllergies() {
         val intent = Intent()
+        intent.putExtra("select_allergies","No")
         setResult(RESULT_OK, intent)
         finish()
     }

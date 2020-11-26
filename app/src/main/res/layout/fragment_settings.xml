@@ -61,6 +61,21 @@
                 android:layout_marginTop="@dimen/_4sdp"
                 android:background="@color/colorLiteGrey" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_12sdp"
+                android:text="@string/change_password"
+                android:visibility="gone" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:background="@color/colorLiteGrey"
+                android:visibility="gone" />
+
         </LinearLayout>
 
         <LinearLayout

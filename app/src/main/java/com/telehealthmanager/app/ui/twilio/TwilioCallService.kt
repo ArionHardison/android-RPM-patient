@@ -36,11 +36,9 @@ class TwilioCallService : Service(), CallHangUpListener {
     private fun getNotification(): Notification {
         createNotificationChannel()
         val intent = Intent(this, TwilloVideoActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
         intent.putExtra(TwilloVideoActivity.CALL_CONNECTED_STATUS, callRequest)
-        val contentIntent: PendingIntent = PendingIntent.getActivity(
-            this, 0,
-            intent, PendingIntent.FLAG_UPDATE_CURRENT
-        )
+        val contentIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         return NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(android.R.drawable.sym_action_call)
@@ -48,6 +46,7 @@ class TwilioCallService : Service(), CallHangUpListener {
             .setContentTitle("Ongoing Call..")
             .setContentText("Tap to continue the call...")
             .setSound(null)
+            .setUsesChronometer(true)
             .setContentIntent(contentIntent)
             .build()
     }

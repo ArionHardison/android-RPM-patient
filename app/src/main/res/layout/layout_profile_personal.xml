@@ -96,9 +96,9 @@
                 app:layout_constraintTop_toBottomOf="@+id/llPatientName">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edPhoneNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:focusable="false"
                     android:hint="Contact Number"
                     android:imeOptions="actionNext"
                     android:inputType="none"

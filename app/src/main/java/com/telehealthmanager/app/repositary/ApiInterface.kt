@@ -5,16 +5,12 @@ import com.telehealthmanager.app.repositary.model.chatmodel.ChatListResponse
 import com.telehealthmanager.app.repositary.model.chatmodel.ChatStatusResponse
 import com.telehealthmanager.app.ui.twilio.AccessToken
 import com.telehealthmanager.doctor.repositary.model.LoginResponse
-
-import com.telehealthmanager.doctor.repositary.model.*
-
+import com.telehealthmanager.doctor.repositary.model.OtpResponse
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
-import java.util.*
-import kotlin.collections.HashMap
 
 interface ApiInterface {
 
@@ -103,6 +99,29 @@ interface ApiInterface {
         @FieldMap hashMap: HashMap<String, Any>
     ): Observable<ProfileResponse>
 
+
+    @GET("api/patient/relative/list")
+    fun getRelativeList(@QueryMap hashMap: HashMap<String, Any>): Observable<RelativeResponse>
+
+    @GET("api/patient/relative/{id}")
+    fun getPatientRelatives(@Path("id") id: String?): Observable<RelativeResponse>
+
+    @Multipart
+    @POST("api/patient/relative")
+    fun addPatientRelative(@PartMap params: HashMap<String, RequestBody>, @Part image: MultipartBody.Part): Observable<AddUpdateRelative>
+
+    @FormUrlEncoded
+    @POST("api/patient/relative")
+    fun addPatientRelative(@FieldMap params: HashMap<String, Any>): Observable<AddUpdateRelative>
+
+    @Multipart
+    @POST("api/patient/relative/{id}")
+    fun updateRelativePatient(@Path("id") id: String?, @PartMap params: HashMap<String, RequestBody>, @Part image: MultipartBody.Part): Observable<AddUpdateRelative>
+
+    @FormUrlEncoded
+    @POST("api/patient/relative/{id}")
+    fun updateRelativePatient(@Path("id") id: String?, @FieldMap params: HashMap<String, Any>): Observable<AddUpdateRelative>
+
     @GET("api/patient/chat/history")
     fun getChat(): Observable<ChatListResponse>
 
@@ -167,4 +186,7 @@ interface ApiInterface {
     @POST("api/patient/add_money")
     fun addMoney(@FieldMap hashMap: HashMap<String, Any>): Observable<WalletAddSuccess>
 
+
+    @GET("api/patient/faq")
+    fun getFaqList(): Observable<FaqResponse>
 }

@@ -249,6 +249,7 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
             callerName = pushRequest!!.name.toString()
             if (isAccept) {
                 onCallPicked()
+                updateCall()
             } else {
                 incomingAlert.visibility = View.VISIBLE
             }

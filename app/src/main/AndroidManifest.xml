@@ -102,6 +102,7 @@
         </service>
 
         <service
+            android:foregroundServiceType="mediaProjection"
             android:name=".ui.twilio.CallReceiveService"
             android:enabled="true"
             android:exported="false" />
@@ -114,12 +115,14 @@
         <service android:name=".ui.twilio.TwilioCallService"
             android:enabled="true"
             android:exported="false"
+            android:foregroundServiceType="mediaProjection"
             android:permission="android.permission.FOREGROUND_SERVICE" />
 
         <activity android:name=".ui.twilio.TwilloVideoActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:noHistory="true"
+            android:configChanges="orientation|screenSize"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
 

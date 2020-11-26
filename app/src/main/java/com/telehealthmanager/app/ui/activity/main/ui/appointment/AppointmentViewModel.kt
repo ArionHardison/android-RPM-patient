@@ -16,8 +16,8 @@ class AppointmentViewModel : BaseViewModel<AppointmentNavigator>() {
     val text: LiveData<String> = _text
     var mResponse = MutableLiveData<AppointmentResponse>()
     var mCancelResponse = MutableLiveData<Response>()
-    var mUpcominglist: MutableList<Appointment>? = arrayListOf()
-    var mPreviouslist: MutableList<Appointment>? = arrayListOf()
+    var mUpcomingList: MutableList<Appointment>? = arrayListOf()
+    var mPreviousList: MutableList<Appointment>? = arrayListOf()
     private val appRepository = AppRepository.instance()
 
     fun getAppointment() {
