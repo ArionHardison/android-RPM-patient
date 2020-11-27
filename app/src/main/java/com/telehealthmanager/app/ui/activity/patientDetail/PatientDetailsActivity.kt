@@ -42,7 +42,7 @@ class PatientDetailsActivity : BaseActivity<ActivityPatientDetailsBinding>(),
         mDataBinding.textView68.text = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_ADDRESS,"The Apollo,Manhattan").toString()
 
         if (preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_IMAGE,"").toString()!=""){
-            ViewUtils.setImageViewGlide(this@PatientDetailsActivity,mDataBinding.imageView20,
+            ViewUtils.setDocViewGlide(this@PatientDetailsActivity,mDataBinding.imageView20,
                 BuildConfig.BASE_IMAGE_URL+preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_IMAGE,"").toString())
         }
 

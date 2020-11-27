@@ -9,7 +9,7 @@ class RegisterViewModel : BaseViewModel<RegisterNavigator>() {
     private val appRepository = AppRepository.instance()
     var mRegisterResponse = MutableLiveData<RegisterResponse>()
     fun Signup(hashMap: HashMap<String, Any>) {
-        getCompositeDisposable().add(appRepository.signup(this, hashMap))
+        getCompositeDisposable().add(appRepository.signUp(this, hashMap))
     }
 
     fun pickDate() {navigator.pickDate()}

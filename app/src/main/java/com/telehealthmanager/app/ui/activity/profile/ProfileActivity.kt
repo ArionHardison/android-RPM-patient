@@ -3,15 +3,14 @@ package com.telehealthmanager.app.ui.activity.profile
 import android.Manifest
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.text.InputType
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.RadioButton
-import android.widget.Toast
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
@@ -541,4 +540,44 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
         val intent: Intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
         startActivityForResult(intent, Constant.REQUEST_AUTOCOMPLETE)
     }
+
+    override fun onClickGender() {
+        selectChoice("GENDER")
+    }
+
+    override fun onClickMartial() {
+        selectChoice("MARITAL")
+    }
+
+    private fun selectChoice(choiceType: String) {
+        var types: Array<String> = arrayOf()
+        var title = ""
+        when (choiceType) {
+            "GENDER" -> {
+                types = arrayOf("Male", "Female")
+                title = getString(R.string.select_gender)
+            }
+            "MARITAL" -> {
+                types = arrayOf("Single", "Married", "Others")
+                title = getString(R.string.select_mertial)
+            }
+        }
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setTitle(title)
+        builder.setIcon(R.drawable.app_logo)
+        val adapter: ArrayAdapter<String> = ArrayAdapter(this, android.R.layout.simple_list_item_1, types)
+        builder.setAdapter(adapter) { dialog, which ->
+            when (choiceType) {
+                "GENDER" -> {
+                    viewModel.gender.set(adapter.getItem(which).toString())
+                }
+                "MARITAL" -> {
+                    viewModel.marital.set(adapter.getItem(which).toString())
+                }
+            }
+            dialog.dismiss()
+        }
+        builder.show()
+    }
+
 }

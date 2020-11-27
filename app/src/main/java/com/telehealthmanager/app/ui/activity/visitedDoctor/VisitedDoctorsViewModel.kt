@@ -41,7 +41,7 @@ class VisitedDoctorsViewModel : BaseViewModel<VisitedDoctorsNavigator>() {
     }
 
     fun postFeedback(hashMap: HashMap<String, Any>) {
-        getCompositeDisposable().add(appRepository.postfeedback(this, hashMap))
+        getCompositeDisposable().add(appRepository.postFeedback(this, hashMap))
     }
 
     fun getListVisitedDoc() {

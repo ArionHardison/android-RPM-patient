@@ -70,7 +70,7 @@ class SearchViewModel : BaseViewModel<SearchNavigator>() {
     }
 
     fun addFav(hashMap: HashMap<String, Any>) {
-        getCompositeDisposable().add(appRepository.addfav(this, hashMap))
+        getCompositeDisposable().add(appRepository.addFav(this, hashMap))
     }
 
     fun gethome(hashMap: HashMap<String, Any>) {

@@ -7,6 +7,7 @@ import com.telehealthmanager.app.repositary.AppRepository
 import com.telehealthmanager.app.repositary.WebApiConstants
 import com.telehealthmanager.app.repositary.model.AddUpdateRelative
 import com.telehealthmanager.app.repositary.model.ProfileResponse
+import com.telehealthmanager.app.repositary.model.RelativeList
 import com.telehealthmanager.app.repositary.model.RelativeResponse
 import com.telehealthmanager.app.utils.ViewUtils
 import okhttp3.MultipartBody
@@ -63,6 +64,14 @@ class ProfileViewModel : BaseViewModel<ProfileNavigator>() {
         navigator.onClickLocation()
     }
 
+
+    fun choiceMartial() {
+        navigator.onClickMartial()
+    }
+
+    fun choiceGender() {
+        navigator.onClickGender()
+    }
 
     fun updatePatient() {
         getCompositeDisposable().add(appRepository.editPatientApi(this, requestWithOutImage()))

@@ -1,5 +1,6 @@
 package com.telehealthmanager.app.ui.activity.allergies
 
+import android.app.Activity
 import android.content.Intent
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProviders
@@ -37,8 +38,25 @@ class AllergiesActivity : BaseActivity<ActivityAllergiesBinding>(), AllergiesNav
 
     override fun noAllergies() {
         val intent = Intent()
-        intent.putExtra("select_allergies","No")
+        intent.putExtra("select_allergies", "No")
         setResult(RESULT_OK, intent)
         finish()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode != Activity.RESULT_CANCELED) {
+            when (requestCode) {
+                REQUEST_ADD_ALLERGES -> {
+                    if (resultCode == Activity.RESULT_OK) {
+                        val allergies = data!!.getStringExtra("select_allergies") as String
+                        val intent = Intent()
+                        intent.putExtra("select_allergies", allergies)
+                        setResult(RESULT_OK, intent)
+                        finish()
+                    }
+                }
+            }
+        }
     }
 }

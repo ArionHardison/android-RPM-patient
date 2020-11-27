@@ -459,7 +459,7 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
         if (callRequest != null) {
             hashMap["hospital_id"] = hospital_id.toString()
             hashMap["patient_id"] = id.toString()
-            hashMap["push_to"] = "patient"
+            hashMap["push_to"] = "hospital"
             call = appRepository.createApiClient(ApiInterface::class.java).getCallRequest(hashMap)
         } else {
             hashMap["video"] = "1"

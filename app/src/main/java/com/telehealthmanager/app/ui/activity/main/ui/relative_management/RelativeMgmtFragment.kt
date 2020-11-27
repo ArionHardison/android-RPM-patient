@@ -76,7 +76,7 @@ class RelativeMgmtFragment : BaseFragment<FragmentRelativeMgmtBinding>(), Relati
     override fun openAddRelative() {
         val intent = Intent(activity!!, ProfileActivity::class.java)
         intent.putExtra(Constant.IntentData.IS_VIEW_TYPE, "add_relative")
-        startActivity(intent);
+        startActivityForResult(intent, Constant.RELATIVE_ADD_UPDATED)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

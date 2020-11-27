@@ -24,6 +24,6 @@ class SearchGlobalViewModel : BaseViewModel<SearchGlobalNavigator>() {
     var loadingProgress = MutableLiveData<Boolean>()
 
     fun getGlobalSearch(hashMap: HashMap<String, Any>) {
-        getCompositeDisposable().add(appRepository.getgloblsearch(this, hashMap))
+        getCompositeDisposable().add(appRepository.getGloblSearch(this, hashMap))
     }
 }

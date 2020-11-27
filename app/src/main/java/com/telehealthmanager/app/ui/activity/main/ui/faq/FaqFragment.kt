@@ -1,6 +1,8 @@
 package com.telehealthmanager.app.ui.activity.main.ui.faq
 
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -12,6 +14,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseFragment
 import com.telehealthmanager.app.databinding.FragmentFaqBinding
@@ -90,12 +93,21 @@ class FaqFragment : BaseFragment<FragmentFaqBinding>(), FaqNavigator {
         val dialog = BottomSheetDialog(this.requireContext())
         dialog.setContentView(btnSheet)
         btnSheet.findViewById<LinearLayout>(R.id.layoutChat).setOnClickListener {
+            val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "admin@telehealth.com", null))
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.support_mail))
+            startActivity(Intent.createChooser(emailIntent, "Send email..."))
             dialog.dismiss()
         }
         btnSheet.findViewById<LinearLayout>(R.id.layoutCall).setOnClickListener {
+            val intent = Intent(Intent.ACTION_DIAL)
+            intent.data = Uri.parse("tel:" + "9876543210")
+            startActivity(intent)
             dialog.dismiss()
         }
         btnSheet.findViewById<LinearLayout>(R.id.layoutWeb).setOnClickListener {
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(BuildConfig.BASE_URL)
+            startActivity(i)
             dialog.dismiss()
         }
         btnSheet.findViewById<TextView>(R.id.tvCancel).setOnClickListener {

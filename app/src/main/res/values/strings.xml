@@ -47,6 +47,11 @@
     <string name="profile_completed">Profile Completed:  </string>
     <string name="profile">Profile</string>
 
+    <!--changepassword-->
+    <string name="current_password">Current Password</string>
+    <string name="new_passwword">New Password</string>
+    <string name="re_password">Re-Enter the New Password</string>
+
     <!--    home-->
     <string name="find_doctors">Find Doctors</string>
     <string name="chat">Chat</string>
@@ -305,10 +310,15 @@
     <string name="categories">Categories</string>
     <string name="follow_up">Follow Up</string>
     <string name="consultation">Consultation</string>
-    <string name="call_connecting">Connecting...</string>
+    <string name="call_connecting">Connecting…</string>
     <string name="add_relative">Add Relative</string>
     <string name="no_faq_found">No Faq Found</string>
     <string name="change_password">Change Password</string>
+    <string name="select_allergies">Please select the allergies</string>
+    <string name="support_mail">Support Mail</string>
+    <string name="select_gender">Select Gender</string>
+    <string name="select_mertial">Select Martial Status</string>
+    <string name="save">Save</string>
 
 
 </resources>

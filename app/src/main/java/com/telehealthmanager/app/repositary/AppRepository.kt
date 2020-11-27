@@ -7,6 +7,8 @@ import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.ui.activity.addmoney.AddMoneyViewModel
 import com.telehealthmanager.app.ui.activity.addreminder.AddReminderViewModel
+import com.telehealthmanager.app.ui.activity.allergies.AllergiesViewModel
+import com.telehealthmanager.app.ui.activity.changepassword.ChangePasswordViewModel
 import com.telehealthmanager.app.ui.activity.chat.ChatSummaryViewModel
 import com.telehealthmanager.app.ui.activity.findDoctors.FindDoctorsViewModel
 import com.telehealthmanager.app.ui.activity.login.LoginViewModel
@@ -38,8 +40,20 @@ import retrofit2.http.Part
 
 class AppRepository : BaseRepository() {
 
-    /* singup*/
-    fun signup(viewModel: RegisterViewModel, params: HashMap<String, Any>): Disposable {
+    companion object {
+        private var appRepository: AppRepository? = null
+
+        fun instance(): AppRepository {
+            if (appRepository == null) synchronized(AppRepository) {
+                appRepository = AppRepository()
+            }
+            return appRepository!!
+        }
+    }
+
+
+    /*TODO singup*/
+    fun signUp(viewModel: RegisterViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .signup(params)
             .observeOn(AndroidSchedulers.mainThread())
@@ -51,7 +65,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun Sendotp(viewModel: LoginViewModel, params: HashMap<String, Any>): Disposable {
+    fun sendOtp(viewModel: LoginViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .Sendotp(params)
             .observeOn(AndroidSchedulers.mainThread())
@@ -63,7 +77,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun verfiyotp(viewModel: OTPViewModel, params: HashMap<String, Any>): Disposable {
+    fun verifiyOtp(viewModel: OTPViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .verifyotp(params)
             .observeOn(AndroidSchedulers.mainThread())
@@ -99,7 +113,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    /*home*/
+    /*TODO home*/
     fun getHome(viewModel: ViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .getHome(params)
@@ -120,7 +134,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    /*profile*/
+    /*TODO profile*/
     fun getProfile(viewModel: ViewModel): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .getProfile()
@@ -133,6 +147,8 @@ class AppRepository : BaseRepository() {
                     viewModel.mProfileResponse.value = it
                 } else if (viewModel is WalletViewModel) {
                     viewModel.mProfileResponse.value = it
+                }else if (viewModel is AllergiesViewModel){
+                    viewModel.mProfileResponse.value = it
                 }
             }, {
                 if (viewModel is MainViewModel) {
@@ -141,11 +157,26 @@ class AppRepository : BaseRepository() {
                     viewModel.getErrorObservable().value = getErrorMessage(it)
                 } else if (viewModel is WalletViewModel) {
                     viewModel.getErrorObservable().value = getErrorMessage(it)
+                }else if (viewModel is AllergiesViewModel){
+                    viewModel.getErrorObservable().value = getErrorMessage(it)
                 }
             })
     }
 
-    /* Category*/
+    /*TODO  changePassword*/
+    fun changePassword(changePasswordViewModel: ChangePasswordViewModel, hashMap: java.util.HashMap<String, Any>): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .updatePassword(hashMap)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                changePasswordViewModel.mResponse.value = it
+            }, {
+                changePasswordViewModel.getErrorObservable().value = getErrorMessage(it)
+            })
+    }
+
+    /*TODO Category*/
     fun getCategorys(viewModel: ViewModel): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .getCategorys()
@@ -162,7 +193,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun bookdoctor(viewModel: ViewModel, params: HashMap<String, Any>): Disposable {
+    fun bookDoctor(viewModel: ViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .bookdoctor(params)
             .observeOn(AndroidSchedulers.mainThread())
@@ -216,7 +247,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    /*Appointments*/
+    /*TODO Appointments*/
     fun getAppointment(viewModel: ViewModel): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .getAppointment()
@@ -272,7 +303,7 @@ class AppRepository : BaseRepository() {
     }
 
 
-    fun postfeedback(viewModel: VisitedDoctorsViewModel, params: HashMap<String, Any>): Disposable {
+    fun postFeedback(viewModel: VisitedDoctorsViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .postfeedback(params)
             .observeOn(AndroidSchedulers.mainThread())
@@ -284,8 +315,8 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    /*doctorprofile*/
-    fun addfav(viewModel: SearchViewModel, params: HashMap<String, Any>): Disposable {
+    /*TODO ADD FAV*/
+    fun addFav(viewModel: SearchViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .addfav(params)
             .observeOn(AndroidSchedulers.mainThread())
@@ -296,59 +327,6 @@ class AppRepository : BaseRepository() {
                 viewModel.getErrorObservable().value = getErrorMessage(it)
             })
     }
-    /*   *//*   updateprofile*//*
-    fun postUpdateProfile(viewModel: EditProfileViewModel, params: HashMap<String, Any>): Disposable {
-        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
-            .updateprofile(params)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe({
-                viewModel.mResponse.value = it
-            }, {
-                viewModel.getErrorObservable().value = getErrorMessage(it)
-            })
-    }
-    fun profileUpdate(viewModel: EditProfileViewModel, @PartMap params: HashMap<String, RequestBody>, @Part image: MultipartBody.Part): Disposable {
-        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
-            .profileUpdate(params, image)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe({
-                viewModel.mResponse.value = it
-
-            }, {
-                viewModel.getErrorObservable().value = getErrorMessage(it)
-            })
-
-
-    }
-
-    *//*changepassword*//*
-
-    fun changepassword(viewModel: ChangePasswordViewModel, params: HashMap<String, Any>): Disposable {
-        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
-            .changepassword(params)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe({
-                viewModel.mResponse.value = it
-            }, {
-                viewModel.getErrorObservable().value = getErrorMessage(it)
-            })
-    }*/
-
-
-    companion object {
-        private var appRepository: AppRepository? = null
-
-        fun instance(): AppRepository {
-            if (appRepository == null) synchronized(AppRepository) {
-                appRepository = AppRepository()
-            }
-            return appRepository!!
-        }
-    }
-
 
     fun getArticles(viewModel: ArticleViewModel): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
@@ -382,6 +360,7 @@ class AppRepository : BaseRepository() {
 
     }
 
+    /*TODO Relativies*/
     fun getRelativeLists(
         editPatientViewModel: RelativeMgmtViewModel,
         hashMap: HashMap<String, Any>
@@ -470,7 +449,7 @@ class AppRepository : BaseRepository() {
         relativeID: String
     ): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
-            .getPatientRelatives(relativeID)
+            .getSingleRelative(relativeID)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
@@ -530,7 +509,7 @@ class AppRepository : BaseRepository() {
 
     }
 
-    /*doctorprofile*/
+    /*TODO Medical Records*/
     fun getMedicalRecord(viewModel: MedicalRecordsViewModel): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .getMedicalRecord()
@@ -543,10 +522,10 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    /*search*/
-    fun getgloblsearch(viewModel: ViewModel, params: HashMap<String, Any>): Disposable {
+    /*TODO Search*/
+    fun getGloblSearch(viewModel: ViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
-            .getglobalsearch(params)
+            .getGlobalSearchApp(params)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
@@ -689,7 +668,6 @@ class AppRepository : BaseRepository() {
             }, {
                 viewModel.getErrorObservable().value = getErrorMessage(it)
             })
-
     }
 
 }

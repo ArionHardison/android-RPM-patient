@@ -9,7 +9,7 @@ class PatientDetailViewModel : BaseViewModel<PatientDetailNavigator>(){
     private val appRepository = AppRepository.instance()
     var mBookedResponse = MutableLiveData<BookedResponse>()
     fun BookDoctor(hashMap: HashMap<String, Any>) {
-        getCompositeDisposable().add(appRepository.bookdoctor(this, hashMap))
+        getCompositeDisposable().add(appRepository.bookDoctor(this, hashMap))
     }
 
     fun goToBooked() {navigator.goToBooked()}

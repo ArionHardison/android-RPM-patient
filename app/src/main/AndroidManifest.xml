@@ -145,9 +145,13 @@
             android:theme="@style/Base.Theme.AppCompat"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".ui.activity.allergies.AllergiesActivity" />
-        <activity android:name=".ui.activity.allergies.AddAllergiesActivity" />
+        <activity android:name=".ui.activity.allergies.AddAllergiesActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MyApp"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity android:name=".ui.activity.addmoney.AddCardActivity" />
         <activity android:name=".ui.activity.addmoney.AddMoneyActivity" />
+        <activity android:name=".ui.activity.changepassword.ChangePasswordActivity" />
     </application>
 
 </manifest>

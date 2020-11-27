@@ -191,7 +191,7 @@
                         android:layout_marginStart="8dp"
                         app:civ_border_color="@color/colorButton"
                         app:civ_border_width="1dp"
-                        android:src="@drawable/user_placeholder" />
+                        android:src="@drawable/doc_place_holder" />
 
                     <LinearLayout
                         android:layout_width="0dp"

@@ -45,7 +45,7 @@ class OTPViewModel : BaseViewModel<OTPNavigator>() {
         val hashMap : HashMap<String,Any> = HashMap()
         hashMap[WebApiConstants.SignIn.OTP] = otp.value!!.trim()
         hashMap[WebApiConstants.SignIn.MOBILE] =  countryCode.get()!!.trim().plus(mobile.get()!!.trim())
-        getCompositeDisposable().add(appRepository.verfiyotp(this,hashMap))
+        getCompositeDisposable().add(appRepository.verifiyOtp(this,hashMap))
     }
     fun signIn() {
 

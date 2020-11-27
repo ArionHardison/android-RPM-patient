@@ -11,6 +11,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
+import java.util.*
 
 interface ApiInterface {
 
@@ -30,6 +31,10 @@ interface ApiInterface {
     @FormUrlEncoded
     @POST("api/patient/verify_otp")
     fun verifyotp(@FieldMap hashMap: HashMap<String, Any>): Observable<LoginResponse>
+
+    @FormUrlEncoded
+    @POST("api/patient/change_password")
+    fun updatePassword(@FieldMap hashMap: HashMap<String, Any>): Observable<Objects>
 
     @FormUrlEncoded
     @POST("api/patient/booking")
@@ -100,11 +105,12 @@ interface ApiInterface {
     ): Observable<ProfileResponse>
 
 
+    /*TODO RELATIVE*/
     @GET("api/patient/relative/list")
     fun getRelativeList(@QueryMap hashMap: HashMap<String, Any>): Observable<RelativeResponse>
 
     @GET("api/patient/relative/{id}")
-    fun getPatientRelatives(@Path("id") id: String?): Observable<RelativeResponse>
+    fun getSingleRelative(@Path("id") id: String?): Observable<RelativeResponse>
 
     @Multipart
     @POST("api/patient/relative")
@@ -122,12 +128,6 @@ interface ApiInterface {
     @POST("api/patient/relative/{id}")
     fun updateRelativePatient(@Path("id") id: String?, @FieldMap params: HashMap<String, Any>): Observable<AddUpdateRelative>
 
-    @GET("api/patient/chat/history")
-    fun getChat(): Observable<ChatListResponse>
-
-    @GET("api/patient/chat/status/{id}")
-    fun getChatStatus(@Path("id") int: Int): Observable<ChatStatusResponse>
-
     @Multipart
     @POST("api/patient/profile")
     fun editPatientWithImage(
@@ -135,9 +135,15 @@ interface ApiInterface {
         @Part image: MultipartBody.Part?
     ): Observable<ProfileResponse>
 
+    @GET("api/patient/chat/history")
+    fun getChat(): Observable<ChatListResponse>
+
+    @GET("api/patient/chat/status/{id}")
+    fun getChatStatus(@Path("id") int: Int): Observable<ChatStatusResponse>
+
     /* search*/
     @GET("api/patient/home_search")
-    fun getglobalsearch(@QueryMap hashMap: HashMap<String, Any>): Observable<SearchResponse>
+    fun getGlobalSearchApp(@QueryMap hashMap: HashMap<String, Any>): Observable<SearchResponse>
 
 
     @FormUrlEncoded
@@ -160,6 +166,7 @@ interface ApiInterface {
     @GET("api/patient/video/call/check")
     fun videoCheckStatusAPI(): Observable<VideoStatusCheck>
 
+    /* TODO TWILIO CALL */
     @GET("api/patient/video/cancel")
     fun cancelVideoCall(@Query("room_id") room_id: Any?): Call<VideoCallCancelResponse>?
 

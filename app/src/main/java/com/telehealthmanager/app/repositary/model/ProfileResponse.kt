@@ -2,7 +2,8 @@ package com.telehealthmanager.app.repositary.model
 
 data class ProfileResponse(
     val patient: Patient,
-    val profile_complete: String
+    val profile_complete: String,
+    val allergies: List<Allergies>
 ) {
     data class Patient(
         val created_at: String,
@@ -56,4 +57,8 @@ data class ProfileResponse(
             val weight: String
         )
     }
+    class Allergies(
+        val id: Int?,
+        val name: String?
+    )
 }

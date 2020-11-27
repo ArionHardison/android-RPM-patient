@@ -139,8 +139,10 @@
                     android:layout_height="wrap_content"
                     android:hint="Gender"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
+                    android:inputType="none"
+                    android:focusable="false"
                     android:maxLines="1"
+                    android:onClick="@{()->viewmodel.choiceGender()}"
                     android:text="@={viewmodel.gender}" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -177,7 +179,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Blood Group"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
+                    android:inputType="textCapCharacters"
                     android:maxLines="1"
                     android:text="@={viewmodel.bloodgroup}" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -196,9 +198,12 @@
                     android:layout_height="wrap_content"
                     android:hint="Martial Status"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
                     android:maxLines="1"
+                    android:inputType="none"
+                    android:focusable="false"
+                    android:onClick="@{()->viewmodel.choiceMartial()}"
                     android:text="@={viewmodel.marital}" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout

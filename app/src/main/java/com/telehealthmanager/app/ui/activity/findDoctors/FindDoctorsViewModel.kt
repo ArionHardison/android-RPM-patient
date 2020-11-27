@@ -34,6 +34,6 @@ class FindDoctorsViewModel : BaseViewModel<FindDoctorsNavigator>() {
     }
 
     fun BookDoctor(hashMap: HashMap<String, Any>) {
-        getCompositeDisposable().add(appRepository.bookdoctor(this, hashMap))
+        getCompositeDisposable().add(appRepository.bookDoctor(this, hashMap))
     }
 }

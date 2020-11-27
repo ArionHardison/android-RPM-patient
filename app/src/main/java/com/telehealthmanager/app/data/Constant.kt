@@ -139,4 +139,11 @@ object Constant {
         val WALLET_AMOUNT = "WALLET_AMOUNT"
     }
 
+
+    object ChangePassword {
+        const val OLD_PASSWORD = "old_password"
+        const val PASSWORD = "password"
+        const val CURRENT_PASSWORD = "current_password"
+        const val PASSWORD_CONFIRMATION = "password_confirmation"
+    }
 }
