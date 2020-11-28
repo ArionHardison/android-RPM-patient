@@ -28,8 +28,6 @@ import com.telehealthmanager.app.ui.adapter.AllServiceAdapter
 import com.telehealthmanager.app.ui.adapter.AvailabilityAdapter
 import com.telehealthmanager.app.ui.adapter.Doctor_feedbackAdapter
 import com.telehealthmanager.app.ui.adapter.Doctors_photoAdapter
-import com.telehealthmanager.app.ui.twilio.CallRequest
-import com.telehealthmanager.app.ui.twilio.TwilloVideoActivity
 import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ViewUtils
 import java.io.Serializable
@@ -86,6 +84,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
                 }
                 if (doctorDegree.speciality?.name != null) {
                     viewModel.branch.set(doctorDegree.speciality.name)
+                    viewModel.specialitiesID.set(doctorDegree.speciality.id.toString())
                 }
                 viewModel.branch.set(doctorDegree.speciality.name)
                 viewModel.percentage.set(viewModel.mDoctorProfile.value!!.hospital[0]?.feedback_percentage ?: "0".plus("%"))
@@ -121,6 +120,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
             }
             if (doctorDegree.speciality?.name != null) {
                 viewModel.branch.set(doctorDegree.speciality.name)
+                viewModel.specialitiesID.set(doctorDegree.speciality.id.toString())
             }
 
             viewModel.percentage.set(viewModel.mFavDoctorProfile.value!!.hospital?.feedback_percentage ?: "0".plus("%"))
@@ -151,6 +151,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
             }
             if (doctorDegree.speciality?.name != null) {
                 viewModel.branch.set(doctorDegree.speciality.name)
+                viewModel.specialitiesID.set(doctorDegree.speciality.id.toString())
             }
             viewModel.percentage.set(searchDoctor.feedback_percentage ?: "0".plus("%"))
             viewModel.experience.set(searchDoctor.doctor_profile?.experience ?: "0")
@@ -288,6 +289,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
         preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_NAME, viewModel.name.get().toString())
         preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_Special, viewModel.specialities.get().toString())
         preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_IMAGE, viewModel.profilePic.get().toString())
+        preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_SPECIALITY_ID, viewModel.specialitiesID.get().toString())
         preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_ADDRESS, viewModel.clinic.get().plus(",").plus(viewModel.clinicAddress.get().toString()))
         val intent = Intent(this@SearchDoctorDetailActivity, FindDoctorBookingActivity::class.java)
         startActivity(intent);

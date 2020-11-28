@@ -128,10 +128,8 @@ class FindDoctorBookingActivity : BaseActivity<ActivityFindDoctorBookingBinding>
         viewModel.mBookedResponse.observe(this@FindDoctorBookingActivity, Observer<BookedResponse> {
             loadingObservable.value = false
             if (it.status) {
-                val intent =
-                    Intent(this@FindDoctorBookingActivity, PatientDetailsActivity::class.java)
+                val intent = Intent(this@FindDoctorBookingActivity, PatientDetailsActivity::class.java)
                 startActivity(intent);
-
             } else
                 ViewUtils.showToast(this@FindDoctorBookingActivity, it.message, false)
         })

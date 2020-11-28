@@ -349,7 +349,6 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
             }
 
             R.id.faHangUp -> {
-                stopCallReceiveService()
                 stopRingTone()
                 declinedCall()
                 stopNotificationService()
@@ -436,6 +435,7 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
     }
 
     private fun resetRoomManager() {
+        stopNotificationService()
         stopRingTone()
         declinedCall()
     }

@@ -32,6 +32,7 @@ class SearchViewModel : BaseViewModel<SearchNavigator>() {
     var name: ObservableField<String> = ObservableField("")
     var profilePic: ObservableField<String> = ObservableField("")
     var specialities: ObservableField<String> = ObservableField("")
+    var specialitiesID: ObservableField<String> = ObservableField("0")
     var degree: ObservableField<String> = ObservableField("")
     var branch: ObservableField<String> = ObservableField("")
     var percentage: ObservableField<String> = ObservableField("0%")

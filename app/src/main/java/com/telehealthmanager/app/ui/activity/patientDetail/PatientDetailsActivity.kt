@@ -12,6 +12,7 @@ import com.telehealthmanager.app.base.BaseActivity
 import com.telehealthmanager.app.data.PreferenceHelper
 import com.telehealthmanager.app.data.PreferenceKey
 import com.telehealthmanager.app.data.getValue
+import com.telehealthmanager.app.data.setValue
 import com.telehealthmanager.app.databinding.ActivityFindDoctorBookingBinding
 import com.telehealthmanager.app.databinding.ActivityPatientDetailsBinding
 import com.telehealthmanager.app.repositary.model.BookedResponse
@@ -36,33 +37,35 @@ class PatientDetailsActivity : BaseActivity<ActivityPatientDetailsBinding>(),
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
 
-        mDataBinding.textView63.text = preferenceHelper.getValue(PreferenceKey.VISIT_PURPOSE,"").toString()
-        mDataBinding.textView65.text = ViewUtils.getDayAndTimeFormat(preferenceHelper.getValue(PreferenceKey.SCHEDULED_DATE,"").toString())
-        mDataBinding.textView67.text = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_NAME,"Dr.Alvin").toString()
-        mDataBinding.textView68.text = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_ADDRESS,"The Apollo,Manhattan").toString()
+        mDataBinding.textView63.text = preferenceHelper.getValue(PreferenceKey.VISIT_PURPOSE, "").toString()
+        mDataBinding.textView65.text = ViewUtils.getDayAndTimeFormat(preferenceHelper.getValue(PreferenceKey.SCHEDULED_DATE, "").toString())
+        mDataBinding.textView67.text = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_NAME, "Dr.Alvin").toString()
+        mDataBinding.textView68.text = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_ADDRESS, "The Apollo,Manhattan").toString()
 
-        if (preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_IMAGE,"").toString()!=""){
-            ViewUtils.setDocViewGlide(this@PatientDetailsActivity,mDataBinding.imageView20,
-                BuildConfig.BASE_IMAGE_URL+preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_IMAGE,"").toString())
+        if (preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_IMAGE, "").toString() != "") {
+            ViewUtils.setDocViewGlide(
+                this@PatientDetailsActivity, mDataBinding.imageView20,
+                BuildConfig.BASE_IMAGE_URL + preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_IMAGE, "").toString()
+            )
         }
 
         mDataBinding.button18.setOnClickListener {
-            if (mDataBinding.nameEt.text.toString().isNullOrBlank()){
+            if (mDataBinding.nameEt.text.toString().isNullOrBlank()) {
                 Toast.makeText(applicationContext, "Invalid Name", Toast.LENGTH_LONG).show()
-            }else if (mDataBinding.emailEt.text.toString().isNullOrBlank()){
+            } else if (mDataBinding.emailEt.text.toString().isNullOrBlank()) {
                 Toast.makeText(applicationContext, "Invalid email", Toast.LENGTH_LONG).show()
-            }else if (mDataBinding.phoneEt.text.toString().isNullOrBlank()){
+            } else if (mDataBinding.phoneEt.text.toString().isNullOrBlank()) {
                 Toast.makeText(applicationContext, "Invalid Phone number", Toast.LENGTH_LONG).show()
-            }else{
+            } else {
                 loadingObservable.value = true
-                bookDoctor_Map["selectedPatient"]= preferenceHelper.getValue(PreferenceKey.PATIENT_ID,0).toString()
-                bookDoctor_Map["doctor_id"]= preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_ID,"").toString()
-                bookDoctor_Map["booking_for"]= preferenceHelper.getValue(PreferenceKey.VISIT_PURPOSE,"").toString()
-                bookDoctor_Map["scheduled_at"]= preferenceHelper.getValue(PreferenceKey.SCHEDULED_DATE,"").toString()
-                bookDoctor_Map["consult_time"]= "15"
-                bookDoctor_Map["service_id"]= "2"
-                bookDoctor_Map["appointment_type"]= "OFFLINE"
-                bookDoctor_Map["description"]= ""
+                bookDoctor_Map["selectedPatient"] = preferenceHelper.getValue(PreferenceKey.PATIENT_ID, 0).toString()
+                bookDoctor_Map["doctor_id"] = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_ID, "").toString()
+                bookDoctor_Map["booking_for"] = preferenceHelper.getValue(PreferenceKey.VISIT_PURPOSE, "").toString()
+                bookDoctor_Map["scheduled_at"] = preferenceHelper.getValue(PreferenceKey.SCHEDULED_DATE, "").toString()
+                bookDoctor_Map["consult_time"] = "15"
+                bookDoctor_Map["service_id"] = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_SPECIALITY_ID, "0").toString()
+                bookDoctor_Map["appointment_type"] = "OFFLINE"
+                bookDoctor_Map["description"] = ""
                 viewModel.BookDoctor(bookDoctor_Map)
             }
         }
@@ -79,9 +82,9 @@ class PatientDetailsActivity : BaseActivity<ActivityPatientDetailsBinding>(),
     private fun observeResponse() {
         viewModel.mBookedResponse.observe(this@PatientDetailsActivity, Observer<BookedResponse> {
             loadingObservable.value = false
-            if (it.message==null) {
+            if (it.message == null) {
                 goToBooked()
-            }else
+            } else
                 ViewUtils.showToast(this@PatientDetailsActivity, it.message, false)
         })
 

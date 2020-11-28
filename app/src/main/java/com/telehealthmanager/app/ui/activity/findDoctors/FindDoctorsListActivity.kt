@@ -175,6 +175,7 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
             preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_ADDRESS, selectedItem.hospital[0].clinic?.name.plus(" , ").plus(selectedItem.hospital[0].clinic?.address))
         }
         preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_Special, selectedItem.speciality?.name ?: "")
+        preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_SPECIALITY_ID, selectedItem.speciality?.id.toString())
         preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_IMAGE, selectedItem.profile_pic ?: "")
         val intent = Intent(this@FindDoctorsListActivity, FindDoctorBookingActivity::class.java)
         startActivity(intent);
