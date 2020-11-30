@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseFragment
 import com.telehealthmanager.app.data.Constant
@@ -17,6 +18,7 @@ import com.telehealthmanager.app.databinding.FragmentRelativeMgmtBinding
 import com.telehealthmanager.app.repositary.model.RelativeList
 import com.telehealthmanager.app.ui.activity.profile.ProfileActivity
 import com.telehealthmanager.app.ui.adapter.RelativemanagerAdapter
+
 
 /**
  * A simple [Fragment] subclass.
@@ -37,6 +39,17 @@ class RelativeMgmtFragment : BaseFragment<FragmentRelativeMgmtBinding>(), Relati
         initAdapter()
         mViewModel.initApi()
         observableLiveDate()
+
+        mDataBinding.rvRelative.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0 && mDataBinding.addRelateLayout.visibility == View.VISIBLE) {
+                    mDataBinding.addRelateLayout.visibility = View.GONE;
+                } else if (dy < 0 && mDataBinding.addRelateLayout.visibility != View.VISIBLE) {
+                    mDataBinding.addRelateLayout.visibility = View.VISIBLE;
+                }
+            }
+        })
     }
 
     private fun observableLiveDate() {

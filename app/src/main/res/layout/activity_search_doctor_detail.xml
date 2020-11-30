@@ -642,12 +642,13 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView7"
                     android:layout_width="match_parent"
-                    android:layout_height="128dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:adapter="@{feedbackadapter}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:orientation="horizontal"
                     app:layout_constraintStart_toStartOf="@+id/textView120"
                     app:layout_constraintTop_toBottomOf="@+id/textView120"
                     tools:listitem="@layout/search_doctor_detail_list_item" />

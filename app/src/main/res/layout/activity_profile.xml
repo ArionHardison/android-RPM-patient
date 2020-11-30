@@ -79,7 +79,6 @@
                             android:layout_width="0dp"
                             android:layout_height="?attr/actionBarSize"
                             android:gravity="center"
-                            android:text="@{viewmodel.toolBarTile}"
                             android:textColor="@color/colorWhite"
                             android:textSize="@dimen/_15sdp"
                             android:textStyle="bold"

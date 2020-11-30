@@ -146,4 +146,9 @@ object Constant {
         const val CURRENT_PASSWORD = "current_password"
         const val PASSWORD_CONFIRMATION = "password_confirmation"
     }
+
+    object BookingStatus {
+        const val CONSULTED = "CONSULTED"
+        const val CANCELLED = "CANCELLED"
+    }
 }

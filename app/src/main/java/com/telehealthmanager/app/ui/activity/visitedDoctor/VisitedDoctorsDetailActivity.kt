@@ -72,6 +72,7 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
                 val mAppointment = intent.getSerializableExtra(WebApiConstants.IntentPass.Appointment) as? Appointment
                 initData(mAppointment!!)
             } else if (intent.getSerializableExtra(WebApiConstants.IntentPass.VisitedDoctor) != null) {
+                mDataBinding.isVideo = false
                 val mAppointment = intent.getSerializableExtra(WebApiConstants.IntentPass.VisitedDoctor) as? Appointment
                 initData(mAppointment!!)
             }
@@ -81,14 +82,14 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
     private fun initData(mAppointment: Appointment) {
         viewModel.mAppointmentDetails.value = mAppointment
         viewModel.id.set(viewModel.mAppointmentDetails.value!!.id)
-        viewModel.status.set(viewModel.mAppointmentDetails.value!!.status ?: "")
         if (mAppointment.hospital != null) {
-            viewModel.mDoctorID.set(viewModel.mAppointmentDetails.value!!.hospital?.id.toString())
-            viewModel.name.set(viewModel.mAppointmentDetails.value!!.hospital?.first_name?.plus(" ").plus(viewModel.mAppointmentDetails.value!!.hospital?.last_name))
-            viewModel.bookfor.set(viewModel.mAppointmentDetails.value!!.booking_for ?: "")
-            viewModel.scheduledAt.set(ViewUtils.getDayAndTimeFormat(viewModel.mAppointmentDetails.value!!.scheduled_at ?: ""))
-            viewModel.specialit.set(viewModel.mAppointmentDetails.value!!.hospital?.doctor_profile?.speciality?.name ?: "")
-            viewModel.catagiery.set(viewModel.mAppointmentDetails.value!!.hospital?.doctor_profile?.speciality?.name ?: "")
+            viewModel.mDoctorID.set(mAppointment.hospital?.id.toString())
+            viewModel.name.set(mAppointment.hospital?.first_name?.plus(" ").plus(viewModel.mAppointmentDetails.value!!.hospital?.last_name))
+            viewModel.bookfor.set(mAppointment.booking_for ?: "")
+            viewModel.scheduledAt.set(ViewUtils.getDayAndTimeFormat(mAppointment.scheduled_at ?: ""))
+            viewModel.specialit.set(mAppointment.hospital?.doctor_profile?.speciality?.name ?: "")
+            viewModel.catagiery.set(mAppointment.hospital?.doctor_profile?.speciality?.name ?: "")
+
             if (viewModel.mAppointmentDetails.value!!.hospital?.clinic != null)
                 viewModel.mClinic.set(viewModel.mAppointmentDetails.value!!.hospital?.clinic?.name.plus(",").plus(viewModel.mAppointmentDetails.value!!.hospital?.clinic?.address))
             if (mAppointment.hospital?.doctor_profile != null && mAppointment.hospital.doctor_profile!!.profile_pic != "") {
@@ -97,6 +98,19 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
                     mDataBinding.imageView12,
                     BuildConfig.BASE_IMAGE_URL + viewModel.mAppointmentDetails.value!!.hospital!!.doctor_profile?.profile_pic
                 )
+            }
+
+            when {
+                mAppointment.status.equals("CANCELLED", true) -> {
+                    viewModel.status.set(mAppointment.status ?: "")
+                }
+                mAppointment.status.equals("CHECKEDOUT", true) -> {
+                    mDataBinding.isVideo = false
+                    viewModel.status.set("CONSULTED")
+                }
+                else -> {
+                    viewModel.status.set(mAppointment.status ?: "")
+                }
             }
         }
     }

@@ -3,6 +3,7 @@ package com.telehealthmanager.app.ui.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.telehealthmanager.app.R
@@ -29,8 +30,12 @@ class PreviousAppointmentsListAdapter(
         }
 
         if (item.status.equals("CANCELLED", true)) {
-            holder.itemBinding.textView28.setTextColor(context.resources.getColor(R.color.colorRed))
-            holder.itemBinding.textView28.setBackgroundColor(context.resources.getColor(R.color.colorLiteRed))
+            holder.itemBinding.textView28.setTextColor(ContextCompat.getColor(context, R.color.colorRed))
+            holder.itemBinding.textView28.setBackgroundColor(ContextCompat.getColor(context, R.color.colorLiteRed))
+        } else if (item.status.equals("CHECKEDOUT", true)) {
+            holder.itemBinding.textView28.setTextColor(ContextCompat.getColor(context, R.color.colorGreen))
+            holder.itemBinding.textView28.setBackgroundColor(ContextCompat.getColor(context, R.color.colorLiteGreen))
+            holder.itemBinding.textView28.text = "CONSULTED"
         }
 
         holder.itemView.setOnClickListener {

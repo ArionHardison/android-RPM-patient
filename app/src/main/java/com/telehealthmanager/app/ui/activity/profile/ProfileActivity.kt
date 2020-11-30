@@ -3,7 +3,6 @@ package com.telehealthmanager.app.ui.activity.profile
 import android.Manifest
 import android.app.Activity
 import android.app.DatePickerDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.text.InputType
@@ -69,7 +68,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
         viewModel.patientId.set(preferenceHelper.getValue(PreferenceKey.PATIENT_ID, 1).toString())
         Places.initialize(this@ProfileActivity, resources.getString(R.string.google_map_api))
         viewModel.setOnClickListener(this@ProfileActivity)
-        viewModel.toolBarTile.value = getString(R.string.your_profile)
+        mDataBinding.titleText2.text = getString(R.string.your_profile)
         initUI()
         initApiCal()
         observeResponse()
@@ -155,11 +154,12 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
         mDataBinding.layoutProfilePersonal.imgProf.setOnClickListener {
             checkPermission()
         }
+
         mDataBinding.layoutProfileLifestyle.rgSmoking.setOnCheckedChangeListener { group, checkedId ->
             val radio: RadioButton = group.findViewById(checkedId)
             viewModel.smoking.set(radio.text.toString().toUpperCase())
-
         }
+
         mDataBinding.layoutProfileLifestyle.rgAlcohol.setOnCheckedChangeListener { group, checkedId ->
             val radio: RadioButton = group.findViewById(checkedId)
             viewModel.alcohol.set(radio.text.toString().toUpperCase())
@@ -167,27 +167,27 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
     }
 
     private fun visiblePersonal() {
-        cutomColorButton(button11)
-        cutomWhiteColorButton(button12)
-        cutomWhiteColorButton(button13)
+        customColorButton(button11)
+        customWhiteColorButton(button12)
+        customWhiteColorButton(button13)
         layout_profile_personal.visibility = View.VISIBLE
         layout_profile_medical.visibility = View.GONE
         layout_profile_lifestyle.visibility = View.GONE
     }
 
     private fun visibleMedical() {
-        cutomColorButton(button12)
-        cutomWhiteColorButton(button11)
-        cutomWhiteColorButton(button13)
+        customColorButton(button12)
+        customWhiteColorButton(button11)
+        customWhiteColorButton(button13)
         layout_profile_personal.visibility = View.GONE
         layout_profile_medical.visibility = View.VISIBLE
         layout_profile_lifestyle.visibility = View.GONE
     }
 
     private fun visibleLifestyle() {
-        cutomColorButton(button13)
-        cutomWhiteColorButton(button11)
-        cutomWhiteColorButton(button12)
+        customColorButton(button13)
+        customWhiteColorButton(button11)
+        customWhiteColorButton(button12)
         layout_profile_personal.visibility = View.GONE
         layout_profile_medical.visibility = View.GONE
         layout_profile_lifestyle.visibility = View.VISIBLE
@@ -479,7 +479,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
                     .placeholder(R.drawable.app_logo)
                     .into(profileImg)
             }
-            viewModel.toolBarTile.value = it.relative_detail?.first_name ?: "".plus(" ").plus(it.relative_detail?.last_name ?: "")
+            mDataBinding.titleText2.text = it.relative_detail?.first_name.plus(" ").plus(it.relative_detail?.last_name)
             viewModel.firstName.set(it.relative_detail?.first_name ?: "")
             viewModel.id.set(it.relative_detail?.id)
             viewModel.lastName.set(it.relative_detail?.last_name ?: "")
@@ -499,13 +499,13 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
             viewModel.chronic_diseases.set(it.relative_detail?.profile?.chronic_diseases ?: "")
             viewModel.injuries.set(it.relative_detail?.profile?.injuries ?: "")
             viewModel.surgeries.set(it.relative_detail?.profile?.surgeries ?: "")
-            if (it.relative_detail?.profile?.alcohol != null && it.relative_detail?.profile?.alcohol.equals("YES"))
+            if (it.relative_detail?.profile?.alcohol != null && it.relative_detail?.profile?.alcohol == "YES")
                 mDataBinding.layoutProfileLifestyle.alcoholYes.isChecked = true
-            else if (it.relative_detail?.profile?.alcohol != null && it.relative_detail?.profile?.alcohol.equals("NO"))
+            else if (it.relative_detail?.profile?.alcohol != null && it.relative_detail?.profile?.alcohol == "NO")
                 mDataBinding.layoutProfileLifestyle.alcoholNo.isChecked = true
-            if (it.relative_detail?.profile?.smoking != null && it.relative_detail?.profile?.smoking.equals("YES"))
+            if (it.relative_detail?.profile?.smoking != null && it.relative_detail?.profile?.smoking == "YES")
                 mDataBinding.layoutProfileLifestyle.smokingYes.isChecked = true
-            else if (it.relative_detail?.profile?.smoking != null && it.relative_detail?.profile?.smoking.equals("NO"))
+            else if (it.relative_detail?.profile?.smoking != null && it.relative_detail?.profile?.smoking == "NO")
                 mDataBinding.layoutProfileLifestyle.smokingNo.isChecked = true
             viewModel.smoking.set(it.relative_detail?.profile?.smoking ?: "")
             viewModel.alcohol.set(it.relative_detail?.profile?.alcohol ?: "")
@@ -520,12 +520,12 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
         })
     }
 
-    fun cutomColorButton(button: Button) {
+    private fun customColorButton(button: Button) {
         button.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.colorButton))
         button.setTextColor(ContextCompat.getColor(applicationContext, R.color.colorWhite))
     }
 
-    fun cutomWhiteColorButton(button: Button) {
+    private fun customWhiteColorButton(button: Button) {
         button.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.colorWhite))
         button.setTextColor(ContextCompat.getColor(applicationContext, R.color.colorBlack))
     }

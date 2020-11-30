@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.telehealthmanager.app.R;
@@ -78,14 +79,14 @@ class BookingCalanderAdapter extends RecyclerView.Adapter<BookingCalanderAdapter
         }
 
         if (model.getStatus() == 0) {
-            holder.date.setTextColor(Color.parseColor("#2891fb"));
-            holder.month.setTextColor(Color.parseColor("#2891fb"));
-            holder.day.setTextColor(Color.parseColor("#2891fb"));
+            holder.date.setTextColor(ContextCompat.getColor(holder.itemView.getContext(),R.color.colorButton));
+            holder.month.setTextColor(ContextCompat.getColor(holder.itemView.getContext(),R.color.colorButton));
+            holder.day.setTextColor(ContextCompat.getColor(holder.itemView.getContext(),R.color.colorButton));
             holder.parent.setBackgroundResource(R.drawable.calander_unselecte);
         } else {
-            holder.date.setTextColor(Color.parseColor("#FFFFFF"));
-            holder.month.setTextColor(Color.parseColor("#FFFFFF"));
-            holder.day.setTextColor(Color.parseColor("#FFFFFF"));
+            holder.date.setTextColor(ContextCompat.getColor(holder.itemView.getContext(),R.color.colorWhite));
+            holder.month.setTextColor(ContextCompat.getColor(holder.itemView.getContext(),R.color.colorWhite));
+            holder.day.setTextColor(ContextCompat.getColor(holder.itemView.getContext(),R.color.colorWhite));
             holder.parent.setBackgroundResource(R.drawable.calander_select);
             selectedPosition = position;
         }
@@ -93,9 +94,9 @@ class BookingCalanderAdapter extends RecyclerView.Adapter<BookingCalanderAdapter
         holder.parent.setOnClickListener(view -> {
             list.get(selectedPosition).setStatus(0);
             list.get(position).setStatus(1);
-            holder.date.setTextColor(Color.parseColor("#FFFFFF"));
-            holder.month.setTextColor(Color.parseColor("#FFFFFF"));
-            holder.day.setTextColor(Color.parseColor("#FFFFFF"));
+            holder.date.setTextColor(ContextCompat.getColor(holder.itemView.getContext(),R.color.colorWhite));
+            holder.month.setTextColor(ContextCompat.getColor(holder.itemView.getContext(),R.color.colorWhite));
+            holder.day.setTextColor(ContextCompat.getColor(holder.itemView.getContext(),R.color.colorWhite));
             holder.parent.setBackgroundResource(R.drawable.calander_select);
             notifyDataSetChanged();
 

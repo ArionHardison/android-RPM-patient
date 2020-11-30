@@ -1,19 +1,15 @@
 package com.telehealthmanager.app.ui.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.databinding.VisitedDoctorsListItemBinding
-import com.telehealthmanager.app.repositary.WebApiConstants
 import com.telehealthmanager.app.repositary.model.Appointment
-import com.telehealthmanager.app.repositary.model.MainResponse
-import com.telehealthmanager.app.ui.activity.visitedDoctor.VisitedDoctorsDetailActivity
 import com.telehealthmanager.app.utils.ViewUtils
-import java.io.Serializable
 
 class VisitedDoctorsListAdapter(val items: MutableList<Appointment>, val context: Context, val listener: IAppointmentListener) :
     RecyclerView.Adapter<VisitedDoctorsViewHolder>() {
@@ -30,8 +26,12 @@ class VisitedDoctorsListAdapter(val items: MutableList<Appointment>, val context
         }
 
         if (item.status.equals("CANCELLED", true)) {
-            holder.itemBinding.textView28.setTextColor(context.resources.getColor(R.color.colorRed))
-            holder.itemBinding.textView28.setBackgroundColor(context.resources.getColor(R.color.colorLiteRed))
+            holder.itemBinding.textView28.setTextColor(ContextCompat.getColor(context, R.color.colorRed))
+            holder.itemBinding.textView28.setBackgroundColor(ContextCompat.getColor(context, R.color.colorLiteRed))
+        } else if (item.status.equals("CHECKEDOUT", true)) {
+            holder.itemBinding.textView28.setTextColor(ContextCompat.getColor(context, R.color.colorGreen))
+            holder.itemBinding.textView28.setBackgroundColor(ContextCompat.getColor(context, R.color.colorLiteGreen))
+            holder.itemBinding.textView28.text = "Consulted"
         }
 
         holder.itemView.setOnClickListener {
@@ -40,7 +40,7 @@ class VisitedDoctorsListAdapter(val items: MutableList<Appointment>, val context
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VisitedDoctorsViewHolder {
-        val inflate = DataBindingUtil.inflate<VisitedDoctorsListItemBinding>(
+        val inflate: VisitedDoctorsListItemBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
             R.layout.visited_doctors_list_item, parent, false
         )

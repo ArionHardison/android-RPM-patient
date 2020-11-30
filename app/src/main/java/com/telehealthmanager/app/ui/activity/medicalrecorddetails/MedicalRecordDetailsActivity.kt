@@ -13,9 +13,10 @@ import com.telehealthmanager.app.repositary.WebApiConstants
 import com.telehealthmanager.app.repositary.model.Hospital1
 import com.telehealthmanager.app.repositary.model.Medical
 import com.telehealthmanager.app.repositary.model.Speciality
+import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ViewUtils
 
-class MedicalRecordDetailsActivity : BaseActivity<ActivityMedicalRecordDetailsBinding>(), MedicalRecordDetailsNavigator {
+class MedicalRecordDetailsActivity : BaseActivity<ActivityMedicalRecordDetailsBinding>(), MedicalRecordDetailsNavigator, CustomBackClick {
 
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
     private lateinit var viewModel: MedicalRecordDetailsViewModel
@@ -28,16 +29,14 @@ class MedicalRecordDetailsActivity : BaseActivity<ActivityMedicalRecordDetailsBi
         viewModel = ViewModelProviders.of(this).get(MedicalRecordDetailsViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
-
-        initUi()
+        viewModel.setOnClickListener(this@MedicalRecordDetailsActivity)
+        viewModel.toolBarTile.value = getString(R.string.your_profile)
         initApiCal()
         observeResponse()
     }
 
-    private fun initUi() {
-        mDataBinding.toolbar.setNavigationOnClickListener {
-            finish()
-        }
+    override fun clickBackPress() {
+        finish()
     }
 
     private fun initApiCal() {
@@ -46,14 +45,10 @@ class MedicalRecordDetailsActivity : BaseActivity<ActivityMedicalRecordDetailsBi
         viewModel.mDoctorName.set(hospital.first_name + " " + hospital.last_name)
         viewModel.mConsultedOnDate.set(ViewUtils.getScheduleDayFormat(mMedicalRecord.scheduled_at))
         viewModel.mRecordName.set("Allopath")
+        viewModel.toolBarTile.value= hospital.first_name.plus(" " ).plus(hospital.last_name)
 
         if (hospital.doctor_profile != null) {
-            Glide.with(this)
-                .load(BuildConfig.BASE_IMAGE_URL + hospital.doctor_profile.profile_pic)
-                .placeholder(R.drawable.place_holder_image)
-                .error(R.drawable.place_holder_image)
-                .fallback(R.drawable.place_holder_image)
-                .into(mDataBinding.mrDocPics)
+            ViewUtils.setDocViewGlide(this,mDataBinding.mrDocPics,BuildConfig.BASE_IMAGE_URL + hospital.doctor_profile.profile_pic)
         }
 
         if (hospital.doctor_profile.speciality != null) {
