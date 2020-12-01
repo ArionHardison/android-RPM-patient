@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.databinding.OnlineAppointmentsListItemBinding
 import com.telehealthmanager.app.repositary.model.chatmodel.Chat
@@ -25,7 +26,7 @@ class ChatAdapter(val context: Context, val list: List<Chat>,val listener:IChatL
             ViewUtils.setDocViewGlide(
                 context,
                 holder.listItemChat.imgProfilePic,
-                item.hospital.doctor_profile?.profile_pic.toString()
+                BuildConfig.BASE_IMAGE_URL + item.hospital.doctor_profile?.profile_pic.toString()
             )
         holder.listItemChat.cardViewChatItem.setOnClickListener {
             listener.onChatClicked(item)

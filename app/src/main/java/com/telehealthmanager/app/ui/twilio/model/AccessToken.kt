@@ -1,4 +1,4 @@
-package com.telehealthmanager.app.ui.twilio
+package com.telehealthmanager.app.ui.twilio.model
 
 import com.google.gson.annotations.SerializedName
 

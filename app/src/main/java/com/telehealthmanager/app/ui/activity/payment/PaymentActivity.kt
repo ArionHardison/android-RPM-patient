@@ -52,14 +52,10 @@ class PaymentActivity : BaseActivity<ActivityPaymentBinding>(), PaymentNavigator
         if (data != null) {
             category = intent.getSerializableExtra("category") as CategoryResponse.Category
             notes = intent.getStringExtra("notes") ?: ""
+            fees = intent.getStringExtra("final_fees") ?: ""
+            mDataBinding.tvConsultationFee.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"), fees.toString())
         }
-        if (category.offer_fees == 0.00) {
-            mDataBinding.tvConsultationFee.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"), category?.fees.toString())
-            fees = category.fees.toString()
-        } else {
-            mDataBinding.tvConsultationFee.text = String.format("%s %s", preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"), category?.offer_fees.toString())
-            fees = category.offer_fees.toString()
-        }
+
         initAdapter()
         observeShowLoading()
         observeSuccessResponse()

@@ -104,8 +104,8 @@ public class PubnubChatActivity extends AppCompatActivity {
                     .load(BuildConfig.BASE_URL + "storage/" + chatData.getHospital().getDoctor_profile().getProfile_pic())
                     .apply(new RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .placeholder(R.drawable.user_placeholder)
-                            .error(R.drawable.user_placeholder))
+                            .placeholder(R.drawable.doc_place_holder)
+                            .error(R.drawable.doc_place_holder))
                     .into(profileImage);
         } else {
             current_Member = getResources().getString(R.string.unknown);

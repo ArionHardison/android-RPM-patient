@@ -15,13 +15,13 @@
 
         <ImageView
             android:id="@+id/backArrow"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_25sdp"
             android:layout_gravity="center_vertical"
             android:layout_margin="10dp"
             android:padding="5dp"
             android:tint="@color/colorWhite"
-            app:srcCompat="@drawable/back_arrow" />
+            app:srcCompat="@drawable/ic_back_new" />
 
         <RelativeLayout
             android:layout_width="@dimen/_25sdp"
@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:src="@drawable/user_placeholder" />
+                android:src="@drawable/doc_place_holder" />
         </RelativeLayout>
 
 
@@ -46,6 +46,7 @@
             android:layout_marginStart="10dp"
             android:gravity="start|center"
             android:text="@string/chat"
+            android:textStyle="bold"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
     </LinearLayout>

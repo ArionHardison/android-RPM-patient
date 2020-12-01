@@ -1,4 +1,4 @@
-package com.telehealthmanager.app.ui.twilio
+package com.telehealthmanager.app.ui.twilio.helper
 
 import android.content.Context
 import android.graphics.ImageFormat

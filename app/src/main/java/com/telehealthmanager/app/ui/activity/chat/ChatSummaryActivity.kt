@@ -113,6 +113,7 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
     private fun payForChatRequest() {
         val intent = Intent(this@ChatSummaryActivity, PaymentActivity::class.java)
         intent.putExtra("category", category)
+        intent.putExtra("final_fees", "" + fees)
         intent.putExtra("notes", notes)
         startActivity(intent)
     }
@@ -212,16 +213,6 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
                 break
             }
         }
-    }
-
-    private fun initAdapter() {
-        docImage.clear()
-        addImage()
-        mAdapter = DoctorImageAdapter(viewModelFindDoctor.mDoctorList!!, docImage, this)
-        val horizontalLayout = LinearLayoutManager(this@ChatSummaryActivity, LinearLayoutManager.HORIZONTAL, false)
-        mDataBinding.contentChatSummary.rvSpecialist.layoutManager = horizontalLayout
-        mDataBinding.contentChatSummary.rvSpecialist.adapter = mAdapter
-        mAdapter!!.notifyDataSetChanged()
     }
 
     private fun addImage() {

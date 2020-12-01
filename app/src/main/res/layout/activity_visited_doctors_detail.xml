@@ -156,7 +156,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/textView34"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/textView34"
-                    app:srcCompat="@drawable/ic_video_call" />
+                    app:srcCompat="@drawable/twillio_ic_video_call" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView

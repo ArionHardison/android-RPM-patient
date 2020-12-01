@@ -25,12 +25,17 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.PermissionChecker
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
+import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.fcm.ReceiverPushResponse
 import com.telehealthmanager.app.repositary.ApiInterface
 import com.telehealthmanager.app.repositary.AppRepository
 import com.telehealthmanager.app.repositary.model.VideoCallCancelResponse
+import com.telehealthmanager.app.ui.twilio.helper.CameraCaptureCompat
+import com.telehealthmanager.app.ui.twilio.listener.LocalTrackListener
+import com.telehealthmanager.app.ui.twilio.model.AccessToken
+import com.telehealthmanager.app.ui.twilio.model.CallRequest
+import com.telehealthmanager.app.ui.twilio.model.ConnectedStatus
 import com.twilio.audioswitch.selection.AudioDevice
 import com.twilio.audioswitch.selection.AudioDeviceSelector
 import com.twilio.video.*
@@ -310,10 +315,10 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
 
     private fun updateAudioDeviceIcon(selectedAudioDevice: AudioDevice?) {
         val audioIcon = when (selectedAudioDevice) {
-            is AudioDevice.BluetoothHeadset -> R.drawable.ic_phone_bluetooth_speaker
-            is AudioDevice.WiredHeadset -> R.drawable.ic_headset
-            is AudioDevice.Speakerphone -> R.drawable.ic_volume_up
-            else -> R.drawable.ic_volume_mute
+            is AudioDevice.BluetoothHeadset -> R.drawable.twillio_ic_phone_bluetooth_speaker
+            is AudioDevice.WiredHeadset -> R.drawable.twillio_ic_headset
+            is AudioDevice.Speakerphone -> R.drawable.twillio_ic_volume_up
+            else -> R.drawable.twillio_ic_volume_mute
         }
         flipAnimateSetImageToFabButton(fabSpeaker!!, audioIcon)
     }
@@ -387,9 +392,9 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
                     val enable = !it.isEnabled
                     it.enable(enable)
                     if (enable) {
-                        flipAnimateSetImageToFabButton(view, R.drawable.ic_videocam_on)
+                        flipAnimateSetImageToFabButton(view, R.drawable.twillio_ic_videocam_on)
                     } else {
-                        flipAnimateSetImageToFabButton(view, R.drawable.ic_videocam_off)
+                        flipAnimateSetImageToFabButton(view, R.drawable.twillio_ic_videocam_off)
                     }
                 }
             }
@@ -398,9 +403,9 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
                     val enable = !it.isEnabled
                     it.enable(enable)
                     if (enable)
-                        flipAnimateSetImageToFabButton(view, R.drawable.ic_mic_black)
+                        flipAnimateSetImageToFabButton(view, R.drawable.twillio_ic_mic_black)
                     else
-                        flipAnimateSetImageToFabButton(view, R.drawable.ic_mic_off_black)
+                        flipAnimateSetImageToFabButton(view, R.drawable.twillio_ic_mic_off_black)
                 }
             }
 

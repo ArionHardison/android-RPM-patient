@@ -3,7 +3,7 @@ package com.telehealthmanager.app.repositary
 import com.telehealthmanager.app.repositary.model.*
 import com.telehealthmanager.app.repositary.model.chatmodel.ChatListResponse
 import com.telehealthmanager.app.repositary.model.chatmodel.ChatStatusResponse
-import com.telehealthmanager.app.ui.twilio.AccessToken
+import com.telehealthmanager.app.ui.twilio.model.AccessToken
 import com.telehealthmanager.doctor.repositary.model.LoginResponse
 import com.telehealthmanager.doctor.repositary.model.OtpResponse
 import io.reactivex.Observable

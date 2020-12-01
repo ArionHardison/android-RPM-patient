@@ -89,7 +89,7 @@ class CallReceiveService : Service() {
             .setCategory(NotificationCompat.CATEGORY_CALL)
             .setContentIntent(contentPendingIntent)
             .addAction(android.R.drawable.sym_action_call, "Answer", receiveCallPendingIntent)
-            .addAction(R.drawable.ic_call_end, "Decline", declineCallPendingIntent)
+            .addAction(R.drawable.twillio_ic_call_end, "Decline", declineCallPendingIntent)
             .setAutoCancel(true)
             .setSound(RingtoneManager.getActualDefaultRingtoneUri(this, RingtoneManager.TYPE_RINGTONE))
             .setVibrate(mVibratePattern)

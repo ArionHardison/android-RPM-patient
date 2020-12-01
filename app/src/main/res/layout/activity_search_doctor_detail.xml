@@ -134,7 +134,7 @@
                             android:tint="@color/colorWhite"
                             android:visibility="gone"
                             android:onClick="@{()->viewmodel.clickInfoClick()}"
-                            app:srcCompat="@drawable/ic_video_call"/>
+                            app:srcCompat="@drawable/twillio_ic_video_call"/>
                     </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

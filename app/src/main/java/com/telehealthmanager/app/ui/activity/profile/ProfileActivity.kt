@@ -385,6 +385,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
                         viewModel.location.set(place.name.toString().plus(", ").plus(place.address.toString()))
                     }
                 }
+
                 REQUEST_CODE_ALLERGIES -> {
                     if (resultCode == Activity.RESULT_OK) {
                         val allergies = data!!.getStringExtra("select_allergies") as String

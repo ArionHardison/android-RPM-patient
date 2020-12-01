@@ -17,7 +17,7 @@ import com.telehealthmanager.app.repositary.model.Appointment
 import com.telehealthmanager.app.repositary.model.FeedbackResponse
 import com.telehealthmanager.app.repositary.model.Response
 import com.telehealthmanager.app.ui.activity.thankyou.ThankyouActivity
-import com.telehealthmanager.app.ui.twilio.CallRequest
+import com.telehealthmanager.app.ui.twilio.model.CallRequest
 import com.telehealthmanager.app.ui.twilio.TwilloVideoActivity
 import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ViewUtils

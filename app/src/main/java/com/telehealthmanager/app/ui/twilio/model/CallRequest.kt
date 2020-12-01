@@ -1,4 +1,4 @@
-package com.telehealthmanager.app.ui.twilio
+package com.telehealthmanager.app.ui.twilio.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
