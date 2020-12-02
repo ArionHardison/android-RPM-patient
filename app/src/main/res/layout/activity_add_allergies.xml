@@ -91,7 +91,7 @@
             android:ems="10"
             android:maxLines="1"
             android:focusable="true"
-            android:hint="Add Allergies"
+            android:hint="Search Allergies"
             android:inputType="textPersonName"
             android:padding="@dimen/_8sdp"
             app:layout_constraintEnd_toEndOf="parent"

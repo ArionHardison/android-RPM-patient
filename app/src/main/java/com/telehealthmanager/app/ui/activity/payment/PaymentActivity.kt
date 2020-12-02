@@ -104,6 +104,7 @@ class PaymentActivity : BaseActivity<ActivityPaymentBinding>(), PaymentNavigator
         })
 
         mViewModel.mChatRequestResponse.observe(this, Observer<MessageResponse> {
+            mAddMoneyViewModel.loadingProgress.value = true
             if (it?.message != null && !it.message.equals("")) {
                 ViewUtils.showToast(this@PaymentActivity, it.message, true)
                 val intent = Intent(applicationContext, SuccessActivity::class.java)
@@ -116,7 +117,7 @@ class PaymentActivity : BaseActivity<ActivityPaymentBinding>(), PaymentNavigator
         })
 
         mAddMoneyViewModel.mDeletedSuccess.observe(this, Observer {
-            mViewModel.loadingProgress.value = false
+            mAddMoneyViewModel.loadingProgress.value = true
             ViewUtils.showToast(this, it.message, true)
             initApiCall()
         })
@@ -176,12 +177,14 @@ class PaymentActivity : BaseActivity<ActivityPaymentBinding>(), PaymentNavigator
             val hashMap = HashMap<String, Any>()
             hashMap["id"] = category.id
             hashMap["message"] = notes
-            hashMap["Amount"] = fees
+            hashMap["amount"] = fees
             hashMap["pay_for"] = "CHAT"
             hashMap["promo_id"] = 1
+            hashMap["card_id"] = mAddMoneyViewModel.mSelectedCard.get().toString()
             hashMap["speciality_id"] = category.id
             hashMap["payment_mode"] = "CARD"
             hashMap["use_wallet"] = false
+            mAddMoneyViewModel.loadingProgress.value = true
             mViewModel.payForChatRequest(hashMap)
         }
     }
