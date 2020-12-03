@@ -32,7 +32,7 @@
         tools:ignore="ExtraText,GoogleAppIndexingWarning"
         tools:targetApi="n">
         <activity android:name="com.telehealthmanager.app.ui.activity.searchDoctor.SearchDoctorScheduleActivity" />
-        <activity android:name="com.telehealthmanager.app.ui.activity.medicalrecorddetails.MedicalRecordDetailsActivity" />
+        <activity android:name="com.telehealthmanager.app.ui.activity.addmedicalrecord.MedicalRecordDetailsActivity" />
         <activity android:name="com.telehealthmanager.app.ui.activity.searchGlobal.SearchGlobalActivity" />
         <activity android:name="com.telehealthmanager.app.ui.activity.searchDoctor.SearchDoctorDetailActivity" />
         <activity android:name="com.telehealthmanager.app.ui.activity.addreminder.AddReminderActivity" />
@@ -152,6 +152,9 @@
         <activity android:name=".ui.activity.addmoney.AddCardActivity" />
         <activity android:name=".ui.activity.addmoney.AddMoneyActivity" />
         <activity android:name=".ui.activity.changepassword.ChangePasswordActivity" />
+        <activity android:name=".ui.activity.addmedicalrecord.AddMedicalRecords" />
+        <activity android:name=".ui.activity.addmedicalrecord.DoctorMedicalRecords" />
+        <activity android:name=".ui.activity.addmedicalrecord.MedicalRecordDetails" />
     </application>
 
 </manifest>

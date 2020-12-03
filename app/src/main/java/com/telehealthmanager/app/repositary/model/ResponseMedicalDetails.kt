@@ -1,0 +1,101 @@
+package com.telehealthmanager.app.repositary.model
+
+import java.io.Serializable
+
+data class ResponseMedicalDetails(
+    val record_details: List<RecordDetail>?,
+    val status: Int?
+) : Serializable {
+    data class RecordDetail(
+        val appointment_id: Int?,
+        val appointments: Any?,
+        val created_at: String?,
+        val created_by: String?,
+        val deleted_at: Any?,
+        val doctor_id: Int?,
+        val dosage: Any?,
+        val dosage_unit: Any?,
+        val drug_id: Int?,
+        val duration: Any?,
+        val duration_unit: Any?,
+        val `file`: String?,
+        val frequency: Any?,
+        val id: Int?,
+        val instruction: String?,
+        val intake: Any?,
+        val inventory_item_id: Any?,
+        val patient: Patient?,
+        val patient_id: Int?,
+        val record_date: String?,
+        val status: String?,
+        val title: String?,
+        val updated_at: String?
+    ) : Serializable {
+        data class Patient(
+            val created_at: String?,
+            val deleted_at: Any?,
+            val device_id: String?,
+            val device_token: String?,
+            val device_type: String?,
+            val email: String?,
+            val email_token: String?,
+            val email_verified: Int?,
+            val email_verified_at: Any?,
+            val first_name: String?,
+            val id: Int?,
+            val last_name: String?,
+            val login_by: String?,
+            val other_id: Any?,
+            val otp: Int?,
+            val payment_mode: String?,
+            val phone: String?,
+            val profile: Profile?,
+            val push_device_token: Any?,
+            val rating: String?,
+            val regn_id: String?,
+            val secondary_mobile: Any?,
+            val social_unique_id: Any?,
+            val stripe_cust_id: String?,
+            val updated_at: String?,
+            val wallet_balance: Int?
+        ) : Serializable {
+            data class Profile(
+                val activity: String?,
+                val address: String?,
+                val age: String?,
+                val alcohol: String?,
+                val allergies: String?,
+                val blood_group: String?,
+                val chronic_diseases: String?,
+                val city: String?,
+                val country: String?,
+                val created_at: String?,
+                val current_medications: String?,
+                val deleted_at: Any?,
+                val description: Any?,
+                val dob: String?,
+                val emergency_contact: String?,
+                val food: String?,
+                val gender: String?,
+                val groups: Any?,
+                val height: String?,
+                val id: Int?,
+                val injuries: String?,
+                val locality: String?,
+                val merital_status: String?,
+                val occupation: String?,
+                val past_medications: String?,
+                val patient_id: String?,
+                val patient_relative_id: Int?,
+                val postal_code: String?,
+                val profile_pic: String?,
+                val refered_by: Any?,
+                val smoking: String?,
+                val street: String?,
+                val surgeries: String?,
+                val updated_at: String?,
+                val weight: String?
+            ) : Serializable
+        }
+    }
+}

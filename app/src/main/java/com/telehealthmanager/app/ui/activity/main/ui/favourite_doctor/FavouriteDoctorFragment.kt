@@ -1,9 +1,6 @@
 package com.telehealthmanager.app.ui.activity.main.ui.favourite_doctor
 
 
-import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.databinding.ViewDataBinding
@@ -11,7 +8,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseFragment
@@ -19,7 +15,6 @@ import com.telehealthmanager.app.databinding.FragmentFavouriteDoctorBinding
 import com.telehealthmanager.app.repositary.model.MainResponse
 import com.telehealthmanager.app.ui.adapter.FavDoctorListAdapter
 import com.telehealthmanager.app.utils.ViewUtils
-import kotlinx.android.synthetic.main.fragment_favourite_doctor.*
 import java.util.HashMap
 
 /**
@@ -53,13 +48,13 @@ class FavouriteDoctorFragment : BaseFragment<FragmentFavouriteDoctorBinding>(), 
     private fun observeResponse() {
 
         viewModel.mDoctorResponse.observe(this, Observer<MainResponse> {
-            viewModel.mDoctorslist = it.favourite_Doctors as MutableList<MainResponse.Doctor>?
-            if (viewModel.mDoctorslist!!.size > 0) {
+            viewModel.mDoctorsList = it.favourite_Doctors as MutableList<MainResponse.Doctor>?
+            if (viewModel.mDoctorsList!!.size > 0) {
                 mDataBinding.tvNotFound.visibility = View.GONE
             } else {
                 mDataBinding.tvNotFound.visibility = View.VISIBLE
             }
-            mAdapter = FavDoctorListAdapter(viewModel.mDoctorslist!!, activity!!)
+            mAdapter = FavDoctorListAdapter(viewModel.mDoctorsList!!, activity!!)
             mDataBinding.adapter = mAdapter
             mAdapter!!.notifyDataSetChanged()
             hideLoading()
@@ -72,7 +67,7 @@ class FavouriteDoctorFragment : BaseFragment<FragmentFavouriteDoctorBinding>(), 
     }
 
     private fun initAdapter() {
-        mAdapter = FavDoctorListAdapter(viewModel.mDoctorslist!!, activity!!)
+        mAdapter = FavDoctorListAdapter(viewModel.mDoctorsList!!, activity!!)
         mDataBinding.adapter = mAdapter
         mDataBinding.rvFavDoctor.addItemDecoration(DividerItemDecoration(activity!!, DividerItemDecoration.VERTICAL))
         mDataBinding.rvFavDoctor.layoutManager = LinearLayoutManager(activity!!)

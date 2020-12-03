@@ -31,7 +31,6 @@ abstract class BaseBottomDialogFragment<T : ViewDataBinding> : BottomSheetDialog
 
     protected abstract fun initView(mRootView: View, mViewDataBinding: ViewDataBinding)
 
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is BaseActivity<*>) {

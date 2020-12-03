@@ -42,7 +42,7 @@
                     android:layout_marginTop="@dimen/_6sdp"
                     android:layout_marginEnd="@dimen/_6sdp"
                     android:layout_marginBottom="@dimen/_2sdp"
-                    android:text="Label"
+                    android:text="@string/test_taken_previous_prescription"
                     android:textColor="@color/grey_700"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
@@ -55,14 +55,48 @@
                     android:layout_marginEnd="@dimen/_6sdp"
                     android:layout_marginBottom="@dimen/_6sdp"
                     android:background="@drawable/rectangular_box"
-                    android:focusable="false"
                     android:hint="@string/test_taken_previous_prescription"
-                    android:inputType="none"
                     android:padding="@dimen/_10sdp"
                     android:text="@={viewmodel.mTestTitle}"
                     android:textColor="@color/grey_700"
                     android:textSize="@dimen/_12sdp" />
 
+                <TextView
+                    android:id="@+id/tv_add_cover_photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_6sdp"
+                    android:layout_marginBottom="@dimen/_2sdp"
+                    android:text="Add Image of the Medical Record"
+                    android:textColor="@color/grey_700"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold" />
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_cover_photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginEnd="@dimen/_6sdp"
+                    android:background="@drawable/rectangular_box">
+
+
+                    <ImageView
+                        android:id="@+id/imgPrescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:scaleType="center"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_add_circle" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
                     android:id="@+id/tv_description"
@@ -72,7 +106,7 @@
                     android:layout_marginTop="@dimen/_12sdp"
                     android:layout_marginEnd="@dimen/_6sdp"
                     android:layout_marginBottom="@dimen/_2sdp"
-                    android:text="Description"
+                    android:text="@string/description_instruction_given"
                     android:textColor="@color/grey_700"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
@@ -85,31 +119,67 @@
                     android:layout_marginEnd="@dimen/_6sdp"
                     android:background="@drawable/rectangular_box"
                     android:ems="10"
-                    android:focusable="false"
+                    android:focusable="true"
                     android:gravity="start"
                     android:hint="@string/instruction_given"
-                    android:inputType="none"
+                    android:inputType="textMultiLine"
                     android:minLines="5"
                     android:padding="@dimen/_8sdp"
                     android:text="@={viewmodel.mTestDescription}" />
 
                 <TextView
-                    android:id="@+id/viewFile"
+                    android:id="@+id/tv_dc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_marginEnd="@dimen/_6sdp"
+                    android:layout_marginBottom="@dimen/_2sdp"
+                    android:text="Doctor Consulted"
+                    android:textColor="@color/grey_700"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etDocName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_6sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_6sdp"
                     android:layout_marginBottom="@dimen/_6sdp"
-                    android:background="@drawable/bg_color_primary_border"
-                    android:gravity="center"
+                    android:background="@drawable/rectangular_box"
+                    android:hint="@string/doctor_name"
                     android:padding="@dimen/_10sdp"
-                    android:text="@string/view_file"
-                    android:textColor="@color/colorButton"
+                    android:focusable="false"
+                    android:inputType="none"
+                    android:text="@={viewmodel.mDoctorName}"
+                    android:textColor="@color/grey_700"
                     android:textSize="@dimen/_12sdp" />
             </LinearLayout>
 
         </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/bottomLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/_14sdp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/dark_button"
+                android:padding="@dimen/_10sdp"
+                android:text="@string/submit"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_12sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </LinearLayout>
 
 
     </RelativeLayout>

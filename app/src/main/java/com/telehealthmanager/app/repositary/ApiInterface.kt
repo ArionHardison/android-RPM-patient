@@ -61,15 +61,6 @@ interface ApiInterface {
     @GET("api/patient/doctor_catagory/{id}")
     fun getDoctorFilterByCategories(@Path("id") id: Int?, @QueryMap hashMap: HashMap<String, Any>): Observable<DoctorListResponse>
 
-    @FormUrlEncoded
-    @POST("api/hospital/update_profile")
-    fun updateprofile(@FieldMap hashMap: HashMap<String, Any>): Observable<OtpResponse>
-
-
-    @Multipart
-    @POST("api/hospital/update_profile")
-    fun profileUpdate(@PartMap params: HashMap<String, RequestBody>, @Part image: MultipartBody.Part): Observable<OtpResponse>
-
     /* Appointment*/
     @GET("api/patient/appointment")
     fun getAppointment(): Observable<AppointmentResponse>
@@ -91,9 +82,19 @@ interface ApiInterface {
     @POST("api/patient/favourite_doctor")
     fun addfav(@FieldMap hashMap: HashMap<String, Any>): Observable<Response>
 
-    /* Appointment*/
-    @GET("api/patient/medical_records")
+    /* TODO Medical Record*/
+    @GET("api/patient/records_list")
     fun getMedicalRecord(): Observable<MedicalRecord>
+
+    @Multipart
+    @POST("api/patient/medical_records")
+    fun addMedicalRecords(@PartMap params: HashMap<String, RequestBody>, @Part image: MultipartBody.Part): Observable<ResponsePrescription>
+
+    @GET("api/patient/doctor")
+    fun getAllDoctors(): Observable<ResponseDoctors>
+
+    @GET("api/patient/records_details/{record_id}")
+    fun getRecordsList(@Path("record_id") id: String?): Observable<ResponseMedicalDetails>
 
     @GET("api/patient/articles")
     fun getArticles(): Observable<ArticleResponse>

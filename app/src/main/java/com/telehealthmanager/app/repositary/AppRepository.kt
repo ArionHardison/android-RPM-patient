@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
+import com.telehealthmanager.app.ui.activity.addmedicalrecord.DoctorMedicalRecordsViewModel
 import com.telehealthmanager.app.ui.activity.addmoney.AddMoneyViewModel
 import com.telehealthmanager.app.ui.activity.addreminder.AddReminderViewModel
 import com.telehealthmanager.app.ui.activity.allergies.AllergiesViewModel
@@ -147,7 +148,7 @@ class AppRepository : BaseRepository() {
                     viewModel.mProfileResponse.value = it
                 } else if (viewModel is WalletViewModel) {
                     viewModel.mProfileResponse.value = it
-                }else if (viewModel is AllergiesViewModel){
+                } else if (viewModel is AllergiesViewModel) {
                     viewModel.mProfileResponse.value = it
                 }
             }, {
@@ -157,7 +158,7 @@ class AppRepository : BaseRepository() {
                     viewModel.getErrorObservable().value = getErrorMessage(it)
                 } else if (viewModel is WalletViewModel) {
                     viewModel.getErrorObservable().value = getErrorMessage(it)
-                }else if (viewModel is AllergiesViewModel){
+                } else if (viewModel is AllergiesViewModel) {
                     viewModel.getErrorObservable().value = getErrorMessage(it)
                 }
             })
@@ -517,6 +518,42 @@ class AppRepository : BaseRepository() {
             .subscribeOn(Schedulers.io())
             .subscribe({
                 viewModel.mMedicalRecordResponse.value = it
+            }, {
+                viewModel.getErrorObservable().value = getErrorMessage(it)
+            })
+    }
+
+    fun getAllDoc(viewModel: DoctorMedicalRecordsViewModel): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .getAllDoctors()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                viewModel.mResponseDoctors.value = it
+            }, {
+                viewModel.getErrorObservable().value = getErrorMessage(it)
+            })
+    }
+
+    fun addMedicalRecord(viewModel: DoctorMedicalRecordsViewModel, hashMap: HashMap<String, RequestBody>, @Part image: MultipartBody.Part): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .addMedicalRecords(hashMap, image)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                viewModel.mAddResponse.value = it
+            }, {
+                viewModel.getErrorObservable().value = getErrorMessage(it)
+            })
+    }
+
+    fun getMedicalRecordsList(viewModel: DoctorMedicalRecordsViewModel, medicalId: String): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .getRecordsList(medicalId)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                viewModel.mResponseMedicalDetails.value = it
             }, {
                 viewModel.getErrorObservable().value = getErrorMessage(it)
             })

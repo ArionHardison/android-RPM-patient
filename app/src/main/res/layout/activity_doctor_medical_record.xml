@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.activity.main.ui.faq.FaqFragment">
+    xmlns:bind="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="viewmodel"
-            type="com.telehealthmanager.app.ui.activity.main.ui.medical_records.MedicalRecordsViewModel" />
+            type="com.telehealthmanager.app.ui.activity.addmedicalrecord.DoctorMedicalRecordsViewModel" />
 
 
         <variable
             name="adapter"
-            type="com.telehealthmanager.app.ui.adapter.MedicalRecordsListAdapter" />
+            type="com.telehealthmanager.app.ui.adapter.DoctorRecordAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,18 +20,24 @@
         android:layout_height="match_parent"
         android:background="@color/colorWhite">
 
+        <include
+            android:id="@+id/toolBar"
+            layout="@layout/toolbar_base"
+            app:layout_constraintTop_toTopOf="parent"
+            bind:baseViewModel="@{viewmodel}" />
+
         <TextView
             android:id="@+id/text_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
             android:padding="@dimen/_8sdp"
-            android:text="Medical record given by Doctors"
+            android:text="Patient Medical Record"
             android:textColor="@color/colorDarkGrey"
             android:textSize="@dimen/_12sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/toolBar" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_medical_records"
@@ -43,9 +48,7 @@
             android:paddingBottom="@dimen/_8sdp"
             app:layout_constraintEnd_toEndOf="@+id/text_info"
             app:layout_constraintStart_toStartOf="@+id/text_info"
-            app:layout_constraintTop_toBottomOf="@+id/text_info"
-            tools:itemCount="5"
-            tools:listitem="@layout/medical_records_list_item" />
+            app:layout_constraintTop_toBottomOf="@+id/text_info" />
 
         <TextView
             android:id="@+id/tvNotFound"
@@ -61,31 +64,5 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/addRelateLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_10sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/filter"
-                style="@style/Widget.MaterialComponents.FloatingActionButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="@{()->viewmodel.clickMedicalRecord()}"
-                app:backgroundTint="@color/colorButton"
-                app:layout_constraintBottom_toTopOf="@+id/textView19"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:maxImageSize="40dp"
-                app:srcCompat="@drawable/ic_add_white" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

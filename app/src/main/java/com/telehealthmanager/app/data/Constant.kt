@@ -13,6 +13,7 @@ object Constant {
 
     const val CATEGORY_REQUEST_CODE = 210
     const val RELATIVE_ADD_UPDATED = 310
+    const val ADD_MEDICAL_RECORD = 310
     const val REQUEST_AUTOCOMPLETE = 201
     private const val PLACE_AUTOCOMPLETE_REQUEST_CODE = 1
     const val REQUEST_CODE_ADD_CARD = 100
@@ -33,6 +34,7 @@ object Constant {
         val FEMALE = "FEMALE"
         val OTHER = "OTHER"
     }
+
     object PaymentMode {
         val CASH = "cash"
         val CARD = "card"

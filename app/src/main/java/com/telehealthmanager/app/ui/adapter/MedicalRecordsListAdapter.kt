@@ -7,41 +7,30 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.repositary.WebApiConstants
-import com.telehealthmanager.app.repositary.model.Hospital1
-import com.telehealthmanager.app.repositary.model.Medical
-import com.telehealthmanager.app.repositary.model.Speciality
-import com.telehealthmanager.app.ui.activity.medicalrecorddetails.MedicalRecordDetailsActivity
+import com.telehealthmanager.app.repositary.model.MedicalRecord
+import com.telehealthmanager.app.repositary.model.chatmodel.Chat
+import com.telehealthmanager.app.ui.activity.addmedicalrecord.DoctorMedicalRecords
 import com.telehealthmanager.app.utils.ViewUtils
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.medical_records_list_item.view.*
 import java.io.Serializable
 
-class MedicalRecordsListAdapter(val items: List<Medical>, val context: Context) :
+class MedicalRecordsListAdapter(val items: List<MedicalRecord.Medical>, val context: Context,val iMedicalRecordClick: IMedicalRecordClick) :
     RecyclerView.Adapter<MedicalRecordsViewHolder>() {
 
     override fun onBindViewHolder(holder: MedicalRecordsViewHolder, position: Int) {
-        val medicalRecord: Medical = items[position]
-        val hospital: Hospital1 = medicalRecord.hospital
-
-        if (hospital.doctor_profile != null) {
-            ViewUtils.setDocViewGlide(context,holder.imDocPics,BuildConfig.BASE_IMAGE_URL + hospital.doctor_profile.profile_pic)
+        val medicalRecord: MedicalRecord.Medical = items[position]
+        holder.tvMrDoctorName.text = medicalRecord?.first_name + " " + medicalRecord?.last_name
+        if (medicalRecord?.doctor_profile != null) {
+            ViewUtils.setDocViewGlide(context, holder.imDocPics, BuildConfig.BASE_IMAGE_URL + medicalRecord.doctor_profile?.profile_pic)
+            holder.tvDoctorType.text = medicalRecord.doctor_profile?.speciality.name
         }
-
-        holder.tvMrDoctorName.text = hospital.first_name + " " + hospital.last_name
-        if (items[position].hospital.doctor_profile.speciality != null) {
-            val specialities: Speciality = items[position].hospital.doctor_profile.speciality
-            holder.tvDoctorType.text = specialities.name
-        }
-
 
         holder.itemView.setOnClickListener {
-            val intent = Intent(context, MedicalRecordDetailsActivity::class.java)
-            intent.putExtra(WebApiConstants.IntentPass.MEDICAL_RECORD, medicalRecord as Serializable)
-            context.startActivity(intent);
+            iMedicalRecordClick.onItemClicked(medicalRecord)
         }
     }
 
@@ -52,6 +41,10 @@ class MedicalRecordsListAdapter(val items: List<Medical>, val context: Context) 
     override fun getItemCount(): Int {
         return items.size
     }
+}
+
+interface IMedicalRecordClick{
+    fun onItemClicked(item: MedicalRecord.Medical)
 }
 
 class MedicalRecordsViewHolder(view: View) : RecyclerView.ViewHolder(view) {

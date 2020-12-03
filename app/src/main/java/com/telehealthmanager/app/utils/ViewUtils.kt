@@ -284,11 +284,10 @@ object ViewUtils {
         return sdf.format(today)
     }
 
-    fun getNextDays(dateCount:Int): String {
-        val currentCal = Calendar.getInstance()
-        currentCal.add(Calendar.DATE, dateCount)
-        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-        return sdf.format(currentCal.time)
+    fun getCurrentDateTime(): String {
+        val today = Date()
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
+        return sdf.format(today)
     }
 
 }

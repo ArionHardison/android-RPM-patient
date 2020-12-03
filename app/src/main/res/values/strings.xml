@@ -319,6 +319,16 @@
     <string name="select_gender">Select Gender</string>
     <string name="select_mertial">Select Martial Status</string>
     <string name="save">Save</string>
+    <string name="please_enter_location">Please enter location</string>
+    <string name="doctor_name">Doctor Name</string>
+    <string name="instruction_given">Instruction Given...</string>
+    <string name="description_instruction_given">Description/Instruction Given</string>
+    <string name="test_taken_previous_prescription">Test Taken/Previous Prescription</string>
+    <string name="view_file">View File</string>
+    <string name="no_records_found">No records found</string>
+    <string name="success_record">Record added successfully</string>
+    <string name="created_by_patient">Created By Patient</string>
+    <string name="created_by_doctor">Created By Doctor</string>
 
 
 </resources>

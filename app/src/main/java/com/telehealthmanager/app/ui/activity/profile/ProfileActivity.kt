@@ -195,20 +195,20 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
 
     private fun validPersonal(): Boolean {
         var isValid = true
-        if (viewModel.email.get().isNullOrBlank()) {
-            ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid_email_address, false)
-            isValid = false
-        } else if (!ValidationUtils.isValidEmail(viewModel.email.get()!!)) {
-            ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid_email_address, false)
-            isValid = false
-        } else if (viewModel.number.get().isNullOrBlank()) {
-            ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid_mobile, false)
-            isValid = false
-        } else if (viewModel.firstName.get().isNullOrBlank()) {
+        if (viewModel.firstName.get().isNullOrBlank()) {
             ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid_first_name, false)
             isValid = false
         } else if (viewModel.lastName.get().isNullOrBlank()) {
             ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid__last_name, false)
+            isValid = false
+        } else if (viewModel.number.get().isNullOrBlank()) {
+            ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid_mobile, false)
+            isValid = false
+        } else if (viewModel.email.get().isNullOrBlank()) {
+            ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid_email_address, false)
+            isValid = false
+        } else if (!ValidationUtils.isValidEmail(viewModel.email.get()!!)) {
+            ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid_email_address, false)
             isValid = false
         } else if (viewModel.gender.get().isNullOrBlank()) {
             ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid_gender, false)
@@ -231,6 +231,9 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
         } else if (viewModel.emgcontact.get().isNullOrBlank()) {
             ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid_mobile_, false)
             isValid = false
+        } else if (viewModel.location.get().isNullOrBlank()) {
+            ViewUtils.showToast(this@ProfileActivity, R.string.please_enter_location, false)
+            isValid = false
         }
         return isValid
     }
@@ -252,7 +255,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
         } else if (viewModel.injuries.get().isNullOrBlank()) {
             ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid_injuries, false)
             isValid = false
-        } else if (viewModel.gender.get().isNullOrBlank()) {
+        } else if (viewModel.surgeries.get().isNullOrBlank()) {
             ViewUtils.showToast(this@ProfileActivity, R.string.error_invalid_surgeries, false)
             isValid = false
         }
