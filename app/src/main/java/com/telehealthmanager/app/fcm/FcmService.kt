@@ -81,12 +81,6 @@ class FcmService : FirebaseMessagingService() {
                     // MISSED CALL
                     showMissedCallNotification(pushResponse)
                 }
-
-               /* val contentIntent = Intent(this, IncomingVideoCallActivity::class.java)
-                contentIntent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT or Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or Intent.FLAG_ACTIVITY_NEW_TASK)
-                contentIntent.putExtra("receiver_push", pushResponse)
-                showNotification("Incoming Video Call", contentIntent)
-                openCallActivity(pushResponse)*/
             } else if (Objects.requireNonNull(notificationMap["message"]) == "audio_call") {
                 wakeUpScreen()
                 val params: Map<String?, String?> = remoteMessage.getData()
@@ -109,34 +103,22 @@ class FcmService : FirebaseMessagingService() {
                     // MISSED CALL
                     showMissedCallNotification(pushResponse)
                 }
-
-               /* val contentIntent = Intent(this, IncomingVideoCallActivity::class.java)
-                contentIntent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT or Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or Intent.FLAG_ACTIVITY_NEW_TASK)
-                contentIntent.putExtra("receiver_push", pushResponse)
-                showNotification("Incoming Audio Call", contentIntent)
-                openCallActivity(pushResponse)*/
             } else {
                 val intent = Intent(this, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 showNotification(messageBody, intent)
             }
         }
-
     }
 
     private fun showMissedCallNotification(pushResponse: ReceiverPushResponse?) {
-
         val mainIntent = Intent(applicationContext, MainActivity::class.java)
         mainIntent.putExtra("redirect", "")
         mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-
         val pushIdChannel = "MISSED CALL CHANNEL"
-
         val pendingIntent = PendingIntent.getActivity(this, 0, mainIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-
         val notificationBuilder = NotificationCompat.Builder(this, pushIdChannel)
-            .setSmallIcon(R.drawable.app_logo)
-            .setColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle("Missed Call")
             .setContentText(pushResponse!!.name)
             .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
@@ -158,7 +140,7 @@ class FcmService : FirebaseMessagingService() {
         val channelId = getString(R.string.app_name)
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.app_logo)
+            .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle(getString(R.string.app_name))
             .setContentText(messageBody)
             .setAutoCancel(true)
@@ -166,7 +148,6 @@ class FcmService : FirebaseMessagingService() {
             .setContentIntent(pendingIntent)
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
         // Since android Oreo notification channel is needed.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
@@ -176,7 +157,6 @@ class FcmService : FirebaseMessagingService() {
             )
             notificationManager.createNotificationChannel(channel)
         }
-
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build())
     }
 
@@ -195,7 +175,6 @@ class FcmService : FirebaseMessagingService() {
             wl_cpu.acquire(10000)
         }
     }
-
 
     private fun isMyServiceRunning(): Boolean {
         val manager = getSystemService(ACTIVITY_SERVICE) as ActivityManager

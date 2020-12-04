@@ -11,7 +11,7 @@ class LoginViewModel : BaseViewModel<LoginNavigator>() {
     private val appRepository = AppRepository.instance()
     var motpResponse = MutableLiveData<OtpResponse>()
     var mobile = MutableLiveData<String>().default("")
-    var countryCode= MutableLiveData<String>().default("+91")
+    var countryCode= MutableLiveData<String>().default("+1")
 
     fun ContinueClick(){
         navigator.performValidation()

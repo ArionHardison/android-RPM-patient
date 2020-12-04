@@ -115,6 +115,7 @@
                             android:contentDescription="@string/app_name"
                             android:padding="@dimen/_10sdp"
                             android:tint="@color/colorWhite"
+                            android:visibility="invisible"
                             android:onClick="@{()->viewmodel.clickShareClick()}"
                             app:srcCompat="@drawable/ic_doctor_share"/>
 
@@ -124,6 +125,7 @@
                             android:contentDescription="@string/app_name"
                             android:padding="@dimen/_10sdp"
                             android:tint="@color/colorWhite"
+                            android:visibility="invisible"
                             android:onClick="@{()->viewmodel.clickVideoCall()}"
                             app:srcCompat="@drawable/ic_doctor_exclamation"/>
 

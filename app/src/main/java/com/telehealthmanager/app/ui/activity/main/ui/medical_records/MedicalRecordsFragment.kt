@@ -108,8 +108,7 @@ class MedicalRecordsFragment : BaseFragment<FragmentMedicalRecordsBinding>(),
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Constant.ADD_MEDICAL_RECORD) {
             if (resultCode != Activity.RESULT_CANCELED) {
-                viewModel.loadingProgress.value = true
-                viewModel.getMedicalRecord()
+                initApiCal()
             }
         }
     }

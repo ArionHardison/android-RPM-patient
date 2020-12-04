@@ -104,7 +104,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
             }
         } else if (favDoctor != null) {
             viewModel.mFavDoctorProfile.value = favDoctor
-            viewModel.id.set(viewModel.mFavDoctorProfile.value!!.id)
+            viewModel.id.set(viewModel.mFavDoctorProfile.value!!.hospital?.id)
             ViewUtils.setDocViewGlide(
                 this@SearchDoctorDetailActivity,
                 mDataBinding.imageView25,

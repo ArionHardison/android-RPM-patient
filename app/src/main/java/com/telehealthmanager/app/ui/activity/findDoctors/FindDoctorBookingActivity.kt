@@ -8,7 +8,6 @@ import android.widget.TimePicker
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.bumptech.glide.Glide
 import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
@@ -46,25 +45,19 @@ class FindDoctorBookingActivity : BaseActivity<ActivityFindDoctorBookingBinding>
         viewModel.navigator = this
         observeResponse()
 
-        mDataBinding.searchDocName.text =
-            preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_NAME, "").toString()
+        mDataBinding.searchDocName.text = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_NAME, "").toString()
+        mDataBinding.searchDocSpec.text = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_Special, "").toString()
+        mDataBinding.searchDocHospName.text = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_ADDRESS, "").toString()
+
         if (preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_Special, "").toString().isEmpty())
             mDataBinding.searchDocSpec.visibility = View.GONE
-        mDataBinding.searchDocSpec.text =
-            preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_Special, "").toString()
-        mDataBinding.searchDocHospName.text =
-            preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_ADDRESS, "").toString()
-        Glide.with(this@FindDoctorBookingActivity)
-            .load(
-                BuildConfig.BASE_IMAGE_URL + preferenceHelper.getValue(
-                    PreferenceKey.SELECTED_DOC_IMAGE,
-                    ""
-                ).toString()
+
+        if (preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_IMAGE, "").toString() != "") {
+            ViewUtils.setDocViewGlide(
+                this@FindDoctorBookingActivity, mDataBinding.searchDocImg,
+                BuildConfig.BASE_IMAGE_URL + preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_IMAGE, "").toString()
             )
-            .placeholder(R.drawable.doc_place_holder)
-            .error(R.drawable.doc_place_holder)
-            .fallback(R.drawable.doc_place_holder)
-            .into(mDataBinding.searchDocImg)
+        }
 
 
         val starttime = Calendar.getInstance()
