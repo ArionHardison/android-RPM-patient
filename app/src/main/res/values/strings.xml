@@ -329,6 +329,9 @@
     <string name="success_record">Record added successfully</string>
     <string name="created_by_patient">Created By Patient</string>
     <string name="created_by_doctor">Created By Doctor</string>
+    <string name="patient_record">Patient Records</string>
+    <string name="patient_medical_record">Patient Medical Records</string>
+    <string name="add_medical_record">Add Medical Record</string>
 
 
 </resources>

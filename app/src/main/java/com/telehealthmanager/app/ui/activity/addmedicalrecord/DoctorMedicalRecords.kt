@@ -32,7 +32,7 @@ class DoctorMedicalRecords : BaseActivity<ActivityDoctorMedicalRecordBinding>(),
         viewModel = ViewModelProviders.of(this).get(DoctorMedicalRecordsViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
-        viewModel.toolBarTile.value = "Patient Medical Records"
+        viewModel.toolBarTile.value = getString(R.string.patient_medical_record)
         viewModel.setOnClickListener(this@DoctorMedicalRecords)
         initApi()
         initObservable()

@@ -38,6 +38,18 @@ class MedicalRecordsFragment : BaseFragment<FragmentMedicalRecordsBinding>(),
         initApiCal()
         initAdapter()
         observeResponse()
+
+        mDataBinding.rvMedicalRecords.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0 && mDataBinding.addMedicalRecord.isShown) {
+                    mDataBinding.addMedicalRecord.hide()
+                } else if (dy < 0 && !mDataBinding.addMedicalRecord.isShown) {
+                    mDataBinding.addMedicalRecord.show()
+                }
+            }
+        })
+
     }
 
     private fun initApiCal() {
@@ -65,7 +77,7 @@ class MedicalRecordsFragment : BaseFragment<FragmentMedicalRecordsBinding>(),
                     mDataBinding.tvNotFound.visibility = View.GONE
                     viewModel.mRecordList = it.medical as MutableList<MedicalRecord.Medical>?
                     mDataBinding.rvMedicalRecords.addItemDecoration(DividerItemDecoration(activity!!, DividerItemDecoration.VERTICAL))
-                    mDataBinding.rvMedicalRecords.layoutManager =LinearLayoutManager(activity!!)
+                    mDataBinding.rvMedicalRecords.layoutManager = LinearLayoutManager(activity!!)
                     mAdapter = MedicalRecordsListAdapter(viewModel.mRecordList!!, activity!!, this)
                     mDataBinding.adapter = mAdapter
                     mAdapter!!.notifyDataSetChanged()

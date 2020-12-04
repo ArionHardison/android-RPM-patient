@@ -62,7 +62,7 @@ class UpcomingAppointmentFragment : BaseFragment<FragmentUpcomingAppointmentBind
     }
 
     private fun initApiCal() {
-        showLoading()
+        viewModel.loadingProgress.value = true
         viewModel.getAppointment()
     }
 
@@ -76,7 +76,7 @@ class UpcomingAppointmentFragment : BaseFragment<FragmentUpcomingAppointmentBind
 
     private fun observeResponse() {
         viewModel.mResponse.observe(this, Observer<AppointmentResponse> {
-            hideLoading()
+            viewModel.loadingProgress.value = false
             viewModel.mUpcomingList = it.upcomming.appointments as MutableList<Appointment>?
             viewModel.mPreviousList = it.previous.appointments as MutableList<Appointment>?
             if (viewModel.mUpcomingList!!.size > 0) {
@@ -87,19 +87,25 @@ class UpcomingAppointmentFragment : BaseFragment<FragmentUpcomingAppointmentBind
             mAdapter = UpcomingAppointmentsListAdapter(viewModel.mUpcomingList!!, activity!!, this)
             mDataBinding.adapter = mAdapter
             mAdapter!!.notifyDataSetChanged()
-            hideLoading()
         })
 
         viewModel.getErrorObservable().observe(this, Observer<String> { message ->
-            hideLoading()
+            viewModel.loadingProgress.value = false
             ViewUtils.showToast(activity!!, message, false)
         })
 
         viewModel.mCancelResponse.observe(this, Observer<Response> {
-            hideLoading()
+            viewModel.loadingProgress.value = false
             if (it.status)
                 ViewUtils.showToast(activity!!, it.message, true)
             initApiCal()
+        })
+
+        viewModel.loadingProgress.observe(this, Observer {
+            if (it)
+                showLoading()
+            else
+                hideLoading()
         })
     }
 
@@ -120,7 +126,7 @@ class UpcomingAppointmentFragment : BaseFragment<FragmentUpcomingAppointmentBind
     }
 
     override fun onCancelClick(selectedItem: Appointment) {
-        showLoading()
+        viewModel.loadingProgress.value = true
         val hashMap: HashMap<String, Any> = HashMap()
         hashMap[WebApiConstants.AddAppointment.ID] = selectedItem.id.toString()
         viewModel.cancelAppointment(hashMap)

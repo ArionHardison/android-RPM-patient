@@ -92,18 +92,21 @@ class FaqFragment : BaseFragment<FragmentFaqBinding>(), FaqNavigator {
         val btnSheet = layoutInflater.inflate(R.layout.alert_faq, null)
         val dialog = BottomSheetDialog(this.requireContext())
         dialog.setContentView(btnSheet)
+
         btnSheet.findViewById<LinearLayout>(R.id.layoutChat).setOnClickListener {
             val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "admin@telehealth.com", null))
             emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.support_mail))
             startActivity(Intent.createChooser(emailIntent, "Send email..."))
             dialog.dismiss()
         }
+
         btnSheet.findViewById<LinearLayout>(R.id.layoutCall).setOnClickListener {
             val intent = Intent(Intent.ACTION_DIAL)
             intent.data = Uri.parse("tel:" + "9876543210")
             startActivity(intent)
             dialog.dismiss()
         }
+
         btnSheet.findViewById<LinearLayout>(R.id.layoutWeb).setOnClickListener {
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(BuildConfig.BASE_URL)

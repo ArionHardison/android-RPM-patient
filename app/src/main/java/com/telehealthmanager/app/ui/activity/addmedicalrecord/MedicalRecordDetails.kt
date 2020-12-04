@@ -13,6 +13,7 @@ import com.telehealthmanager.app.databinding.ActivityMedicalRecordDetailsBinding
 import com.telehealthmanager.app.repositary.WebApiConstants
 import com.telehealthmanager.app.repositary.model.ResponseMedicalDetails
 import com.telehealthmanager.app.utils.CustomBackClick
+import java.io.Serializable
 
 
 class MedicalRecordDetails : BaseActivity<ActivityMedicalRecordDetailsBinding>(), DoctorMedicalRecordsNavigator, CustomBackClick {
@@ -27,11 +28,14 @@ class MedicalRecordDetails : BaseActivity<ActivityMedicalRecordDetailsBinding>()
         viewModel = ViewModelProviders.of(this).get(DoctorMedicalRecordsViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
-        viewModel.toolBarTile.value = "Patient Records"
+        viewModel.toolBarTile.value = getString(R.string.patient_record)
         viewModel.setOnClickListener(this@MedicalRecordDetails)
         intentData()
+
         mDataBinding.viewFile.setOnClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(viewModel.mViewFile.get().toString())))
+            val intent = Intent(this, RecordImageFile::class.java)
+            intent.putExtra("file", viewModel.mViewFile.get().toString())
+            startActivity(intent)
         }
     }
 

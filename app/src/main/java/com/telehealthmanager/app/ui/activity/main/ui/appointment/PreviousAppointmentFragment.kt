@@ -27,7 +27,7 @@ import java.io.Serializable
 /**
  * A simple [Fragment] subclass.
  */
-class PreviousAppointmentFragment : BaseFragment<FragmentPreviousAppointmentBinding>(),AppointmentNavigator,
+class PreviousAppointmentFragment : BaseFragment<FragmentPreviousAppointmentBinding>(), AppointmentNavigator,
     PreviousAppointmentsListAdapter.IAppointmentListener {
 
     private lateinit var viewModel: AppointmentViewModel
@@ -58,21 +58,21 @@ class PreviousAppointmentFragment : BaseFragment<FragmentPreviousAppointmentBind
     }
 
     private fun initApiCal() {
-        showLoading()
+        viewModel.loadingProgress.value = true
         viewModel.getAppointment()
     }
 
     private fun initAdapter() {
-        mAdapter = PreviousAppointmentsListAdapter( viewModel.mPreviousList!!,activity!!,this)
+        mAdapter = PreviousAppointmentsListAdapter(viewModel.mPreviousList!!, activity!!, this)
         mDataBinding.adapter = mAdapter
         mDataBinding.rvPreviousAppointments.addItemDecoration(DividerItemDecoration(activity!!, DividerItemDecoration.VERTICAL))
-        mDataBinding.rvPreviousAppointments.layoutManager =LinearLayoutManager(activity!!)
+        mDataBinding.rvPreviousAppointments.layoutManager = LinearLayoutManager(activity!!)
         mAdapter!!.notifyDataSetChanged()
     }
 
     private fun observeResponse() {
         viewModel.mResponse.observe(this, Observer<AppointmentResponse> {
-            hideLoading()
+            viewModel.loadingProgress.value = false
             viewModel.mUpcomingList = it.upcomming.appointments as MutableList<Appointment>?
             viewModel.mPreviousList = it.previous.appointments as MutableList<Appointment>?
             if (viewModel.mPreviousList!!.size > 0) {
@@ -80,14 +80,21 @@ class PreviousAppointmentFragment : BaseFragment<FragmentPreviousAppointmentBind
             } else {
                 mDataBinding.tvNotFound.visibility = View.VISIBLE
             }
-            mAdapter = PreviousAppointmentsListAdapter(viewModel.mPreviousList!!,activity!!,this@PreviousAppointmentFragment)
+            mAdapter = PreviousAppointmentsListAdapter(viewModel.mPreviousList!!, activity!!, this@PreviousAppointmentFragment)
             mDataBinding.adapter = mAdapter
             mAdapter!!.notifyDataSetChanged()
         })
 
         viewModel.getErrorObservable().observe(this, Observer<String> { message ->
-            hideLoading()
+            viewModel.loadingProgress.value = false
             ViewUtils.showToast(activity!!, message, false)
+        })
+
+        viewModel.loadingProgress.observe(this, Observer {
+            if (it)
+                showLoading()
+            else
+                hideLoading()
         })
     }
 

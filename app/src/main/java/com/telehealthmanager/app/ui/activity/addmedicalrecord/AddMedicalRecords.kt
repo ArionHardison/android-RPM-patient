@@ -63,7 +63,7 @@ class AddMedicalRecords : BaseActivity<ActivityAddMedicalRecordBinding>(), Docto
             }
         }
 
-        viewModel.toolBarTile.value = "Add Medical Record"
+        viewModel.toolBarTile.value = getString(R.string.add_medical_record)
         viewModel.setOnClickListener(this@AddMedicalRecords)
     }
 
@@ -86,7 +86,6 @@ class AddMedicalRecords : BaseActivity<ActivityAddMedicalRecordBinding>(), Docto
             ViewUtils.showToast(this, getString(R.string.success_record), true)
             finish()
         })
-
 
         viewModel.getErrorObservable().observe(this, Observer<String> { message ->
             viewModel.loadingProgress.value = false

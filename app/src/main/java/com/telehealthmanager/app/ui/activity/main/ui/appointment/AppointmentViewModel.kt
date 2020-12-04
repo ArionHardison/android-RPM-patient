@@ -10,14 +10,12 @@ import com.telehealthmanager.app.repositary.model.Response
 
 class AppointmentViewModel : BaseViewModel<AppointmentNavigator>() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is gallery Fragment"
-    }
-    val text: LiveData<String> = _text
     var mResponse = MutableLiveData<AppointmentResponse>()
     var mCancelResponse = MutableLiveData<Response>()
     var mUpcomingList: MutableList<Appointment>? = arrayListOf()
     var mPreviousList: MutableList<Appointment>? = arrayListOf()
+    var loadingProgress = MutableLiveData<Boolean>()
+
     private val appRepository = AppRepository.instance()
 
     fun getAppointment() {
