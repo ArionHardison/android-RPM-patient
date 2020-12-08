@@ -94,7 +94,7 @@ class FaqFragment : BaseFragment<FragmentFaqBinding>(), FaqNavigator {
         dialog.setContentView(btnSheet)
 
         btnSheet.findViewById<LinearLayout>(R.id.layoutChat).setOnClickListener {
-            val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "admin@telehealth.com", null))
+            val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "support@telehealthmanager.com", null))
             emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.support_mail))
             startActivity(Intent.createChooser(emailIntent, "Send email..."))
             dialog.dismiss()
@@ -102,7 +102,7 @@ class FaqFragment : BaseFragment<FragmentFaqBinding>(), FaqNavigator {
 
         btnSheet.findViewById<LinearLayout>(R.id.layoutCall).setOnClickListener {
             val intent = Intent(Intent.ACTION_DIAL)
-            intent.data = Uri.parse("tel:" + "9876543210")
+            intent.data = Uri.parse("tel:" + "+12139210059")
             startActivity(intent)
             dialog.dismiss()
         }

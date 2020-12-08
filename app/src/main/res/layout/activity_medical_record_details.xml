@@ -42,7 +42,7 @@
                     android:layout_marginTop="@dimen/_6sdp"
                     android:layout_marginEnd="@dimen/_6sdp"
                     android:layout_marginBottom="@dimen/_2sdp"
-                    android:text="Label"
+                    android:text="@string/test_taken_previous_prescription"
                     android:textColor="@color/grey_700"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />

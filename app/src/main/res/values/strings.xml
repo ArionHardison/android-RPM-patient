@@ -332,6 +332,7 @@
     <string name="patient_record">Patient Records</string>
     <string name="patient_medical_record">Patient Medical Records</string>
     <string name="add_medical_record">Add Medical Record</string>
+    <string name="invoice_details">Invoice Details</string>
 
 
 </resources>

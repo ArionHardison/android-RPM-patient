@@ -84,6 +84,8 @@ class AddMedicalRecords : BaseActivity<ActivityAddMedicalRecordBinding>(), Docto
         viewModel.mAddResponse.observe(this, Observer {
             viewModel.loadingProgress.value = false
             ViewUtils.showToast(this, getString(R.string.success_record), true)
+            val intent = Intent()
+            setResult(RESULT_OK, intent)
             finish()
         })
 

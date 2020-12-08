@@ -25,6 +25,12 @@ class VisitedDoctorsViewModel : BaseViewModel<VisitedDoctorsNavigator>() {
     var mComment: ObservableField<String> = ObservableField("")
     var mTitle: ObservableField<String> = ObservableField("")
 
+    /* Invoice */
+    var mSpecialityFees: ObservableField<String> = ObservableField("$ 0")
+    var mConsultingFees: ObservableField<String> = ObservableField("$ 0")
+    var mGrossTotal: ObservableField<String> = ObservableField("$ 0")
+    var mTotalPaid: ObservableField<String> = ObservableField("$ 0")
+
     fun onLike() {
         navigator.onlike()
     }

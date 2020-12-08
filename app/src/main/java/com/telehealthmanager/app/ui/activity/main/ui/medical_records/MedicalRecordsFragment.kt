@@ -58,7 +58,8 @@ class MedicalRecordsFragment : BaseFragment<FragmentMedicalRecordsBinding>(),
     }
 
     private fun initAdapter() {
-        mDataBinding.rvMedicalRecords.layoutManager = LinearLayoutManager(context) as RecyclerView.LayoutManager?
+        mDataBinding.rvMedicalRecords.layoutManager = LinearLayoutManager(activity!!)
+        mDataBinding.rvMedicalRecords.addItemDecoration(DividerItemDecoration(activity!!, DividerItemDecoration.VERTICAL))
     }
 
     private fun observeResponse() {
@@ -76,8 +77,6 @@ class MedicalRecordsFragment : BaseFragment<FragmentMedicalRecordsBinding>(),
                 if (!it.medical.isNullOrEmpty()) {
                     mDataBinding.tvNotFound.visibility = View.GONE
                     viewModel.mRecordList = it.medical as MutableList<MedicalRecord.Medical>?
-                    mDataBinding.rvMedicalRecords.addItemDecoration(DividerItemDecoration(activity!!, DividerItemDecoration.VERTICAL))
-                    mDataBinding.rvMedicalRecords.layoutManager = LinearLayoutManager(activity!!)
                     mAdapter = MedicalRecordsListAdapter(viewModel.mRecordList!!, activity!!, this)
                     mDataBinding.adapter = mAdapter
                     mAdapter!!.notifyDataSetChanged()

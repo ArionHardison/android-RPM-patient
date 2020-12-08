@@ -4,14 +4,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.JsonSyntaxException
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException
+import com.queenbee.app.session.SessionListener
+import com.queenbee.app.session.SessionManager
 import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.data.NetworkError
 import com.telehealthmanager.app.data.PreferenceHelper
 import com.telehealthmanager.app.data.PreferenceKey
 import com.telehealthmanager.app.data.getValue
-import com.queenbee.app.session.SessionListener
-import com.queenbee.app.session.SessionManager
 import com.telehealthmanager.app.utils.CustomBackClick
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.ResponseBody
@@ -20,12 +20,12 @@ import java.io.IOException
 import java.lang.ref.WeakReference
 import java.net.SocketTimeoutException
 
-abstract class BaseViewModel<N> : ViewModel() , SessionListener {
+abstract class BaseViewModel<N> : ViewModel(), SessionListener {
     private var compositeDisposable = CompositeDisposable()
     private lateinit var mNavigator: WeakReference<N>
     private var liveErrorResponse = MutableLiveData<String>()
     var toolBarTile = MutableLiveData<String>("")
-    var customBackClick:CustomBackClick? = null
+    var customBackClick: CustomBackClick? = null
 
     fun setOnClickListener(onViewClickListener: CustomBackClick) {
         this.customBackClick = onViewClickListener
@@ -90,12 +90,14 @@ abstract class BaseViewModel<N> : ViewModel() , SessionListener {
     private fun getErrorMessage(responseBody: ResponseBody): String? {
         return try {
             val jsonObject = JSONObject(responseBody.string())
-            if(jsonObject.has("error"))
-                jsonObject.getString("error")
-            else if(jsonObject.has("message"))
-                jsonObject.getString("message")
-            else
-                NetworkError.SERVER_EXCEPTION
+
+            when {
+                jsonObject.has("email") -> jsonObject.optJSONObject("errors")?.optJSONArray("email")?.opt(0).toString()
+                jsonObject.has("phone") -> jsonObject.optJSONObject("errors")?.optJSONArray("phone")?.opt(0).toString()
+                jsonObject.has("error") -> jsonObject.getString("error")
+                jsonObject.has("message") -> jsonObject.getString("message")
+                else -> NetworkError.SERVER_EXCEPTION
+            }
         } catch (e: Exception) {
             NetworkError.SERVER_EXCEPTION
         }

@@ -2,14 +2,14 @@ package com.telehealthmanager.app.repositary
 
 import com.google.gson.JsonSyntaxException
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException
+import com.queenbee.app.session.SessionListener
+import com.queenbee.app.session.SessionManager
 import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.data.NetworkError
 import com.telehealthmanager.app.data.PreferenceHelper
 import com.telehealthmanager.app.data.PreferenceKey
 import com.telehealthmanager.app.data.getValue
-import com.queenbee.app.session.SessionListener
-import com.queenbee.app.session.SessionManager
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Retrofit
@@ -59,7 +59,7 @@ open class BaseRepository {
                         ""
                     )!! != ""
                 ) {
-                    SessionManager.instance(object :SessionListener{
+                    SessionManager.instance(object : SessionListener {
                         override fun invalidate() {
 
                         }
@@ -82,16 +82,33 @@ open class BaseRepository {
     private fun getErrorMessage(responseBody: ResponseBody): String? {
         return try {
             val jsonObject = JSONObject(responseBody.string())
-            if(jsonObject.has("error"))
-                jsonObject.getString("error")
-            else if(jsonObject.has("message"))
-                jsonObject.getString("message")
-            else
-                NetworkError.SERVER_EXCEPTION
+            when {
+                jsonObject.has("errors") -> {
+                    val errorObject = jsonObject.optJSONObject("errors")
+                    when {
+                        errorObject!!.has("email") -> errorObject.optJSONArray("email")?.opt(0).toString()
+                        errorObject.has("phone") -> errorObject.optJSONArray("phone")?.opt(0).toString()
+                        errorObject.has("prescription_image") -> errorObject.optJSONArray("prescription_image")?.opt(0).toString()
+                        else -> getJSONResponse(jsonObject)
+                    }
+                }
+                else -> getJSONResponse(jsonObject)
+            }
         } catch (e: Exception) {
             NetworkError.SERVER_EXCEPTION
         }
     }
 
+    private fun getJSONResponse(jsonObject: JSONObject): String? {
+        return try {
+            when {
+                jsonObject.has("error") -> jsonObject.getString("error")
+                jsonObject.has("message") -> jsonObject.getString("message")
+                else -> NetworkError.SERVER_EXCEPTION
+            }
+        } catch (e: Exception) {
+            NetworkError.SERVER_EXCEPTION
+        }
+    }
 
 }
