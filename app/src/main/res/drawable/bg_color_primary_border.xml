@@ -5,7 +5,7 @@
     <!-- Border Color -->
     <stroke
         android:width="0.5dp"
-        android:color="@color/colorBlack" />
+        android:color="@color/colorButton" />
     <!-- Round Corners -->
     <corners android:radius="5dp" />
 

@@ -179,7 +179,7 @@ interface ApiInterface {
 
 
     /* TODO CARD */
-    @GET("api/patient/card")
+    @GET("api/patient/card?user_type=patient")
     fun getCards(): Observable<List<CardList>>
 
     @FormUrlEncoded

@@ -67,10 +67,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
         val navController = findNavController(R.id.nav_host_fragment)
         headerview = navView.getHeaderView(0)
         navView.itemIconTintList = null
-        navView.getHeaderView(0).setOnClickListener() {
+        navView.getHeaderView(0).setOnClickListener {
             val intent = Intent(applicationContext, ProfileActivity::class.java)
             intent.putExtra(Constant.IntentData.IS_VIEW_TYPE, "home")
-            startActivity(intent);
+            startActivity(intent)
         }
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -95,42 +95,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
         name = headerview.findViewById(R.id.name)
         profileCompleted = headerview.findViewById(R.id.profile_completed)
         profileImg = headerview.findViewById(R.id.profile_img)
-        name.setText(
-            preferenceHelper.getValue(PreferenceKey.FIRST_NAME, "Test").toString().plus(" ").plus(
-                preferenceHelper.getValue(
-                    PreferenceKey.LAST_NAME,
-                    "Test"
-                ).toString()
-            )
+        name.text = preferenceHelper.getValue(PreferenceKey.FIRST_NAME, "Test").toString().plus(" ").plus(
+            preferenceHelper.getValue(
+                PreferenceKey.LAST_NAME,
+                "Test"
+            ).toString()
         )
-        profileCompleted.setText(
-            getString(R.string.profile_completed).plus(" ").plus(
-                preferenceHelper.getValue(
-                    PreferenceKey.PROFILE_PER,
-                    "Test"
-                ).toString()
-            )
+        profileCompleted.text = getString(R.string.profile_completed).plus(" ").plus(
+            preferenceHelper.getValue(
+                PreferenceKey.PROFILE_PER,
+                "Test"
+            ).toString()
         )
 
-    }
-
-    override fun onPause() {
-        super.onPause()
-        /* if (checkRequestTimer != null) {
-             checkRequestTimer!!.cancel();
-             checkRequestTimer = null;
-         }*/
-    }
-
-    override fun onResume() {
-        super.onResume()
-        /*checkRequestTimer = Timer()
-        checkRequestTimer!!.schedule(object : TimerTask() {
-            override fun run() {
-                if (NetworkUtils.isNetworkConnected(this@MainActivity)){}
-                    //viewModel.callCheckVideoAPI()
-            }
-        }, 0, 5000)*/
     }
 
     private fun observeResponse() {
@@ -151,8 +128,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
 
             viewModel.name.set(it.patient.first_name.plus(" ").plus(it.patient.last_name))
             viewModel.profilepercentage.set(it.profile_complete)
-            if (it.patient.profile?.profile_pic != null)
-                viewModel.imageurl.set(it.patient.profile?.profile_pic as String?)
+            if (it.patient.profile.profile_pic != null)
+                viewModel.imageurl.set(it.patient.profile.profile_pic as String?)
 
             preferenceHelper.setValue(PreferenceKey.PATIENT_ID, it.patient.id)
             preferenceHelper.setValue(PreferenceKey.FIRST_NAME, it.patient.first_name)
@@ -160,26 +137,23 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
             preferenceHelper.setValue(PreferenceKey.PROFILE_PER, it.profile_complete)
             preferenceHelper.setValue(PreferenceKey.PHONE, it.patient.phone)
             preferenceHelper.setValue(PreferenceKey.EMAIL, it.patient.email)
-            preferenceHelper.setValue(PreferenceKey.PROFILE_IMAGE, it.patient.profile?.profile_pic)
+            preferenceHelper.setValue(PreferenceKey.PROFILE_IMAGE, it.patient.profile.profile_pic)
             preferenceHelper.setValue(PreferenceKey.WALLET_BALANCE, it.patient.wallet_balance)
 
-            name.setText(
-                preferenceHelper.getValue(PreferenceKey.FIRST_NAME, "Test").toString().plus(
-                    " "
-                ).plus(preferenceHelper.getValue(PreferenceKey.LAST_NAME, "Test").toString())
-            )
-            profileCompleted.setText(
-                getString(R.string.profile_completed).plus(" ").plus(
-                    preferenceHelper.getValue(
-                        PreferenceKey.PROFILE_PER,
-                        "Test"
-                    ).toString()
-                )
-            )
+            name.text = preferenceHelper.getValue(PreferenceKey.FIRST_NAME, "Test").toString().plus(
+                " "
+            ).plus(preferenceHelper.getValue(PreferenceKey.LAST_NAME, "Test").toString())
 
-            if (it.patient?.profile?.profile_pic != null) {
+            profileCompleted.text = getString(R.string.profile_completed).plus(" ").plus(
+                preferenceHelper.getValue(
+                    PreferenceKey.PROFILE_PER,
+                    "0"
+                ).toString()
+            ).plus("%")
+
+            if (it.patient.profile.profile_pic != null) {
                 Glide.with(this)
-                    .load(BuildConfig.BASE_IMAGE_URL + it.patient?.profile?.profile_pic)
+                    .load(BuildConfig.BASE_IMAGE_URL + it.patient.profile.profile_pic)
                     .error(R.drawable.app_logo)
                     .placeholder(R.drawable.app_logo)
                     .into(profileImg)
