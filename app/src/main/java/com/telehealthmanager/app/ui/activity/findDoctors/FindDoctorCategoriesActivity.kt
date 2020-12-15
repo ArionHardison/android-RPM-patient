@@ -85,7 +85,7 @@ class FindDoctorCategoriesActivity : BaseActivity<ActivityFindDoctorCategoriesBi
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s!!.length > 0)
+                if (s!!.isNotEmpty())
                     mDataBinding.adapter!!.filter.filter(s)
                 else {
                     mCategoriesAdapter = CategoriesListAdapter(viewModel.mCategoryList!!, this@FindDoctorCategoriesActivity)
@@ -95,6 +95,4 @@ class FindDoctorCategoriesActivity : BaseActivity<ActivityFindDoctorCategoriesBi
             }
         })
     }
-
-
 }

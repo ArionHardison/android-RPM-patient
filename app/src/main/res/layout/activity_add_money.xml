@@ -113,7 +113,6 @@
                 android:layout_margin="20dp"
                 android:background="@drawable/dark_button"
                 android:clickable="@{viewmodel.mEnablePay}"
-                android:onClick="@{()->viewmodel.clickAddMoney()}"
                 android:text="@string/add_money"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"

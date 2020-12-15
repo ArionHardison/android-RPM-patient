@@ -189,9 +189,9 @@
                         android:layout_height="@dimen/_50sdp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="8dp"
+                        android:src="@drawable/doc_place_holder"
                         app:civ_border_color="@color/colorButton"
-                        app:civ_border_width="1dp"
-                        android:src="@drawable/doc_place_holder" />
+                        app:civ_border_width="1dp" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -218,6 +218,44 @@
                     </LinearLayout>
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/textView69"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorLiteGrey"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_3sdp"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:text="Pay using"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/llProfileDetails" />
+
+                <RadioGroup
+                    android:id="@+id/groupRadio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@+id/textView69">
+
+                    <RadioButton
+                        android:id="@+id/radioCard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Card" />
+
+                    <RadioButton
+                        android:id="@+id/radioWallet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Wallet" />
+
+                </RadioGroup>
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
@@ -233,8 +271,8 @@
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/_14sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

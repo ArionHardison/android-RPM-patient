@@ -33,8 +33,8 @@ class FindDoctorBookingActivity : BaseActivity<ActivityFindDoctorBookingBinding>
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
     private lateinit var viewModel: FindDoctorsViewModel
     private lateinit var mDataBinding: ActivityFindDoctorBookingBinding
-    val bookDoctor_Map: HashMap<kotlin.String, Any> = HashMap()
-    val sdf1 = SimpleDateFormat("yyyy-MM-dd")
+    private val bookDoctorMap: HashMap<kotlin.String, Any> = HashMap()
+    private val sdf1 = SimpleDateFormat("yyyy-MM-dd")
 
     override fun getLayoutId(): Int = R.layout.activity_find_doctor_booking
 
@@ -60,16 +60,16 @@ class FindDoctorBookingActivity : BaseActivity<ActivityFindDoctorBookingBinding>
         }
 
 
-        val starttime = Calendar.getInstance()
-        starttime.add(Calendar.DATE, 0)
+        val startTime: Calendar = Calendar.getInstance()
+        startTime.add(Calendar.DATE, 0)
 
-        val endtime = Calendar.getInstance()
-        endtime.add(Calendar.MONTH, 6)
+        val endTime = Calendar.getInstance()
+        endTime.add(Calendar.MONTH, 6)
 
         val datesToBeColored: ArrayList<kotlin.String> = ArrayList()
         datesToBeColored.add(Tools.getFormattedDateToday())
         viewModel.mSelectedScheduleDate.set(sdf1.format(System.currentTimeMillis()))
-        mDataBinding.calanderView.setUpCalendar(starttime.timeInMillis, endtime.timeInMillis, datesToBeColored) { date, strDate ->
+        mDataBinding.calanderView.setUpCalendar(startTime.timeInMillis, endTime.timeInMillis, datesToBeColored) { date, strDate ->
             viewModel.mSelectedScheduleDate.set(strDate)
             viewModel.selectedDate = date
             Log.e("mSelectedSchedul==>", "" + viewModel.mSelectedScheduleDate.get().toString())
@@ -100,7 +100,7 @@ class FindDoctorBookingActivity : BaseActivity<ActivityFindDoctorBookingBinding>
         viewModel.selectedDate!!.set(Calendar.MINUTE, minute)
         val currentTime = Calendar.getInstance()
         currentTime.add(Calendar.MINUTE, -1)
-        if (viewModel.selectedDate!!.getTimeInMillis() < currentTime.timeInMillis) {
+        if (viewModel.selectedDate!!.timeInMillis < currentTime.timeInMillis) {
             ViewUtils.showToast(this@FindDoctorBookingActivity, getString(R.string.past_time_error), false)
             return
         }
@@ -114,7 +114,7 @@ class FindDoctorBookingActivity : BaseActivity<ActivityFindDoctorBookingBinding>
         } else {
             preferenceHelper.setValue(PreferenceKey.VISIT_PURPOSE, mDataBinding.radioButton2.text.toString())
         }
-        performclick()
+        perFormClick()
     }
 
     private fun observeResponse() {
@@ -122,7 +122,7 @@ class FindDoctorBookingActivity : BaseActivity<ActivityFindDoctorBookingBinding>
             loadingObservable.value = false
             if (it.status) {
                 val intent = Intent(this@FindDoctorBookingActivity, PatientDetailsActivity::class.java)
-                startActivity(intent);
+                startActivity(intent)
             } else
                 ViewUtils.showToast(this@FindDoctorBookingActivity, it.message, false)
         })
@@ -132,20 +132,20 @@ class FindDoctorBookingActivity : BaseActivity<ActivityFindDoctorBookingBinding>
         })
     }
 
-    fun performclick() {
+    private fun perFormClick() {
         // loadingObservable.value = true
-        bookDoctor_Map["doctor_id"] = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_ID, "").toString()
-        bookDoctor_Map["selectedPatient"] = preferenceHelper.getValue(PreferenceKey.PATIENT_ID, 0).toString()
-        bookDoctor_Map["booking_for"] = preferenceHelper.getValue(PreferenceKey.VISIT_PURPOSE, "").toString()
-        bookDoctor_Map["scheduled_at"] = preferenceHelper.getValue(PreferenceKey.SCHEDULED_DATE, "").toString()
-        bookDoctor_Map["consult_time"] = "15"
-        bookDoctor_Map["appointment_type"] = "OFFLINE"
-        bookDoctor_Map["description"] = ""
+        bookDoctorMap["doctor_id"] = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_ID, "").toString()
+        bookDoctorMap["selectedPatient"] = preferenceHelper.getValue(PreferenceKey.PATIENT_ID, 0).toString()
+        bookDoctorMap["booking_for"] = preferenceHelper.getValue(PreferenceKey.VISIT_PURPOSE, "").toString()
+        bookDoctorMap["scheduled_at"] = preferenceHelper.getValue(PreferenceKey.SCHEDULED_DATE, "").toString()
+        bookDoctorMap["consult_time"] = "15"
+        bookDoctorMap["appointment_type"] = "OFFLINE"
+        bookDoctorMap["description"] = "Appointment"
 
         // loadingObservable.value = true
         // viewModel.BookDoctor(bookDoctor_Map)
         val intent = Intent(this@FindDoctorBookingActivity, PatientDetailsActivity::class.java)
-        startActivity(intent);
+        startActivity(intent)
     }
 
 }

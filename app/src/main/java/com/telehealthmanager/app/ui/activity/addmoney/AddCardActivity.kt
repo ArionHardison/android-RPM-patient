@@ -103,10 +103,7 @@ class AddCardActivity : BaseActivity<ActivityAddCardBinding>(), AddMoneyNavigato
     }
 
     override fun openAddCard() {
-        TODO("Not yet implemented")
+
     }
 
-    override fun addMoney() {
-        TODO("Not yet implemented")
-    }
 }

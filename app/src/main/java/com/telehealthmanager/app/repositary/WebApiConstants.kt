@@ -48,6 +48,7 @@ object WebApiConstants {
     }
 
     object Feedback {
+        const val appointment_id = "appointment_id"
         const val hospital_id = "hospital_id"
         const val experiences = "experiences"
         const val visited_for="visited_for"
@@ -59,7 +60,6 @@ object WebApiConstants {
     object Favourite {
         const val patient_id = "patient_id"
         const val doctor_id = "doctor_id"
-
     }
 
 

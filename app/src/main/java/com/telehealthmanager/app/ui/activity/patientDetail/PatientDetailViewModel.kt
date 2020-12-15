@@ -8,10 +8,9 @@ import com.telehealthmanager.app.repositary.model.BookedResponse
 class PatientDetailViewModel : BaseViewModel<PatientDetailNavigator>(){
     private val appRepository = AppRepository.instance()
     var mBookedResponse = MutableLiveData<BookedResponse>()
-    fun BookDoctor(hashMap: HashMap<String, Any>) {
+
+    fun bookDoctor(hashMap: HashMap<String, Any>) {
         getCompositeDisposable().add(appRepository.bookDoctor(this, hashMap))
     }
-
-    fun goToBooked() {navigator.goToBooked()}
 
 }

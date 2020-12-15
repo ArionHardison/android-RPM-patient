@@ -44,7 +44,6 @@ class AddReminderViewModel : BaseViewModel<AddReminderNavigator>(){
         getCompositeDisposable().add(appRepository.addRemainder(this, hashMap))
     }
 
-
     fun onFromTimeClicked() {
         navigator.onFromTimeClicked()
     }

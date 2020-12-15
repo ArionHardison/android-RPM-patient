@@ -25,5 +25,7 @@ data class Appointment(
     val scheduled_end: String?,
     val service_id: Any?,
     val status: String?,
-    val updated_at: String?
+    val updated_at: String?,
+    val driver_rating: Int = 0,
+    val patient_rating: Int = 0
 ) : Serializable

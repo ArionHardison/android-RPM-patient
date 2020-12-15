@@ -12,14 +12,12 @@ import com.telehealthmanager.app.base.BaseActivity
 import com.telehealthmanager.app.data.PreferenceHelper
 import com.telehealthmanager.app.data.PreferenceKey
 import com.telehealthmanager.app.data.getValue
-import com.telehealthmanager.app.data.setValue
-import com.telehealthmanager.app.databinding.ActivityFindDoctorBookingBinding
 import com.telehealthmanager.app.databinding.ActivityPatientDetailsBinding
 import com.telehealthmanager.app.repositary.model.BookedResponse
 import com.telehealthmanager.app.ui.activity.success.SuccessActivity
 import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ViewUtils
-import java.util.HashMap
+import java.util.*
 
 class PatientDetailsActivity : BaseActivity<ActivityPatientDetailsBinding>(),
     PatientDetailNavigator, CustomBackClick {
@@ -56,6 +54,8 @@ class PatientDetailsActivity : BaseActivity<ActivityPatientDetailsBinding>(),
                 Toast.makeText(applicationContext, "Invalid email", Toast.LENGTH_LONG).show()
             } else if (mDataBinding.phoneEt.text.toString().isNullOrBlank()) {
                 Toast.makeText(applicationContext, "Invalid Phone number", Toast.LENGTH_LONG).show()
+            } else if (!mDataBinding.radioCard.isChecked && !mDataBinding.radioWallet.isChecked) {
+                Toast.makeText(applicationContext, "Please Select payment mode", Toast.LENGTH_LONG).show()
             } else {
                 loadingObservable.value = true
                 bookDoctor_Map["selectedPatient"] = preferenceHelper.getValue(PreferenceKey.PATIENT_ID, 0).toString()
@@ -65,8 +65,14 @@ class PatientDetailsActivity : BaseActivity<ActivityPatientDetailsBinding>(),
                 bookDoctor_Map["consult_time"] = "15"
                 bookDoctor_Map["service_id"] = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_SPECIALITY_ID, "0").toString()
                 bookDoctor_Map["appointment_type"] = "OFFLINE"
-                bookDoctor_Map["description"] = ""
-                viewModel.BookDoctor(bookDoctor_Map)
+                bookDoctor_Map["description"] = "Appointment"
+                if (mDataBinding.radioCard.isChecked) {
+                    bookDoctor_Map["payment_mode"] = "stripe"
+                    bookDoctor_Map["card_id "] = ""
+                } else if (mDataBinding.radioWallet.isChecked) {
+                    bookDoctor_Map["payment_mode"] = "wallet"
+                }
+                viewModel.bookDoctor(bookDoctor_Map)
             }
         }
 

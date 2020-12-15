@@ -1,6 +1,7 @@
 package com.telehealthmanager.app.ui.activity.searchDoctor
 
 import android.content.Intent
+import android.net.Uri
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
@@ -55,6 +56,13 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
         observeResponse()
         viewModel.setOnClickListener(this@SearchDoctorDetailActivity)
         viewModel.toolBarTile.value = ""
+        mDataBinding.imageView27.setOnClickListener {
+            if (!viewModel.clinicAddress.get().toString().equals("")) {
+                goToMapLocation(viewModel.clinicAddress.get().toString())
+            } else {
+                ViewUtils.showToast(this@SearchDoctorDetailActivity, getString(R.string.no_address_found), false)
+            }
+        }
     }
 
     override fun clickBackPress() {
@@ -62,6 +70,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
     }
 
     private fun initIntentData() {
+        mDataBinding.isVideoVisible = false
         val details = intent.getSerializableExtra(WebApiConstants.IntentPass.DoctorProfile) as? DoctorListResponse.specialities.DoctorProfile
         val favDoctor = intent.getSerializableExtra(WebApiConstants.IntentPass.FavDoctorProfile) as? MainResponse.Doctor
         val searchDoctor = intent.getSerializableExtra(WebApiConstants.IntentPass.SearchDoctorProfile) as? Hospital
@@ -73,6 +82,10 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
                 mDataBinding.imageView25,
                 BuildConfig.BASE_IMAGE_URL.plus(viewModel.mDoctorProfile.value!!.profile_pic)
             )
+            if (details.profile_video != null) {
+                mDataBinding.isVideoVisible = true
+                viewModel.profileVideo.set(details.profile_video.toString())
+            }
             if (viewModel.mDoctorProfile.value!!.hospital.isNotEmpty()) {
                 viewModel.profilePic.set(viewModel.mDoctorProfile.value!!.profile_pic)
                 viewModel.favourite.set(viewModel.mDoctorProfile.value!!.hospital[0].is_favourite.toString())
@@ -86,6 +99,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
                     viewModel.branch.set(doctorDegree.speciality.name)
                     viewModel.specialitiesID.set(doctorDegree.speciality.id.toString())
                 }
+
                 viewModel.branch.set(doctorDegree.speciality.name)
                 viewModel.percentage.set(viewModel.mDoctorProfile.value!!.hospital[0]?.feedback_percentage ?: "0".plus("%"))
                 viewModel.experience.set(viewModel.mDoctorProfile.value!!.experience ?: "0")
@@ -93,13 +107,14 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
                 viewModel.clinic.set(viewModel.mDoctorProfile.value!!.hospital[0]?.clinic?.name)
                 viewModel.clinicAddress.set(viewModel.mDoctorProfile.value!!.hospital[0]?.clinic?.address)
                 if (viewModel.mDoctorProfile.value!!.hospital[0]?.clinic?.static_map != null)
-                    ViewUtils.setDocViewGlide(this@SearchDoctorDetailActivity, mDataBinding.imageView27, viewModel.mDoctorProfile.value!!.hospital[0]?.clinic?.static_map)
+                    ViewUtils.setMapViewGlide(this@SearchDoctorDetailActivity, mDataBinding.imageView27, viewModel.mDoctorProfile.value!!.hospital[0]?.clinic?.static_map)
                 else
                     mDataBinding.imageView27.visibility = View.GONE
                 viewModel.mfeedbacklist = viewModel.mDoctorProfile.value!!.hospital[0]?.feedback as MutableList<Hospital.Feedback>?
                 viewModel.mservcielist = viewModel.mDoctorProfile.value!!.hospital[0]?.doctor_service as MutableList<Hospital.DoctorService>?
                 viewModel.mTimingList = viewModel.mDoctorProfile.value!!.hospital[0]?.timing as MutableList<Hospital.Timing>?
                 viewModel.mphotoslist = viewModel.mDoctorProfile.value!!.hospital[0]?.clinic?.clinic_photo as MutableList<Hospital.Clinic.photos>?
+
                 initAdapter()
             }
         } else if (favDoctor != null) {
@@ -115,12 +130,19 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
             viewModel.favourite.set(viewModel.mFavDoctorProfile.value!!.hospital.is_favourite.toString())
             viewModel.specialities.set(viewModel.mFavDoctorProfile.value!!.hospital?.doctor_profile?.speciality?.name ?: "")
             val doctorDegree = viewModel.mFavDoctorProfile.value!!.hospital?.doctor_profile
+
             if (doctorDegree.certification != null) {
                 viewModel.degree.set(doctorDegree.certification.plus(" - "))
             }
+
             if (doctorDegree.speciality?.name != null) {
                 viewModel.branch.set(doctorDegree.speciality.name)
                 viewModel.specialitiesID.set(doctorDegree.speciality.id.toString())
+            }
+
+            if (viewModel.mFavDoctorProfile.value!!.hospital?.doctor_profile?.profile_video != null) {
+                mDataBinding.isVideoVisible = true
+                viewModel.profileVideo.set(viewModel.mFavDoctorProfile.value!!.hospital?.doctor_profile?.profile_video.toString())
             }
 
             viewModel.percentage.set(viewModel.mFavDoctorProfile.value!!.hospital?.feedback_percentage ?: "0".plus("%"))
@@ -142,6 +164,10 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
             viewModel.id.set(searchDoctor.id)
             ViewUtils.setDocViewGlide(this@SearchDoctorDetailActivity, mDataBinding.imageView25, BuildConfig.BASE_IMAGE_URL.plus(searchDoctor.doctor_profile?.profile_pic))
             viewModel.profilePic.set(searchDoctor.doctor_profile?.profile_pic)
+            if (searchDoctor.doctor_profile?.profile_video != null) {
+                mDataBinding.isVideoVisible = true
+                viewModel.profileVideo.set(searchDoctor.doctor_profile?.profile_video.toString())
+            }
             viewModel.name.set(searchDoctor.first_name.plus(" ").plus(searchDoctor.last_name))
             viewModel.favourite.set(searchDoctor.is_favourite.toString())
             viewModel.specialities.set(searchDoctor.doctor_profile?.speciality?.name ?: "")
@@ -168,6 +194,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
             viewModel.mphotoslist = searchDoctor.clinic?.clinic_photo as MutableList<Hospital.Clinic.photos>?
             initAdapter()
         }
+
         if (viewModel.mTimingList != null) {
             for (item in viewModel.mTimingList!!) {
                 setAvailabilityVisibility(item.day)
@@ -272,6 +299,14 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
         })
     }
 
+    fun goToMapLocation(pinAddress: String) {
+        val gmmIntentUri = Uri.parse("geo:0,0?q=$pinAddress")
+        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+        mapIntent.setPackage("com.google.android.apps.maps")
+        startActivity(mapIntent)
+    }
+
+
     override fun onFavClick() {
         loadingObservable.value = true
         val hashMap: HashMap<String, Any> = HashMap()
@@ -301,15 +336,17 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
         startActivity(intent)
     }
 
-    override fun viewCallClick() {
-        TODO("Not yet implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun viewVideoClick() {
+        val i = Intent(applicationContext, VideoViewActivity::class.java)
+        i.putExtra("url", BuildConfig.BASE_IMAGE_URL+viewModel.profileVideo.get().toString())
+        startActivity(i)
     }
 
     override fun viewInfoClick() {
-        TODO("Not yet implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun viewShareClick() {
-        TODO("Not yet implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 }

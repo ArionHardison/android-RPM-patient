@@ -68,7 +68,6 @@ class DoctorListFragment : BaseBottomDialogFragment<FragmentDoctorListBinding>()
                 mAdapter!!.notifyDataSetChanged()
             }
         })
-
     }
 
     override fun onDocClicked(item: ResponseDoctors.AllDoctors) {

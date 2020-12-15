@@ -89,6 +89,7 @@ open class BaseRepository {
                         errorObject!!.has("email") -> errorObject.optJSONArray("email")?.opt(0).toString()
                         errorObject.has("phone") -> errorObject.optJSONArray("phone")?.opt(0).toString()
                         errorObject.has("prescription_image") -> errorObject.optJSONArray("prescription_image")?.opt(0).toString()
+                        errorObject.has("payment_mode") -> errorObject.optJSONArray("payment_mode")?.opt(0).toString()
                         else -> getJSONResponse(jsonObject)
                     }
                 }

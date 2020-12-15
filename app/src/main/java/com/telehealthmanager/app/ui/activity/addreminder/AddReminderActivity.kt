@@ -175,6 +175,16 @@ class AddReminderActivity : BaseActivity<ActivityAddReminderBinding>(), AddRemin
             } else {
                 mViewModel.addReminderAPI()
             }
+        }else{
+            val currentTimeTwoHours = Calendar.getInstance()
+            currentTimeTwoHours.add(Calendar.MINUTE, -5)
+            if (mViewModel.name.get()!! == "") {
+                ViewUtils.showToast(this, getString(R.string.please_enter_reminder_name), false)
+            } else if (fromCalendar.timeInMillis < currentTimeTwoHours.timeInMillis) {
+                ViewUtils.showToast(this@AddReminderActivity, getString(R.string.past_time_error), false)
+            } else {
+                mViewModel.addReminderAPI()
+            }
         }
     }
 }

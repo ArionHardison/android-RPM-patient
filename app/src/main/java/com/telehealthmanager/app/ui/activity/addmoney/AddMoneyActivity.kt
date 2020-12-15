@@ -47,6 +47,14 @@ class AddMoneyActivity : BaseActivity<ActivityAddMoneyBinding>(), AddMoneyNaviga
         mViewModel.toolBarTile.value = getString(R.string.add_money)
         mDataBinding.addMoneyBtn.alpha = .5f
         mViewModel.mEnablePay.set(false)
+
+        mDataBinding.addMoneyBtn.setOnClickListener {
+            if (mViewModel.mSelectedCard.get().toString() == "") {
+                ViewUtils.showToast(this, getString(R.string.please_select_card), false)
+            } else {
+                mViewModel.clickAddMoney()
+            }
+        }
     }
 
     private fun initAdapter() {
@@ -148,17 +156,4 @@ class AddMoneyActivity : BaseActivity<ActivityAddMoneyBinding>(), AddMoneyNaviga
         mViewModel.deleteCard(hashMap)
     }
 
-    override fun addMoney() {
-        val hashMap: HashMap<String, Any> = HashMap()
-        hashMap["amount"] = mViewModel.mWalletAmount.get().toString()
-        if (mViewModel.mSelectedCard.get().toString() == "") {
-            ViewUtils.showToast(this, getString(R.string.please_select_card), false)
-        } else {
-            hashMap["card_id"] = mViewModel.mSelectedCard.get().toString()
-            hashMap["payment_type"] = "stripe"
-            hashMap["user_type"] = "patient"
-            mViewModel.loadingProgress.value = true
-            mViewModel.addMoneyWallet(hashMap)
-        }
-    }
 }

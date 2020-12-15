@@ -18,6 +18,14 @@
             type="java.lang.Boolean" />
 
         <variable
+            name="isRated"
+            type="java.lang.Boolean" />
+
+        <variable
+            name="isStatus"
+            type="java.lang.Boolean" />
+
+        <variable
             name="isVideo"
             type="java.lang.Boolean" />
 
@@ -120,6 +128,7 @@
                 android:padding="@dimen/_8sdp"
                 android:text="Booked for"
                 android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_11sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/llHeaderProfile" />
 
@@ -140,6 +149,7 @@
                     android:paddingBottom="@dimen/_12sdp"
                     android:text="@{viewmodel.bookfor}"
                     android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_12sdp"
                     app:layout_constraintEnd_toStartOf="@+id/callVideo"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -149,9 +159,9 @@
                     android:id="@+id/callVideo"
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="0dp"
+                    android:onClick="@{()->viewmodel.onClickVideo()}"
                     android:padding="@dimen/_10sdp"
                     android:tint="@color/colorPrimary"
-                    android:onClick="@{()->viewmodel.onClickVideo()}"
                     android:visibility="@{isVideo? View.VISIBLE : View.GONE, default=gone}"
                     app:layout_constraintBottom_toBottomOf="@+id/textView34"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -167,6 +177,7 @@
                 android:padding="@dimen/_8sdp"
                 android:text="Scheduled date"
                 android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_11sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/dislpayName" />
@@ -181,16 +192,17 @@
                 android:paddingBottom="@dimen/_12sdp"
                 android:text="@{viewmodel.scheduledAt}"
                 android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_12sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView35"
                 tools:text="24 Oct 2020,Wed 8.30 pm" />
 
-
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/statusLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="@{isCancel ? View.GONE : View.VISIBLE,default=gone}"
+                android:visibility="@{isStatus ? View.VISIBLE : View.GONE,default=visible}"
                 app:layout_constraintTop_toBottomOf="@+id/textView36">
 
                 <TextView
@@ -201,6 +213,7 @@
                     android:padding="@dimen/_8sdp"
                     android:text="Status"
                     android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_11sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     tools:ignore="MissingConstraints" />
@@ -216,19 +229,28 @@
                     android:text="@{viewmodel.status}"
                     android:textAllCaps="false"
                     android:textColor="@color/colorGreen"
+                    android:textSize="@dimen/_12sdp"
                     app:layout_constraintEnd_toEndOf="@+id/textView37"
                     app:layout_constraintStart_toStartOf="@+id/textView37"
                     app:layout_constraintTop_toBottomOf="@+id/textView37"
                     tools:text="Consulted" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="@{isRated ? View.VISIBLE : View.GONE,default=gone}"
+                app:layout_constraintTop_toBottomOf="@+id/statusLayout">
+
 
                 <View
                     android:id="@+id/divider"
                     android:layout_width="409dp"
                     android:layout_height="1dp"
                     android:background="?android:attr/listDivider"
-                    app:layout_constraintEnd_toEndOf="@+id/textView38"
-                    app:layout_constraintStart_toStartOf="@+id/textView38"
-                    app:layout_constraintTop_toBottomOf="@+id/textView38" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/textView39"
@@ -340,6 +362,8 @@
                     app:layout_constraintEnd_toEndOf="@+id/divider2"
                     app:layout_constraintStart_toStartOf="@+id/divider2"
                     app:layout_constraintTop_toBottomOf="@+id/editText7" />
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Button
@@ -360,8 +384,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView36"
-                tools:visibility="gone" />
+                app:layout_constraintTop_toBottomOf="@+id/statusLayout"
+                tools:visibility="gone"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

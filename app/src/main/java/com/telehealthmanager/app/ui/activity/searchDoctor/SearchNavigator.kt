@@ -4,7 +4,7 @@ interface SearchNavigator {
     fun onShareClick()
     fun onBookClick()
     fun viewAllClick()
-    fun viewCallClick()
+    fun viewVideoClick()
     fun viewInfoClick()
     fun viewShareClick()
 }

@@ -40,6 +40,7 @@ class SearchViewModel : BaseViewModel<SearchNavigator>() {
     var fee: ObservableField<String> = ObservableField()
     var clinic: ObservableField<String> = ObservableField("")
     var clinicAddress: ObservableField<String> = ObservableField("")
+    var profileVideo: ObservableField<String> = ObservableField("")
     var favourite: ObservableField<String> = ObservableField("false")
 
     fun favClick() {
@@ -58,8 +59,8 @@ class SearchViewModel : BaseViewModel<SearchNavigator>() {
         navigator.viewAllClick()
     }
 
-    fun clickVideoCall() {
-        navigator.viewCallClick()
+    fun clickVideo() {
+        navigator.viewVideoClick()
     }
 
     fun clickInfoClick() {

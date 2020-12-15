@@ -197,6 +197,16 @@ object ViewUtils {
             .into(imageView)
     }
 
+    fun setMapViewGlide(context: Context, imageView: ImageView, imagePath: String) {
+        Glide.with(context)
+            .load(imagePath)
+            .thumbnail(0.5f)
+            .centerCrop()
+            .error(R.drawable.shimmer_bg)
+            .placeholder(R.drawable.shimmer_bg)
+            .into(imageView)
+    }
+
     fun getDayFormat(str: String): String {
         val formatter = SimpleDateFormat("yyyy-MM-dd ", Locale.ENGLISH)
         val date = formatter.parse(str);

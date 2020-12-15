@@ -32,7 +32,7 @@ class SearchDoctorActivity : BaseActivity<ActivitySearchDoctorBinding>(), Search
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun viewCallClick() {
+    override fun viewVideoClick() {
         TODO("Not yet implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

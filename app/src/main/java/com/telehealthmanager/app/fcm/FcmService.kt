@@ -1,12 +1,10 @@
 package com.telehealthmanager.app.fcm
 
 import android.annotation.SuppressLint
-import android.app.ActivityManager
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.media.RingtoneManager
 import android.os.Build
 import android.os.PowerManager
@@ -118,17 +116,23 @@ class FcmService : FirebaseMessagingService() {
         val pushIdChannel = "MISSED CALL CHANNEL"
         val pendingIntent = PendingIntent.getActivity(this, 0, mainIntent, PendingIntent.FLAG_UPDATE_CURRENT)
         val notificationBuilder = NotificationCompat.Builder(this, pushIdChannel)
-            .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle("Missed Call")
             .setContentText(pushResponse!!.name)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(pushResponse!!.name))
+            .setTicker(getString(R.string.app_name))
             .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
             .setAutoCancel(true)
             .setNumber(COUNT)
             .setContentIntent(pendingIntent)
+            .setContentIntent(pendingIntent)
+            .setChannelId(pushIdChannel)
+            .setWhen(System.currentTimeMillis())
+            .setDefaults(Notification.DEFAULT_VIBRATE or Notification.DEFAULT_LIGHTS)
+        setIcon(notificationBuilder)
         val mNotification = notificationBuilder.build()
         val nm = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(pushIdChannel, pushIdChannel, NotificationManager.IMPORTANCE_LOW)
+            val channel = NotificationChannel(pushIdChannel, pushIdChannel, NotificationManager.IMPORTANCE_HIGH)
             channel.setShowBadge(true)
             nm.createNotificationChannel(channel)
         }
@@ -136,28 +140,39 @@ class FcmService : FirebaseMessagingService() {
     }
 
     private fun showNotification(messageBody: String, contentIntent: Intent) {
-        val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, contentIntent, PendingIntent.FLAG_ONE_SHOT)
+        val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT)
         val channelId = getString(R.string.app_name)
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle(getString(R.string.app_name))
             .setContentText(messageBody)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(messageBody))
+            .setTicker(getString(R.string.app_name))
             .setAutoCancel(true)
-            .setSound(defaultSoundUri)
+            .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
             .setContentIntent(pendingIntent)
-
+            .setChannelId(channelId)
+            .setWhen(System.currentTimeMillis())
+            .setDefaults(Notification.DEFAULT_VIBRATE or Notification.DEFAULT_LIGHTS)
+        setIcon(notificationBuilder)
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         // Since android Oreo notification channel is needed.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                channelId,
-                "Channel human readable title",
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
+            val channel = NotificationChannel(channelId, "Channel human readable title", NotificationManager.IMPORTANCE_HIGH)
             notificationManager.createNotificationChannel(channel)
         }
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build())
+    }
+
+    private fun setIcon(notificationBuilder: NotificationCompat.Builder) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val icon = BitmapFactory.decodeResource(resources, R.drawable.app_logo)
+            notificationBuilder.setLargeIcon(icon)
+            notificationBuilder.setSmallIcon(R.drawable.ic_notification)
+            notificationBuilder.color = ContextCompat.getColor(this, R.color.colorPrimary)
+        } else {
+            notificationBuilder.setSmallIcon(R.mipmap.ic_launcher_round)
+        }
     }
 
     private fun wakeUpScreen() {
@@ -193,5 +208,4 @@ class FcmService : FirebaseMessagingService() {
             stopService(Intent(this, CallReceiveService::class.java))
         }
     }
-
 }

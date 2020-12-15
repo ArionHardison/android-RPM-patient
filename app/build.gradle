@@ -206,4 +206,7 @@ dependencies {
 
     /*Place Pick*/
     implementation 'com.google.android.libraries.places:places:2.4.0'
+
+    /*Place Pick*/
+    implementation 'com.github.HamidrezaAmz:MagicalExoPlayer:1.0.15'
 }

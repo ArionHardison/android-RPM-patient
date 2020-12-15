@@ -27,6 +27,13 @@
             name="availibilityAdapter"
             type="com.telehealthmanager.app.ui.adapter.AvailabilityAdapter" />
 
+        <variable
+            name="isVideoVisible"
+            type="java.lang.Boolean" />
+
+        <import type="android.view.View" />
+
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -115,7 +122,7 @@
                             android:contentDescription="@string/app_name"
                             android:padding="@dimen/_10sdp"
                             android:tint="@color/colorWhite"
-                            android:visibility="invisible"
+                            android:visibility="gone"
                             android:onClick="@{()->viewmodel.clickShareClick()}"
                             app:srcCompat="@drawable/ic_doctor_share"/>
 
@@ -124,10 +131,9 @@
                             android:layout_height="?attr/actionBarSize"
                             android:contentDescription="@string/app_name"
                             android:padding="@dimen/_10sdp"
-                            android:tint="@color/colorWhite"
-                            android:visibility="invisible"
-                            android:onClick="@{()->viewmodel.clickVideoCall()}"
-                            app:srcCompat="@drawable/ic_doctor_exclamation"/>
+                            android:visibility="@{isVideoVisible ? View.VISIBLE : View.GONE,default=gone}"
+                            android:onClick="@{()->viewmodel.clickVideo()}"
+                            app:srcCompat="@drawable/ic_doctor_video"/>
 
                         <ImageView
                             android:layout_width="@dimen/_35sdp"
@@ -594,7 +600,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/textView118"
                     app:layout_constraintTop_toBottomOf="@+id/textView118"
-                    app:srcCompat="@drawable/logo_app" />
+                    app:srcCompat="@drawable/shimmer_bg" />
 
                 <View
                     android:id="@+id/divider15"

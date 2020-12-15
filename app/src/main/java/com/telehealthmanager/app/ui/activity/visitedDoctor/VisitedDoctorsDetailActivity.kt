@@ -17,8 +17,8 @@ import com.telehealthmanager.app.repositary.model.Appointment
 import com.telehealthmanager.app.repositary.model.FeedbackResponse
 import com.telehealthmanager.app.repositary.model.Response
 import com.telehealthmanager.app.ui.activity.thankyou.ThankyouActivity
-import com.telehealthmanager.app.ui.twilio.model.CallRequest
 import com.telehealthmanager.app.ui.twilio.TwilloVideoActivity
+import com.telehealthmanager.app.ui.twilio.model.CallRequest
 import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ViewUtils
 import java.util.*
@@ -61,18 +61,24 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
     }
 
     private fun initIntentData() {
+        mDataBinding.isRated = false
+        mDataBinding.isVideo = false
+        mDataBinding.isCancel = false
+        mDataBinding.isStatus = false
         if (intent.getBooleanExtra(WebApiConstants.IntentPass.iscancel, false)) {
             val details = intent.getSerializableExtra(WebApiConstants.IntentPass.Appointment) as? Appointment
             initData(details!!)
             mDataBinding.isCancel = true
             mDataBinding.isVideo = true
         } else {
-            mDataBinding.isCancel = false
             if (intent.getSerializableExtra(WebApiConstants.IntentPass.Appointment) != null) {
+                mDataBinding.isStatus = true
                 val mAppointment = intent.getSerializableExtra(WebApiConstants.IntentPass.Appointment) as? Appointment
-                initData(mAppointment!!)
+                if (mAppointment!!.patient_rating == 0) {
+                    mDataBinding.isRated = true
+                }
+                initData(mAppointment)
             } else if (intent.getSerializableExtra(WebApiConstants.IntentPass.VisitedDoctor) != null) {
-                mDataBinding.isVideo = false
                 val mAppointment = intent.getSerializableExtra(WebApiConstants.IntentPass.VisitedDoctor) as? Appointment
                 initData(mAppointment!!)
             }
@@ -105,7 +111,6 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
                     viewModel.status.set(mAppointment.status ?: "")
                 }
                 mAppointment.status.equals("CHECKEDOUT", true) -> {
-                    mDataBinding.isVideo = false
                     viewModel.status.set("CONSULTED")
                 }
                 else -> {
@@ -159,6 +164,7 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
         }
         loadingObservable.value = true
         val hashMap: HashMap<String, Any> = HashMap()
+        hashMap[WebApiConstants.Feedback.appointment_id] = viewModel.id.get().toString()
         hashMap[WebApiConstants.Feedback.hospital_id] = viewModel.mDoctorID.get().toString()
         hashMap[WebApiConstants.Feedback.experiences] = experiences
         hashMap[WebApiConstants.Feedback.visited_for] = viewModel.bookfor.get().toString()

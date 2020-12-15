@@ -84,6 +84,7 @@ data class Hospital(
         val postal_code: Any,
         val profile_description: Any,
         val profile_pic: String,
+        val profile_video:String,
         val residency: Any,
         val specialities: Int,
         val speciality: Speciality,
