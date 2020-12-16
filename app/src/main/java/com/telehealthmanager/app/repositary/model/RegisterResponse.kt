@@ -1,26 +1,19 @@
 package com.telehealthmanager.app.repositary.model
 
 data class RegisterResponse(
-    val access_token: AccessToken,
-    val created_at: String,
-    val email: String,
-    val first_name: String,
-    val id: Int,
-    val last_name: String,
-    val phone: String,
-    val token_type: String,
-    val updated_at: String
+    val access_token: AccessToken
 ) {
     data class AccessToken(
-        val exception: Any,
-        val headers: Headers,
-        val original: Original
-    ) {
-        class Headers(
-        )
+        val exception: Any?,
+        val headers: Headers?,
+        val original: Original?
+    )
 
-        data class Original(
-            val token: String
-        )
-    }
+    class Headers(
+
+    )
+
+    data class Original(
+        val token: String?
+    )
 }

@@ -53,12 +53,12 @@ class RegisterFinalActivity : BaseActivity<ActivityRegisterFinalBinding>(), Regi
     }
 
     private fun goToHome(data: RegisterResponse) {
-        if (data.token_type.isNullOrBlank())
-            ViewUtils.showToast(this@RegisterFinalActivity, "Login Failed", false)
-        else {
-            preferenceHelper.setValue(PreferenceKey.ACCESS_TOKEN, data.access_token.original.token)
+        if (data.access_token != null) {
+            preferenceHelper.setValue(PreferenceKey.ACCESS_TOKEN, data.access_token.original?.token)
             openNewActivity(this@RegisterFinalActivity, MainActivity::class.java, true)
             finishAffinity()
+        } else {
+            ViewUtils.showToast(this@RegisterFinalActivity, "Login Failed", false)
         }
     }
 

@@ -182,7 +182,7 @@ class PaymentActivity : BaseActivity<ActivityPaymentBinding>(), PaymentNavigator
             hashMap["promo_id"] = 1
             hashMap["card_id"] = mAddMoneyViewModel.mSelectedCard.get().toString()
             hashMap["speciality_id"] = category.id
-            hashMap["payment_mode"] = "CARD"
+            hashMap["payment_mode"] = "stripe"
             hashMap["use_wallet"] = false
             mAddMoneyViewModel.loadingProgress.value = true
             mViewModel.payForChatRequest(hashMap)

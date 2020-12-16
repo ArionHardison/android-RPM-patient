@@ -51,7 +51,6 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
         viewModel.mCategoryId.set(intent.getIntExtra(WebApiConstants.IntentPass.ID, 1))
-        initApiCal()
         initAdapter()
         observeResponse()
         filterdialog = AlertDialog.Builder(this)
@@ -192,5 +191,10 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
         val intent = Intent(Intent.ACTION_DIAL)
         intent.data = Uri.parse("tel:$phoneNumber")
         startActivity(intent)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initApiCal()
     }
 }

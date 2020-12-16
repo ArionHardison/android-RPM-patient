@@ -1,6 +1,8 @@
 package com.telehealthmanager.app.ui.activity.thankyou
 
+import android.content.Intent
 import android.os.Handler
+import android.os.Looper
 import androidx.databinding.ViewDataBinding
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
@@ -14,7 +16,7 @@ class ThankyouActivity : BaseActivity<ActivityThankyouBinding>() {
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
 
-        mDelayHandler = Handler()
+        mDelayHandler = Handler(Looper.myLooper()!!)
 
         //Navigate with delay
         mDelayHandler!!.postDelayed(mRunnable, SPLASH_DELAY)
@@ -22,8 +24,9 @@ class ThankyouActivity : BaseActivity<ActivityThankyouBinding>() {
     internal val mRunnable: Runnable = Runnable {
 
         if (!isFinishing) {
+            val intent = Intent()
+            setResult(RESULT_OK, intent)
             finish()
-
         }
     }
 

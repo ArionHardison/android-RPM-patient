@@ -25,7 +25,7 @@ class PatientDetailsActivity : BaseActivity<ActivityPatientDetailsBinding>(),
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
     private lateinit var viewModel: PatientDetailViewModel
     private lateinit var mDataBinding: ActivityPatientDetailsBinding
-    val bookDoctor_Map: HashMap<String, Any> = HashMap()
+
 
     override fun getLayoutId(): Int = R.layout.activity_patient_details
 
@@ -58,21 +58,22 @@ class PatientDetailsActivity : BaseActivity<ActivityPatientDetailsBinding>(),
                 Toast.makeText(applicationContext, "Please Select payment mode", Toast.LENGTH_LONG).show()
             } else {
                 loadingObservable.value = true
-                bookDoctor_Map["selectedPatient"] = preferenceHelper.getValue(PreferenceKey.PATIENT_ID, 0).toString()
-                bookDoctor_Map["doctor_id"] = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_ID, "").toString()
-                bookDoctor_Map["booking_for"] = preferenceHelper.getValue(PreferenceKey.VISIT_PURPOSE, "").toString()
-                bookDoctor_Map["scheduled_at"] = preferenceHelper.getValue(PreferenceKey.SCHEDULED_DATE, "").toString()
-                bookDoctor_Map["consult_time"] = "15"
-                bookDoctor_Map["service_id"] = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_SPECIALITY_ID, "0").toString()
-                bookDoctor_Map["appointment_type"] = "OFFLINE"
-                bookDoctor_Map["description"] = "Appointment"
+                val bookMap: HashMap<String, Any> = HashMap()
+                bookMap["selectedPatient"] = preferenceHelper.getValue(PreferenceKey.PATIENT_ID, 0).toString()
+                bookMap["doctor_id"] = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_ID, "").toString()
+                bookMap["booking_for"] = preferenceHelper.getValue(PreferenceKey.VISIT_PURPOSE, "").toString()
+                bookMap["scheduled_at"] = preferenceHelper.getValue(PreferenceKey.SCHEDULED_DATE, "").toString()
+                bookMap["consult_time"] = "15"
+                bookMap["service_id"] = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_SPECIALITY_ID, "0").toString()
+                bookMap["appointment_type"] = "OFFLINE"
+                bookMap["description"] = "Appointment"
                 if (mDataBinding.radioCard.isChecked) {
-                    bookDoctor_Map["payment_mode"] = "stripe"
-                    bookDoctor_Map["card_id "] = ""
+                    bookMap["payment_mode"] = "stripe"
+                    bookMap["card_id "] = ""
                 } else if (mDataBinding.radioWallet.isChecked) {
-                    bookDoctor_Map["payment_mode"] = "wallet"
+                    bookMap["payment_mode"] = "wallet"
                 }
-                viewModel.bookDoctor(bookDoctor_Map)
+                viewModel.bookDoctor(bookMap)
             }
         }
 
