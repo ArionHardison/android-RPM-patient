@@ -1,5 +1,7 @@
 package com.telehealthmanager.app.repositary.model
 
+import java.io.Serializable
+
 data class CardList(
     val brand: String?,
     val card_id: String?,
@@ -12,4 +14,4 @@ data class CardList(
     val updated_at: String?,
     val user_id: Int?,
     var cardSelect: Boolean = false
-)
+) : Serializable

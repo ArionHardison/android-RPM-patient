@@ -222,22 +222,52 @@
                     android:id="@+id/textView69"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_20sdp"
                     android:background="@color/colorLiteGrey"
                     android:paddingStart="@dimen/_5sdp"
                     android:paddingTop="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_3sdp"
                     android:paddingBottom="@dimen/_8sdp"
-                    android:text="Pay using"
+                    android:text="Select Payment"
                     android:textColor="@color/colorBlack"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/llProfileDetails" />
+
+                <TextView
+                    android:id="@+id/paymentType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:padding="@dimen/_6sdp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:text="@={viewmodel.paymentMode}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView69"
+                    tools:text="Wallet" />
+
+                <TextView
+                    android:id="@+id/changePayment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:padding="@dimen/_6sdp"
+                    android:text="Change"
+                    android:textColor="@color/colorButton"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/paymentType"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/paymentType" />
+
 
                 <RadioGroup
                     android:id="@+id/groupRadio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@+id/textView69">
 
                     <RadioButton

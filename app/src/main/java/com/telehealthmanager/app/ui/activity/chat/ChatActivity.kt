@@ -23,28 +23,27 @@ import kotlinx.android.synthetic.main.content_chat.*
 import kotlinx.android.synthetic.main.content_chat.view.*
 
 class ChatActivity : BaseActivity<ActivityChatBinding>(), ChatNavigator, IChatCategoryListener, CustomBackClick {
-    override fun getLayoutId(): Int = R.layout.activity_chat
-    private lateinit var viewModel: ChatViewModel
+
     private lateinit var viewModelFindDoctor: FindDoctorsViewModel
     private lateinit var mDataBinding: ActivityChatBinding
     private var mCategoriesAdapter: ChatCategoryAdapter? = null
     var category: CategoryResponse.Category? = null
     var seeAllSelectedCategory: CategoryResponse.Category? = null
+
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
+
+    override fun getLayoutId(): Int = R.layout.activity_chat
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivityChatBinding
-        viewModel = ViewModelProviders.of(this).get(ChatViewModel::class.java)
-        mDataBinding.viewmodel = viewModel
         viewModelFindDoctor = ViewModelProviders.of(this).get(FindDoctorsViewModel::class.java)
-        mDataBinding.viewModelFindDoctor = viewModelFindDoctor
-        viewModel.navigator = this
+        mDataBinding.viewmodel = viewModelFindDoctor
 
         observeResponse()
         initApiCal()
         initAdapter()
-        viewModel.setOnClickListener(this@ChatActivity)
-        viewModel.toolBarTile.value = resources.getString(R.string.chat)
+        viewModelFindDoctor.setOnClickListener(this@ChatActivity)
+        viewModelFindDoctor.toolBarTile.value = resources.getString(R.string.chat)
 
         mDataBinding.contentChat.see_all_specialist.setOnClickListener {
             val intent = Intent(applicationContext, ChatProblemAreaActivity::class.java)

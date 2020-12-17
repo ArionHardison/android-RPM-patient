@@ -15,9 +15,9 @@ object Constant {
     const val RELATIVE_ADD_UPDATED = 310
     const val ADD_MEDICAL_RECORD = 310
     const val REQUEST_AUTOCOMPLETE = 201
-    private const val PLACE_AUTOCOMPLETE_REQUEST_CODE = 1
     const val REQUEST_CODE_ADD_CARD = 100
     const val REQUEST_CODE_ADD_MONEY = 101
+    const val PAYMENT_REQUEST_CODE = 102
     const val CUSTOM_PREFERENCE: String = "BaseConfigSetting"
     const val storetype = "Restaurant"
     const val CHAT = "/chat"

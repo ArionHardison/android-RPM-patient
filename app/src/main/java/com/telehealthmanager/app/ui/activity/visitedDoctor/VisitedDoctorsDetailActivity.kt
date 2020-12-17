@@ -1,5 +1,6 @@
 package com.telehealthmanager.app.ui.activity.visitedDoctor
 
+import android.app.Activity
 import android.content.Intent
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
@@ -21,6 +22,7 @@ import com.telehealthmanager.app.ui.twilio.TwilloVideoActivity
 import com.telehealthmanager.app.ui.twilio.model.CallRequest
 import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ViewUtils
+import java.io.Serializable
 import java.util.*
 
 
@@ -31,6 +33,7 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
     private lateinit var mDataBinding: ActivityVisitedDoctorsDetailBinding
     private var experiences: String = "UNLIKE"
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
+    private val ON_CHANGE_CODE = 101
 
     override fun getLayoutId(): Int = R.layout.activity_visited_doctors_detail
 
@@ -137,7 +140,8 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
         viewModel.mFeedbackResponse.observe(this, Observer<FeedbackResponse> {
             hideLoading()
             ViewUtils.showToast(this@VisitedDoctorsDetailActivity, it.message, true)
-            openNewActivity(this@VisitedDoctorsDetailActivity, ThankyouActivity::class.java, true)
+            val intent = Intent(this@VisitedDoctorsDetailActivity, ThankyouActivity::class.java)
+            startActivityForResult(intent, ON_CHANGE_CODE);
         })
     }
 
@@ -185,6 +189,17 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
         )
         callIntent.putExtra(TwilloVideoActivity.CALL_REQUEST, callRequest)
         startActivity(callIntent)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == ON_CHANGE_CODE) {
+            if (resultCode != Activity.RESULT_CANCELED) {
+                val intent = Intent()
+                setResult(RESULT_OK, intent)
+                finish()
+            }
+        }
     }
 
 }

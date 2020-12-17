@@ -19,19 +19,17 @@ import java.io.Serializable
 
 class ChatProblemAreaActivity : BaseActivity<ActivityChatProblemAreaBinding>(), ChatNavigator,
     IChatProblemAreaListener {
-    override fun getLayoutId(): Int = R.layout.activity_chat_problem_area
-    private lateinit var viewModel: ChatViewModel
-    private lateinit var viewModelFindDoctor: FindDoctorsViewModel
+
+    private lateinit var viewModel: FindDoctorsViewModel
     private lateinit var mDataBinding: ActivityChatProblemAreaBinding
     private var mCategoriesAdapter: ChatProblemAreasListAdapter? = null
 
+    override fun getLayoutId(): Int = R.layout.activity_chat_problem_area
+
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivityChatProblemAreaBinding
-        viewModel = ViewModelProviders.of(this).get(ChatViewModel::class.java)
-        mDataBinding.viewmodel = viewModel
-        viewModelFindDoctor = ViewModelProviders.of(this).get(FindDoctorsViewModel::class.java)
-        mDataBinding.viewModelDoctor = viewModelFindDoctor
-        viewModel.navigator = this
+        viewModel = ViewModelProviders.of(this).get(FindDoctorsViewModel::class.java)
+        mDataBinding.viewModel = viewModel
         initApiCal()
         initAdapter()
         observeResponse()
@@ -49,35 +47,35 @@ class ChatProblemAreaActivity : BaseActivity<ActivityChatProblemAreaBinding>(), 
 
     private fun initApiCal() {
         loadingObservable.value = true
-        viewModelFindDoctor.getCategorys()
+        viewModel.getCategorys()
     }
 
     private fun observeResponse() {
 
-        viewModelFindDoctor.mCategoryResponse.observe(this, Observer<CategoryResponse> {
-            viewModelFindDoctor.mCategoryList =
+        viewModel.mCategoryResponse.observe(this, Observer<CategoryResponse> {
+            viewModel.mCategoryList =
                 it.category as MutableList<CategoryResponse.Category>?
-            if (viewModelFindDoctor.mCategoryList!!.size > 0) {
+            if (viewModel.mCategoryList!!.size > 0) {
                 mDataBinding.tvNotFound.visibility = View.GONE
             } else {
                 mDataBinding.tvNotFound.visibility = View.VISIBLE
             }
             mCategoriesAdapter =
-                ChatProblemAreasListAdapter(viewModelFindDoctor.mCategoryList!!, this,this)
+                ChatProblemAreasListAdapter(viewModel.mCategoryList!!, this,this)
             mDataBinding.rvCategories.adapter = mCategoriesAdapter
             mDataBinding.rvCategories.layoutManager = GridLayoutManager(applicationContext, 2)
             mCategoriesAdapter!!.notifyDataSetChanged()
             loadingObservable.value = false
         })
 
-        viewModelFindDoctor.getErrorObservable().observe(this, Observer<String> { message ->
+        viewModel.getErrorObservable().observe(this, Observer<String> { message ->
             loadingObservable.value = false
             ViewUtils.showToast(this@ChatProblemAreaActivity, message, false)
         })
     }
 
     private fun initAdapter() {
-        mCategoriesAdapter = ChatProblemAreasListAdapter(viewModelFindDoctor.mCategoryList!!, this,this)
+        mCategoriesAdapter = ChatProblemAreasListAdapter(viewModel.mCategoryList!!, this,this)
         mDataBinding.rvCategories.adapter = mCategoriesAdapter
         mDataBinding.rvCategories.layoutManager = GridLayoutManager(applicationContext, 2)
         mCategoriesAdapter!!.notifyDataSetChanged()

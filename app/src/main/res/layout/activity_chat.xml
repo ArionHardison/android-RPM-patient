@@ -7,10 +7,6 @@
 
         <variable
             name="viewmodel"
-            type="com.telehealthmanager.app.ui.activity.chat.ChatViewModel" />
-
-        <variable
-            name="viewModelFindDoctor"
             type="com.telehealthmanager.app.ui.activity.findDoctors.FindDoctorsViewModel" />
     </data>
 

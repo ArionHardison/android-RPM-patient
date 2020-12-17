@@ -8,16 +8,9 @@
     <data>
 
         <variable
-            name="viewmodel"
-            type="com.telehealthmanager.app.ui.activity.chat.ChatViewModel" />
-
-        <variable
             name="viewmodelSummary"
             type="com.telehealthmanager.app.ui.activity.chat.ChatSummaryViewModel" />
 
-        <variable
-            name="viewModelFindDoctor"
-            type="com.telehealthmanager.app.ui.activity.findDoctors.FindDoctorsViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -29,7 +22,7 @@
         <include
             android:id="@+id/toolBar"
             layout="@layout/toolbar_backpress_scroll"
-            bind:baseViewModel="@{viewmodel}" />
+            bind:baseViewModel="@{viewmodelSummary}" />
 
         <include
             android:id="@+id/content_chat_summary"

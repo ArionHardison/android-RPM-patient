@@ -6,34 +6,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.RadioButton
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.repositary.model.CardList
-import com.telehealthmanager.app.ui.activity.addmoney.AddMoneyViewModel
-import kotlinx.android.synthetic.main.list_item_card_list.view.*
+import kotlinx.android.synthetic.main.list_item_card.view.*
 
-class CardListAdapter(
+class AvailableCardsAdapter(
     val items: List<CardList>,
     val context: Context,
-    val listener: ICardItemClick,
-    val addMoneyModel: AddMoneyViewModel
+    val listener: ICardClick
 ) :
-    RecyclerView.Adapter<CardViewHolder>() {
+    RecyclerView.Adapter<AvailableViewHolder>() {
     private var selectedPosition = ""
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
-        return CardViewHolder(LayoutInflater.from(context).inflate(R.layout.list_item_card_list, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AvailableViewHolder {
+        return AvailableViewHolder(LayoutInflater.from(context).inflate(R.layout.list_item_card, parent, false))
     }
 
-    override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: AvailableViewHolder, position: Int) {
         val item: CardList = items[position]
         holder.tvCardNumber.text = "XXXX-XXXX-XXXX-".plus(item.last_four)
-        if (selectedPosition != "") {
-            holder.tvCardNumber.isChecked = selectedPosition.toInt() == position
-        } else {
-            holder.tvCardNumber.isChecked = false
-        }
         holder.tvCardNumber.setOnClickListener {
             val selectedItem: CardList = items[position]
             listener.onItemClickCard(selectedItem)
@@ -43,7 +36,6 @@ class CardListAdapter(
 
         holder.tvCardNumber.setOnLongClickListener {
             val selectedItem: CardList = items[position]
-            addMoneyModel.mDeletedCard.set(selectedItem.card_id.toString())
             val builder: AlertDialog.Builder = AlertDialog.Builder(context)
             builder.setMessage(context.getString(R.string.delete_card_info))
                 .setCancelable(false)
@@ -60,12 +52,12 @@ class CardListAdapter(
     override fun getItemCount(): Int = items.size
 }
 
-interface ICardItemClick {
+interface ICardClick {
     fun onItemClickCard(item: CardList)
     fun onItemDelete(item: CardList)
 }
 
-class CardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    val tvCardNumber: RadioButton = view.tvCardNumber
+class AvailableViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    val tvCardNumber: TextView = view.tvCardNumber
     val imgCardBrand: ImageView = view.cardBrand
 }

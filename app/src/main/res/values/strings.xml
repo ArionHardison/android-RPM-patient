@@ -334,6 +334,8 @@
     <string name="add_medical_record">Add Medical Record</string>
     <string name="invoice_details">Invoice Details</string>
     <string name="no_address_found">No address found</string>
+    <string name="payment_mode_error">Please Select payment mode</string>
+    <string name="payment_view">Payment View</string>
 
 
 </resources>

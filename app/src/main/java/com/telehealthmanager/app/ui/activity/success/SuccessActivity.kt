@@ -1,6 +1,7 @@
 package com.telehealthmanager.app.ui.activity.success
 
 import android.os.Handler
+import android.os.Looper
 import androidx.databinding.ViewDataBinding
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
@@ -17,7 +18,7 @@ class SuccessActivity : BaseActivity<ActivitySuccessBinding>() {
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivitySuccessBinding
-        mDelayHandler = Handler()
+        mDelayHandler = Handler(Looper.myLooper()!!)
         val data = intent.extras
         if (data != null) {
             if (intent.getStringExtra("isFrom") != null && intent.getStringExtra("isFrom").toString().equals("chat")) {
