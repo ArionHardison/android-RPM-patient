@@ -109,7 +109,7 @@ class PreviousAppointmentFragment : BaseFragment<FragmentPreviousAppointmentBind
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == ON_CHANGE_CODE) {
             if (resultCode != Activity.RESULT_CANCELED) {
-                initAdapter()
+                initApiCal()
             }
         }
     }

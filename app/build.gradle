@@ -48,6 +48,8 @@ android {
             buildConfigField "String", "DEVICE_TYPE", '"android"'
             buildConfigField "String", "GRANT_TYPE", '"password"'
             buildConfigField "String", "STRIPE_KEY", '"pk_test_EacUddWKtq5XqAt3dGdpr0YW"'
+            buildConfigField "String", "PUBNUB_PUBLISH_KEY", '"pub-c-b07e3612-dbd2-4e0c-9394-c5d7430c9606"'
+            buildConfigField "String", "PUBNUB_SUBSCRIBE_KEY", '"sub-c-6b66e3cc-25eb-11e8-97e5-2e7e45341bc1"'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             //signingConfig signingConfigs.release
@@ -72,6 +74,8 @@ android {
             buildConfigField "String", "DEVICE_TYPE", '"android"'
             buildConfigField "String", "GRANT_TYPE", '"password"'
             buildConfigField "String", "STRIPE_KEY", '"pk_test_EacUddWKtq5XqAt3dGdpr0YW"'
+            buildConfigField "String", "PUBNUB_PUBLISH_KEY", '"pub-c-b07e3612-dbd2-4e0c-9394-c5d7430c9606"'
+            buildConfigField "String", "PUBNUB_SUBSCRIBE_KEY", '"sub-c-6b66e3cc-25eb-11e8-97e5-2e7e45341bc1"'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

@@ -2,6 +2,7 @@ package com.telehealthmanager.app.ui.activity.addreminder
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -50,7 +51,9 @@ class AddReminderActivity : BaseActivity<ActivityAddReminderBinding>(), AddRemin
         val reminder: ReminderResponse.Reminder? = intent.getSerializableExtra("reminder") as ReminderResponse.Reminder?
         if (reminder != null) {
             isEdit = true
+            mDataBinding.btnSubmit.visibility = View.GONE
             mViewModel.name.set(reminder.name)
+            mViewModel.toolBarTile.value = reminder.name
             mViewModel.patientId.set(reminder.patientId)
             val notify = reminder.notifyMe != 0
             mViewModel.notifyme.set(notify)
@@ -175,7 +178,7 @@ class AddReminderActivity : BaseActivity<ActivityAddReminderBinding>(), AddRemin
             } else {
                 mViewModel.addReminderAPI()
             }
-        }else{
+        } else {
             val currentTimeTwoHours = Calendar.getInstance()
             currentTimeTwoHours.add(Calendar.MINUTE, -5)
             if (mViewModel.name.get()!! == "") {

@@ -37,6 +37,7 @@ object WebApiConstants {
 
     object IntentPass {
         const val Appointment = "Appointment"
+        const val Invoice = "Invoice"
         const val VisitedDoctor = "VisitedDoctor"
         const val DoctorProfile = "DoctorProfile"
         const val FavDoctorProfile = "FavDoctorProfile"

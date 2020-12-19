@@ -13,12 +13,15 @@ import com.telehealthmanager.app.data.PreferenceHelper
 import com.telehealthmanager.app.data.PreferenceKey
 import com.telehealthmanager.app.data.getValue
 import com.telehealthmanager.app.databinding.ActivityPatientDetailsBinding
+import com.telehealthmanager.app.repositary.WebApiConstants
 import com.telehealthmanager.app.repositary.model.BookedResponse
 import com.telehealthmanager.app.repositary.model.CardList
 import com.telehealthmanager.app.ui.activity.payment.PaymentTypeActivity
 import com.telehealthmanager.app.ui.activity.success.SuccessActivity
+import com.telehealthmanager.app.ui.activity.visitedDoctor.InvoiceActivity
 import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ViewUtils
+import java.io.Serializable
 import java.util.*
 
 class PatientDetailsActivity : BaseActivity<ActivityPatientDetailsBinding>(),
@@ -98,10 +101,17 @@ class PatientDetailsActivity : BaseActivity<ActivityPatientDetailsBinding>(),
     private fun observeResponse() {
         viewModel.mBookedResponse.observe(this@PatientDetailsActivity, Observer<BookedResponse> {
             loadingObservable.value = false
-            if (it.message == null) {
-                goToBooked()
-            } else
+            if (it.appointment != null) {
+                if (it.appointment.invoice != null) {
+                    val intent = Intent(this@PatientDetailsActivity, InvoiceActivity::class.java)
+                    intent.putExtra(WebApiConstants.IntentPass.Invoice, it.appointment.invoice as Serializable)
+                    startActivity(intent);
+                } else {
+                    goToBooked()
+                }
+            } else {
                 ViewUtils.showToast(this@PatientDetailsActivity, it.message, false)
+            }
         })
 
         viewModel.getErrorObservable().observe(this, Observer<String> { message ->

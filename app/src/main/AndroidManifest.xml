@@ -163,6 +163,7 @@
             android:label="Chat Video"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.activity.payment.PaymentTypeActivity" />
+        <activity android:name=".ui.activity.visitedDoctor.InvoiceActivity" />
     </application>
 
 </manifest>

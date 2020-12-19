@@ -136,13 +136,17 @@ interface ApiInterface {
         @Part image: MultipartBody.Part?
     ): Observable<ProfileResponse>
 
+    /*TODO CHAT*/
     @GET("api/patient/chat/history")
     fun getChat(): Observable<ChatListResponse>
 
     @GET("api/patient/chat/status/{id}")
     fun getChatStatus(@Path("id") int: Int): Observable<ChatStatusResponse>
 
-    /* search*/
+    @GET("api/patient/chat_push")
+    fun postChat(@QueryMap hashMap: HashMap<String, String>): Call<Object>
+
+    /*TODO SEARCH*/
     @GET("api/patient/home_search")
     fun getGlobalSearchApp(@QueryMap hashMap: HashMap<String, Any>): Observable<SearchResponse>
 

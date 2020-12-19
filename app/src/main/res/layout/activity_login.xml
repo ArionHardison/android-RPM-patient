@@ -154,11 +154,11 @@
                 app:layout_constraintTop_toTopOf="@+id/button2" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/termsCondition"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_25sdp"
                 android:layout_marginTop="16dp"
-                android:paddingBottom="@dimen/_100sdp"
+                android:gravity="center"
                 android:text="@string/by_continuing_you_agree_to_terms_amp_conditions"
                 android:textColor="@color/colorWhite"
                 app:layout_constraintEnd_toEndOf="parent"

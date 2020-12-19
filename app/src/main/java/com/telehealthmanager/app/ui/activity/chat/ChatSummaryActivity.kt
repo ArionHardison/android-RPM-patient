@@ -163,6 +163,7 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
                 mDataBinding.buttonToProceed.alpha = .5f
                 mDataBinding.buttonToProceed.isClickable = false
             }
+
             if (viewModelFindDoctor.mDoctorList!!.size > 5) {
                 mDataBinding.contentChatSummary.tvDoctorCount.text = String.format("+%s", (viewModelFindDoctor.mDoctorList!!.size - 5))
                 mDataBinding.contentChatSummary.tvDoctorCount.visibility = View.VISIBLE

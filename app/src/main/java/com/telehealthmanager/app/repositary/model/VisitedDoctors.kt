@@ -28,5 +28,5 @@ data class VisitedDoctors(
     val social_unique_id: Any?,
     val stripe_cust_id: String?,
     val updated_at: String?,
-    val wallet_balance: Int?
+    val wallet_balance: Any?
 ): Serializable

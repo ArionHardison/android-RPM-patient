@@ -1,13 +1,12 @@
 package com.telehealthmanager.app.ui.activity.login
 
 import android.content.Intent
-
-import com.telehealthmanager.app.utils.ViewUtils
-
+import android.net.Uri
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.telehealthmanager.app.BaseApplication
+import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
 import com.telehealthmanager.app.data.Constant
@@ -17,7 +16,7 @@ import com.telehealthmanager.app.data.setValue
 import com.telehealthmanager.app.databinding.ActivityLoginBinding
 import com.telehealthmanager.app.repositary.WebApiConstants
 import com.telehealthmanager.app.ui.activity.otp.OTPActivity
-
+import com.telehealthmanager.app.utils.ViewUtils
 import com.telehealthmanager.doctor.repositary.model.OtpResponse
 
 
@@ -36,6 +35,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(), LoginNavigator {
         observeResponse()
         Register_Map.put(WebApiConstants.SignIn.COUNTRY_CODE, mDataBinding.mobile.text.toString())
         mDataBinding.countryCodePicker.selectedCountryCodeWithPlus
+
+        mDataBinding.termsCondition.setOnClickListener {
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(BuildConfig.BASE_URL)
+            startActivity(i)
+        }
     }
 
     override fun performValidation() {

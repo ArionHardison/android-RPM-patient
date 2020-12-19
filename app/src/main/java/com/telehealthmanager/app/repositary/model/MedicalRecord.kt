@@ -44,7 +44,7 @@ data class MedicalRecord(
         val subscribe_to: Any?,
         val tax_id: String?,
         val updated_at: String?,
-        val wallet_balance: Int?,
+        val wallet_balance: Any?,
         val doctor_profile: DoctorProfile
     ) : Serializable {
         data class DoctorProfile(

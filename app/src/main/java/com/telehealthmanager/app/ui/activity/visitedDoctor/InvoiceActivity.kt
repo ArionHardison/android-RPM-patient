@@ -12,6 +12,9 @@ import com.telehealthmanager.app.data.getValue
 import com.telehealthmanager.app.databinding.ActivityInvoiceBinding
 import com.telehealthmanager.app.repositary.WebApiConstants
 import com.telehealthmanager.app.repositary.model.Appointment
+import com.telehealthmanager.app.repositary.model.Invoice
+import com.telehealthmanager.app.ui.activity.main.MainActivity
+import kotlin.math.roundToInt
 
 class InvoiceActivity : BaseActivity<ActivityInvoiceBinding>() {
 
@@ -28,29 +31,24 @@ class InvoiceActivity : BaseActivity<ActivityInvoiceBinding>() {
         initIntentData()
 
         mDataBinding.toolbarBackImg.setOnClickListener {
-            onBackPressed()
+            openNewActivity(this@InvoiceActivity, MainActivity::class.java, true)
+            finishAffinity()
         }
 
         mDataBinding.tvDone.setOnClickListener {
-            finish()
+            openNewActivity(this@InvoiceActivity, MainActivity::class.java, true)
+            finishAffinity()
         }
     }
 
     private fun initIntentData() {
-        val appointment: Appointment? = intent.getSerializableExtra(WebApiConstants.IntentPass.Appointment) as? Appointment
-        viewModel.mAppointmentDetails.value = appointment
-        /*     if (viewModel.mAppointmentDetails.value!!.invoice != null) {
-                 viewModel.mSpecialityFees.set(getAmountFormat(appointment!!.invoice!!.specialityFees.toString()))
-                 viewModel.mConsultingFees.set(getAmountFormat(appointment.invoice!!.consultingFees.toString()))
-                 viewModel.mGrossTotal.set(getAmountFormat(appointment.invoice.gross.toString()))
-                 viewModel.mTotalPaid.set(getAmountFormat(appointment.invoice.totalPay.toString()))
-             } else {*/
-        val zeroAmount = getAmountFormat("0")
-        viewModel.mSpecialityFees.set(zeroAmount)
-        viewModel.mConsultingFees.set(zeroAmount)
-        viewModel.mGrossTotal.set(zeroAmount)
-        viewModel.mTotalPaid.set(zeroAmount)
-        // }
+        val invoice: Invoice? = intent.getSerializableExtra(WebApiConstants.IntentPass.Invoice) as? Invoice
+        invoice.let {
+            viewModel.mSpecialityFees.set(getAmountFormat(it!!.speciality_fees.toString()))
+            viewModel.mConsultingFees.set(getAmountFormat(it.consulting_fees.toString()))
+            viewModel.mGrossTotal.set(getAmountFormat(it.gross.toString()))
+            viewModel.mTotalPaid.set(getAmountFormat(it.total_pay.toString()))
+        }
     }
 
     private fun getAmountFormat(amountStr: String): String {
@@ -59,9 +57,5 @@ class InvoiceActivity : BaseActivity<ActivityInvoiceBinding>() {
             preferenceHelper.getValue(PreferenceKey.CURRENCY, "$"),
             amountStr
         )
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
     }
 }

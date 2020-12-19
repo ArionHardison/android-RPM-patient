@@ -44,6 +44,6 @@ data class ResponseDoctors(
         val subscribe_to: Any?,
         val tax_id: String?,
         val updated_at: String?,
-        val wallet_balance: Int?
+        val wallet_balance: Any?
     ) : Serializable
 }

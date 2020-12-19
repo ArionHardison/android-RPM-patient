@@ -33,7 +33,7 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
     private lateinit var mDataBinding: ActivityVisitedDoctorsDetailBinding
     private var experiences: String = "UNLIKE"
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
-    private val ON_CHANGE_CODE = 101
+    private val FEED_BACK_SUCCES = 102
 
     override fun getLayoutId(): Int = R.layout.activity_visited_doctors_detail
 
@@ -69,10 +69,10 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
         mDataBinding.isCancel = false
         mDataBinding.isStatus = false
         if (intent.getBooleanExtra(WebApiConstants.IntentPass.iscancel, false)) {
-            val details = intent.getSerializableExtra(WebApiConstants.IntentPass.Appointment) as? Appointment
-            initData(details!!)
             mDataBinding.isCancel = true
             mDataBinding.isVideo = true
+            val details = intent.getSerializableExtra(WebApiConstants.IntentPass.Appointment) as? Appointment
+            initData(details!!)
         } else {
             if (intent.getSerializableExtra(WebApiConstants.IntentPass.Appointment) != null) {
                 mDataBinding.isStatus = true
@@ -141,7 +141,7 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
             hideLoading()
             ViewUtils.showToast(this@VisitedDoctorsDetailActivity, it.message, true)
             val intent = Intent(this@VisitedDoctorsDetailActivity, ThankyouActivity::class.java)
-            startActivityForResult(intent, ON_CHANGE_CODE);
+            startActivityForResult(intent, FEED_BACK_SUCCES);
         })
     }
 
@@ -193,7 +193,7 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == ON_CHANGE_CODE) {
+        if (requestCode == FEED_BACK_SUCCES) {
             if (resultCode != Activity.RESULT_CANCELED) {
                 val intent = Intent()
                 setResult(RESULT_OK, intent)

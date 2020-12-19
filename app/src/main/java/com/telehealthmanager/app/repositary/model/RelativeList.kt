@@ -27,5 +27,5 @@ data class RelativeList(
     val stripe_cust_id: Any?,
     val updated_at: String?,
     val username: Any?,
-    val wallet_balance: Int?
+    val wallet_balance: Any?
 )

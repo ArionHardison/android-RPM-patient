@@ -30,7 +30,7 @@ data class AppointmentResponse(
         val secondary_mobile: Any,
         val social_unique_id: Any,
         val updated_at: String,
-        val wallet_balance: Int
+        val wallet_balance: Any
     ) : Serializable
 
     data class Upcomming(
@@ -57,6 +57,6 @@ data class AppointmentResponse(
         val secondary_mobile: Any,
         val social_unique_id: Any,
         val updated_at: String,
-        val wallet_balance: Int
+        val wallet_balance: Any
     ) : Serializable
 }

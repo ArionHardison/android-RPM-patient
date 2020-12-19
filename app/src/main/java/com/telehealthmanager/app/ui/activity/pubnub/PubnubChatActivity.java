@@ -4,7 +4,6 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -22,9 +21,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-import com.telehealthmanager.app.BuildConfig;
-import com.telehealthmanager.app.R;
-import com.telehealthmanager.app.repositary.model.chatmodel.Chat;
 import com.pubnub.api.PNConfiguration;
 import com.pubnub.api.PubNub;
 import com.pubnub.api.callbacks.PNCallback;
@@ -36,6 +32,11 @@ import com.pubnub.api.models.consumer.history.PNHistoryItemResult;
 import com.pubnub.api.models.consumer.history.PNHistoryResult;
 import com.pubnub.api.models.consumer.pubsub.PNMessageResult;
 import com.pubnub.api.models.consumer.pubsub.PNPresenceEventResult;
+import com.telehealthmanager.app.BuildConfig;
+import com.telehealthmanager.app.R;
+import com.telehealthmanager.app.repositary.ApiInterface;
+import com.telehealthmanager.app.repositary.AppRepository;
+import com.telehealthmanager.app.repositary.model.chatmodel.Chat;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,7 +46,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static android.widget.TextView.OnEditorActionListener;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PubnubChatActivity extends AppCompatActivity {
     EditText message;
@@ -78,6 +81,8 @@ public class PubnubChatActivity extends AppCompatActivity {
     @Nullable
     String current_Member = "";
 
+    AppRepository appRepository = new AppRepository();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,13 +97,13 @@ public class PubnubChatActivity extends AppCompatActivity {
         Chat chatData = (Chat) getIntent().getSerializableExtra("chat_data");
         assert chatData != null;
         chat_request_id = "" + chatData.getPatientId();
-        if(chatData.getHospital()!=null) {
+        if (chatData.getHospital() != null) {
             chat_provider_id = "" + chatData.getHospital().getId();
             chat_provider_name = "" + chatData.getHospital().getFirst_name() + " " + chatData.getHospital().getLast_name();
         }
         chat_device_token = "";
 
-        if (chatData != null&&chatData.getHospital()!=null) {
+        if (chatData != null && chatData.getHospital() != null) {
             current_Member = chatData.getHospital().getFirst_name();
             Glide.with(this)
                     .load(BuildConfig.BASE_URL + "storage/" + chatData.getHospital().getDoctor_profile().getProfile_pic())
@@ -222,23 +227,19 @@ public class PubnubChatActivity extends AppCompatActivity {
         });
 
         pubnub.subscribe().channels(Collections.singletonList(PUBNUB_CHANNEL_NAME)).execute();
-
-        message.setOnEditorActionListener(new OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                boolean handled = false;
-                if (actionId == EditorInfo.IME_ACTION_SEND) {
-                    String dd = message.getText().toString().trim();
-                    if (dd.length() > 0) {
-                        send.setVisibility(View.VISIBLE);
-                        sendMessage(dd);
-                    } else {
-                        send.setVisibility(View.GONE);
-                    }
-                    handled = true;
+        message.setOnEditorActionListener((textView, actionId, keyEvent) -> {
+            boolean handled = false;
+            if (actionId == EditorInfo.IME_ACTION_SEND) {
+                String dd = message.getText().toString().trim();
+                if (dd.length() > 0) {
+                    send.setVisibility(View.VISIBLE);
+                    sendMessage(dd);
+                } else {
+                    send.setVisibility(View.GONE);
                 }
-                return handled;
+                handled = true;
             }
+            return handled;
         });
 
 
@@ -246,22 +247,13 @@ public class PubnubChatActivity extends AppCompatActivity {
 
 
     void addToAdapter(final MessageModel messageObject) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.add(messageObject);
-            }
-        });
+        runOnUiThread(() -> mAdapter.add(messageObject));
     }
 
 
     private void sendMessage(String messageStr) {
-        Map<String, Object> payload = new HashMap<>();
-        Map<String, Object> gcmPayload = new HashMap<>();
-        Map<String, Object> apnPayload = new HashMap<>();
         //Message
         JsonObject jObj = new JsonObject();
-
         jObj.addProperty("type", "text");
         jObj.addProperty("message", messageStr);
 
@@ -270,39 +262,25 @@ public class PubnubChatActivity extends AppCompatActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         jObj.addProperty("time", dateFormat.format(date));
         jObj.addProperty("senderId", chat_request_id);
-
         jObj.addProperty("request_id", PUBNUB_CHANNEL_NAME);
         jObj.addProperty("user_id", chat_request_id);
         jObj.addProperty("provider_id", chat_provider_id);
 
-      /*  jObj.addProperty("read", 0);
-        jObj.addProperty("created_at", System.currentTimeMillis());
-        jObj.addProperty("dispatcher_id", chat_request_id);
-        jObj.addProperty("driver_id", chat_provider_id);
-        //For iOS Push
-        JsonObject apsjObj = new JsonObject();
-        JsonObject apsAlert = new JsonObject();
-        apsAlert.addProperty("title", current_Member);
-        apsAlert.addProperty("body", messageStr);
-        apsjObj.add("alert", apsAlert);
-        apsjObj.addProperty("badge", 0);
-        apsjObj.addProperty("sound", "default");
-        //For Android Push
-        JsonObject notificationObj = new JsonObject();
-        notificationObj.addProperty("title", current_Member);
-        notificationObj.addProperty("body", messageStr);
-        *//*Payload for both Android and iOS*//*
-        //For android pn_gcm
-        gcmPayload.put("notification", notificationObj);
-        gcmPayload.put("data", jObj);
-        //For ios pn_apns
-        apnPayload.put("aps", apsjObj);
-        apnPayload.put("message", jObj);
-        //Load payload with both Android and iOS data
-        payload.put("pn_apns", apnPayload);
-        payload.put("pn_gcm", gcmPayload);*/
-        //For iOS Payload Message
-        Log.e(TAG, "Final payload: " + jObj);
+        HashMap<String, String> map = new HashMap<>();
+        map.put("doctor_id", chat_provider_id);
+        map.put("message", messageStr);
+        Call<Object> pushChatApi = appRepository.createApiClient(BuildConfig.BASE_URL, ApiInterface.class).postChat(map);
+        pushChatApi.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                Log.e(TAG, "Push Chat " + "Success");
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                Log.e(TAG, "Push Chat " + "onFailure");
+            }
+        });
         pubnub.publish().channel(PUBNUB_CHANNEL_NAME).message(jObj).async(new PNCallback<PNPublishResult>() {
             @Override
             public void onResponse(PNPublishResult result, @NonNull PNStatus status) {
@@ -317,7 +295,6 @@ public class PubnubChatActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         pubnub.subscribe().channels(Collections.singletonList(PUBNUB_CHANNEL_NAME)).execute();
-        // getAppInstance().putString(AutolinksApplication.Keyname.IS_CHAT_OPEN, AutolinksApplication.Keyname.TRUE);
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         if (notificationManager != null) {
             notificationManager.cancelAll();
@@ -330,15 +307,12 @@ public class PubnubChatActivity extends AppCompatActivity {
     public void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "DESTROYED" + System.currentTimeMillis());
-        // getAppInstance().putString(AutolinksApplication.Keyname.IS_CHAT_OPEN, AutolinksApplication.Keyname.FALSE);
         pubnub.unsubscribe().channels(Collections.singletonList(PUBNUB_CHANNEL_NAME)).execute();
-        // getAppInstance().putString(PUBNUB_CHANNEL_NAME, String.valueOf(System.currentTimeMillis()));
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        //   getAppInstance().putString(AutolinksApplication.Keyname.IS_CHAT_OPEN, AutolinksApplication.Keyname.FALSE);
     }
 
 }
