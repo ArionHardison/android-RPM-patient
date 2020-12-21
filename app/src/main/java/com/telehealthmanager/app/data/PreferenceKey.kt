@@ -44,6 +44,7 @@ object PreferenceKey {
     const val PATIENT_ID = "patient_id"
     const val SCHEDULED_DATE = "scheduled_date"
     const val VISIT_PURPOSE = "visit_purpose"
+    const val BOOKED_FOR = "booked_for"
     const val SELECTED_DOC_ID = "selected_doc_id"
     const val SELECTED_DOC_NAME = "selected_doc_name"
     const val SELECTED_DOC_Special = "selected_doc_special"

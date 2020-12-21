@@ -73,7 +73,7 @@ class PatientDetailsActivity : BaseActivity<ActivityPatientDetailsBinding>(),
                 val bookMap: HashMap<String, Any> = HashMap()
                 bookMap["selectedPatient"] = preferenceHelper.getValue(PreferenceKey.PATIENT_ID, 0).toString()
                 bookMap["doctor_id"] = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_ID, "").toString()
-                bookMap["booking_for"] = preferenceHelper.getValue(PreferenceKey.VISIT_PURPOSE, "").toString()
+                bookMap["booking_for"] = preferenceHelper.getValue(PreferenceKey.BOOKED_FOR, "").toString()
                 bookMap["scheduled_at"] = preferenceHelper.getValue(PreferenceKey.SCHEDULED_DATE, "").toString()
                 bookMap["consult_time"] = "15"
                 bookMap["service_id"] = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_SPECIALITY_ID, "0").toString()

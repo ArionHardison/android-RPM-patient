@@ -10,15 +10,14 @@ import android.net.NetworkInfo;
 import androidx.lifecycle.LiveData;
 
 public class ConnectionLiveData extends LiveData<ConnectionModel> {
-    private Context context;
-    private BroadcastReceiver networkReceiver = new BroadcastReceiver() {
+    private final Context context;
+    private final BroadcastReceiver networkReceiver = new BroadcastReceiver() {
         @SuppressWarnings("deprecation")
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getExtras() != null) {
                 NetworkInfo activeNetwork = (NetworkInfo) intent.getExtras().get(ConnectivityManager.EXTRA_NETWORK_INFO);
-                boolean isConnected = activeNetwork != null &&
-                        activeNetwork.isConnectedOrConnecting();
+                boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
                 if (isConnected) {
                     switch (activeNetwork.getType()) {
                         case ConnectivityManager.TYPE_WIFI:

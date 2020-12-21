@@ -111,8 +111,10 @@ class FindDoctorBookingActivity : BaseActivity<ActivityFindDoctorBookingBinding>
         preferenceHelper.setValue(PreferenceKey.SCHEDULED_DATE, viewModel.mSelectedScheduleDate.get().toString() + " " + selectedHour + ":" + selectedMinutes + ":" + "00")
         if (mDataBinding.radioButton.isChecked) {
             preferenceHelper.setValue(PreferenceKey.VISIT_PURPOSE, mDataBinding.radioButton.text.toString())
+            preferenceHelper.setValue(PreferenceKey.BOOKED_FOR, "follow _up")
         } else {
             preferenceHelper.setValue(PreferenceKey.VISIT_PURPOSE, mDataBinding.radioButton2.text.toString())
+            preferenceHelper.setValue(PreferenceKey.BOOKED_FOR,"consultation")
         }
         perFormClick()
     }
@@ -134,9 +136,10 @@ class FindDoctorBookingActivity : BaseActivity<ActivityFindDoctorBookingBinding>
 
     private fun perFormClick() {
         // loadingObservable.value = true
+
         bookDoctorMap["doctor_id"] = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_ID, "").toString()
         bookDoctorMap["selectedPatient"] = preferenceHelper.getValue(PreferenceKey.PATIENT_ID, 0).toString()
-        bookDoctorMap["booking_for"] = preferenceHelper.getValue(PreferenceKey.VISIT_PURPOSE, "").toString()
+        bookDoctorMap["booking_for"] = preferenceHelper.getValue(PreferenceKey.BOOKED_FOR, "").toString()
         bookDoctorMap["scheduled_at"] = preferenceHelper.getValue(PreferenceKey.SCHEDULED_DATE, "").toString()
         bookDoctorMap["consult_time"] = "15"
         bookDoctorMap["appointment_type"] = "OFFLINE"
