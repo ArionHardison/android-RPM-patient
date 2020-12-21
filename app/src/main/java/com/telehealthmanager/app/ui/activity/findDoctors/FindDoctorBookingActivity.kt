@@ -111,7 +111,7 @@ class FindDoctorBookingActivity : BaseActivity<ActivityFindDoctorBookingBinding>
         preferenceHelper.setValue(PreferenceKey.SCHEDULED_DATE, viewModel.mSelectedScheduleDate.get().toString() + " " + selectedHour + ":" + selectedMinutes + ":" + "00")
         if (mDataBinding.radioButton.isChecked) {
             preferenceHelper.setValue(PreferenceKey.VISIT_PURPOSE, mDataBinding.radioButton.text.toString())
-            preferenceHelper.setValue(PreferenceKey.BOOKED_FOR, "follow _up")
+            preferenceHelper.setValue(PreferenceKey.BOOKED_FOR, "follow_up")
         } else {
             preferenceHelper.setValue(PreferenceKey.VISIT_PURPOSE, mDataBinding.radioButton2.text.toString())
             preferenceHelper.setValue(PreferenceKey.BOOKED_FOR,"consultation")

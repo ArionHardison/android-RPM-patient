@@ -288,7 +288,8 @@
                         app:layout_constraintStart_toEndOf="@+id/textView96"
                         app:layout_constraintTop_toBottomOf="@+id/textView97"
                         tools:text="18 yrs of overall exp"
-                        android:textSize="@dimen/_10sdp"/>
+                        android:textSize="@dimen/_10sdp"
+                        android:visibility="gone"/>
 
                     <ImageView
                         android:id="@+id/imageView26"

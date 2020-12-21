@@ -125,6 +125,7 @@
                         android:singleLine="true"
                         android:text="0 year of Overall exp"
                         android:textSize="@dimen/_10sdp"
+                        android:visibility="invisible"
                         app:layout_constraintBottom_toBottomOf="@+id/textView49"
                         app:layout_constraintStart_toEndOf="@+id/textView49"
                         app:layout_constraintTop_toTopOf="@+id/textView49" />
