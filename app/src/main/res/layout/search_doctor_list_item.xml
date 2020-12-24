@@ -38,7 +38,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/textView90"
         app:layout_constraintStart_toEndOf="@+id/textView90"
         app:layout_constraintTop_toTopOf="@+id/textView90"
-        tools:text="DR MBBS"/>
+        tools:text="DR MBBS"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/textView92"

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="com.telehealthmanager.app.base.BaseViewModel" />
         <variable
             name="viewmodel"
             type="com.telehealthmanager.app.ui.activity.findDoctors.FindDoctorsViewModel" />
@@ -19,7 +19,7 @@
         <include
             android:id="@+id/toolbarBase"
             layout="@layout/toolbar_base"
-            bind:baseViewModel="@{viewmodel}" />
+            app:baseViewModel="@{((BaseViewModel) viewmodel)}"/>
 
         <LinearLayout
             android:id="@+id/constraintLayout2"
@@ -68,10 +68,11 @@
                     android:layout_height="wrap_content"
                     android:background="@color/colorLiteGrey"
                     android:padding="@dimen/_4sdp"
-                    android:textSize="@dimen/_12sdp"
-                    android:visibility="gone"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:textSize="@dimen/_10sdp"
                     app:layout_constraintStart_toEndOf="@+id/searchDocImg"
-                    app:layout_constraintTop_toBottomOf="@+id/searchDocName" />
+                    app:layout_constraintTop_toBottomOf="@+id/searchDocName"
+                    tools:text="@string/Specialities" />
 
                 <TextView
                     android:id="@+id/searchDocHospName"

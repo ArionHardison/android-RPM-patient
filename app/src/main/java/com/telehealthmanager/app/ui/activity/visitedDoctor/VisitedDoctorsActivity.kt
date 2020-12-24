@@ -4,7 +4,7 @@ import android.content.Intent
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.telehealthmanager.app.R
@@ -43,7 +43,7 @@ class VisitedDoctorsActivity : BaseActivity<ActivityVisitedDoctorsBinding>(), Vi
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivityVisitedDoctorsBinding
-        viewModel = ViewModelProviders.of(this).get(VisitedDoctorsViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(VisitedDoctorsViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
         initApiCal()

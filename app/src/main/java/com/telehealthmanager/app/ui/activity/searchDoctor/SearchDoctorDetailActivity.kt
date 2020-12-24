@@ -6,7 +6,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.common.util.CollectionUtils
 import com.telehealthmanager.app.BaseApplication
@@ -49,7 +49,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivitySearchDoctorDetailBinding
-        viewModel = ViewModelProviders.of(this).get(SearchViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
         initIntentData()
@@ -90,17 +90,24 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
                 viewModel.profilePic.set(viewModel.mDoctorProfile.value!!.profile_pic)
                 viewModel.favourite.set(viewModel.mDoctorProfile.value!!.hospital[0].is_favourite.toString())
                 viewModel.name.set(viewModel.mDoctorProfile.value!!.hospital[0]?.first_name.plus(" ").plus(viewModel.mDoctorProfile.value!!.hospital[0]?.last_name))
-                viewModel.specialities.set(viewModel.mDoctorProfile.value!!.speciality?.name ?: "")
                 val doctorDegree = viewModel.mDoctorProfile.value!!
+
+                val specialist: StringBuilder = StringBuilder()
                 if (doctorDegree.certification != null) {
-                    viewModel.degree.set(doctorDegree.certification.plus(" - "))
-                }
-                if (doctorDegree.speciality?.name != null) {
-                    viewModel.branch.set(doctorDegree.speciality.name)
-                    viewModel.specialitiesID.set(doctorDegree.speciality.id.toString())
+                    specialist.append(doctorDegree.certification)
                 }
 
-                viewModel.branch.set(doctorDegree.speciality.name)
+                if (doctorDegree.speciality?.name != null) {
+                    if (specialist.toString() != ""){
+                        specialist.append(" - ").append(doctorDegree.speciality.name)
+                    }else{
+                        specialist.append(doctorDegree.speciality.name)
+                    }
+                    viewModel.specialities.set(doctorDegree.speciality.name)
+                    viewModel.specialitiesID.set(doctorDegree.speciality.id.toString())
+                }
+                viewModel.degreeSpecialities.set(specialist.toString())
+
                 viewModel.percentage.set(viewModel.mDoctorProfile.value!!.hospital[0]?.feedback_percentage ?: "0".plus("%"))
                 viewModel.experience.set(viewModel.mDoctorProfile.value!!.experience ?: "0")
                 viewModel.fee.set(preferenceHelper.getValue(PreferenceKey.CURRENCY, "$").toString().plus(viewModel.mDoctorProfile.value!!.fees ?: "0"))
@@ -128,17 +135,25 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
             viewModel.profilePic.set(viewModel.mFavDoctorProfile.value!!.hospital?.doctor_profile?.profile_pic)
             viewModel.name.set(viewModel.mFavDoctorProfile.value!!.hospital?.first_name.plus(" ").plus(viewModel.mFavDoctorProfile.value!!.hospital?.last_name))
             viewModel.favourite.set(viewModel.mFavDoctorProfile.value!!.hospital.is_favourite.toString())
-            viewModel.specialities.set(viewModel.mFavDoctorProfile.value!!.hospital?.doctor_profile?.speciality?.name ?: "")
+
             val doctorDegree = viewModel.mFavDoctorProfile.value!!.hospital?.doctor_profile
 
+            val specialist: StringBuilder = StringBuilder()
             if (doctorDegree.certification != null) {
-                viewModel.degree.set(doctorDegree.certification.plus(" - "))
+                specialist.append(doctorDegree.certification)
             }
 
             if (doctorDegree.speciality?.name != null) {
-                viewModel.branch.set(doctorDegree.speciality.name)
+                if (specialist.toString() != ""){
+                    specialist.append(" - ").append(doctorDegree.speciality.name)
+                }else{
+                    specialist.append(doctorDegree.speciality.name)
+                }
+                viewModel.specialities.set(doctorDegree.speciality.name)
                 viewModel.specialitiesID.set(doctorDegree.speciality.id.toString())
             }
+            viewModel.degreeSpecialities.set(specialist.toString())
+
 
             if (viewModel.mFavDoctorProfile.value!!.hospital?.doctor_profile?.profile_video != null) {
                 mDataBinding.isVideoVisible = true
@@ -170,15 +185,25 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
             }
             viewModel.name.set(searchDoctor.first_name.plus(" ").plus(searchDoctor.last_name))
             viewModel.favourite.set(searchDoctor.is_favourite.toString())
-            viewModel.specialities.set(searchDoctor.doctor_profile?.speciality?.name ?: "")
+
             val doctorDegree = searchDoctor.doctor_profile
+
+
+            val specialist: StringBuilder = StringBuilder()
             if (doctorDegree.certification != null) {
-                viewModel.degree.set(doctorDegree.certification.plus(" - "))
+                specialist.append(doctorDegree.certification)
             }
             if (doctorDegree.speciality?.name != null) {
-                viewModel.branch.set(doctorDegree.speciality.name)
+                if (specialist.toString() != ""){
+                    specialist.append(" - ").append(doctorDegree.speciality.name)
+                }else{
+                    specialist.append(doctorDegree.speciality.name)
+                }
+                viewModel.specialities.set(doctorDegree.speciality.name)
                 viewModel.specialitiesID.set(doctorDegree.speciality.id.toString())
             }
+            viewModel.degreeSpecialities.set(specialist.toString())
+
             viewModel.percentage.set(searchDoctor.feedback_percentage ?: "0".plus("%"))
             viewModel.experience.set(searchDoctor.doctor_profile?.experience ?: "0")
             viewModel.fee.set(preferenceHelper.getValue(PreferenceKey.CURRENCY, "$").toString().plus(searchDoctor.doctor_profile?.fees ?: "0"))
@@ -338,7 +363,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
 
     override fun viewVideoClick() {
         val i = Intent(applicationContext, VideoViewActivity::class.java)
-        i.putExtra("url", BuildConfig.BASE_IMAGE_URL+viewModel.profileVideo.get().toString())
+        i.putExtra("url", BuildConfig.BASE_IMAGE_URL + viewModel.profileVideo.get().toString())
         startActivity(i)
     }
 

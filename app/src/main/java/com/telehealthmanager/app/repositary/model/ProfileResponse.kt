@@ -3,6 +3,7 @@ package com.telehealthmanager.app.repositary.model
 data class ProfileResponse(
     val patient: Patient,
     val profile_complete: String,
+    val currency: Currency,
     val allergies: List<Allergies>
 ) {
     data class Patient(
@@ -57,8 +58,16 @@ data class ProfileResponse(
             val weight: String
         )
     }
+
     class Allergies(
         val id: Int?,
         val name: String?
+    )
+
+    class Currency(
+        val stripe_public_key: String?,
+        val stripe_publishable_key: String?,
+        val stripe_secret_key: String?,
+        val currency: String?
     )
 }

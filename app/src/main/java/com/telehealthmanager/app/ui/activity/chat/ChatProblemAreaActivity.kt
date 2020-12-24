@@ -5,7 +5,7 @@ import android.content.Intent
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
@@ -28,7 +28,7 @@ class ChatProblemAreaActivity : BaseActivity<ActivityChatProblemAreaBinding>(), 
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivityChatProblemAreaBinding
-        viewModel = ViewModelProviders.of(this).get(FindDoctorsViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(FindDoctorsViewModel::class.java)
         mDataBinding.viewModel = viewModel
         initApiCal()
         initAdapter()

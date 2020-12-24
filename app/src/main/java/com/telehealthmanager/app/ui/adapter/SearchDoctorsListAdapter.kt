@@ -2,6 +2,7 @@ package com.telehealthmanager.app.ui.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,15 +11,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.databinding.SearchDoctorListItemBinding
-import com.telehealthmanager.app.databinding.VisitedDoctorsListItemBinding
 import com.telehealthmanager.app.repositary.WebApiConstants
 import com.telehealthmanager.app.repositary.model.Hospital
 import com.telehealthmanager.app.ui.activity.searchDoctor.SearchDoctorDetailActivity
 import com.telehealthmanager.app.utils.ViewUtils
 import java.io.Serializable
 
-class SearchDoctorsListAdapter(val items: MutableList<Hospital>, val context: Context) :
+class SearchDoctorsListAdapter(val context: Context) :
     RecyclerView.Adapter<SearchDoctorsViewHolder>() {
+
+    private val items: MutableList<Hospital> = mutableListOf()
+
+    private var isSearchRequest = false
+
+    private val holdingItems = mutableListOf<Hospital>()
 
     override fun onBindViewHolder(holder: SearchDoctorsViewHolder, position: Int) {
         val item = items[position]
@@ -51,10 +57,38 @@ class SearchDoctorsListAdapter(val items: MutableList<Hospital>, val context: Co
         return SearchDoctorsViewHolder(inflate)
     }
 
+    fun addItems(list: MutableList<Hospital>) {
+        items.addAll(list)
+        if (!isSearchRequest)
+            holdingItems.addAll(list)
+        notifyItemRangeInserted(items.size - 1, list.size)
+    }
+
+    fun onSearchCleared() {
+        isSearchRequest = false
+        items.addAll(holdingItems)
+        notifyDataSetChanged()
+    }
+
+    fun onSearchRequest() {
+        isSearchRequest = true
+        items.clear()
+        notifyDataSetChanged()
+    }
+
+    fun getSearch(): Boolean {
+        return isSearchRequest
+    }
+
+    fun getItem(index: Int): Hospital {
+        return items[index - 1]
+    }
+
     // Gets the number of animals in the list
     override fun getItemCount(): Int {
         return items.size
     }
+
 }
 
 class SearchDoctorsViewHolder(view: SearchDoctorListItemBinding) :

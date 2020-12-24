@@ -12,17 +12,18 @@ import com.telehealthmanager.app.repositary.model.chatmodel.Chat
 import com.telehealthmanager.app.utils.ViewUtils
 
 
-class ChatAdapter(val context: Context, val list: List<Chat>,val listener:IChatListener) :
+class ChatAdapter(val context: Context, val list: List<Chat>, val listener: IChatListener) :
     RecyclerView.Adapter<ChatViewHolder>() {
 
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
         val item = list.get(position);
         holder.listItemChat.patientName.text =
-            String.format("%s %s", item.hospital?.first_name ?: "", item.hospital?.last_name?: "")
-        holder.listItemChat.lastChatTxt.text = item.chatRequest?.messages?.toString() ?: ""
-        if(item.chatRequest?.startedAt!=null)
-            holder.listItemChat.textViewTime.text = ViewUtils.getTimeAgoFormat(item.chatRequest?.startedAt)
-        if (item.hospital?.doctor_profile?.profile_pic!=null &&item.hospital.doctor_profile?.profile_pic.isNotEmpty())
+            String.format("%s %s", item.hospital?.first_name ?: "", item.hospital?.last_name ?: "")
+        holder.listItemChat.lastChatTxt.text = item.chatRequest?.messages ?: ""
+        if (item.chatRequest?.startedAt != null)
+            holder.listItemChat.textViewTime.text = ViewUtils.getDayAndTimeFormat(item.chatRequest?.startedAt)
+
+        if (item.hospital?.doctor_profile?.profile_pic != null && item.hospital.doctor_profile?.profile_pic.isNotEmpty())
             ViewUtils.setDocViewGlide(
                 context,
                 holder.listItemChat.imgProfilePic,
@@ -48,8 +49,8 @@ class ChatAdapter(val context: Context, val list: List<Chat>,val listener:IChatL
     }
 }
 
-interface IChatListener{
-    fun onChatClicked(item:Chat)
+interface IChatListener {
+    fun onChatClicked(item: Chat)
 }
 
 class ChatViewHolder(view: OnlineAppointmentsListItemBinding) : RecyclerView.ViewHolder(view.root) {

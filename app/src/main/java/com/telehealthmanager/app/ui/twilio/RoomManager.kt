@@ -87,7 +87,7 @@ object RoomManager {
                 Log.d(TAG, "onConnected: ")
                 localParticipant = room.localParticipant
                 roomEventListener?.onConnected(room)
-                startNotificationService(context, roomName)
+               // startNotificationService(context, roomName)
             }
 
             override fun onDisconnected(room: Room, twilioException: TwilioException?) {

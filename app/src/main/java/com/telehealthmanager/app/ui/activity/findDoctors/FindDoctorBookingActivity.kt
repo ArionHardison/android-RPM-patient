@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.TimePicker
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
@@ -40,7 +40,7 @@ class FindDoctorBookingActivity : BaseActivity<ActivityFindDoctorBookingBinding>
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivityFindDoctorBookingBinding
-        viewModel = ViewModelProviders.of(this).get(FindDoctorsViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(FindDoctorsViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
         observeResponse()

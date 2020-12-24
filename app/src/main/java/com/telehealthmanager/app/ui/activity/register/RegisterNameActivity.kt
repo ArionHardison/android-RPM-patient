@@ -3,7 +3,7 @@ package com.telehealthmanager.app.ui.activity.register
 import android.content.Intent
 
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
@@ -25,7 +25,7 @@ class RegisterNameActivity : BaseActivity<ActivityRegisterNameBinding>() {
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivityRegisterNameBinding
-        viewModel = ViewModelProviders.of(this).get(RegisterViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(RegisterViewModel::class.java)
         mDataBinding.viewmodel = viewModel
 
         mDataBinding.next.setOnClickListener {

@@ -7,7 +7,7 @@ import android.text.TextWatcher
 import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.chip.Chip
@@ -31,7 +31,7 @@ class AddAllergiesActivity : BaseActivity<ActivityAddAllergiesBinding>(), Allerg
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivityAddAllergiesBinding
-        viewModel = ViewModelProviders.of(this).get(AllergiesViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(AllergiesViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
         viewModel.setOnClickListener(this@AddAllergiesActivity)

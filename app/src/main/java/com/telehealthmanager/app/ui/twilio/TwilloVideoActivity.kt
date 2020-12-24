@@ -175,9 +175,7 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
         audioDeviceSelector.availableAudioDevices.find { it is AudioDevice.Speakerphone }?.let { audioDeviceSelector.selectDevice(it) }
 
         localAudioTrack = LocalAudioTrack.create(this, true, LOCAL_AUDIO_TRACK_NAME)
-        localVideoTrack = LocalVideoTrack.create(
-            this,
-            true,
+        localVideoTrack = LocalVideoTrack.create(this, true,
             cameraCaptureCompat!!.videoCapturer,
             LOCAL_VIDEO_TRACK_NAME
         )
@@ -287,7 +285,7 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
 
 
     private fun stopNotificationService() {
-        stopService(Intent(this, TwilioCallService::class.java))
+       // stopService(Intent(this, TwilioCallService::class.java))
     }
 
     private fun isMyServiceRunning(): Boolean {

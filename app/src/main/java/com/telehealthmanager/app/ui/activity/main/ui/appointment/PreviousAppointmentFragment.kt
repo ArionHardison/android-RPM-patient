@@ -10,7 +10,7 @@ import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.telehealthmanager.app.R
@@ -39,7 +39,7 @@ class PreviousAppointmentFragment : BaseFragment<FragmentPreviousAppointmentBind
 
     override fun initView(mRootView: View?, mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as FragmentPreviousAppointmentBinding
-        viewModel = ViewModelProviders.of(this).get(AppointmentViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(AppointmentViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
         initApiCal()

@@ -4,7 +4,7 @@ import android.content.Intent
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.telehealthmanager.app.R
@@ -28,7 +28,7 @@ class OnlineConsultationFragment : BaseFragment<FragmentOnlineConsultationBindin
 
     override fun initView(mRootView: View?, mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as FragmentOnlineConsultationBinding
-        mViewModel = ViewModelProviders.of(this).get(OnlineConsultationViewModel::class.java)
+        mViewModel = ViewModelProvider(this).get(OnlineConsultationViewModel::class.java)
         mDataBinding.viewmodel = mViewModel
         mViewModel.navigator = this
         observeSuccessResponse()

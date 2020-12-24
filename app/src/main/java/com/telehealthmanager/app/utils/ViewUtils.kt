@@ -7,12 +7,12 @@ import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.provider.MediaStore
-import android.text.format.DateUtils
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.MainThread
 import androidx.annotation.StringRes
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.telehealthmanager.app.R
 import es.dmoral.toasty.Toasty
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -23,6 +23,7 @@ import java.io.ByteArrayOutputStream
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 object ViewUtils {
 
@@ -112,17 +113,27 @@ object ViewUtils {
     }
 
     fun getTimeAgoFormat(str: String): String {
-        val sdf =
-            SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-        var dateObj: Date? = null
-        try {
-            dateObj = sdf.parse(str)
-            val niceDateStr: String = DateUtils.getRelativeTimeSpanString(dateObj.getTime(), Calendar.getInstance().getTimeInMillis(), DateUtils.MINUTE_IN_MILLIS) as String
-            return niceDateStr
-        } catch (e: ParseException) {
-            e.printStackTrace()
+        val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val past = format.parse(str)
+        val now = Date()
+        val seconds: Long = TimeUnit.MILLISECONDS.toSeconds(now.time - past!!.time)
+        val minutes: Long = TimeUnit.MILLISECONDS.toMinutes(now.time - past.time)
+        val hours: Long = TimeUnit.MILLISECONDS.toHours(now.time - past.time)
+        val days: Long = TimeUnit.MILLISECONDS.toDays(now.time - past.time)
+        return when {
+            seconds < 60 -> {
+                "$seconds seconds ago"
+            }
+            minutes < 60 -> {
+                "$days minutes ago"
+            }
+            hours < 24 -> {
+                "$hours hours ago"
+            }
+            else -> {
+                "$days days ago"
+            }
         }
-        return ""
     }
 
 
@@ -143,42 +154,6 @@ object ViewUtils {
         return mutableBitmap
     }
 
-    fun getTimeDifference(date: String): String {
-        val simpleDateFormat = SimpleDateFormat("yyyy-mm-dd hh:mm:ss")
-
-        try {
-            val date1 = simpleDateFormat.parse(simpleDateFormat.format(Calendar.getInstance().time))
-            val date2 = simpleDateFormat.parse(date)
-
-            var different = date2.time - date1.time
-            val secondsInMilli: Long = 1000
-            val minutesInMilli = secondsInMilli * 60
-            val hoursInMilli = minutesInMilli * 60
-            val daysInMilli = hoursInMilli * 24
-
-            val elapsedDays = different / daysInMilli
-            different = different % daysInMilli
-
-            val elapsedHours = different / hoursInMilli
-            different = different % hoursInMilli
-
-            val elapsedMinutes = different / minutesInMilli
-            different = different % minutesInMilli
-
-            val elapsedSeconds = different / secondsInMilli
-
-            return if (elapsedHours == 0L)
-                if (elapsedMinutes > 1) "$elapsedMinutes mins" else elapsedMinutes.toString() + "min"
-            else
-                if (elapsedHours > 1) "$elapsedHours hrs" else elapsedMinutes.toString() + "hr"
-
-        } catch (e: ParseException) {
-            e.printStackTrace()
-        }
-
-        return "0"
-    }
-
     fun setImageViewGlide(context: Context, imageView: ImageView, imagePath: String) {
         Glide.with(context)
             .load(imagePath)
@@ -194,6 +169,7 @@ object ViewUtils {
             .thumbnail(0.5f)
             .error(R.drawable.doc_place_holder)
             .placeholder(R.drawable.doc_place_holder)
+            .skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.RESOURCE)
             .into(imageView)
     }
 

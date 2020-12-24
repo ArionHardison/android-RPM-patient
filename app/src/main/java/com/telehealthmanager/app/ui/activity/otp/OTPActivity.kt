@@ -6,7 +6,7 @@ import android.util.Log
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
@@ -34,7 +34,7 @@ class OTPActivity : BaseActivity<ActivityOtpBinding>(), OTPNavigator {
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivityOtpBinding
-        viewModel = ViewModelProviders.of(this).get(OTPViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(OTPViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
         mDataBinding.backarrow.setOnClickListener {

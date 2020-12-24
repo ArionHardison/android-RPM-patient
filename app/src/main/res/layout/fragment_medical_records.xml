@@ -53,7 +53,7 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/addMedicalRecord"
-            style="@style/Widget.MaterialComponents.FloatingActionButton"
+            style="@style/Theme.MaterialComponents"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

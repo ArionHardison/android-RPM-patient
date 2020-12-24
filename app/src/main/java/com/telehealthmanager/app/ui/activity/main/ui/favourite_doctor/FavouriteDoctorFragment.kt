@@ -5,7 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 
@@ -30,7 +31,7 @@ class FavouriteDoctorFragment : BaseFragment<FragmentFavouriteDoctorBinding>(), 
 
     override fun initView(mRootView: View?, mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as FragmentFavouriteDoctorBinding
-        viewModel = ViewModelProviders.of(this).get(FavouriteDoctorViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(FavouriteDoctorViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
         //addFavDoctor()

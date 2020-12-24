@@ -7,7 +7,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.telehealthmanager.app.BaseApplication
 
 import com.telehealthmanager.app.R
@@ -38,7 +38,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(), SettingNavigat
 
     override fun initView(mRootView: View?, mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as FragmentSettingsBinding
-        viewModel = ViewModelProviders.of(this).get(SettingViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(SettingViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
         initObservableApi()

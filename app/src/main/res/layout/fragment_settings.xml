@@ -27,12 +27,14 @@
                 android:layout_marginTop="@dimen/_4sdp"
                 android:fontFamily="@font/montserrat_medium"
                 android:padding="@dimen/_12sdp"
+                android:visibility="gone"
                 android:text="@string/show_reminder_notification" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
                 android:layout_marginTop="@dimen/_4sdp"
+                android:visibility="gone"
                 android:background="@color/colorLiteGrey" />
 
             <TextView

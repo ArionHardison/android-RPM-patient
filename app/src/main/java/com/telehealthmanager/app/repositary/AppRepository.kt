@@ -1,10 +1,17 @@
 package com.telehealthmanager.app.repositary
 
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.PagingSource
 import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
+import com.telehealthmanager.app.repositary.model.Hospital
+import com.telehealthmanager.app.repositary.model.MainResponse
 import com.telehealthmanager.app.ui.activity.addmedicalrecord.DoctorMedicalRecordsViewModel
 import com.telehealthmanager.app.ui.activity.addmoney.AddMoneyViewModel
 import com.telehealthmanager.app.ui.activity.addreminder.AddReminderViewModel
@@ -32,12 +39,21 @@ import com.telehealthmanager.app.ui.activity.register.RegisterViewModel
 import com.telehealthmanager.app.ui.activity.searchDoctor.SearchViewModel
 import com.telehealthmanager.app.ui.activity.searchGlobal.SearchGlobalViewModel
 import com.telehealthmanager.app.ui.activity.visitedDoctor.VisitedDoctorsViewModel
+import com.telehealthmanager.app.ui.pagging.RepoSearchResult
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.channels.ConflatedBroadcastChannel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.HttpException
 import retrofit2.http.Part
+import java.io.IOException
+
 
 class AppRepository : BaseRepository() {
 
@@ -135,6 +151,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
+
     /*TODO profile*/
     fun getProfile(viewModel: ViewModel): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
@@ -216,9 +233,9 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun getDoctorByCategorys(viewModel: ViewModel, id: Int): Disposable {
+    fun getDoctorByCategorys(viewModel: ViewModel, id: Int, hashMap: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
-            .getDoctorByCategorys(id)
+            .getDoctorByCategorys(id, hashMap)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
@@ -335,13 +352,9 @@ class AppRepository : BaseRepository() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
-                if (viewModel is ArticleViewModel) {
-                    viewModel.mArticleResponse.value = it
-                }
+                viewModel.mArticleResponse.value = it
             }, {
-                if (viewModel is ArticleViewModel) {
-                    viewModel.getErrorObservable().value = getErrorMessage(it)
-                }
+                viewModel.getErrorObservable().value = getErrorMessage(it)
             })
     }
 
@@ -706,5 +719,45 @@ class AppRepository : BaseRepository() {
                 viewModel.getErrorObservable().value = getErrorMessage(it)
             })
     }
+
+    private val inMemoryCache = mutableListOf<Hospital>()
+
+    // keep channel of results. The channel allows us to broadcast updates so
+    // the subscriber will have the latest data
+    private val searchResults = ConflatedBroadcastChannel<RepoSearchResult>()
+
+
+    @FlowPreview
+    suspend fun getSearchResultStream(hashMap: HashMap<String, Any>): Flow<RepoSearchResult> {
+        inMemoryCache.clear()
+        requestAndSaveData(hashMap)
+        return searchResults.asFlow()
+    }
+
+    private suspend fun requestAndSaveData(hashMap: HashMap<String, Any>): Boolean {
+        var successful = false
+        try {
+            val response = BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java).getDoctorsList(/*hashMap*/)
+            Log.d("GithubRepository", "response $response")
+            val repos = response.search_doctors ?: emptyList()
+            inMemoryCache.addAll(repos)
+            searchResults.offer(RepoSearchResult.Success(repos))
+            successful = true
+        } catch (exception: IOException) {
+            searchResults.offer(RepoSearchResult.Error(exception))
+        } catch (exception: HttpException) {
+            searchResults.offer(RepoSearchResult.Error(exception))
+        }
+        return successful
+    }
+
+    private fun reposByName(query: String): List<Hospital> {
+        // from the in memory cache select only the repos whose name or description matches
+        // the query. Then order the results.
+        return inMemoryCache.filter {
+            it.first_name.contains(query, true) || (it.last_name.contains(query, true))
+        }.sortedWith(compareByDescending<Hospital> { it.first_name }.thenBy { it.last_name })
+    }
+
 
 }

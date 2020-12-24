@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
@@ -39,7 +39,7 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivityVisitedDoctorsDetailBinding
-        viewModel = ViewModelProviders.of(this).get(VisitedDoctorsViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(VisitedDoctorsViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
         initIntentData()

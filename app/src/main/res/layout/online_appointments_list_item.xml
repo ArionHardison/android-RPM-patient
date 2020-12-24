@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_2sdp"
                 android:textColor="@color/colorBlack"
-                android:textSize="@dimen/_12sdp" />
+                android:textSize="@dimen/_7sdp" />
 
             <ImageView
                 android:id="@+id/imageView9"
@@ -69,8 +69,8 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_4sdp"
                 android:layout_gravity="center_vertical"
-
                 app:srcCompat="@drawable/ic_arrow_forward_ios_24px" />
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </layout>

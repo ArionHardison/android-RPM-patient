@@ -4,7 +4,7 @@ import android.content.Intent
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.telehealthmanager.app.R
@@ -28,7 +28,7 @@ class RemainderFragment : BaseFragment<FragmentRemainderBinding>(), RemainderNav
 
     override fun initView(mRootView: View?, mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as FragmentRemainderBinding
-        mViewModel = ViewModelProviders.of(this).get(RemainderViewModel::class.java)
+        mViewModel = ViewModelProvider(this).get(RemainderViewModel::class.java)
         mDataBinding.viewmodel = mViewModel
         mViewModel.navigator = this
         initAdapter()

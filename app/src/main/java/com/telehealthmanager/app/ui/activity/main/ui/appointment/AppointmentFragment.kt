@@ -6,7 +6,7 @@ import android.view.MenuInflater
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseFragment
 import com.telehealthmanager.app.databinding.FragmentAppointmentBinding
@@ -34,7 +34,7 @@ class AppointmentFragment : BaseFragment<FragmentAppointmentBinding>(),Appointme
         tabs_main.setupWithViewPager(viewpager_main)
         setHasOptionsMenu(false);
         mDataBinding = mViewDataBinding as FragmentAppointmentBinding
-        viewModel = ViewModelProviders.of(this).get(AppointmentViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(AppointmentViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
 

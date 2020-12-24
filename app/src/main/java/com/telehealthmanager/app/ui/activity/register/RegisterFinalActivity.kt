@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
@@ -31,7 +31,7 @@ class RegisterFinalActivity : BaseActivity<ActivityRegisterFinalBinding>(), Regi
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivityRegisterFinalBinding
-        viewModel = ViewModelProviders.of(this).get(RegisterViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(RegisterViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
         observeResponse()

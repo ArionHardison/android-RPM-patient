@@ -4,7 +4,7 @@ import android.content.Intent
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.telehealthmanager.app.BaseApplication
@@ -42,10 +42,10 @@ class PaymentActivity : BaseActivity<ActivityPaymentBinding>(), PaymentNavigator
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivityPaymentBinding
-        mViewModel = ViewModelProviders.of(this).get(PaymentViewModel::class.java)
+        mViewModel = ViewModelProvider(this).get(PaymentViewModel::class.java)
         mDataBinding.viewmodel = mViewModel
         mViewModel.navigator = this
-        mAddMoneyViewModel = ViewModelProviders.of(this).get(AddMoneyViewModel::class.java)
+        mAddMoneyViewModel = ViewModelProvider(this).get(AddMoneyViewModel::class.java)
         mDataBinding.addViewModel = mAddMoneyViewModel
 
         val data = intent.extras

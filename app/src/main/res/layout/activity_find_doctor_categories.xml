@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.activity.findDoctors.FindDoctorCategoriesActivity">
 
     <data>
+
+        <import type="com.telehealthmanager.app.base.BaseViewModel" />
 
         <variable
             name="viewmodel"
@@ -23,7 +24,7 @@
         <include
             android:id="@+id/toolbarBase"
             layout="@layout/toolbar_base"
-            bind:baseViewModel="@{viewmodel}" />
+            app:baseViewModel="@{((BaseViewModel) viewmodel)}" />
 
         <ScrollView
             android:layout_width="match_parent"

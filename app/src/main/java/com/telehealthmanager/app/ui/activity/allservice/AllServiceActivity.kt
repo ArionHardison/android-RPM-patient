@@ -1,7 +1,7 @@
 package com.telehealthmanager.app.ui.activity.allservice
 
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
@@ -21,7 +21,7 @@ class AllServiceActivity : BaseActivity<ActivityAllServiceBinding>(), AllService
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivityAllServiceBinding
-        viewModel = ViewModelProviders.of(this).get(AllServiceViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(AllServiceViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
         initUI()

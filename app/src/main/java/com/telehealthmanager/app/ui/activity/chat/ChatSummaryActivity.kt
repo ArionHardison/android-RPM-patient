@@ -5,7 +5,7 @@ import android.graphics.Paint
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.appbar.AppBarLayout
 import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.BuildConfig
@@ -29,6 +29,7 @@ import kotlinx.android.synthetic.main.list_item_doctor_image.view.*
 import java.lang.Math.abs
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavigator, CustomBackClick {
@@ -49,10 +50,10 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivityChatSummaryBinding
-        mViewModel = ViewModelProviders.of(this).get(ChatSummaryViewModel::class.java)
+        mViewModel = ViewModelProvider(this).get(ChatSummaryViewModel::class.java)
         mDataBinding.viewmodelSummary = mViewModel
-        viewModelFindDoctor = ViewModelProviders.of(this).get(FindDoctorsViewModel::class.java)
-        paymentViewModel = ViewModelProviders.of(this).get(PaymentViewModel::class.java)
+        viewModelFindDoctor = ViewModelProvider(this).get(FindDoctorsViewModel::class.java)
+        paymentViewModel = ViewModelProvider(this).get(PaymentViewModel::class.java)
         paymentViewModel.paymentType.set("wallet")
         paymentViewModel.paymentMode.set("Wallet")
         mDataBinding.contentChatSummary.paymentType.text = "Wallet"
@@ -141,7 +142,7 @@ class ChatSummaryActivity : BaseActivity<ActivityChatSummaryBinding>(), ChatNavi
 
     private fun initApiCal() {
         loadingObservable.value = true
-        viewModelFindDoctor.getDoctorByCategorys(category.id)
+        viewModelFindDoctor.getDoctorByCategorys(category.id, HashMap())
     }
 
     private fun observeResponse() {

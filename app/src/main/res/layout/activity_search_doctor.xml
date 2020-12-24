@@ -28,6 +28,7 @@
             bind:baseViewModel="@{viewmodel}"/>
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollable"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/layout_circle_corner"
@@ -37,12 +38,11 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
                 <EditText
                     android:id="@+id/editText13"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
@@ -81,13 +81,30 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_serach_doctors"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
                     android:adapter="@{adapter}"
+                    android:nestedScrollingEnabled="false"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/textView88"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView89" />
+
+                <TextView
+                    android:id="@+id/loadingTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:padding="@dimen/_5sdp"
+                    android:text="@string/loading"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:textSize="@dimen/_10sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/rv_serach_doctors"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_serach_doctors"/>
 
                 <TextView
                     android:id="@+id/tvNotFound"

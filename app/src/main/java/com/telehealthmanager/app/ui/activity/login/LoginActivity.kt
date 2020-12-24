@@ -4,7 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
@@ -29,7 +29,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(), LoginNavigator {
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivityLoginBinding
-        viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
         observeResponse()

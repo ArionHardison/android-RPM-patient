@@ -18,16 +18,23 @@ import com.telehealthmanager.app.data.PreferenceKey
 import com.telehealthmanager.app.data.getValue
 import com.telehealthmanager.app.databinding.FindDoctorListItemBinding
 import com.telehealthmanager.app.repositary.model.DoctorListResponse
+import com.telehealthmanager.app.repositary.model.Hospital
 import com.telehealthmanager.app.utils.ViewUtils
 
 class FindDoctorListAdapter(
-    val items: MutableList<DoctorListResponse.specialities.DoctorProfile>,
     val context: Context,
     val listener: IDoctorListener
 ) :
     RecyclerView.Adapter<FindDoctorViewHolder>(), Filterable {
     private var SearchList: MutableList<DoctorListResponse.specialities.DoctorProfile> =
         mutableListOf()
+
+    private val items: MutableList<DoctorListResponse.specialities.DoctorProfile> = mutableListOf()
+
+    private var isSearchRequest = false
+
+    private val holdingItems = mutableListOf<DoctorListResponse.specialities.DoctorProfile>()
+
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
 
     init {
@@ -86,10 +93,6 @@ class FindDoctorListAdapter(
         return FindDoctorViewHolder(inflate)
     }
 
-    // Gets the number of animals in the list
-    override fun getItemCount(): Int {
-        return SearchList!!.size
-    }
 
     override fun getFilter(): Filter {
 
@@ -123,8 +126,35 @@ class FindDoctorListAdapter(
                 SearchList = results?.values as MutableList<DoctorListResponse.specialities.DoctorProfile>
                 notifyDataSetChanged()
             }
-
         }
+    }
+
+    fun addItems(list: MutableList<DoctorListResponse.specialities.DoctorProfile>) {
+        items.addAll(list)
+        if (!isSearchRequest)
+            holdingItems.addAll(list)
+        notifyItemRangeInserted(items.size-1, list.size)
+    }
+
+    fun onSearchCleared() {
+        isSearchRequest = false
+        items.addAll(holdingItems)
+        notifyDataSetChanged()
+    }
+
+    fun onSearchRequest() {
+        isSearchRequest = true
+        items.clear()
+        notifyDataSetChanged()
+    }
+
+    fun getItem(index: Int): DoctorListResponse.specialities.DoctorProfile {
+        return items[index]
+    }
+
+    // Gets the number of animals in the list
+    override fun getItemCount(): Int {
+        return items.size
     }
 }
 

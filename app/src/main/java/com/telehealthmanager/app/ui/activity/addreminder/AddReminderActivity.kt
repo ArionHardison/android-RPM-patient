@@ -5,7 +5,7 @@ import android.app.TimePickerDialog
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
 import com.telehealthmanager.app.databinding.ActivityAddReminderBinding
@@ -29,7 +29,7 @@ class AddReminderActivity : BaseActivity<ActivityAddReminderBinding>(), AddRemin
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivityAddReminderBinding
-        mViewModel = ViewModelProviders.of(this).get(AddReminderViewModel::class.java)
+        mViewModel = ViewModelProvider(this).get(AddReminderViewModel::class.java)
         mViewModel.navigator = this
         mDataBinding.viewmodel = mViewModel
 

@@ -6,6 +6,7 @@
     tools:context=".ui.activity.visitedDoctor.VisitedDoctorsActivity">
 
     <data>
+        <import type="com.telehealthmanager.app.base.BaseViewModel" />
 
         <variable
             name="viewmodel"
@@ -24,7 +25,7 @@
         <include
             android:id="@+id/toolBar"
             layout="@layout/toolbar_base"
-            bind:baseViewModel="@{viewmodel}"
+            app:baseViewModel="@{((BaseViewModel) viewmodel)}"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <androidx.recyclerview.widget.RecyclerView

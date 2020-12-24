@@ -1,5 +1,6 @@
 package com.telehealthmanager.app.ui.activity.findDoctors
 
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.telehealthmanager.app.base.BaseViewModel
@@ -8,8 +9,11 @@ import com.telehealthmanager.app.repositary.model.BookedResponse
 import com.telehealthmanager.app.repositary.model.CategoryResponse
 import com.telehealthmanager.app.repositary.model.DoctorListResponse
 import java.util.*
+import kotlin.collections.HashMap
 
 class FindDoctorsViewModel : BaseViewModel<FindDoctorsNavigator>() {
+    private val TAG = "FindDoctorsViewModel"
+
     var mCategoryResponse = MutableLiveData<CategoryResponse>()
     var mCategoryList: MutableList<CategoryResponse.Category>? = arrayListOf()
     var mFirstCategoryList: MutableList<CategoryResponse.Category>? = arrayListOf()
@@ -25,8 +29,8 @@ class FindDoctorsViewModel : BaseViewModel<FindDoctorsNavigator>() {
         getCompositeDisposable().add(appRepository.getCategorys(this))
     }
 
-    fun getDoctorByCategorys(id: Int) {
-        getCompositeDisposable().add(appRepository.getDoctorByCategorys(this, id))
+    fun getDoctorByCategorys(id: Int, hashMap: HashMap<String, Any>) {
+        getCompositeDisposable().add(appRepository.getDoctorByCategorys(this, id, hashMap))
     }
 
     fun getDoctorFilterCategories(hashMap: HashMap<String, Any>) {
@@ -35,5 +39,18 @@ class FindDoctorsViewModel : BaseViewModel<FindDoctorsNavigator>() {
 
     fun BookDoctor(hashMap: HashMap<String, Any>) {
         getCompositeDisposable().add(appRepository.bookDoctor(this, hashMap))
+    }
+
+    private val VISIBLE_THRESHOLD = 5
+
+    fun listScrolled(visibleItemCount: Int, lastVisibleItem: Int, totalItemCount: Int, item: DoctorListResponse.specialities.DoctorProfile) {
+
+        if ((visibleItemCount + lastVisibleItem + VISIBLE_THRESHOLD >= totalItemCount)) {
+            Log.d(TAG, "listScrolled: True $totalItemCount LAST ITEM $lastVisibleItem VISIBLE COUNT $visibleItemCount DOCTOR ID ${item.id}")
+            val hashMap: HashMap<String, Any> = HashMap()
+            hashMap["page"] = item.id
+            getDoctorByCategorys(mCategoryId.get()!!.toInt(), hashMap)
+        }
+
     }
 }

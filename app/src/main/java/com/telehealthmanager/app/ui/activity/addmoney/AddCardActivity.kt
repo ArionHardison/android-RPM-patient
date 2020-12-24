@@ -3,29 +3,35 @@ package com.telehealthmanager.app.ui.activity.addmoney
 import android.content.Intent
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider
 import com.stripe.android.Stripe
 import com.stripe.android.TokenCallback
 import com.stripe.android.model.Card
 import com.stripe.android.model.Token
-import com.telehealthmanager.app.BuildConfig
+import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
+import com.telehealthmanager.app.data.PreferenceHelper
+import com.telehealthmanager.app.data.PreferenceKey
+import com.telehealthmanager.app.data.getValue
 import com.telehealthmanager.app.databinding.ActivityAddCardBinding
 import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ViewUtils
 
 class AddCardActivity : BaseActivity<ActivityAddCardBinding>(), AddMoneyNavigator, CustomBackClick {
 
+    private var TAG: String = "AddCardActivity"
     lateinit var mDataBinding: ActivityAddCardBinding
     lateinit var mViewModel: AddMoneyViewModel
-    private var TAG: String = "AddCardActivity"
+
+    private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
 
     override fun getLayoutId(): Int = R.layout.activity_add_card
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivityAddCardBinding
-        mViewModel = ViewModelProviders.of(this).get(AddMoneyViewModel::class.java)
+        mViewModel = ViewModelProvider(this).get(AddMoneyViewModel::class.java)
         mViewModel.navigator = this
         mDataBinding.viewmodel = mViewModel
 
@@ -39,11 +45,14 @@ class AddCardActivity : BaseActivity<ActivityAddCardBinding>(), AddMoneyNavigato
             .setup(this)
 
         mDataBinding.addCard.setOnClickListener {
+            val stripe_Key: String = preferenceHelper.getValue(PreferenceKey.STRIPE_KEY, "") as String
             if (mDataBinding.cardForm.cardNumber == null || mDataBinding.cardForm.expirationMonth == null || mDataBinding.cardForm.expirationYear == null || mDataBinding.cardForm.cvv == null) {
                 ViewUtils.showToast(this@AddCardActivity, getString(R.string.card_details_not_valid), false)
             } else {
                 if (mDataBinding.cardForm.cardNumber == "" || mDataBinding.cardForm.expirationMonth == "" || mDataBinding.cardForm.expirationYear == "" || mDataBinding.cardForm.cvv == "") {
                     ViewUtils.showToast(this@AddCardActivity, getString(R.string.card_details_not_valid), false)
+                } else if (stripe_Key == "") {
+                    ViewUtils.showToast(this@AddCardActivity, getString(R.string.stripe_key_not_found), false)
                 } else {
                     mViewModel.loadingProgress.value = true
                     val cardNumber: String = mDataBinding.cardForm.cardNumber
@@ -52,7 +61,7 @@ class AddCardActivity : BaseActivity<ActivityAddCardBinding>(), AddMoneyNavigato
                     val cvv: String = mDataBinding.cardForm.cvv
                     val card = Card(cardNumber, month, year, cvv)
                     try {
-                        val stripe = Stripe(this@AddCardActivity, BuildConfig.STRIPE_KEY)
+                        val stripe = Stripe(this@AddCardActivity, stripe_Key)
                         stripe.createToken(card, object : TokenCallback {
                             override fun onSuccess(token: Token) {
                                 mViewModel.loadingProgress.value = false

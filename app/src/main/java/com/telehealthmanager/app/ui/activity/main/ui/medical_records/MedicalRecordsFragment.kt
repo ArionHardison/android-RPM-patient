@@ -5,7 +5,7 @@ import android.content.Intent
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -32,7 +32,7 @@ class MedicalRecordsFragment : BaseFragment<FragmentMedicalRecordsBinding>(),
 
     override fun initView(mRootView: View?, mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as FragmentMedicalRecordsBinding
-        viewModel = ViewModelProviders.of(this).get(MedicalRecordsViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MedicalRecordsViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
         initApiCal()

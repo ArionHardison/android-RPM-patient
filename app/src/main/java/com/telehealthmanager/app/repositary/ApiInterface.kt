@@ -51,12 +51,16 @@ interface ApiInterface {
     @GET("api/patient/search_doctor")
     fun getHome(@QueryMap hashMap: HashMap<String, Any>): Observable<MainResponse>
 
+    @GET("api/patient/search_doctor")
+    suspend fun getDoctorsList(@QueryMap hashMap: HashMap<String, Any>): MainResponse
+
+
     /*  doctor*/
     @GET("api/patient/doctor_catagory")
     fun getCategorys(): Observable<CategoryResponse>
 
     @GET("api/patient/doctor_catagory/{id}")
-    fun getDoctorByCategorys(@Path("id") id: Int?): Observable<DoctorListResponse>
+    fun getDoctorByCategorys(@Path("id") id: Int?,@QueryMap hashMap: HashMap<String, Any>): Observable<DoctorListResponse>
 
     @GET("api/patient/doctor_catagory/{id}")
     fun getDoctorFilterByCategories(@Path("id") id: Int?, @QueryMap hashMap: HashMap<String, Any>): Observable<DoctorListResponse>

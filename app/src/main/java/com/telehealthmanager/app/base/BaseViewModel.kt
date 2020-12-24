@@ -20,6 +20,7 @@ import java.io.IOException
 import java.lang.ref.WeakReference
 import java.net.SocketTimeoutException
 
+
 abstract class BaseViewModel<N> : ViewModel(), SessionListener {
     private var compositeDisposable = CompositeDisposable()
     private lateinit var mNavigator: WeakReference<N>

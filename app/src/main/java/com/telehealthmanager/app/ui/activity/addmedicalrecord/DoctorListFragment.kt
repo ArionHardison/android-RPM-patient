@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.telehealthmanager.app.R
@@ -34,7 +34,7 @@ class DoctorListFragment : BaseBottomDialogFragment<FragmentDoctorListBinding>()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(DoctorMedicalRecordsViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(DoctorMedicalRecordsViewModel::class.java)
         viewModel.navigator = this
         initApi()
         initObservable()

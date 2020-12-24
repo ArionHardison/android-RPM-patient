@@ -6,7 +6,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.telehealthmanager.app.R
@@ -34,7 +34,7 @@ class SearchGlobalActivity : BaseActivity<ActivityGlobalSearchBinding>(), Search
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivityGlobalSearchBinding
-        viewModel = ViewModelProviders.of(this).get(SearchGlobalViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(SearchGlobalViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
         initApiCal()
@@ -66,7 +66,7 @@ class SearchGlobalActivity : BaseActivity<ActivityGlobalSearchBinding>(), Search
             }
         })
 
-        viewModel.mResponse.observe(this, Observer<SearchResponse> {
+        /*viewModel.mResponse.observe(this, Observer<SearchResponse> {
             viewModel.mDoctorsList = it.doctors as MutableList<Hospital>?
             if (viewModel.mDoctorsList!!.size > 0) {
                 viewModel.listsize.set(it.doctors.size.toString())
@@ -92,7 +92,7 @@ class SearchGlobalActivity : BaseActivity<ActivityGlobalSearchBinding>(), Search
             mclinicAdapter!!.notifyDataSetChanged()
             loadingObservable.value = false
             viewModel.loadingProgress.value=false
-        })
+        })*/
 
         viewModel.getErrorObservable().observe(this, Observer<String> { message ->
             loadingObservable.value = false
@@ -105,9 +105,9 @@ class SearchGlobalActivity : BaseActivity<ActivityGlobalSearchBinding>(), Search
         decorator = DividerItemDecoration(applicationContext, LinearLayoutManager.VERTICAL)
         decorator.setDrawable(ContextCompat.getDrawable(applicationContext, R.drawable.divider)!!)
 
-        mAdapter = SearchDoctorsListAdapter(viewModel.mDoctorsList!!, this@SearchGlobalActivity)
+       /* mAdapter = SearchDoctorsListAdapter(viewModel.mDoctorsList!!, this@SearchGlobalActivity)
         mDataBinding.doctoradapter = mAdapter
-
+*/
         mDataBinding.rvDoctorsList.addItemDecoration(decorator)
 
         mDataBinding.rvDoctorsList.layoutManager = LinearLayoutManager(applicationContext)

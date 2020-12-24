@@ -9,7 +9,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -38,7 +38,7 @@ class AddMedicalRecords : BaseActivity<ActivityAddMedicalRecordBinding>(), Docto
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivityAddMedicalRecordBinding
-        viewModel = ViewModelProviders.of(this).get(DoctorMedicalRecordsViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(DoctorMedicalRecordsViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
 

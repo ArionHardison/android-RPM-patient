@@ -3,7 +3,7 @@ package com.telehealthmanager.app.ui.activity.changepassword
 import android.text.TextUtils
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
@@ -23,7 +23,7 @@ class ChangePasswordActivity : BaseActivity<ActivityChangepasswordBinding>(), Ch
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivityChangepasswordBinding
-        viewModel = ViewModelProviders.of(this).get(ChangePasswordViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ChangePasswordViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
 

@@ -3,7 +3,7 @@ package com.telehealthmanager.app.ui.activity.payment
 import android.content.Intent
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.telehealthmanager.app.R
@@ -29,7 +29,7 @@ class PaymentTypeActivity : BaseActivity<ActivityPaymentTypeBinding>(), ICardCli
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivityPaymentTypeBinding
-        mAddMoneyViewModel = ViewModelProviders.of(this).get(AddMoneyViewModel::class.java)
+        mAddMoneyViewModel = ViewModelProvider(this).get(AddMoneyViewModel::class.java)
         mDataBinding.viewmodel = mAddMoneyViewModel
         initAdapter()
         observeShowLoading()

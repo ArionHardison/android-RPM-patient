@@ -2,7 +2,7 @@ package com.telehealthmanager.app.ui.activity.visitedDoctor
 
 import android.content.Intent
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
@@ -26,7 +26,7 @@ class InvoiceActivity : BaseActivity<ActivityInvoiceBinding>() {
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivityInvoiceBinding
-        viewModel = ViewModelProviders.of(this).get(VisitedDoctorsViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(VisitedDoctorsViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         initIntentData()
 

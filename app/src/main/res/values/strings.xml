@@ -321,7 +321,7 @@
     <string name="save">Save</string>
     <string name="please_enter_location">Please enter location</string>
     <string name="doctor_name">Doctor Name</string>
-    <string name="instruction_given">Instruction Given...</string>
+    <string name="instruction_given">Instruction Given…</string>
     <string name="description_instruction_given">Description/Instruction Given</string>
     <string name="test_taken_previous_prescription">Test Taken/Previous Prescription</string>
     <string name="view_file">View File</string>
@@ -336,6 +336,8 @@
     <string name="no_address_found">No address found</string>
     <string name="payment_mode_error">Please Select payment mode</string>
     <string name="payment_view">Payment View</string>
+    <string name="stripe_key_not_found">Stripe key not found</string>
+    <string name="loading">Loading...</string>
 
 
 </resources>

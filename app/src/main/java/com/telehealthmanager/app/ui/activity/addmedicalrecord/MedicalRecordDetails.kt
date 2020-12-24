@@ -3,7 +3,7 @@ package com.telehealthmanager.app.ui.activity.addmedicalrecord
 import android.content.Intent
 import android.net.Uri
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
@@ -25,7 +25,7 @@ class MedicalRecordDetails : BaseActivity<ActivityMedicalRecordDetailsBinding>()
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivityMedicalRecordDetailsBinding
-        viewModel = ViewModelProviders.of(this).get(DoctorMedicalRecordsViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(DoctorMedicalRecordsViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
         viewModel.toolBarTile.value = getString(R.string.patient_record)

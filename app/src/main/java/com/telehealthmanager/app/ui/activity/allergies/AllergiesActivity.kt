@@ -3,7 +3,7 @@ package com.telehealthmanager.app.ui.activity.allergies
 import android.app.Activity
 import android.content.Intent
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
 import com.telehealthmanager.app.databinding.ActivityAllergiesBinding
@@ -19,7 +19,7 @@ class AllergiesActivity : BaseActivity<ActivityAllergiesBinding>(), AllergiesNav
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivityAllergiesBinding
-        viewModel = ViewModelProviders.of(this).get(AllergiesViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(AllergiesViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
         viewModel.setOnClickListener(this@AllergiesActivity)

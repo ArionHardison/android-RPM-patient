@@ -122,6 +122,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:noHistory="true"
+            android:excludeFromRecents="true"
             android:configChanges="orientation|screenSize"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />

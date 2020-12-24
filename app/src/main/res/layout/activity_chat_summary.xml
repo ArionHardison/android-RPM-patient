@@ -7,6 +7,8 @@
 
     <data>
 
+        <import type="com.telehealthmanager.app.base.BaseViewModel" />
+
         <variable
             name="viewmodelSummary"
             type="com.telehealthmanager.app.ui.activity.chat.ChatSummaryViewModel" />
@@ -22,7 +24,7 @@
         <include
             android:id="@+id/toolBar"
             layout="@layout/toolbar_backpress_scroll"
-            bind:baseViewModel="@{viewmodelSummary}" />
+            app:baseViewModel="@{((BaseViewModel) viewmodelSummary)}" />
 
         <include
             android:id="@+id/content_chat_summary"

@@ -4,7 +4,7 @@ import android.content.Intent
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.telehealthmanager.app.R
@@ -29,7 +29,7 @@ class DoctorMedicalRecords : BaseActivity<ActivityDoctorMedicalRecordBinding>(),
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivityDoctorMedicalRecordBinding
-        viewModel = ViewModelProviders.of(this).get(DoctorMedicalRecordsViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(DoctorMedicalRecordsViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
         viewModel.toolBarTile.value = getString(R.string.patient_medical_record)

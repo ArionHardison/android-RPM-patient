@@ -4,7 +4,7 @@ import android.content.Intent
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.telehealthmanager.app.BaseApplication
@@ -33,7 +33,7 @@ class AddMoneyActivity : BaseActivity<ActivityAddMoneyBinding>(), AddMoneyNaviga
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivityAddMoneyBinding
-        mViewModel = ViewModelProviders.of(this).get(AddMoneyViewModel::class.java)
+        mViewModel = ViewModelProvider(this).get(AddMoneyViewModel::class.java)
         mViewModel.navigator = this
         mDataBinding.viewmodel = mViewModel
         mViewModel.mWalletAmount.set(intent.getStringExtra(Constant.IntentData.WALLET_AMOUNT))

@@ -8,7 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.databinding.ViewDataBinding
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -44,10 +44,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
 
     override fun initView(mViewDataBinding: ViewDataBinding?) {
         mDataBinding = mViewDataBinding as ActivityMainBinding
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
-        preferenceHelper.setValue(PreferenceKey.CURRENCY, "$")
+
         initUI()
         initApiCal()
         observeResponse()
@@ -139,6 +139,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
             preferenceHelper.setValue(PreferenceKey.EMAIL, it.patient.email)
             preferenceHelper.setValue(PreferenceKey.PROFILE_IMAGE, it.patient.profile.profile_pic)
             preferenceHelper.setValue(PreferenceKey.WALLET_BALANCE, it.patient.wallet_balance)
+            preferenceHelper.setValue(PreferenceKey.CURRENCY, it.currency?.currency)
+            preferenceHelper.setValue(PreferenceKey.STRIPE_KEY, it.currency?.stripe_public_key)
 
             name.text = preferenceHelper.getValue(PreferenceKey.FIRST_NAME, "Test").toString().plus(
                 " "
