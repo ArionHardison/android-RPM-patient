@@ -427,8 +427,8 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
             if (it.patient?.profile?.profile_pic != null) {
                 Glide.with(this)
                     .load(BuildConfig.BASE_IMAGE_URL + it.patient?.profile?.profile_pic)
-                    .error(R.drawable.app_logo)
-                    .placeholder(R.drawable.app_logo)
+                    .error(R.drawable.user_placeholder)
+                    .placeholder(R.drawable.user_placeholder)
                     .into(profileImg)
             }
             preferenceHelper.setValue(PreferenceKey.WALLET_BALANCE, it.patient?.wallet_balance)
@@ -479,8 +479,8 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
             if (it.relative_detail?.profile?.profile_pic != null) {
                 Glide.with(this)
                     .load(BuildConfig.BASE_IMAGE_URL + it.relative_detail?.profile?.profile_pic)
-                    .error(R.drawable.app_logo)
-                    .placeholder(R.drawable.app_logo)
+                    .error(R.drawable.user_placeholder)
+                    .placeholder(R.drawable.user_placeholder)
                     .into(profileImg)
             }
             mDataBinding.titleText2.text = it.relative_detail?.first_name.plus(" ").plus(it.relative_detail?.last_name)

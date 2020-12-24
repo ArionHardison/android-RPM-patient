@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="com.telehealthmanager.app.base.BaseViewModel" />
+
         <variable
             name="viewmodel"
             type="com.telehealthmanager.app.ui.activity.addmedicalrecord.DoctorMedicalRecordsViewModel" />
@@ -18,7 +20,7 @@
             android:id="@+id/toolBar"
             layout="@layout/toolbar_base"
             app:layout_constraintTop_toTopOf="parent"
-            bind:baseViewModel="@{viewmodel}" />
+            bind:baseViewModel="@{((BaseViewModel)viewmodel)}" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -148,10 +150,10 @@
                     android:layout_marginEnd="@dimen/_6sdp"
                     android:layout_marginBottom="@dimen/_6sdp"
                     android:background="@drawable/rectangular_box"
-                    android:hint="@string/doctor_name"
-                    android:padding="@dimen/_10sdp"
                     android:focusable="false"
+                    android:hint="@string/doctor_name"
                     android:inputType="none"
+                    android:padding="@dimen/_10sdp"
                     android:text="@={viewmodel.mDoctorName}"
                     android:textColor="@color/grey_700"
                     android:textSize="@dimen/_12sdp" />

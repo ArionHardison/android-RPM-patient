@@ -6,7 +6,7 @@
     tools:context=".ui.activity.patientDetail.PatientDetailsActivity">
 
     <data>
-
+        <import type="com.telehealthmanager.app.base.BaseViewModel" />
         <variable
             name="viewmodel"
             type="com.telehealthmanager.app.ui.activity.patientDetail.PatientDetailViewModel" />
@@ -21,7 +21,7 @@
         <include
             android:id="@+id/toolbarBase"
             layout="@layout/toolbar_base"
-            bind:baseViewModel="@{viewmodel}" />
+            bind:baseViewModel="@{((BaseViewModel)viewmodel)}" />
 
         <ScrollView
             android:layout_width="match_parent"

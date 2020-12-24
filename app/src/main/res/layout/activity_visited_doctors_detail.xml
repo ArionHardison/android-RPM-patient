@@ -7,6 +7,8 @@
 
     <data>
 
+        <import type="com.telehealthmanager.app.base.BaseViewModel" />
+
         <variable
             name="viewmodel"
             type="com.telehealthmanager.app.ui.activity.visitedDoctor.VisitedDoctorsViewModel" />
@@ -43,7 +45,7 @@
                 android:id="@+id/toolBar"
                 layout="@layout/toolbar_base"
                 app:layout_constraintTop_toTopOf="parent"
-                bind:baseViewModel="@{viewmodel}" />
+                bind:baseViewModel="@{((BaseViewModel)viewmodel)}" />
 
             <LinearLayout
                 android:id="@+id/llHeaderProfile"

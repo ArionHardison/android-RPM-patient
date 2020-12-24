@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.activity.searchDoctor.SearchDoctorActivity">
 
     <data>
+
+        <import type="com.telehealthmanager.app.base.BaseViewModel" />
 
         <variable
             name="viewmodel"
             type="com.telehealthmanager.app.ui.activity.searchDoctor.SearchViewModel" />
 
-        <variable
-            name="adapter"
-            type="com.telehealthmanager.app.ui.adapter.SearchDoctorsListAdapter" />
+        <!--  <variable
+              name="adapter"
+              type="com.telehealthmanager.app.ui.adapter.SearchDoctorsListAdapter" />-->
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -25,12 +27,13 @@
         <include
             android:id="@+id/toolBar"
             layout="@layout/toolbar_backpress_scroll"
-            bind:baseViewModel="@{viewmodel}"/>
+            bind:baseViewModel="@{((BaseViewModel)viewmodel)}" />
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/scrollable"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:fillViewport="true"
             android:background="@drawable/layout_circle_corner"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:context=".ui.activity.searchDoctor.SearchDoctorActivity"
@@ -62,7 +65,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="@{@string/search_result(viewmodel.search)}"
                     android:textColor="@color/colorBlack"
                     app:layout_constraintStart_toStartOf="@+id/editText13"
                     app:layout_constraintTop_toBottomOf="@+id/editText13"
@@ -72,19 +74,18 @@
                     android:id="@+id/textView89"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{@string/result_found(viewmodel.listsize)}"
                     android:textColor="@color/colorButton"
                     app:layout_constraintBottom_toBottomOf="@+id/textView88"
                     app:layout_constraintStart_toEndOf="@+id/textView88"
                     app:layout_constraintTop_toTopOf="@+id/textView88"
-                    tools:text=" (6 results found)" />
+                    tools:text="(6 results found)" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_serach_doctors"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
                     android:layout_marginTop="8dp"
-                    android:adapter="@{adapter}"
+                    android:fitsSystemWindows="true"
                     android:nestedScrollingEnabled="false"
                     android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -97,27 +98,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_35sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
+                    android:gravity="center"
                     android:padding="@dimen/_5sdp"
                     android:text="@string/loading"
-                    android:gravity="center"
-                    android:visibility="gone"
                     android:textSize="@dimen/_10sdp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/rv_serach_doctors"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_serach_doctors"/>
+                    app:layout_constraintTop_toBottomOf="@+id/rv_serach_doctors" />
 
                 <TextView
                     android:id="@+id/tvNotFound"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_200sdp"
                     android:layout_centerInParent="true"
+                    android:gravity="center"
                     android:text="@string/no_result_found"
                     android:textSize="@dimen/_12sdp"
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintEnd_toStartOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView89" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 

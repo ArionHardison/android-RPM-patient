@@ -56,10 +56,10 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
         viewModel.mCategoryId.set(intent.getIntExtra(WebApiConstants.IntentPass.ID, 1))
 
         mAdapter = FindDoctorListAdapter(this@FindDoctorsListActivity, this)
-        mDataBinding.adapter = mAdapter
+        mDataBinding.rvFinddoctorsList.adapter =  mAdapter
         mDataBinding.rvFinddoctorsList.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         mDataBinding.rvFinddoctorsList.itemAnimator = DefaultItemAnimator()
-
+        setupScrollListener()
         initApiCal()
         observeResponse()
         filterdialog = AlertDialog.Builder(this)
@@ -68,19 +68,6 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
         mDataBinding.imageView17.setOnClickListener {
             showFilterDialog(this@FindDoctorsListActivity)
         }
-
-        mDataBinding.rvFinddoctorsList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val lm = mDataBinding.rvFinddoctorsList.layoutManager as LinearLayoutManager
-                val totalItemCount = lm.itemCount
-                val visibleItemCount = lm.childCount
-                val lastVisibleItem = lm.findLastVisibleItemPosition()
-                viewModel.listScrolled(visibleItemCount, lastVisibleItem, totalItemCount, mAdapter.getItem(mAdapter.itemCount - 1))
-            }
-        })
-
         mDataBinding.editText9.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
 
@@ -90,16 +77,23 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-               /* if (s!!.isNotEmpty())
-                    mDataBinding.adapter!!.filter.filter(s)
-                else {
 
-                }*/
-
-                /**/
             }
         })
 
+    }
+
+    private fun setupScrollListener() {
+        val layoutManager = mDataBinding.rvFinddoctorsList.layoutManager as LinearLayoutManager
+        mDataBinding.rvFinddoctorsList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val totalItemCount = layoutManager.itemCount
+                val visibleItemCount = layoutManager.childCount
+                val lastVisibleItem = layoutManager.findLastVisibleItemPosition()
+                viewModel.listScrolled(visibleItemCount, lastVisibleItem, totalItemCount, mAdapter.getItem(mAdapter.itemCount - 1))
+            }
+        })
     }
 
     override fun clickBackPress() {
@@ -112,7 +106,7 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
     }
 
     private fun observeResponse() {
-        viewModel.mDoctorResponse.observe(this, Observer<DoctorListResponse> {
+        viewModel.mDoctorResponse.observe(this, {
             viewModel.mDoctorList = it.Specialities.doctor_profile as MutableList<DoctorListResponse.specialities.DoctorProfile>?
             Log.d(TAG, "observeResponse: ${it.Specialities.doctor_profile.size}")
             if (it.Specialities.doctor_profile.toMutableList().size > 0) {
@@ -128,7 +122,7 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
             loadingObservable.value = false
         })
 
-        viewModel.getErrorObservable().observe(this, Observer<String> { message ->
+        viewModel.getErrorObservable().observe(this, { message ->
             loadingObservable.value = false
             ViewUtils.showToast(this@FindDoctorsListActivity, message, false)
         })

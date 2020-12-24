@@ -4,7 +4,11 @@
     xmlns:bind="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="com.telehealthmanager.app.base.BaseViewModel" />
+
         <import type="android.view.View" />
+
         <variable
             name="viewmodel"
             type="com.telehealthmanager.app.ui.activity.addreminder.AddReminderViewModel" />
@@ -20,7 +24,7 @@
             android:id="@+id/toolbarBase"
             layout="@layout/toolbar_base"
             app:layout_constraintTop_toTopOf="parent"
-            bind:baseViewModel="@{viewmodel}" />
+            bind:baseViewModel="@{((BaseViewModel)viewmodel)}" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -162,10 +166,10 @@
                         android:background="@drawable/doctor_specialist_name"
                         android:padding="@dimen/_5sdp"
                         android:singleLine="true"
-                        android:visibility="@{viewmodel.notifyme? View.VISIBLE : View.GONE, default=gone}"
                         android:text="@string/notify_message"
                         android:textColor="@color/colorDarkGrey"
                         android:textSize="@dimen/_10sdp"
+                        android:visibility="@{viewmodel.notifyme? View.VISIBLE : View.GONE, default=gone}"
                         app:layout_constraintStart_toStartOf="@+id/textView47"
                         app:layout_constraintTop_toBottomOf="@+id/textView48" />
 

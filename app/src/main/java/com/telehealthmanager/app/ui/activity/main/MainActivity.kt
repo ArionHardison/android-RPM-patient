@@ -87,7 +87,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
                 R.id.nav_relative_mgmt,
                 R.id.nav_faq,
                 R.id.nav_settings
-            ), drawerLayout
+            ), drawerLayout,
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
@@ -156,8 +156,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
             if (it.patient.profile.profile_pic != null) {
                 Glide.with(this)
                     .load(BuildConfig.BASE_IMAGE_URL + it.patient.profile.profile_pic)
-                    .error(R.drawable.app_logo)
-                    .placeholder(R.drawable.app_logo)
+                    .error(R.drawable.user_placeholder)
+                    .placeholder(R.drawable.user_placeholder)
                     .into(profileImg)
             }
 

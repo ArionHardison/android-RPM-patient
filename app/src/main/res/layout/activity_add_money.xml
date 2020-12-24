@@ -7,6 +7,8 @@
 
     <data>
 
+        <import type="com.telehealthmanager.app.base.BaseViewModel" />
+
         <variable
             name="viewmodel"
             type="com.telehealthmanager.app.ui.activity.addmoney.AddMoneyViewModel" />
@@ -21,7 +23,7 @@
             android:id="@+id/toolbarBase"
             layout="@layout/toolbar_base"
             app:layout_constraintTop_toTopOf="parent"
-            bind:baseViewModel="@{viewmodel}" />
+            bind:baseViewModel="@{((BaseViewModel)viewmodel)}" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutPaymentText"

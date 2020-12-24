@@ -37,14 +37,9 @@ class FindDoctorsViewModel : BaseViewModel<FindDoctorsNavigator>() {
         getCompositeDisposable().add(appRepository.getFiltersDoctors(this, mCategoryId.get()!!.toInt(), hashMap))
     }
 
-    fun BookDoctor(hashMap: HashMap<String, Any>) {
-        getCompositeDisposable().add(appRepository.bookDoctor(this, hashMap))
-    }
-
     private val VISIBLE_THRESHOLD = 5
 
     fun listScrolled(visibleItemCount: Int, lastVisibleItem: Int, totalItemCount: Int, item: DoctorListResponse.specialities.DoctorProfile) {
-
         if ((visibleItemCount + lastVisibleItem + VISIBLE_THRESHOLD >= totalItemCount)) {
             Log.d(TAG, "listScrolled: True $totalItemCount LAST ITEM $lastVisibleItem VISIBLE COUNT $visibleItemCount DOCTOR ID ${item.id}")
             val hashMap: HashMap<String, Any> = HashMap()

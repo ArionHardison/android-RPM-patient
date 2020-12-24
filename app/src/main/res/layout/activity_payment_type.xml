@@ -6,7 +6,7 @@
     tools:context=".ui.activity.payment.PaymentActivity">
 
     <data>
-
+        <import type="com.telehealthmanager.app.base.BaseViewModel" />
         <variable
             name="viewmodel"
             type="com.telehealthmanager.app.ui.activity.addmoney.AddMoneyViewModel" />
@@ -30,7 +30,7 @@
                 android:id="@+id/toolBar"
                 layout="@layout/toolbar_base"
                 app:layout_constraintTop_toTopOf="parent"
-                bind:baseViewModel="@{viewmodel}" />
+                bind:baseViewModel="@{((BaseViewModel)viewmodel)}" />
 
         </com.google.android.material.appbar.AppBarLayout>
 

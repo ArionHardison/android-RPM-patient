@@ -737,7 +737,7 @@ class AppRepository : BaseRepository() {
     private suspend fun requestAndSaveData(hashMap: HashMap<String, Any>): Boolean {
         var successful = false
         try {
-            val response = BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java).getDoctorsList(/*hashMap*/)
+            val response = BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java).getDoctorsList(hashMap)
             Log.d("GithubRepository", "response $response")
             val repos = response.search_doctors ?: emptyList()
             inMemoryCache.addAll(repos)

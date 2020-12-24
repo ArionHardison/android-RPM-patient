@@ -30,7 +30,7 @@ class FcmService : FirebaseMessagingService() {
     var COUNT = 0
 
     @SuppressLint("HardwareIds")
-    override fun onNewToken(token: String?) {
+    override fun onNewToken(token: String) {
         super.onNewToken(token)
         Log.d(TAG, "onNewToken()")
         Log.d(TAG, "FireBaseRegToken: " + token!!)
@@ -43,7 +43,7 @@ class FcmService : FirebaseMessagingService() {
         BaseApplication.getCustomPreference!!.edit().putString(PreferenceKey.DEVICE_ID, deviceId).apply()
     }
 
-    override fun onMessageReceived(remoteMessage: RemoteMessage?) {
+    override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
         Log.d(TAG, "msg: $remoteMessage")
         if (remoteMessage?.notification != null)

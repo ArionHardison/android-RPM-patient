@@ -28,6 +28,7 @@ class SearchViewModel : BaseViewModel<SearchNavigator>() {
 
     var listsize = MutableLiveData<String>("0")
     var search: ObservableField<String> = ObservableField("")
+    var searchText: ObservableField<Boolean> = ObservableField(false)
 
     var mDoctorProfile = MutableLiveData<DoctorListResponse.specialities.DoctorProfile>()
     var mfeedbacklist: MutableList<Hospital.Feedback>? = arrayListOf()
@@ -88,24 +89,6 @@ class SearchViewModel : BaseViewModel<SearchNavigator>() {
     fun gethome(hashMap: HashMap<String, Any>) {
         loadingProgress.value = true
         getCompositeDisposable().add(appRepository.getHome(this, hashMap))
-    }
-
-    private val VISIBLE_THRESHOLD = 5
-
-    fun listScrolled(visibleItemCount: Int, lastVisibleItem: Int, totalItemCount: Int, item: Hospital) {
-        if ((visibleItemCount + lastVisibleItem + VISIBLE_THRESHOLD >= totalItemCount) && !loadingProgress.value!!) {
-            Log.d(TAG, "listScrolled: True $totalItemCount LAST ITEM $lastVisibleItem VISIBLE COUNT $visibleItemCount DOCTOR ID ${item.id}")
-            val hashMap: HashMap<String, Any> = HashMap()
-            hashMap["page"] = item.id
-            getSearchDoctors(hashMap)
-        }
-    }
-
-    fun getSearchDoctors(hashMap: HashMap<String, Any>) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val response = BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java).getDoctorsList(hashMap)
-            mDoctorResponse.postValue(response)
-        }
     }
 
 }

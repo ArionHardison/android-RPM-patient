@@ -6,7 +6,7 @@
     tools:context=".ui.activity.chat.ChatActivity">
 
     <data>
-
+        <import type="com.telehealthmanager.app.base.BaseViewModel" />
         <variable
             name="serviceAdapter"
             type="com.telehealthmanager.app.ui.adapter.AllServiceAdapter" />
@@ -26,7 +26,7 @@
             android:id="@+id/toolBar"
             layout="@layout/toolbar_base"
             app:layout_constraintTop_toTopOf="parent"
-            bind:baseViewModel="@{viewmodel}" />
+            bind:baseViewModel="@{((BaseViewModel)viewmodel)}" />
 
 
         <androidx.recyclerview.widget.RecyclerView

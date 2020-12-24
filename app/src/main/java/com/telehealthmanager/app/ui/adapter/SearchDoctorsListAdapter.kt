@@ -81,7 +81,7 @@ class SearchDoctorsListAdapter(val context: Context) :
     }
 
     fun getItem(index: Int): Hospital {
-        return items[index - 1]
+        return items[index]
     }
 
     // Gets the number of animals in the list

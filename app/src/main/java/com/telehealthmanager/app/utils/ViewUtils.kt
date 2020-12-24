@@ -218,6 +218,20 @@ object ViewUtils {
     }
 
 
+    fun getChatTimeFormat(str: String): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        var dateObj: Date? = null
+        try {
+            dateObj = sdf.parse(str)
+            val time = SimpleDateFormat("h:mm a", Locale.getDefault()).format(dateObj)
+            val fmtOutFull = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            return fmtOutFull.format(dateObj!!.time) + "\n" + time
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return ""
+    }
+
     fun getDayAndTimeFormat(str: String): String {
         val sdf =
             SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())

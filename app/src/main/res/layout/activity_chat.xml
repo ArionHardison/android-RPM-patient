@@ -4,7 +4,7 @@
     xmlns:bind="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="com.telehealthmanager.app.base.BaseViewModel" />
         <variable
             name="viewmodel"
             type="com.telehealthmanager.app.ui.activity.findDoctors.FindDoctorsViewModel" />
@@ -20,7 +20,7 @@
         <include
             android:id="@+id/toolBar"
             layout="@layout/toolbar_base"
-            bind:baseViewModel="@{viewmodel}"
+            bind:baseViewModel="@{((BaseViewModel)viewmodel)}"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <include

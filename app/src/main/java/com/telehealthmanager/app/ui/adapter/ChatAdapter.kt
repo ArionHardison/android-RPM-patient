@@ -21,7 +21,7 @@ class ChatAdapter(val context: Context, val list: List<Chat>, val listener: ICha
             String.format("%s %s", item.hospital?.first_name ?: "", item.hospital?.last_name ?: "")
         holder.listItemChat.lastChatTxt.text = item.chatRequest?.messages ?: ""
         if (item.chatRequest?.startedAt != null)
-            holder.listItemChat.textViewTime.text = ViewUtils.getDayAndTimeFormat(item.chatRequest?.startedAt)
+            holder.listItemChat.textViewTime.text = ViewUtils.getChatTimeFormat(item.chatRequest?.startedAt)
 
         if (item.hospital?.doctor_profile?.profile_pic != null && item.hospital.doctor_profile?.profile_pic.isNotEmpty())
             ViewUtils.setDocViewGlide(

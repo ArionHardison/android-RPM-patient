@@ -7,6 +7,8 @@
 
     <data>
 
+        <import type="com.telehealthmanager.app.base.BaseViewModel" />
+
         <variable
             name="viewmodel"
             type="com.telehealthmanager.app.ui.activity.searchGlobal.SearchGlobalViewModel" />
@@ -37,6 +39,7 @@
         <variable
             name="isdoctor"
             type="java.lang.Boolean" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,7 +50,7 @@
         <include
             android:id="@+id/toolbarBase"
             layout="@layout/toolbar_base"
-            bind:baseViewModel="@{viewmodel}" />
+            bind:baseViewModel="@{((BaseViewModel)viewmodel)}" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/search_layout"

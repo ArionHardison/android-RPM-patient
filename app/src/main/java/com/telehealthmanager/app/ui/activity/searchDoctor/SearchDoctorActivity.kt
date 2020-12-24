@@ -4,11 +4,11 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import androidx.core.widget.NestedScrollView
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
@@ -30,6 +30,9 @@ class SearchDoctorActivity : BaseActivity<ActivitySearchDoctorBinding>(), Custom
     private lateinit var viewModel: SearchViewModel
     private lateinit var mDataBinding: ActivitySearchDoctorBinding
     private lateinit var mAdapter: SearchDoctorsListAdapter
+    private var loading = true
+    private var previousTotalItemCount = 0
+    private var visibleThreshold = 5
 
     override fun getLayoutId(): Int = R.layout.activity_search_doctor
 
@@ -38,9 +41,10 @@ class SearchDoctorActivity : BaseActivity<ActivitySearchDoctorBinding>(), Custom
         viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         mAdapter = SearchDoctorsListAdapter(this)
-        mDataBinding.adapter = mAdapter
+        mDataBinding.rvSerachDoctors.adapter = mAdapter
         setupScrollListener()
-
+        mDataBinding.textView88.text = getString(R.string.search_result, "")
+        mDataBinding.textView89.text = getString(R.string.result_found, "0")
         mDataBinding.editText13.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
 
@@ -50,12 +54,17 @@ class SearchDoctorActivity : BaseActivity<ActivitySearchDoctorBinding>(), Custom
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
                 if (s!!.isNotEmpty()) {
+                    mDataBinding.textView88.text = resources.getString(R.string.search_result, s.toString())
+                    viewModel.searchText.set(true)
                     mAdapter.onSearchRequest()
                     val hashMap: HashMap<String, Any> = HashMap()
                     hashMap[WebApiConstants.Home.SEARCH] = s.toString()
-                    viewModel.getSearchDoctors(hashMap)
+                    viewModel.gethome(hashMap)
                 } else {
+                    mDataBinding.textView88.text = resources.getString(R.string.search_result, " ")
+                    viewModel.searchText.set(false)
                     mAdapter.onSearchCleared()
                 }
             }
@@ -65,19 +74,37 @@ class SearchDoctorActivity : BaseActivity<ActivitySearchDoctorBinding>(), Custom
         observeResponse()
         viewModel.setOnClickListener(this@SearchDoctorActivity)
         viewModel.toolBarTile.value = resources.getString(R.string.search_doctor)
+
     }
 
     private fun setupScrollListener() {
         val layoutManager = mDataBinding.rvSerachDoctors.layoutManager as LinearLayoutManager
-        mDataBinding.rvSerachDoctors.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val totalItemCount = layoutManager.itemCount
-                val visibleItemCount = layoutManager.childCount
-                val lastVisibleItem = layoutManager.findLastCompletelyVisibleItemPosition()
-                viewModel.listScrolled(visibleItemCount, lastVisibleItem, totalItemCount, mAdapter.getItem(mAdapter.itemCount))
+        mDataBinding.scrollable.setOnScrollChangeListener { v: NestedScrollView, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
+            if (viewModel.searchText.get() == true) {
+                return@setOnScrollChangeListener
+            } else if (mAdapter.itemCount == 0) {
+                return@setOnScrollChangeListener
             }
-        })
+            if (v.getChildAt(v.childCount - 1) != null) {
+                if (scrollY >= v.getChildAt(v.childCount - 1).measuredHeight - v.measuredHeight && scrollY > oldScrollY) {
+                    val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+                    val totalItemCount: Int = layoutManager.itemCount
+                    if (loading && totalItemCount > previousTotalItemCount) {
+                        loading = false
+                        previousTotalItemCount = totalItemCount
+                    }
+                    if (!loading && lastVisibleItemPosition + visibleThreshold > totalItemCount && mAdapter.itemCount > visibleThreshold) { // This condition will useful when recyclerview has less than visibleThreshold items
+                        mDataBinding.scrollable.fullScroll(View.FOCUS_DOWN)
+                        val hashMap: HashMap<String, Any> = HashMap()
+                        hashMap["page"] = mAdapter.getItem(mAdapter.itemCount - 1).id
+                        loading = true
+                        viewModel.loadingProgress.value = true
+                        viewModel.gethome(hashMap)
+                    }
+                }
+            }
+        }
+
     }
 
     override fun clickBackPress() {
@@ -88,7 +115,7 @@ class SearchDoctorActivity : BaseActivity<ActivitySearchDoctorBinding>(), Custom
         viewModel.search.set("")
         val hashMap: HashMap<String, Any> = HashMap()
         hashMap["page"] = "0"
-        viewModel.getSearchDoctors(hashMap)
+        viewModel.gethome(hashMap)
         mDataBinding.toolBar.appBar.addOnOffsetChangedListener(OnOffsetChangedListener { appBarLayout, verticalOffset ->
             if (abs(verticalOffset) == appBarLayout.totalScrollRange) {
                 mDataBinding.toolBar.scrollToolbarBar.visibility = View.GONE
@@ -103,10 +130,10 @@ class SearchDoctorActivity : BaseActivity<ActivitySearchDoctorBinding>(), Custom
     private fun observeResponse() {
 
         viewModel.mDoctorResponse.observe(this, Observer {
-            Log.d(TAG, "observeResponse: ${it.search_doctors.size}")
             if (it.search_doctors.toMutableList().size > 0) {
                 mDataBinding.tvNotFound.visibility = View.GONE
                 mAdapter.addItems(it.search_doctors.toMutableList())
+                mDataBinding.textView89.text = resources.getString(R.string.result_found, mAdapter.itemCount.toString())
             } else {
                 if (mAdapter.itemCount > 0) {
                     mDataBinding.tvNotFound.visibility = View.GONE
@@ -114,7 +141,8 @@ class SearchDoctorActivity : BaseActivity<ActivitySearchDoctorBinding>(), Custom
                     mDataBinding.tvNotFound.visibility = View.VISIBLE
                 }
             }
-            viewModel.listsize.value = mAdapter.itemCount.toString()
+            viewModel.listsize.postValue(mAdapter.itemCount.toString())
+            loading = true
             loadingObservable.value = false
             viewModel.loadingProgress.value = false
         })

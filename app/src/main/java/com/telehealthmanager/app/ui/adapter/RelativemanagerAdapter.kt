@@ -18,7 +18,7 @@ class RelativemanagerAdapter(val items: MutableList<RelativeList>, val context: 
         val item = items!![position]
         holder.itemBinding.name?.text = item.first_name.plus(" ").plus(item.last_name)
         holder.itemBinding.age?.text = item.profile?.age.plus(" years old")
-        ViewUtils.setImageViewGlide(context, holder.itemBinding.imageView8, BuildConfig.BASE_IMAGE_URL.plus(item.profile?.profile_pic))
+        ViewUtils.setDocViewGlide(context, holder.itemBinding.imageView8, BuildConfig.BASE_IMAGE_URL.plus(item.profile?.profile_pic))
         holder.itemView.setOnClickListener {
             listener.onItemClick(item)
         }
