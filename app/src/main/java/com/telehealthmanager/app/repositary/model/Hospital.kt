@@ -24,7 +24,7 @@ data class Hospital(
     val is_doctor: Int,
     val is_receptionist: Int,
     val is_staff: Int,
-    val is_favourite: Boolean,
+    var is_favourite: String,
     val last_name: String,
     val medical_id: String,
     val mobile: String,

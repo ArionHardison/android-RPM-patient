@@ -32,6 +32,7 @@ class AddReminderActivity : BaseActivity<ActivityAddReminderBinding>(), AddRemin
         mViewModel = ViewModelProvider(this).get(AddReminderViewModel::class.java)
         mViewModel.navigator = this
         mDataBinding.viewmodel = mViewModel
+        mDataBinding.isEdit=true
 
         mViewModel.setOnClickListener(this@AddReminderActivity)
         mViewModel.toolBarTile.value = getString(R.string.add_new_remainder)
@@ -51,6 +52,7 @@ class AddReminderActivity : BaseActivity<ActivityAddReminderBinding>(), AddRemin
         val reminder: ReminderResponse.Reminder? = intent.getSerializableExtra("reminder") as ReminderResponse.Reminder?
         if (reminder != null) {
             isEdit = true
+            mDataBinding.isEdit=false
             mDataBinding.btnSubmit.visibility = View.GONE
             mViewModel.name.set(reminder.name)
             mViewModel.toolBarTile.value = reminder.name

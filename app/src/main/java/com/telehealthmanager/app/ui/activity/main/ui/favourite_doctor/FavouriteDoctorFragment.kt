@@ -47,30 +47,30 @@ class FavouriteDoctorFragment : BaseFragment<FragmentFavouriteDoctorBinding>(), 
 
     private fun observeResponse() {
 
-        viewModel.mDoctorResponse.observe(this, Observer<MainResponse> {
+        viewModel.mDoctorResponse.observe(this, {
             viewModel.mDoctorsList = it.favourite_Doctors as MutableList<MainResponse.Doctor>?
             if (viewModel.mDoctorsList!!.size > 0) {
                 mDataBinding.tvNotFound.visibility = View.GONE
             } else {
                 mDataBinding.tvNotFound.visibility = View.VISIBLE
             }
-            mAdapter = FavDoctorListAdapter(viewModel.mDoctorsList!!, activity!!)
+            mAdapter = FavDoctorListAdapter(viewModel.mDoctorsList!!, requireActivity())
             mDataBinding.adapter = mAdapter
             mAdapter!!.notifyDataSetChanged()
             hideLoading()
         })
 
-        viewModel.getErrorObservable().observe(this, Observer<String> { message ->
+        viewModel.getErrorObservable().observe(this, { message ->
             hideLoading()
-            ViewUtils.showToast(context!!, message, false)
+            ViewUtils.showToast(requireActivity(), message, false)
         })
     }
 
     private fun initAdapter() {
-        mAdapter = FavDoctorListAdapter(viewModel.mDoctorsList!!, activity!!)
+        mAdapter = FavDoctorListAdapter(viewModel.mDoctorsList!!, requireActivity())
         mDataBinding.adapter = mAdapter
-        mDataBinding.rvFavDoctor.addItemDecoration(DividerItemDecoration(activity!!, DividerItemDecoration.VERTICAL))
-        mDataBinding.rvFavDoctor.layoutManager = LinearLayoutManager(activity!!)
+        mDataBinding.rvFavDoctor.addItemDecoration(DividerItemDecoration(requireActivity(), DividerItemDecoration.VERTICAL))
+        mDataBinding.rvFavDoctor.layoutManager = LinearLayoutManager(requireActivity())
         mAdapter!!.notifyDataSetChanged()
     }
 

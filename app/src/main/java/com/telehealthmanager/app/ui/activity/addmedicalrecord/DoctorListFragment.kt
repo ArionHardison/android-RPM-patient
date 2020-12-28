@@ -61,9 +61,9 @@ class DoctorListFragment : BaseBottomDialogFragment<FragmentDoctorListBinding>()
             viewModel.loadingProgress.value = false
             if (!it.doctor.isNullOrEmpty()) {
                 viewModel.mDoctorsList = it.doctor as MutableList<ResponseDoctors.AllDoctors>
-                mDataBinding.rvDoctorsList.addItemDecoration(DividerItemDecoration(activity!!, DividerItemDecoration.VERTICAL))
-                mDataBinding.rvDoctorsList.layoutManager = LinearLayoutManager(activity!!)
-                mAdapter = DoctorListAdapter(viewModel.mDoctorsList!!, activity!!, this)
+                mDataBinding.rvDoctorsList.addItemDecoration(DividerItemDecoration(requireActivity(), DividerItemDecoration.VERTICAL))
+                mDataBinding.rvDoctorsList.layoutManager = LinearLayoutManager(requireActivity())
+                mAdapter = DoctorListAdapter(viewModel.mDoctorsList!!, requireActivity(), this)
                 mDataBinding.adapter = mAdapter
                 mAdapter!!.notifyDataSetChanged()
             }

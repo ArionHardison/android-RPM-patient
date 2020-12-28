@@ -18,6 +18,7 @@ object Constant {
     const val REQUEST_CODE_ADD_CARD = 100
     const val REQUEST_CODE_ADD_MONEY = 101
     const val PAYMENT_REQUEST_CODE = 102
+    const val DOCTORS_ACTIVITY = 103
     const val CUSTOM_PREFERENCE: String = "BaseConfigSetting"
     const val storetype = "Restaurant"
     const val CHAT = "/chat"

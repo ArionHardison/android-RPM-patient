@@ -66,7 +66,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
     }
 
     override fun clickBackPress() {
-        finish()
+       onBackPressed()
     }
 
     private fun initIntentData() {
@@ -98,9 +98,9 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
                 }
 
                 if (doctorDegree.speciality?.name != null) {
-                    if (specialist.toString() != ""){
+                    if (specialist.toString() != "") {
                         specialist.append(" - ").append(doctorDegree.speciality.name)
-                    }else{
+                    } else {
                         specialist.append(doctorDegree.speciality.name)
                     }
                     viewModel.specialities.set(doctorDegree.speciality.name)
@@ -144,9 +144,9 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
             }
 
             if (doctorDegree.speciality?.name != null) {
-                if (specialist.toString() != ""){
+                if (specialist.toString() != "") {
                     specialist.append(" - ").append(doctorDegree.speciality.name)
-                }else{
+                } else {
                     specialist.append(doctorDegree.speciality.name)
                 }
                 viewModel.specialities.set(doctorDegree.speciality.name)
@@ -194,9 +194,9 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
                 specialist.append(doctorDegree.certification)
             }
             if (doctorDegree.speciality?.name != null) {
-                if (specialist.toString() != ""){
+                if (specialist.toString() != "") {
                     specialist.append(" - ").append(doctorDegree.speciality.name)
-                }else{
+                } else {
                     specialist.append(doctorDegree.speciality.name)
                 }
                 viewModel.specialities.set(doctorDegree.speciality.name)
@@ -210,7 +210,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
             viewModel.clinic.set(searchDoctor.clinic?.name)
             viewModel.clinicAddress.set(searchDoctor.clinic?.address)
             if (searchDoctor.clinic?.static_map != null)
-                ViewUtils.setDocViewGlide(this@SearchDoctorDetailActivity, mDataBinding.imageView27, searchDoctor.clinic?.static_map)
+                ViewUtils.setMapViewGlide(this@SearchDoctorDetailActivity, mDataBinding.imageView27, searchDoctor.clinic?.static_map)
             else
                 mDataBinding.imageView27.visibility = View.GONE
             viewModel.mfeedbacklist = searchDoctor.feedback as MutableList<Hospital.Feedback>?
@@ -324,7 +324,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
         })
     }
 
-    fun goToMapLocation(pinAddress: String) {
+    private fun goToMapLocation(pinAddress: String) {
         val gmmIntentUri = Uri.parse("geo:0,0?q=$pinAddress")
         val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
         mapIntent.setPackage("com.google.android.apps.maps")
@@ -373,5 +373,12 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
 
     override fun viewShareClick() {
 
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent()
+        intent.putExtra("is_favourite", viewModel.favourite.get().toString())
+        setResult(RESULT_OK, intent)
+        finish()
     }
 }

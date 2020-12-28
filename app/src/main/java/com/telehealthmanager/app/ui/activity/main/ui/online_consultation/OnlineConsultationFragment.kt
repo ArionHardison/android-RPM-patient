@@ -52,9 +52,9 @@ class OnlineConsultationFragment : BaseFragment<FragmentOnlineConsultationBindin
             } else {
                 mDataBinding.tvNotFound.visibility = View.VISIBLE
             }
-            mChatAdapter = ChatAdapter(activity!!, mViewModel.mChatResponse.value!!.chats!!, this)
+            mChatAdapter = ChatAdapter(requireActivity(), mViewModel.mChatResponse.value!!.chats!!, this)
             mDataBinding.mChatAdapter = mChatAdapter
-            mDataBinding.rvOnlineConsultation.addItemDecoration(DividerItemDecoration(activity!!, DividerItemDecoration.VERTICAL))
+            mDataBinding.rvOnlineConsultation.addItemDecoration(DividerItemDecoration(requireActivity(), DividerItemDecoration.VERTICAL))
             mDataBinding.rvOnlineConsultation.layoutManager = LinearLayoutManager(activity)
             mChatAdapter!!.notifyDataSetChanged()
             mViewModel.loadingProgress.value = false
@@ -64,15 +64,15 @@ class OnlineConsultationFragment : BaseFragment<FragmentOnlineConsultationBindin
             if (it.checkStatus != null) {
                 when {
                     it.checkStatus.status?.equals("ACCEPTED", true) -> {
-                        val intent = Intent(context, PubnubChatActivity::class.java)
+                        val intent = Intent(requireActivity(), PubnubChatActivity::class.java)
                         intent.putExtra("chat_data", chat as Serializable)
                         startActivity(intent)
                     }
                     it.checkStatus.status?.equals("CANCELLED", true) -> {
-                        ViewUtils.showToast(activity!!, "Doctor not accepted your request", false)
+                        ViewUtils.showToast(requireActivity(), "Doctor not accepted your request", false)
                     }
                     it.checkStatus.status?.equals("COMPLETED", true) -> {
-                        ViewUtils.showToast(activity!!, "Chat time expired, Request again", false)
+                        ViewUtils.showToast(requireActivity(), "Chat time expired, Request again", false)
                     }
                 }
             }
@@ -90,7 +90,7 @@ class OnlineConsultationFragment : BaseFragment<FragmentOnlineConsultationBindin
     private fun observeErrorResponse() {
         mViewModel.getErrorObservable().observe(this, Observer<String> { message ->
             mViewModel.loadingProgress.value = false
-            ViewUtils.showToast(activity!!, message, false)
+            ViewUtils.showToast(requireActivity(), message, false)
         })
     }
 

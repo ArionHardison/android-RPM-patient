@@ -17,19 +17,15 @@ import com.telehealthmanager.app.utils.ViewUtils
 import kotlinx.android.synthetic.main.fragment_appointment.*
 
 
+class AppointmentFragment : BaseFragment<FragmentAppointmentBinding>(), AppointmentNavigator {
 
-
-class AppointmentFragment : BaseFragment<FragmentAppointmentBinding>(),AppointmentNavigator {
-
-  private lateinit var viewModel: AppointmentViewModel
+    private lateinit var viewModel: AppointmentViewModel
     private lateinit var mDataBinding: FragmentAppointmentBinding
     override fun getLayoutId(): Int = R.layout.fragment_appointment
 
     override fun initView(mRootView: View?, mViewDataBinding: ViewDataBinding?) {
-
-
-       val fragmentAdapter =this.childFragmentManager!!.let { MyPagerAdapter(it) }
-       // val fragmentAdapter = MyPagerAdapter(this.childFragmentManager)
+        val fragmentAdapter = this.childFragmentManager!!.let { MyPagerAdapter(it) }
+        // val fragmentAdapter = MyPagerAdapter(this.childFragmentManager)
         viewpager_main.adapter = fragmentAdapter
         tabs_main.setupWithViewPager(viewpager_main)
         setHasOptionsMenu(false);
@@ -38,15 +34,16 @@ class AppointmentFragment : BaseFragment<FragmentAppointmentBinding>(),Appointme
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
 
-        initApiCal()
-        observeResponse()
+       /* initApiCal()
+        observeResponse()*/
     }
 
     private fun initApiCal() {
-       showLoading()
+        showLoading()
         viewModel.getAppointment()
 
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -58,7 +55,7 @@ class AppointmentFragment : BaseFragment<FragmentAppointmentBinding>(),Appointme
         menu.clear();
     }
 
-    private fun observeResponse() {
+   /* private fun observeResponse() {
 
         viewModel.mResponse.observe(this, Observer<AppointmentResponse> {
             hideLoading()
@@ -66,10 +63,10 @@ class AppointmentFragment : BaseFragment<FragmentAppointmentBinding>(),Appointme
             viewModel.mPreviousList = it.previous.appointments as MutableList<Appointment>?
         })
         viewModel.getErrorObservable().observe(this, Observer<String> { message ->
-           hideLoading()
-            ViewUtils.showToast(activity!!, message, false)
+            hideLoading()
+            ViewUtils.showToast(requireActivity(), message, false)
         })
     }
-
+*/
 
 }

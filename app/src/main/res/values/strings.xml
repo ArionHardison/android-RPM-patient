@@ -338,6 +338,8 @@
     <string name="payment_view">Payment View</string>
     <string name="stripe_key_not_found">Stripe key not found</string>
     <string name="loading">Loading...</string>
+    <string name="playstore_url">https://play.google.com/store/apps/details?id=</string>
+    <string name="appointments_not_found">Appointments not found</string>
 
 
 </resources>

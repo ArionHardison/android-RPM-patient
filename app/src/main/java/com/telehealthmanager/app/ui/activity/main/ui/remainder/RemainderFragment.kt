@@ -38,9 +38,9 @@ class RemainderFragment : BaseFragment<FragmentRemainderBinding>(), RemainderNav
     }
 
     private fun observeErrorResponse() {
-        mViewModel.getErrorObservable().observe(this, Observer<String> { message ->
+        mViewModel.getErrorObservable().observe(this, { message ->
             mViewModel.loadingProgress.value = false
-            ViewUtils.showToast(context!!, message, false)
+            ViewUtils.showToast(requireContext(), message, false)
         })
     }
 
@@ -72,7 +72,7 @@ class RemainderFragment : BaseFragment<FragmentRemainderBinding>(), RemainderNav
                 mDataBinding.tvNotFound.visibility = View.VISIBLE
             }
 
-            mRemainderAdapter = RemainderListAdapter(context!!, mViewModel.mReminders!!, this)
+            mRemainderAdapter = RemainderListAdapter(requireContext(), mViewModel.mReminders!!, this)
             mDataBinding.reminderAdapter = mRemainderAdapter
             mRemainderAdapter!!.notifyDataSetChanged()
             mViewModel.loadingProgress.value = false
@@ -82,7 +82,7 @@ class RemainderFragment : BaseFragment<FragmentRemainderBinding>(), RemainderNav
     private fun initAdapter() {
         mDataBinding.rvRemainder.layoutManager = LinearLayoutManager(context)
         mDataBinding.rvRemainder.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-        mRemainderAdapter = RemainderListAdapter(context!!, mViewModel.mReminders!!, this)
+        mRemainderAdapter = RemainderListAdapter(requireActivity(), mViewModel.mReminders!!, this)
         mDataBinding.reminderAdapter = mRemainderAdapter
         mRemainderAdapter!!.notifyDataSetChanged()
     }

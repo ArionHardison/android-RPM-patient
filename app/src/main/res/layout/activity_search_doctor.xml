@@ -29,69 +29,82 @@
             layout="@layout/toolbar_backpress_scroll"
             bind:baseViewModel="@{((BaseViewModel)viewmodel)}" />
 
-        <androidx.core.widget.NestedScrollView
+        <com.telehealthmanager.app.utils.SmartNestedScrollView
             android:id="@+id/scrollable"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true"
             android:background="@drawable/layout_circle_corner"
+            android:fillViewport="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:context=".ui.activity.searchDoctor.SearchDoctorActivity"
             tools:showIn="@layout/activity_search_doctor">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/editText13"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/search_bg"
-                    android:drawableEnd="@drawable/ic_search"
-                    android:ems="10"
-                    android:focusable="true"
-                    android:hint="Search hospital or doctor name"
-                    android:inputType="textPersonName"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/textView88"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:textColor="@color/colorBlack"
-                    app:layout_constraintStart_toStartOf="@+id/editText13"
-                    app:layout_constraintTop_toBottomOf="@+id/editText13"
-                    tools:text="Search results for Miot" />
+                    <EditText
+                        android:id="@+id/editText13"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/search_bg"
+                        android:drawableEnd="@drawable/ic_search"
+                        android:ems="10"
+                        android:focusable="true"
+                        android:hint="Search hospital or doctor name"
+                        android:inputType="textPersonName"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/textView89"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorButton"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView88"
-                    app:layout_constraintStart_toEndOf="@+id/textView88"
-                    app:layout_constraintTop_toTopOf="@+id/textView88"
-                    tools:text="(6 results found)" />
+                    <TextView
+                        android:id="@+id/textView88"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textColor="@color/colorBlack"
+                        app:layout_constraintStart_toStartOf="@+id/editText13"
+                        app:layout_constraintTop_toBottomOf="@+id/editText13"
+                        tools:text="Search results for Miot" />
+
+                    <TextView
+                        android:id="@+id/textView89"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorButton"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView88"
+                        app:layout_constraintStart_toEndOf="@+id/textView88"
+                        app:layout_constraintTop_toTopOf="@+id/textView88"
+                        tools:text="(6 results found)" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_doctors"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:nestedScrollingEnabled="true"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_serach_doctors"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
-                    android:fitsSystemWindows="true"
-                    android:nestedScrollingEnabled="false"
+                    android:nestedScrollingEnabled="true"
                     android:orientation="vertical"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView89" />
+                    android:visibility="gone"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
 
                 <TextView
                     android:id="@+id/loadingTxt"
@@ -102,10 +115,7 @@
                     android:padding="@dimen/_5sdp"
                     android:text="@string/loading"
                     android:textSize="@dimen/_10sdp"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/rv_serach_doctors"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_serach_doctors" />
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/tvNotFound"
@@ -115,13 +125,9 @@
                     android:gravity="center"
                     android:text="@string/no_result_found"
                     android:textSize="@dimen/_12sdp"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintEnd_toStartOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView89" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.core.widget.NestedScrollView>
+                    android:visibility="gone" />
+            </LinearLayout>
+        </com.telehealthmanager.app.utils.SmartNestedScrollView>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

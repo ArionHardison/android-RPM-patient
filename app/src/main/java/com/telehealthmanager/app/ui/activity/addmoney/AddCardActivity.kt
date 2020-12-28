@@ -104,6 +104,7 @@ class AddCardActivity : BaseActivity<ActivityAddCardBinding>(), AddMoneyNavigato
     private fun observeSuccessResponse() {
         mViewModel.mAddCardSuccess.observe(this, Observer {
             mViewModel.loadingProgress.value = false
+            ViewUtils.showToast(this, it.message, true)
             val intent = Intent()
             setResult(RESULT_OK, intent)
             finish()

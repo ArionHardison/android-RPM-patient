@@ -9,7 +9,6 @@ import android.view.MenuInflater
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,8 +17,6 @@ import com.telehealthmanager.app.base.BaseFragment
 import com.telehealthmanager.app.databinding.FragmentUpcomingAppointmentBinding
 import com.telehealthmanager.app.repositary.WebApiConstants
 import com.telehealthmanager.app.repositary.model.Appointment
-import com.telehealthmanager.app.repositary.model.AppointmentResponse
-import com.telehealthmanager.app.repositary.model.Response
 import com.telehealthmanager.app.ui.activity.visitedDoctor.VisitedDoctorsDetailActivity
 import com.telehealthmanager.app.ui.adapter.IAppointmentListener
 import com.telehealthmanager.app.ui.adapter.UpcomingAppointmentsListAdapter
@@ -36,7 +33,6 @@ class UpcomingAppointmentFragment : BaseFragment<FragmentUpcomingAppointmentBind
 
     private lateinit var viewModel: AppointmentViewModel
     private lateinit var mDataBinding: FragmentUpcomingAppointmentBinding
-    private var mAdapter: UpcomingAppointmentsListAdapter? = null
     private val ON_REQUEST_CANCEL = 100
 
     override fun getLayoutId(): Int = R.layout.fragment_upcoming_appointment
@@ -46,9 +42,9 @@ class UpcomingAppointmentFragment : BaseFragment<FragmentUpcomingAppointmentBind
         viewModel = ViewModelProvider(this).get(AppointmentViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
-        initApiCal()
         initAdapter()
         observeResponse()
+        initApiCal()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,55 +58,55 @@ class UpcomingAppointmentFragment : BaseFragment<FragmentUpcomingAppointmentBind
     }
 
     private fun initApiCal() {
-        viewModel.loadingProgress.value = true
+        viewModel.upcomingProgress.value = true
         viewModel.getAppointment()
     }
 
     private fun initAdapter() {
-        mAdapter = UpcomingAppointmentsListAdapter(viewModel.mUpcomingList!!, activity!!, this)
-        mDataBinding.adapter = mAdapter
-        mDataBinding.rvUpcomingAppointments.addItemDecoration(DividerItemDecoration(activity!!, DividerItemDecoration.VERTICAL))
-        mDataBinding.rvUpcomingAppointments.layoutManager = LinearLayoutManager(activity!!)
-        mAdapter!!.notifyDataSetChanged()
-    }
-
-    private fun observeResponse() {
-        viewModel.mResponse.observe(this, Observer<AppointmentResponse> {
-            viewModel.loadingProgress.value = false
-            viewModel.mUpcomingList = it.upcomming.appointments as MutableList<Appointment>?
-            viewModel.mPreviousList = it.previous.appointments as MutableList<Appointment>?
-            if (viewModel.mUpcomingList!!.size > 0) {
+        val mAdapter = UpcomingAppointmentsListAdapter(this)
+        mDataBinding.rvUpcomingAppointments.addItemDecoration(DividerItemDecoration(requireActivity(), DividerItemDecoration.VERTICAL))
+        mDataBinding.rvUpcomingAppointments.layoutManager = LinearLayoutManager(requireActivity())
+        mDataBinding.rvUpcomingAppointments.adapter = mAdapter
+        viewModel.mResponseUpcoming.observe(this, {
+            viewModel.upcomingProgress.value = false
+            if (!it.upcomming.appointments.isNullOrEmpty()) {
                 mDataBinding.tvNotFound.visibility = View.GONE
+                mAdapter.addItem(it.upcomming.appointments.toMutableList())
             } else {
                 mDataBinding.tvNotFound.visibility = View.VISIBLE
             }
-            mAdapter = UpcomingAppointmentsListAdapter(viewModel.mUpcomingList!!, activity!!, this)
-            mDataBinding.adapter = mAdapter
-            mAdapter!!.notifyDataSetChanged()
         })
 
-        viewModel.getErrorObservable().observe(this, Observer<String> { message ->
+    }
+
+    private fun observeResponse() {
+
+        viewModel.getErrorObservable().observe(this, { message ->
             viewModel.loadingProgress.value = false
-            ViewUtils.showToast(activity!!, message, false)
+            ViewUtils.showToast(requireActivity(), message, false)
         })
 
-        viewModel.mCancelResponse.observe(this, Observer<Response> {
+        viewModel.mCancelResponse.observe(this, {
             viewModel.loadingProgress.value = false
             if (it.status)
-                ViewUtils.showToast(activity!!, it.message, true)
+                ViewUtils.showToast(requireActivity(), it.message, true)
             initApiCal()
         })
 
-        viewModel.loadingProgress.observe(this, Observer {
+        viewModel.loadingProgress.observe(this, {
             if (it)
                 showLoading()
             else
                 hideLoading()
         })
+
+        viewModel.upcomingProgress.observe(this, {
+            mDataBinding.isProgressVisible = it
+        })
     }
 
     override fun onItemClick(selectedItem: Appointment) {
-        val intent = Intent(activity!!, VisitedDoctorsDetailActivity::class.java)
+        val intent = Intent(requireActivity(), VisitedDoctorsDetailActivity::class.java)
         intent.putExtra(WebApiConstants.IntentPass.iscancel, true)
         intent.putExtra(WebApiConstants.IntentPass.Appointment, selectedItem as Serializable)
         startActivityForResult(intent, ON_REQUEST_CANCEL);

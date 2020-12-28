@@ -249,6 +249,7 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
             isCallAccepted = pushRequest!!.connectedCall
             chatPath = pushRequest!!.room_id.toString()
             id = pushRequest!!.sender_id.toString()
+            hospital_id = pushRequest!!.receiver_id.toString()
             callerName = pushRequest!!.name.toString()
             if (isAccept) {
                 onCallPicked()
@@ -486,7 +487,12 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
     }
 
     private fun declinedCall() {
-        val call = appRepository.createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java).cancelVideoCall(chatPath)
+        val hashMap: HashMap<String, Any> = HashMap()
+        hashMap["room_id"] = chatPath
+        hashMap["hospital_id"] = hospital_id.toString()
+        hashMap["patient_id"] = id.toString()
+        hashMap["push_to"] = "provider"
+        val call = appRepository.createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java).cancelVideoCall(hashMap)
         call!!.enqueue(
             object : Callback<VideoCallCancelResponse?> {
                 override fun onResponse(call: Call<VideoCallCancelResponse?>, response: Response<VideoCallCancelResponse?>) {

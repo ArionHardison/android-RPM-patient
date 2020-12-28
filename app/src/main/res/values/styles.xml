@@ -47,8 +47,8 @@
         <item name="fontFamily">@font/montserrat_regular</item>
     </style>
 
-    <!-- transport calender alert dialog -->
-    <style name="TransportCalenderThemeDialog" parent="Theme.AppCompat.Light.Dialog">
+    <!-- calender alert dialog -->
+    <style name="CalandrTheamDialog" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="colorControlActivated">@color/colorAccent</item>
         <item name="android:textColorPrimary">@color/colorBlack</item>

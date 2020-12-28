@@ -6,17 +6,13 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.telehealthmanager.app.ui.activity.main.ui.appointment.PreviousAppointmentFragment
 import com.telehealthmanager.app.ui.activity.main.ui.appointment.UpcomingAppointmentFragment
 
-class MyPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm,FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class MyPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getItem(position: Int): Fragment {
         return when (position) {
-            0 -> {
-                UpcomingAppointmentFragment()
-            }
+            0 -> UpcomingAppointmentFragment()
             1 -> PreviousAppointmentFragment()
-            else -> {
-                return UpcomingAppointmentFragment()
-            }
+            else -> UpcomingAppointmentFragment()
         }
     }
 

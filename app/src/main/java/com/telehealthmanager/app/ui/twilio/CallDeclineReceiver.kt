@@ -28,8 +28,10 @@ class CallDeclineReceiver : BroadcastReceiver() {
                 try {
                     val hashMap: HashMap<String, Any> = HashMap()
                     hashMap["room_id"] = data.room_id.toString()
-                    hashMap["video"] = "1"
-                    appRepository.retrofit.create(ApiInterface::class.java).getCallRequest(hashMap)
+                    hashMap["hospital_id"] = data.receiver_id.toString()
+                    hashMap["patient_id"] = data.sender_id.toString()
+                    hashMap["push_to"] = "provider"
+                    appRepository.retrofit.create(ApiInterface::class.java).cancelVideoCall(hashMap)
                 } catch (e: Exception) {
                     Log.e(TAG, "onReceive: ${e.message}")
                 }

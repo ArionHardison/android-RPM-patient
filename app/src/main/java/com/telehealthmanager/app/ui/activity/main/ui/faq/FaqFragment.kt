@@ -42,7 +42,7 @@ class FaqFragment : BaseFragment<FragmentFaqBinding>(), FaqNavigator {
     }
 
     private fun observableDate() {
-        mViewModel.mFaqResponse.observe(this, Observer {
+        mViewModel.mFaqResponse.observe(this, {
             mViewModel.loadingProgress.value = false
             if (!it.faq.isNullOrEmpty()) {
                 val expandableListDetail = HashMap<String, List<String>>()
@@ -53,7 +53,7 @@ class FaqFragment : BaseFragment<FragmentFaqBinding>(), FaqNavigator {
                     expandableListDetail[faq.question.toString()] = subItem
                 }
                 titleList = ArrayList(expandableListDetail.keys)
-                val mFaqAdapter = FaqAdapter(context!!, titleList as ArrayList<String>, expandableListDetail)
+                val mFaqAdapter = FaqAdapter(requireActivity(), titleList as ArrayList<String>, expandableListDetail)
                 mDataBinding.expendableList.setAdapter(mFaqAdapter)
             } else {
                 mDataBinding.tvNotFound.visibility = View.VISIBLE
@@ -61,7 +61,7 @@ class FaqFragment : BaseFragment<FragmentFaqBinding>(), FaqNavigator {
         })
 
 
-        mViewModel.loadingProgress.observe(this, Observer {
+        mViewModel.loadingProgress.observe(this, {
             if (it)
                 showLoading()
             else

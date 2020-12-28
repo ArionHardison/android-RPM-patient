@@ -23,8 +23,11 @@ class FindDoctorsViewModel : BaseViewModel<FindDoctorsNavigator>() {
     var mDoctorResponse = MutableLiveData<DoctorListResponse>()
     var mDoctorList: MutableList<DoctorListResponse.specialities.DoctorProfile>? = arrayListOf()
 
+    val queryLiveData: MutableLiveData<String> = MutableLiveData<String>("")
+
     private val appRepository = AppRepository.instance()
     var mBookedResponse = MutableLiveData<BookedResponse>()
+
     fun getCategorys() {
         getCompositeDisposable().add(appRepository.getCategorys(this))
     }
@@ -44,8 +47,12 @@ class FindDoctorsViewModel : BaseViewModel<FindDoctorsNavigator>() {
             Log.d(TAG, "listScrolled: True $totalItemCount LAST ITEM $lastVisibleItem VISIBLE COUNT $visibleItemCount DOCTOR ID ${item.id}")
             val hashMap: HashMap<String, Any> = HashMap()
             hashMap["page"] = item.id
-            getDoctorByCategorys(mCategoryId.get()!!.toInt(), hashMap)
+            if (queryLiveData.value.toString() != "") {
+                hashMap.put("search", queryLiveData.value.toString())
+                getDoctorByCategorys(mCategoryId.get()!!.toInt(), hashMap)
+            } else {
+                getDoctorByCategorys(mCategoryId.get()!!.toInt(), hashMap)
+            }
         }
-
     }
 }

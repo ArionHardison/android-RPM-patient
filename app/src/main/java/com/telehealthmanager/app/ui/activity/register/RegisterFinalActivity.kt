@@ -72,7 +72,7 @@ class RegisterFinalActivity : BaseActivity<ActivityRegisterFinalBinding>(), Regi
         val maxDate = System.currentTimeMillis() + (1000 * 60 * 60 * 24 * 3)
         val datePickerDialog =
             DatePickerDialog(
-                this@RegisterFinalActivity, R.style.TransportCalenderThemeDialog,
+                this@RegisterFinalActivity, R.style.CalandrTheamDialog,
                 { view, year, monthOfYear, dayOfMonth ->
                     view.minDate = System.currentTimeMillis() - 1000
                     view.maxDate = maxDate - 1000

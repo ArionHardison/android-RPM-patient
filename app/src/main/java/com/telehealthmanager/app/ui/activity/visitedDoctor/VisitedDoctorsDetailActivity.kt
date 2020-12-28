@@ -22,7 +22,6 @@ import com.telehealthmanager.app.ui.twilio.TwilloVideoActivity
 import com.telehealthmanager.app.ui.twilio.model.CallRequest
 import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ViewUtils
-import java.io.Serializable
 import java.util.*
 
 
@@ -99,8 +98,23 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
             viewModel.specialit.set(mAppointment.hospital?.doctor_profile?.speciality?.name ?: "")
             viewModel.catagiery.set(mAppointment.hospital?.doctor_profile?.speciality?.name ?: "")
 
-            if (viewModel.mAppointmentDetails.value!!.hospital?.clinic != null)
-                viewModel.mClinic.set(viewModel.mAppointmentDetails.value!!.hospital?.clinic?.name.plus(",").plus(viewModel.mAppointmentDetails.value!!.hospital?.clinic?.address))
+            if (viewModel.mAppointmentDetails.value!!.hospital?.clinic != null) {
+                val clinic = viewModel.mAppointmentDetails.value!!.hospital?.clinic
+                if (clinic?.name != null && clinic?.address != null) {
+                    viewModel.mClinic.set(clinic.name.plus(",").plus(clinic.address))
+                } else {
+                    viewModel.mClinic.set("No Location")
+                    if (clinic?.name != null) {
+                        viewModel.mClinic.set(clinic.name)
+                    }
+
+                    if (clinic?.address != null) {
+                        viewModel.mClinic.set(clinic.address)
+                    }
+                }
+            }
+
+
             if (mAppointment.hospital?.doctor_profile != null && mAppointment.hospital.doctor_profile!!.profile_pic != "") {
                 ViewUtils.setDocViewGlide(
                     this@VisitedDoctorsDetailActivity,

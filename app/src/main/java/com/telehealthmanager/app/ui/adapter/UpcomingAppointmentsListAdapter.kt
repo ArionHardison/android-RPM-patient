@@ -8,14 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.databinding.UpcomingListItemBinding
 import com.telehealthmanager.app.repositary.model.Appointment
+import com.telehealthmanager.app.repositary.model.DoctorListResponse
 import com.telehealthmanager.app.utils.ViewUtils
 
 class UpcomingAppointmentsListAdapter(
-    val items: MutableList<Appointment>,
-    val context: Context,
     val listener: IAppointmentListener
-) :
-    RecyclerView.Adapter<UpcomingAppointmentsViewHolder>() {
+) : RecyclerView.Adapter<UpcomingAppointmentsViewHolder>() {
+
+    private val items: MutableList<Appointment> = mutableListOf()
 
     override fun onBindViewHolder(holder: UpcomingAppointmentsViewHolder, position: Int) {
         val item = items[position]
@@ -23,8 +23,22 @@ class UpcomingAppointmentsListAdapter(
         holder.itemBinding.upcomingTime.text = ViewUtils.getTimeFormat(item.scheduled_at)
 
         if (item.hospital != null) {
-            holder.itemBinding.upcomingDoctorName.text = item.hospital.first_name.plus(" ").plus(item.hospital.last_name)
-            holder.itemBinding.upcomingHospitalName.text = item.hospital.clinic.name.plus(",").plus(item.hospital.clinic?.address)
+            holder.itemBinding.upcomingDoctorName.text = item.hospital?.first_name.plus(" ").plus(item.hospital?.last_name)
+            if (item.hospital.clinic != null) {
+                val clinic = item.hospital.clinic
+                if (clinic?.name != null && clinic?.address != null) {
+                    holder.itemBinding.upcomingHospitalName.text = clinic.name.plus(",").plus(clinic.address)
+                } else {
+                    holder.itemBinding.upcomingHospitalName.text = "No Location"
+                    if (clinic?.name != null) {
+                        holder.itemBinding.upcomingHospitalName.text = clinic.name
+                    }
+
+                    if (clinic?.address != null) {
+                        holder.itemBinding.upcomingHospitalName.text = clinic.address
+                    }
+                }
+            }
         }
 
         holder.itemView.setOnClickListener {
@@ -45,6 +59,11 @@ class UpcomingAppointmentsListAdapter(
 
     override fun getItemCount(): Int {
         return items.size
+    }
+
+    fun addItem(list: MutableList<Appointment>) {
+        items.addAll(list)
+        notifyDataSetChanged()
     }
 }
 

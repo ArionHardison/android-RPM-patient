@@ -52,8 +52,10 @@ interface ApiInterface {
     fun getHome(@QueryMap hashMap: HashMap<String, Any>): Observable<MainResponse>
 
     @GET("api/patient/search_doctor")
-    suspend fun getDoctorsList(@QueryMap hashMap: HashMap<String, Any>): MainResponse
+    suspend fun getDoctorsList(@Query("page") page: Int): MainResponse
 
+    @GET("api/patient/search_doctor")
+    suspend fun getDoctorsList( @Query("page") page: Int,@Query("search") search: String): MainResponse
 
     /*  doctor*/
     @GET("api/patient/doctor_catagory")
@@ -177,7 +179,7 @@ interface ApiInterface {
 
     /* TODO TWILIO CALL */
     @GET("api/patient/video/cancel")
-    fun cancelVideoCall(@Query("room_id") room_id: Any?): Call<VideoCallCancelResponse>?
+    fun cancelVideoCall(@QueryMap hashMap: HashMap<String, Any>): Call<VideoCallCancelResponse>?
 
     @GET("api/patient/video/call/token")
     fun getTwilloVideoToken(@QueryMap hashMap: HashMap<String, Any>): Call<AccessToken>

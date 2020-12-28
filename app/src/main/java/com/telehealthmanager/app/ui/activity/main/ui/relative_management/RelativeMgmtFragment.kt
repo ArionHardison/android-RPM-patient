@@ -58,7 +58,7 @@ class RelativeMgmtFragment : BaseFragment<FragmentRelativeMgmtBinding>(), Relati
             if (!it.relatives.isNullOrEmpty()) {
                 mDataBinding.tvNotFound.visibility = View.GONE
                 mViewModel.mRelativeList = it.relatives as MutableList<RelativeList>?
-                mAdapter = RelativemanagerAdapter(mViewModel.mRelativeList!!, activity!!, this)
+                mAdapter = RelativemanagerAdapter(mViewModel.mRelativeList!!, requireActivity(), this)
                 mDataBinding.adapter = mAdapter
                 mAdapter!!.notifyDataSetChanged()
             } else {
@@ -79,15 +79,15 @@ class RelativeMgmtFragment : BaseFragment<FragmentRelativeMgmtBinding>(), Relati
     }
 
     private fun initAdapter() {
-        mAdapter = RelativemanagerAdapter(mViewModel.mRelativeList!!, activity!!, this)
+        mAdapter = RelativemanagerAdapter(mViewModel.mRelativeList!!, requireActivity(), this)
         mDataBinding.adapter = mAdapter
-        mDataBinding.rvRelative.addItemDecoration(DividerItemDecoration(activity!!, DividerItemDecoration.VERTICAL))
-        mDataBinding.rvRelative.layoutManager = LinearLayoutManager(activity!!)
+        mDataBinding.rvRelative.addItemDecoration(DividerItemDecoration(requireActivity(), DividerItemDecoration.VERTICAL))
+        mDataBinding.rvRelative.layoutManager = LinearLayoutManager(requireActivity())
         mAdapter!!.notifyDataSetChanged()
     }
 
     override fun openAddRelative() {
-        val intent = Intent(activity!!, ProfileActivity::class.java)
+        val intent = Intent(requireActivity(), ProfileActivity::class.java)
         intent.putExtra(Constant.IntentData.IS_VIEW_TYPE, "add_relative")
         startActivityForResult(intent, Constant.RELATIVE_ADD_UPDATED)
     }
@@ -103,7 +103,7 @@ class RelativeMgmtFragment : BaseFragment<FragmentRelativeMgmtBinding>(), Relati
     }
 
     override fun onItemClick(selectedItem: RelativeList) {
-        val intent = Intent(activity!!, ProfileActivity::class.java)
+        val intent = Intent(requireActivity(), ProfileActivity::class.java)
         intent.putExtra(Constant.IntentData.IS_VIEW_TYPE, "edit_relative")
         intent.putExtra(Constant.IntentData.IS_RELATIVE_ID, selectedItem.id)
         startActivityForResult(intent, Constant.RELATIVE_ADD_UPDATED)

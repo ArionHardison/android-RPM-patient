@@ -2,28 +2,19 @@ package com.telehealthmanager.app.ui.activity.main.ui.settings
 
 
 import android.content.Intent
-import android.os.Bundle
-import android.view.*
-import androidx.fragment.app.Fragment
+import android.net.Uri
+import android.view.View
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.Observer
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.telehealthmanager.app.BaseApplication
-
+import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseFragment
 import com.telehealthmanager.app.data.PreferenceHelper
 import com.telehealthmanager.app.data.clearAll
-import com.telehealthmanager.app.databinding.FragmentMedicalRecordsBinding
 import com.telehealthmanager.app.databinding.FragmentSettingsBinding
-import com.telehealthmanager.app.repositary.model.Response
-import com.telehealthmanager.app.ui.activity.main.MainViewModel
-import com.telehealthmanager.app.ui.activity.main.ui.medical_records.MedicalRecordsNavigator
-import com.telehealthmanager.app.ui.activity.main.ui.medical_records.MedicalRecordsViewModel
 import com.telehealthmanager.app.ui.activity.splash.SplashActivity
-import com.telehealthmanager.app.ui.adapter.MedicalRecordsListAdapter
-import kotlinx.android.synthetic.main.fragment_medical_records.*
-import kotlinx.android.synthetic.main.fragment_settings.*
 
 /**
  * A simple [Fragment] subclass.
@@ -45,16 +36,16 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(), SettingNavigat
     }
 
     private fun initObservableApi() {
-        viewModel.mLogoutResponse.observe(this, Observer<Response> {
+        viewModel.mLogoutResponse.observe(this, {
             hideLoading()
             preferenceHelper.clearAll()
             val intent = Intent(activity, SplashActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent);
-            activity!!.finish()
+            requireActivity().finish()
         })
 
-        viewModel.getErrorObservable().observe(this, Observer<String> { message ->
+        viewModel.getErrorObservable().observe(this, {
             hideLoading()
         })
     }
@@ -62,5 +53,12 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(), SettingNavigat
     override fun logoutClick() {
         showLoading()
         viewModel.logout(HashMap())
+    }
+
+    override fun ratingClick() {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.setData(Uri.parse(getString(R.string.playstore_url) + BuildConfig.APPLICATION_ID))
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NO_ANIMATION)
+        startActivity(intent);
     }
 }

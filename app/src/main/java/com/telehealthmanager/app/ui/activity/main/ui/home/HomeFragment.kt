@@ -26,10 +26,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         menus.clear()
         addMenus()
-        recyclerView.adapter = context?.let { MenuAdapter(menus, it) }
+        recyclerView.adapter = MenuAdapter(menus, requireActivity())
 
         editText5.setOnClickListener {
-            openNewActivity(activity,SearchGlobalActivity::class.java,false)
+            openNewActivity(requireActivity(),SearchGlobalActivity::class.java,false)
         }
     }
 

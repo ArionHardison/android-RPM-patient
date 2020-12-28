@@ -60,7 +60,7 @@ class WalletFragment : BaseFragment<FragmentWalletBinding>(), WalletNavigator {
 
     private fun observeErrorResponse() {
         mViewModel.getErrorObservable().observe(this, Observer<String> { message ->
-            ViewUtils.showToast(context!!, message, false)
+            ViewUtils.showToast(requireContext(), message, false)
             mViewModel.loadingProgress.value = false
         })
     }
@@ -78,7 +78,7 @@ class WalletFragment : BaseFragment<FragmentWalletBinding>(), WalletNavigator {
 
     override fun onAddMoneyClicked() {
         if (mViewModel.enteredMoney.get().equals("")) {
-            ViewUtils.showToast(context!!, getString(R.string.please_enter_amount), false)
+            ViewUtils.showToast(requireContext(), getString(R.string.please_enter_amount), false)
         } else {
             val callIntent = Intent(activity, AddMoneyActivity::class.java)
             callIntent.putExtra(Constant.IntentData.WALLET_AMOUNT, mViewModel.enteredMoney.get().toString())

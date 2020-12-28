@@ -58,26 +58,26 @@ class MedicalRecordsFragment : BaseFragment<FragmentMedicalRecordsBinding>(),
     }
 
     private fun initAdapter() {
-        mDataBinding.rvMedicalRecords.layoutManager = LinearLayoutManager(activity!!)
-        mDataBinding.rvMedicalRecords.addItemDecoration(DividerItemDecoration(activity!!, DividerItemDecoration.VERTICAL))
+        mDataBinding.rvMedicalRecords.layoutManager = LinearLayoutManager(requireActivity())
+        mDataBinding.rvMedicalRecords.addItemDecoration(DividerItemDecoration(requireActivity(), DividerItemDecoration.VERTICAL))
     }
 
     private fun observeResponse() {
 
-        viewModel.loadingProgress.observe(this, Observer {
+        viewModel.loadingProgress.observe(this, {
             if (it)
                 showLoading()
             else
                 hideLoading()
         })
 
-        viewModel.mMedicalRecordResponse.observe(this, Observer {
+        viewModel.mMedicalRecordResponse.observe(this, {
             viewModel.loadingProgress.value = false
             if (it != null && it.status == 200) {
                 if (!it.medical.isNullOrEmpty()) {
                     mDataBinding.tvNotFound.visibility = View.GONE
                     viewModel.mRecordList = it.medical as MutableList<MedicalRecord.Medical>?
-                    mAdapter = MedicalRecordsListAdapter(viewModel.mRecordList!!, activity!!, this)
+                    mAdapter = MedicalRecordsListAdapter(viewModel.mRecordList!!, requireActivity(), this)
                     mDataBinding.adapter = mAdapter
                     mAdapter!!.notifyDataSetChanged()
                 } else {
@@ -88,12 +88,12 @@ class MedicalRecordsFragment : BaseFragment<FragmentMedicalRecordsBinding>(),
 
         viewModel.getErrorObservable().observe(this, Observer<String> { message ->
             viewModel.loadingProgress.value = false
-            ViewUtils.showToast(activity!!, message, false)
+            ViewUtils.showToast(requireActivity(), message, false)
         })
     }
 
     override fun goToMedicalRecord() {
-        val intent = Intent(activity!!, AddMedicalRecords::class.java)
+        val intent = Intent(requireActivity(), AddMedicalRecords::class.java)
         startActivityForResult(intent, Constant.ADD_MEDICAL_RECORD)
     }
 

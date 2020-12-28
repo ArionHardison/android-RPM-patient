@@ -30,7 +30,6 @@ import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
 import com.telehealthmanager.app.data.*
 import com.telehealthmanager.app.databinding.ActivityProfileBinding
-import com.telehealthmanager.app.repositary.model.ProfileResponse
 import com.telehealthmanager.app.ui.activity.allergies.AllergiesActivity
 import com.telehealthmanager.app.ui.activity.main.MainActivity
 import com.telehealthmanager.app.utils.CustomBackClick
@@ -113,7 +112,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
         val maxDate = System.currentTimeMillis() + (1000 * 60 * 60 * 24 * 3)
         val datePickerDialog =
             DatePickerDialog(
-                this@ProfileActivity, R.style.TransportCalenderThemeDialog,
+                this@ProfileActivity, R.style.CalandrTheamDialog,
                 { view, year, monthOfYear, dayOfMonth ->
                     c.set(Calendar.YEAR, year)
                     c.set(Calendar.MONTH, monthOfYear)
@@ -422,13 +421,13 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
             finishAffinity()
         })
 
-        viewModel.mProfileResponse.observe(this, Observer<ProfileResponse> {
+        viewModel.mProfileResponse.observe(this, {
             loadingObservable.value = false
             if (it.patient?.profile?.profile_pic != null) {
                 Glide.with(this)
                     .load(BuildConfig.BASE_IMAGE_URL + it.patient?.profile?.profile_pic)
-                    .error(R.drawable.user_placeholder)
-                    .placeholder(R.drawable.user_placeholder)
+                    .error(R.drawable.doc_place_holder)
+                    .placeholder(R.drawable.doc_place_holder)
                     .into(profileImg)
             }
             preferenceHelper.setValue(PreferenceKey.WALLET_BALANCE, it.patient?.wallet_balance)
@@ -474,7 +473,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
             finish()
         })
 
-        viewModel.mRelativeResponse.observe(this, Observer {
+        viewModel.mRelativeResponse.observe(this, {
             loadingObservable.value = false
             if (it.relative_detail?.profile?.profile_pic != null) {
                 Glide.with(this)

@@ -30,13 +30,21 @@ import com.pubnub.api.models.consumer.PNPublishResult;
 import com.pubnub.api.models.consumer.PNStatus;
 import com.pubnub.api.models.consumer.history.PNHistoryItemResult;
 import com.pubnub.api.models.consumer.history.PNHistoryResult;
+import com.pubnub.api.models.consumer.objects_api.channel.PNChannelMetadataResult;
+import com.pubnub.api.models.consumer.objects_api.membership.PNMembershipResult;
+import com.pubnub.api.models.consumer.objects_api.uuid.PNUUIDMetadataResult;
 import com.pubnub.api.models.consumer.pubsub.PNMessageResult;
 import com.pubnub.api.models.consumer.pubsub.PNPresenceEventResult;
+import com.pubnub.api.models.consumer.pubsub.PNSignalResult;
+import com.pubnub.api.models.consumer.pubsub.files.PNFileEventResult;
+import com.pubnub.api.models.consumer.pubsub.message_actions.PNMessageActionResult;
 import com.telehealthmanager.app.BuildConfig;
 import com.telehealthmanager.app.R;
 import com.telehealthmanager.app.repositary.ApiInterface;
 import com.telehealthmanager.app.repositary.AppRepository;
 import com.telehealthmanager.app.repositary.model.chatmodel.Chat;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -151,32 +159,29 @@ public class PubnubChatActivity extends AppCompatActivity {
         pubnub.history()
                 .channel(PUBNUB_CHANNEL_NAME)
                 .count(100)
-                .async(new PNCallback<PNHistoryResult>() {
-                    @Override
-                    public void onResponse(@Nullable PNHistoryResult result, @NonNull PNStatus status) {
-                        System.out.println(result + " History " + status);
-                       /* pubnub.addPushNotificationsOnChannels()
-                                .pushType(PNPushType.GCM)
-                                .channels(Collections.singletonList(PUBNUB_CHANNEL_NAME))
-                                .deviceId(chat_device_token)
-                                .async(new PNCallback<PNPushAddChannelResult>() {
-                                    @Override
-                                    public void onResponse(PNPushAddChannelResult result, PNStatus status) {
-                                        Log.e(TAG, "onResponse: test" + result);
-                                    }
-                                });*/
-                        if (!status.isError() && result != null) {
-                            List<PNHistoryItemResult> list = result.getMessages();
-                            for (PNHistoryItemResult object : list) {
-                                System.out.println(object.getEntry());
-                                try {
-                                    String message = object.getEntry().toString();
-                                    Log.e(TAG, "onResponse: History" + message);
-                                    MessageModel messageObject = gson.fromJson(message, MessageModel.class);
-                                    addToAdapter(messageObject);
-                                } catch (Exception exception) {
-                                    exception.printStackTrace();
+                .async((result, status) -> {
+                    System.out.println(result + " History " + status);
+                   /* pubnub.addPushNotificationsOnChannels()
+                            .pushType(PNPushType.GCM)
+                            .channels(Collections.singletonList(PUBNUB_CHANNEL_NAME))
+                            .deviceId(chat_device_token)
+                            .async(new PNCallback<PNPushAddChannelResult>() {
+                                @Override
+                                public void onResponse(PNPushAddChannelResult result, PNStatus status) {
+                                    Log.e(TAG, "onResponse: test" + result);
                                 }
+                            });*/
+                    if (!status.isError() && result != null) {
+                        List<PNHistoryItemResult> list = result.getMessages();
+                        for (PNHistoryItemResult object : list) {
+                            System.out.println(object.getEntry());
+                            try {
+                                String message = object.getEntry().toString();
+                                Log.e(TAG, "onResponse: History" + message);
+                                MessageModel messageObject = gson.fromJson(message, MessageModel.class);
+                                addToAdapter(messageObject);
+                            } catch (Exception exception) {
+                                exception.printStackTrace();
                             }
                         }
                     }
@@ -184,7 +189,7 @@ public class PubnubChatActivity extends AppCompatActivity {
 
         pubnub.addListener(new SubscribeCallback() {
             @Override
-            public void status(PubNub pubnub, @NonNull PNStatus status) {
+            public void status(@NotNull PubNub pubnub, @NonNull PNStatus status) {
 
                 if (status.getCategory() == PNStatusCategory.PNUnexpectedDisconnectCategory) {
                     // This event happens when radio / connectivity is lost
@@ -204,7 +209,7 @@ public class PubnubChatActivity extends AppCompatActivity {
             }
 
             @Override
-            public void message(PubNub pubnub, @NonNull PNMessageResult message) {
+            public void message(@NotNull PubNub pubnub, @NonNull PNMessageResult message) {
                 if (message.getChannel() != null) {
                     System.out.println(message.getMessage());
                     Log.e(TAG, "message: receiving " + message);
@@ -221,7 +226,37 @@ public class PubnubChatActivity extends AppCompatActivity {
             }
 
             @Override
-            public void presence(PubNub pubnub, PNPresenceEventResult presence) {
+            public void presence(@NotNull PubNub pubnub, @NotNull PNPresenceEventResult presence) {
+
+            }
+
+            @Override
+            public void signal(@NotNull PubNub pubnub, @NotNull PNSignalResult pnSignalResult) {
+
+            }
+
+            @Override
+            public void uuid(@NotNull PubNub pubnub, @NotNull PNUUIDMetadataResult pnUUIDMetadataResult) {
+
+            }
+
+            @Override
+            public void channel(@NotNull PubNub pubnub, @NotNull PNChannelMetadataResult pnChannelMetadataResult) {
+
+            }
+
+            @Override
+            public void membership(@NotNull PubNub pubnub, @NotNull PNMembershipResult pnMembershipResult) {
+
+            }
+
+            @Override
+            public void messageAction(@NotNull PubNub pubnub, @NotNull PNMessageActionResult pnMessageActionResult) {
+
+            }
+
+            @Override
+            public void file(@NotNull PubNub pubnub, @NotNull PNFileEventResult pnFileEventResult) {
 
             }
         });

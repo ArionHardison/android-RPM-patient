@@ -54,7 +54,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), ArticleNavigator
     private fun observeErrorResponse() {
         mViewModel.getErrorObservable().observe(this, Observer<String> { message ->
             mViewModel.loadingProgress.value = false
-            ViewUtils.showToast(context!!, message, false)
+            ViewUtils.showToast(requireActivity(), message, false)
         })
     }
 
@@ -76,7 +76,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), ArticleNavigator
             } else {
                 mDataBinding.tvNotFound.visibility = View.VISIBLE
             }
-            mHeathFeedAdapter = HealthFeedAdapter(context!!, mViewModel.mAllArticles!!, this)
+            mHeathFeedAdapter = HealthFeedAdapter(requireActivity(), mViewModel.mAllArticles!!, this)
             mDataBinding.healthFeedAdapter = mHeathFeedAdapter
             mHeathFeedAdapter!!.notifyDataSetChanged()
             mViewModel.loadingProgress.value = false
@@ -84,9 +84,9 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), ArticleNavigator
     }
 
     private fun initAdapter() {
-        mHeathFeedAdapter = HealthFeedAdapter(context!!, mViewModel.mAllArticles!!, this)
+        mHeathFeedAdapter = HealthFeedAdapter(requireActivity(), mViewModel.mAllArticles!!, this)
         mDataBinding.healthFeedAdapter = mHeathFeedAdapter
-        mDataBinding.rvHealthFeed.layoutManager = LinearLayoutManager(context!!.applicationContext)
+        mDataBinding.rvHealthFeed.layoutManager = LinearLayoutManager(requireActivity().applicationContext)
         mHeathFeedAdapter!!.notifyDataSetChanged()
     }
 

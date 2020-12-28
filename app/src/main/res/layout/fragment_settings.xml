@@ -28,7 +28,8 @@
                 android:fontFamily="@font/montserrat_medium"
                 android:padding="@dimen/_12sdp"
                 android:visibility="gone"
-                android:text="@string/show_reminder_notification" />
+                android:text="@string/show_reminder_notification"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
 
             <View
                 android:layout_width="match_parent"
@@ -54,6 +55,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_12sdp"
+                android:onClick="@{() -> viewmodel.performShare()}"
+                android:id="@+id/ratingPlaystore"
                 android:text="@string/rate_us_on_play_store" />
 
             <View

@@ -13,6 +13,10 @@ class SettingViewModel : BaseViewModel<SettingNavigator>(){
         navigator.logoutClick()
     }
 
+    fun performShare(){
+        navigator.ratingClick()
+    }
+
     fun logout(hashMap: HashMap<String, Any>) {
         getCompositeDisposable().add(appRepository.logout(this,hashMap))
     }

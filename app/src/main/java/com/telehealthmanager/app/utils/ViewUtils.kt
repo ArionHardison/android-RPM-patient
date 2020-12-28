@@ -160,6 +160,7 @@ object ViewUtils {
             .thumbnail(0.5f)
             .error(R.drawable.app_logo)
             .placeholder(R.drawable.app_logo)
+            .skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.RESOURCE)
             .into(imageView)
     }
 
@@ -180,6 +181,7 @@ object ViewUtils {
             .centerCrop()
             .error(R.drawable.shimmer_bg)
             .placeholder(R.drawable.shimmer_bg)
+            .skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.RESOURCE)
             .into(imageView)
     }
 

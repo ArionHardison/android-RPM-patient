@@ -12,7 +12,6 @@ import android.widget.RadioButton
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -56,7 +55,7 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
         viewModel.mCategoryId.set(intent.getIntExtra(WebApiConstants.IntentPass.ID, 1))
 
         mAdapter = FindDoctorListAdapter(this@FindDoctorsListActivity, this)
-        mDataBinding.rvFinddoctorsList.adapter =  mAdapter
+        mDataBinding.rvFinddoctorsList.adapter = mAdapter
         mDataBinding.rvFinddoctorsList.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         mDataBinding.rvFinddoctorsList.itemAnimator = DefaultItemAnimator()
         setupScrollListener()
@@ -77,7 +76,15 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
+                viewModel.queryLiveData.postValue(s.toString())
+                if (s!!.isNotEmpty()) {
+                    mAdapter.onSearchRequest()
+                    val hashMap: HashMap<String, Any> = HashMap()
+                    hashMap["search"] = viewModel.queryLiveData.value.toString()
+                    viewModel.getDoctorByCategorys(viewModel.mCategoryId.get()!!.toInt(), hashMap)
+                } else {
+                    mAdapter.onSearchCleared()
+                }
             }
         })
 
@@ -91,7 +98,9 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
                 val totalItemCount = layoutManager.itemCount
                 val visibleItemCount = layoutManager.childCount
                 val lastVisibleItem = layoutManager.findLastVisibleItemPosition()
-                viewModel.listScrolled(visibleItemCount, lastVisibleItem, totalItemCount, mAdapter.getItem(mAdapter.itemCount - 1))
+                if (mAdapter.itemCount != 0) {
+                    viewModel.listScrolled(visibleItemCount, lastVisibleItem, totalItemCount, mAdapter.getItem(mAdapter.itemCount - 1))
+                }
             }
         })
     }
@@ -113,9 +122,9 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
                 mDataBinding.tvNotFound.visibility = View.GONE
                 mAdapter.addItems(it.Specialities.doctor_profile.toMutableList())
             } else {
-                if (mAdapter.itemCount > 0){
+                if (mAdapter.itemCount > 0) {
                     mDataBinding.tvNotFound.visibility = View.GONE
-                }else{
+                } else {
                     mDataBinding.tvNotFound.visibility = View.VISIBLE
                 }
             }

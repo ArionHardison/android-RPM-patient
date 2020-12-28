@@ -46,9 +46,9 @@ public class HealthFeedAdapter (val mContext : Context, val list: MutableList<Ar
         if (item.coverPhoto != null && item.coverPhoto != "") {
             Glide.with(mContext)
                 .load(BuildConfig.BASE_IMAGE_URL + item.coverPhoto)
-                .placeholder(R.drawable.leaderboard)
-                .error(R.drawable.leaderboard)
-                .fallback(R.drawable.leaderboard)
+                .placeholder(R.drawable.shimmer_bg)
+                .error(R.drawable.shimmer_bg)
+                .fallback(R.drawable.shimmer_bg)
                 .into(holder.mHealthFeedBinding.imgFeed)
         }
     }

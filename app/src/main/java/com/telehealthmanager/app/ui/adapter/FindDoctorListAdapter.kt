@@ -25,9 +25,7 @@ class FindDoctorListAdapter(
     val context: Context,
     val listener: IDoctorListener
 ) :
-    RecyclerView.Adapter<FindDoctorViewHolder>(), Filterable {
-    private var SearchList: MutableList<DoctorListResponse.specialities.DoctorProfile> =
-        mutableListOf()
+    RecyclerView.Adapter<FindDoctorViewHolder>() {
 
     private val items: MutableList<DoctorListResponse.specialities.DoctorProfile> = mutableListOf()
 
@@ -37,12 +35,9 @@ class FindDoctorListAdapter(
 
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
 
-    init {
-        this.SearchList = items
-    }
 
     override fun onBindViewHolder(holder: FindDoctorViewHolder, position: Int) {
-        val item: DoctorListResponse.specialities.DoctorProfile = SearchList[position]
+        val item: DoctorListResponse.specialities.DoctorProfile = items[position]
         if (!item.hospital.isNullOrEmpty()) {
             holder.itemBinding.textView47.text = (item.hospital[0].first_name ?: "").plus(" ").plus(item.hospital[0].last_name ?: "")
             holder.itemBinding.textView52.text = (item.hospital[0].clinic?.name ?: "").plus(" , ").plus(item.hospital[0].clinic?.address ?: "")
@@ -93,47 +88,11 @@ class FindDoctorListAdapter(
         return FindDoctorViewHolder(inflate)
     }
 
-
-    override fun getFilter(): Filter {
-
-        return object : Filter() {
-            override fun performFiltering(charSequence: CharSequence?): FilterResults {
-                val charString = charSequence.toString()
-                if (charString.isEmpty()) {
-                    SearchList = items
-                    notifyDataSetChanged()
-                } else {
-                    val filteredList = ArrayList<DoctorListResponse.specialities.DoctorProfile>()
-                    for (row in items) {
-                        if (!CollectionUtils.isEmpty(row.hospital)) {
-                            if (row.hospital[0].first_name!!.toLowerCase()
-                                    .contains(charString.toLowerCase()) || row.hospital[0].last_name!!.toLowerCase()
-                                    .contains(charString.toLowerCase())
-                            ) {
-                                filteredList.add(row)
-                            }
-                        }
-                    }
-                    SearchList = filteredList
-                }
-
-                val filterResults = Filter.FilterResults()
-                filterResults.values = SearchList
-                return filterResults
-            }
-
-            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                SearchList = results?.values as MutableList<DoctorListResponse.specialities.DoctorProfile>
-                notifyDataSetChanged()
-            }
-        }
-    }
-
     fun addItems(list: MutableList<DoctorListResponse.specialities.DoctorProfile>) {
         items.addAll(list)
         if (!isSearchRequest)
             holdingItems.addAll(list)
-        notifyItemRangeInserted(items.size-1, list.size)
+        notifyItemRangeInserted(items.size - 1, list.size)
     }
 
     fun onSearchCleared() {
@@ -156,6 +115,7 @@ class FindDoctorListAdapter(
     override fun getItemCount(): Int {
         return items.size
     }
+
 }
 
 interface IDoctorListener {
