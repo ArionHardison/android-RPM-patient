@@ -256,20 +256,28 @@ class AppRepository : BaseRepository() {
     }
 
     /*TODO Appointments*/
-    fun getAppointment(viewModel: ViewModel): Disposable {
+    fun getAppointment(viewModel: AppointmentViewModel): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .getAppointment()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
-                if (viewModel is AppointmentViewModel) {
-                    viewModel.mResponseUpcoming.value = it
-                    viewModel.mResponsePrevious.value = it
-                }
+                viewModel.mResponseUpcoming.value = it
+                viewModel.mResponsePrevious.value = it
             }, {
-                if (viewModel is AppointmentViewModel) {
-                    viewModel.getErrorObservable().value = getErrorMessage(it)
-                }
+                viewModel.getErrorObservable().value = getErrorMessage(it)
+            })
+    }
+
+    fun getUpcomingAppointment(viewModel: AppointmentViewModel): Disposable {
+        return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
+            .getAppointment()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                viewModel.mResponseUpcoming.value = it
+            }, {
+                viewModel.getErrorObservable().value = getErrorMessage(it)
             })
     }
 
@@ -564,20 +572,15 @@ class AppRepository : BaseRepository() {
     }
 
     /*TODO Search*/
-    fun getGloblSearch(viewModel: ViewModel, params: HashMap<String, Any>): Disposable {
+    fun getGlobalSearch(viewModel: SearchGlobalViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .getGlobalSearchApp(params)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
-                if (viewModel is SearchGlobalViewModel) {
-                    viewModel.mResponse.value = it
-                }
+                viewModel.mResponse.value = it
             }, {
-                if (viewModel is SearchGlobalViewModel) {
-                    viewModel.getErrorObservable().value = getErrorMessage(it)
-                }
-
+                viewModel.getErrorObservable().value = getErrorMessage(it)
             })
     }
 

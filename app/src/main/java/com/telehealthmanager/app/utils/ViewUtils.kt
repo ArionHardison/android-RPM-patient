@@ -179,8 +179,8 @@ object ViewUtils {
             .load(imagePath)
             .thumbnail(0.5f)
             .centerCrop()
-            .error(R.drawable.shimmer_bg)
-            .placeholder(R.drawable.shimmer_bg)
+            .error(R.drawable.leader_board)
+            .placeholder(R.drawable.leader_board)
             .skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.RESOURCE)
             .into(imageView)
     }
@@ -280,9 +280,9 @@ object ViewUtils {
         return ""
     }
 
-    fun getCurrentDate(): String {
+    fun getCurrentDate(format: String): String {
         val today = Date()
-        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+        val sdf = SimpleDateFormat(format, Locale.ENGLISH)
         return sdf.format(today)
     }
 

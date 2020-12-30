@@ -13,9 +13,6 @@
             name="viewmodel"
             type="com.telehealthmanager.app.ui.activity.searchDoctor.SearchViewModel" />
 
-        <!--  <variable
-              name="adapter"
-              type="com.telehealthmanager.app.ui.adapter.SearchDoctorsListAdapter" />-->
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

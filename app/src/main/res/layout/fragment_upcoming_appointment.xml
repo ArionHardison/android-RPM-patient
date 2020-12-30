@@ -10,9 +10,9 @@
             name="viewmodel"
             type="com.telehealthmanager.app.ui.activity.main.ui.appointment.AppointmentViewModel" />
 
-        <variable
+        <!--<variable
             name="adapter"
-            type="com.telehealthmanager.app.ui.adapter.UpcomingAppointmentsListAdapter" />
+            type="com.telehealthmanager.app.ui.adapter.UpcomingAppointmentsListAdapter" />-->
 
         <import type="android.view.View" />
 
@@ -31,7 +31,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
             android:layout_marginBottom="@dimen/_46sdp"
-            android:adapter="@{adapter}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

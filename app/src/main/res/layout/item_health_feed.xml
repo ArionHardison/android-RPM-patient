@@ -36,7 +36,7 @@
                 android:layout_height="@dimen/_120sdp"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerCrop"
-                android:src="@drawable/shimmer_bg"
+                android:src="@drawable/leader_board"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

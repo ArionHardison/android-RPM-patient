@@ -32,7 +32,7 @@ class AddReminderActivity : BaseActivity<ActivityAddReminderBinding>(), AddRemin
         mViewModel = ViewModelProvider(this).get(AddReminderViewModel::class.java)
         mViewModel.navigator = this
         mDataBinding.viewmodel = mViewModel
-        mDataBinding.isEdit=true
+        mDataBinding.isEdit = true
 
         mViewModel.setOnClickListener(this@AddReminderActivity)
         mViewModel.toolBarTile.value = getString(R.string.add_new_remainder)
@@ -52,7 +52,7 @@ class AddReminderActivity : BaseActivity<ActivityAddReminderBinding>(), AddRemin
         val reminder: ReminderResponse.Reminder? = intent.getSerializableExtra("reminder") as ReminderResponse.Reminder?
         if (reminder != null) {
             isEdit = true
-            mDataBinding.isEdit=false
+            mDataBinding.isEdit = false
             mDataBinding.btnSubmit.visibility = View.GONE
             mViewModel.name.set(reminder.name)
             mViewModel.toolBarTile.value = reminder.name
@@ -83,8 +83,8 @@ class AddReminderActivity : BaseActivity<ActivityAddReminderBinding>(), AddRemin
 
     private fun initializing() {
 
-        mViewModel.fromDate.value = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(fromCalendar.time)
-        mViewModel.displayFromDate.set(SimpleDateFormat("dd/MM/yy", Locale.getDefault()).format(fromCalendar.time))
+        mViewModel.fromDate.value = ViewUtils.getCurrentDate("yyyy-MM-dd")
+        mViewModel.displayFromDate.set(ViewUtils.getCurrentDate("dd/MM/yy"))
         val f: Format = SimpleDateFormat("HH:mm:ss")
         mViewModel.fromTime.value = f.format(fromCalendar.time)
         try {
@@ -101,7 +101,7 @@ class AddReminderActivity : BaseActivity<ActivityAddReminderBinding>(), AddRemin
                 val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                 mViewModel.fromTime.value = sdf.format(fromCalendar.time)
                 //scheduleDate.setText(schedule_date);
-                val fmtOut = SimpleDateFormat("dd/mm/yy", Locale.getDefault())
+                val fmtOut = SimpleDateFormat("dd/MM/yy", Locale.getDefault())
                 mViewModel.displayFromDate.set(fmtOut.format(fromCalendar.time))
             }
     }

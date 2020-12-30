@@ -557,7 +557,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
         var title = ""
         when (choiceType) {
             "GENDER" -> {
-                types = arrayOf("Male", "Female")
+                types = arrayOf("MALE", "FEMALE")
                 title = getString(R.string.select_gender)
             }
             "MARITAL" -> {

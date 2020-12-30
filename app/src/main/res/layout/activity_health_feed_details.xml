@@ -82,7 +82,7 @@
                     android:layout_margin="@dimen/_6sdp"
                     android:contentDescription="@string/app_name"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/leaderboard"
+                    android:src="@drawable/leader_board"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

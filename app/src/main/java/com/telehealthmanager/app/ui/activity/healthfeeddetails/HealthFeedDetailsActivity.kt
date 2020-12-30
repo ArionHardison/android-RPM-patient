@@ -43,9 +43,9 @@ class HealthFeedDetailsActivity : BaseActivity<ActivityHealthFeedDetailsBinding>
 
             Glide.with(this)
                 .load(BuildConfig.BASE_IMAGE_URL + article.coverPhoto)
-                .placeholder(R.drawable.leaderboard)
-                .error(R.drawable.leaderboard)
-                .fallback(R.drawable.leaderboard)
+                .placeholder(R.drawable.leader_board)
+                .error(R.drawable.leader_board)
+                .fallback(R.drawable.leader_board)
                 .into(  mViewDataBinding.imgFeed)
         }
         mViewModel.description.set(article.description)

@@ -243,13 +243,13 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
                 localVideoTrack?.enable(true)
             } else {
                 prepareRoomManager()
-            }
+            }//{receiver_id=2, name=Ricky, sender_id=975, video=1, message=video_call, room_id=975_video_2}
         } else if (pushRequest != null) {
             val isAccept = intent.getBooleanExtra(CallReceiveService.CALL_IS_ACCEPTED, false)
             isCallAccepted = pushRequest!!.connectedCall
             chatPath = pushRequest!!.room_id.toString()
-            id = pushRequest!!.sender_id.toString()
-            hospital_id = pushRequest!!.receiver_id.toString()
+            id = pushRequest!!.receiver_id.toString()
+            hospital_id = pushRequest!!.sender_id.toString()
             callerName = pushRequest!!.name.toString()
             if (isAccept) {
                 onCallPicked()
@@ -463,7 +463,6 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
         if (callRequest != null) {
             hashMap["hospital_id"] = hospital_id.toString()
             hashMap["patient_id"] = id.toString()
-            hashMap["push_to"] = "hospital"
             call = appRepository.createApiClient(ApiInterface::class.java).getCallRequest(hashMap)
         } else {
             hashMap["video"] = "1"

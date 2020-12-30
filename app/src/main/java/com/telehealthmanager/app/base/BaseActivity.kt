@@ -83,8 +83,7 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
 
     fun showLoading() {
         if (mCustomLoader != null) {
-            Objects.requireNonNull(mCustomLoader!!.window)
-                ?.setBackgroundDrawableResource(android.R.color.transparent)
+            Objects.requireNonNull(mCustomLoader!!.window)?.setBackgroundDrawableResource(android.R.color.transparent)
             mCustomLoader!!.show()
         }
     }

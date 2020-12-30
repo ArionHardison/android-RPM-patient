@@ -13,9 +13,6 @@
             name="viewmodel"
             type="com.telehealthmanager.app.ui.activity.searchGlobal.SearchGlobalViewModel" />
 
-        <variable
-            name="doctoradapter"
-            type="com.telehealthmanager.app.ui.adapter.SearchDoctorsListAdapter" />
 
         <variable
             name="clinicadapter"
@@ -207,7 +204,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:layout_marginBottom="@dimen/_50sdp"
-                        android:adapter="@{doctoradapter}"
                         android:nestedScrollingEnabled="false"
                         android:scrollbars="vertical"
                         tools:itemCount="5"
