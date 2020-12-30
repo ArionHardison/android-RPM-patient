@@ -137,6 +137,6 @@ class SearchDoctorActivity : BaseActivity<ActivitySearchDoctorBinding>(), Custom
     override fun onItemClicked(item: Hospital) {
         val intent = Intent(this@SearchDoctorActivity, SearchDoctorDetailActivity::class.java)
         intent.putExtra(WebApiConstants.IntentPass.SearchDoctorProfile, item as Serializable)
-        startActivityForResult(intent, Constant.DOCTORS_ACTIVITY);
+        startActivityForResult(intent, Constant.DOCTORS_ACTIVITY)
     }
 }

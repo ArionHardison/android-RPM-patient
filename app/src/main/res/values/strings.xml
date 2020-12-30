@@ -342,4 +342,8 @@
     <string name="appointments_not_found">Appointments not found</string>
 
 
+    <string name="lbl_take_camera_picture">Take a picture</string>
+    <string name="lbl_choose_from_gallery">Choose from gallery</string>
+    <string name="toast_image_intent_null">Image picker option is missing!</string>
+
 </resources>

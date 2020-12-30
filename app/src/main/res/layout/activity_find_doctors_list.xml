@@ -94,15 +94,22 @@
                         android:background="@color/colorPrimary"
                         android:gravity="center"
                         android:orientation="horizontal"
-                        android:visibility="invisible"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent">
+                        <ImageView
+                            android:id="@+id/imageView17"
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:background="@drawable/search_bg"
+                            app:srcCompat="@drawable/ic_filter"
+                            android:layout_marginEnd="@dimen/_5sdp"/>
 
                         <ImageView
                             android:layout_width="@dimen/_25sdp"
                             android:layout_height="match_parent"
                             android:contentDescription="@string/app_name"
                             android:padding="@dimen/_5sdp"
+                            android:visibility="gone"
                             app:srcCompat="@drawable/ic_google_pin"
                             app:tint="@color/colorWhite" />
 
@@ -112,6 +119,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:text="New York"
+                            android:visibility="gone"
                             android:textColor="@color/colorWhite"
                             android:textSize="@dimen/_12sdp"
                             android:textStyle="bold" />
@@ -121,6 +129,7 @@
                             android:layout_height="match_parent"
                             android:contentDescription="@string/app_name"
                             android:padding="@dimen/_5sdp"
+                            android:visibility="gone"
                             app:srcCompat="@drawable/ic_down_arrow" />
                     </LinearLayout>
 
@@ -137,6 +146,7 @@
             android:layout_height="@dimen/_50sdp"
             android:background="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBar">
 
@@ -151,23 +161,12 @@
                 android:ems="10"
                 android:focusable="true"
                 android:hint="Search"
+                android:visibility="gone"
                 android:inputType="textPersonName"
                 android:padding="@dimen/_8sdp"
-                app:layout_constraintEnd_toStartOf="@+id/imageView17"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/imageView17"
-                android:layout_width="40dp"
-                android:layout_height="42dp"
-                android:layout_marginEnd="@dimen/_8sdp"
-                android:background="@drawable/search_bg"
-                app:layout_constraintBottom_toBottomOf="@+id/editText9"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/editText9"
-                app:layout_constraintTop_toTopOf="@+id/editText9"
-                app:srcCompat="@drawable/ic_filter" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView

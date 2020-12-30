@@ -5,11 +5,8 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.common.util.CollectionUtils
 import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
@@ -18,7 +15,6 @@ import com.telehealthmanager.app.data.PreferenceKey
 import com.telehealthmanager.app.data.getValue
 import com.telehealthmanager.app.databinding.FindDoctorListItemBinding
 import com.telehealthmanager.app.repositary.model.DoctorListResponse
-import com.telehealthmanager.app.repositary.model.Hospital
 import com.telehealthmanager.app.utils.ViewUtils
 
 class FindDoctorListAdapter(
@@ -40,7 +36,22 @@ class FindDoctorListAdapter(
         val item: DoctorListResponse.specialities.DoctorProfile = items[position]
         if (!item.hospital.isNullOrEmpty()) {
             holder.itemBinding.textView47.text = (item.hospital[0].first_name ?: "").plus(" ").plus(item.hospital[0].last_name ?: "")
-            holder.itemBinding.textView52.text = (item.hospital[0].clinic?.name ?: "").plus(" , ").plus(item.hospital[0].clinic?.address ?: "")
+            if (item.hospital[0].clinic != null) {
+                val clinic = item.hospital[0].clinic
+                if (clinic?.name != null && clinic?.address != null) {
+                    holder.itemBinding.textView52.text = (item.hospital[0].clinic?.name ?: "").plus(" , ").plus(item.hospital[0].clinic?.address ?: "")
+                } else {
+                    holder.itemBinding.textView52.text = "No Location"
+                    if (clinic?.name != null) {
+                        holder.itemBinding.textView52.text = clinic.name
+                    }
+
+                    if (clinic?.address != null) {
+                        holder.itemBinding.textView52.text = clinic.address
+                    }
+                }
+            }
+
             holder.itemBinding.textView46.text = (item.hospital[0].feedback_percentage ?: "0").plus("%")
             if (item.hospital[0].availability != null) {
                 when (item.hospital[0].availability) {

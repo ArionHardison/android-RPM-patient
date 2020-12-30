@@ -32,7 +32,6 @@
         tools:ignore="ExtraText,GoogleAppIndexingWarning"
         tools:targetApi="n">
         <activity android:name="com.telehealthmanager.app.ui.activity.searchDoctor.SearchDoctorScheduleActivity" />
-        <activity android:name="com.telehealthmanager.app.ui.activity.addmedicalrecord.MedicalRecordDetailsActivity" />
         <activity android:name="com.telehealthmanager.app.ui.activity.searchGlobal.SearchGlobalActivity" />
         <activity android:name="com.telehealthmanager.app.ui.activity.searchDoctor.SearchDoctorDetailActivity" />
         <activity android:name="com.telehealthmanager.app.ui.activity.addreminder.AddReminderActivity" />
@@ -140,11 +139,7 @@
         </activity>
         <activity android:name="com.telehealthmanager.app.ui.activity.otp.OTPActivity" />
 
-        <activity
-            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Base.Theme.AppCompat"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+
         <activity android:name=".ui.activity.allergies.AllergiesActivity" />
         <activity android:name=".ui.activity.allergies.AddAllergiesActivity"
             android:screenOrientation="portrait"
@@ -165,6 +160,27 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.activity.payment.PaymentTypeActivity" />
         <activity android:name=".ui.activity.visitedDoctor.InvoiceActivity" />
+
+
+        <activity android:name=".utils.ImagePickerActivity" />
+
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Base.Theme.AppCompat"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <!-- cache directory file provider paths -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
     </application>
 
 </manifest>

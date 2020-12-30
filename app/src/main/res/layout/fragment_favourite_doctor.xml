@@ -9,9 +9,6 @@
             name="viewmodel"
             type="com.telehealthmanager.app.ui.activity.main.ui.favourite_doctor.FavouriteDoctorViewModel" />
 
-        <variable
-            name="adapter"
-            type="com.telehealthmanager.app.ui.adapter.FavDoctorListAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,7 +23,6 @@
             android:background="@color/colorWhite"
             android:paddingTop="@dimen/_8sdp"
             android:paddingBottom="@dimen/_8sdp"
-            android:adapter="@{adapter}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
             tools:listitem="@layout/fav_doctor_list_item"

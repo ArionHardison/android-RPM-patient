@@ -6,7 +6,6 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.net.Uri
 import android.text.InputType
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
@@ -33,10 +32,10 @@ import com.telehealthmanager.app.databinding.ActivityProfileBinding
 import com.telehealthmanager.app.ui.activity.allergies.AllergiesActivity
 import com.telehealthmanager.app.ui.activity.main.MainActivity
 import com.telehealthmanager.app.utils.CustomBackClick
+import com.telehealthmanager.app.utils.ImagePickerActivity
+import com.telehealthmanager.app.utils.ImagePickerActivity.PickerOptionListener
 import com.telehealthmanager.app.utils.ValidationUtils
 import com.telehealthmanager.app.utils.ViewUtils
-import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.activity_profile.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -45,13 +44,13 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator, CustomBackClick {
 
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
     private lateinit var viewModel: ProfileViewModel
     private lateinit var mDataBinding: ActivityProfileBinding
     private lateinit var profileImg: ImageView
-    private var REQUEST_CODE_ALLERGIES: Int = 150
     private var viewType: String = ""
     private var relativeManagementID: Int = 0
 
@@ -71,6 +70,10 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
         initUI()
         initApiCal()
         observeResponse()
+        // Clearing older images from cache directory
+        // don't call this line if you want to choose multiple images in the same activity
+        // call this once the bitmap(s) usage is over
+        ImagePickerActivity.clearCache(this)
     }
 
     override fun clickBackPress() {
@@ -337,14 +340,14 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
 
     private var mCropImageUri: Uri? = null
     private fun checkPermission() {
-        Dexter.withActivity(this).withPermissions(
+        Dexter.withContext(this).withPermissions(
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE
+            Manifest.permission.CAMERA
         ).withListener(object : MultiplePermissionsListener {
             override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
                 report?.let {
                     if (report.areAllPermissionsGranted()) {
-                        CropImage.startPickImageActivity(this@ProfileActivity)
+                        showImagePickerOptions()
                     }
                 }
             }
@@ -365,21 +368,6 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode != Activity.RESULT_CANCELED) {
             when (requestCode) {
-                CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE -> {
-                    val imageUri = CropImage.getPickImageResultUri(this, data)
-                    // For API >= 23 we need to check specifically that we have permissions to read external storage.
-                    startCropImageActivity(imageUri)
-                }
-
-                CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
-                    val result = CropImage.getActivityResult(data)
-                    if (resultCode == Activity.RESULT_OK) {
-                        mDataBinding.layoutProfilePersonal.imgProf.setImageURI(result.uri)
-                        mCropImageUri = result.uri
-                    } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                        Toast.makeText(this, "Cropping failed: ", Toast.LENGTH_LONG).show()
-                    }
-                }
 
                 Constant.REQUEST_AUTOCOMPLETE -> {
                     if (resultCode == Activity.RESULT_OK) {
@@ -388,33 +376,54 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
                     }
                 }
 
-                REQUEST_CODE_ALLERGIES -> {
+                Constant.REQUEST_CODE_ALLERGIES -> {
                     if (resultCode == Activity.RESULT_OK) {
                         val allergies = data!!.getStringExtra("select_allergies") as String
                         viewModel.allergies.set(allergies)
+                    }
+                }
+
+                Constant.REQUEST_IMAGE_PICK -> {
+                    if (resultCode == Activity.RESULT_OK) {
+                        val uri = data?.getParcelableExtra<Uri>("path")!!
+                        mDataBinding.layoutProfilePersonal.imgProf.setImageURI(uri)
+                        mCropImageUri = uri
                     }
                 }
             }
         }
     }
 
-    private fun startCropImageActivity(imageUri: Uri) {
-        try {
-            CropImage.activity(imageUri)
-                .setFixAspectRatio(true)
-                .setGuidelines(CropImageView.Guidelines.ON)
-                .setCropShape(CropImageView.CropShape.OVAL)
-                .setMultiTouchEnabled(true)
-                .start(this)
-        } catch (ex: Exception) {
-            Log.e("CropImage", ex.message!!)
-        }
+
+    private fun showImagePickerOptions() {
+        ImagePickerActivity.showImagePickerOptions(this, object : PickerOptionListener {
+            override fun onTakeCameraSelected() {
+                launchCameraIntent()
+            }
+
+            override fun onChooseGallerySelected() {
+                launchGalleryIntent()
+            }
+        })
+    }
+
+    private fun launchCameraIntent() {
+        val intent = Intent(this@ProfileActivity, ImagePickerActivity::class.java)
+        intent.putExtra(ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION, ImagePickerActivity.REQUEST_IMAGE_CAPTURE)
+        startActivityForResult(intent, Constant.REQUEST_IMAGE_PICK)
+    }
+
+    private fun launchGalleryIntent() {
+        val intent = Intent(this@ProfileActivity, ImagePickerActivity::class.java)
+        intent.putExtra(ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION, ImagePickerActivity.REQUEST_GALLERY_IMAGE)
+        startActivityForResult(intent, Constant.REQUEST_IMAGE_PICK)
     }
 
 
     private fun observeResponse() {
 
-        viewModel.mEditPatientResponse.observe(this, androidx.lifecycle.Observer {
+        viewModel.mEditPatientResponse.observe(this, {
+            loadingObservable.value = false
             ViewUtils.showToast(this@ProfileActivity, getString(R.string.profile_successfully_edited), true)
             val newIntent = Intent(this, MainActivity::class.java)
             startActivity(newIntent)
@@ -424,11 +433,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
         viewModel.mProfileResponse.observe(this, {
             loadingObservable.value = false
             if (it.patient?.profile?.profile_pic != null) {
-                Glide.with(this)
-                    .load(BuildConfig.BASE_IMAGE_URL + it.patient?.profile?.profile_pic)
-                    .error(R.drawable.doc_place_holder)
-                    .placeholder(R.drawable.doc_place_holder)
-                    .into(profileImg)
+                ViewUtils.setDocViewGlide(this, profileImg, BuildConfig.BASE_IMAGE_URL + it.patient.profile.profile_pic)
             }
             preferenceHelper.setValue(PreferenceKey.WALLET_BALANCE, it.patient?.wallet_balance)
             viewModel.firstName.set(it.patient?.first_name ?: "")
@@ -535,7 +540,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
 
     override fun onClickAllergies() {
         val newIntent = Intent(this, AllergiesActivity::class.java)
-        startActivityForResult(newIntent, REQUEST_CODE_ALLERGIES)
+        startActivityForResult(newIntent, Constant.REQUEST_CODE_ALLERGIES)
     }
 
     override fun onClickLocation() {

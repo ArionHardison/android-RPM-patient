@@ -38,6 +38,7 @@
                 android:inputType="textPersonName"
                 android:padding="@dimen/_8sdp"
                 android:textSize="@dimen/_12sdp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

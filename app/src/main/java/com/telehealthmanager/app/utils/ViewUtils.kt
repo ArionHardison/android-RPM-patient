@@ -18,7 +18,6 @@ import es.dmoral.toasty.Toasty
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import permissions.dispatcher.PermissionRequest
 import java.io.ByteArrayOutputStream
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -96,19 +95,6 @@ object ViewUtils {
             .setTitle(R.string.app_name)
             .setMessage(messageResId)
             .setPositiveButton(android.R.string.yes) { dialog, which -> dialog.dismiss() }
-            .show()
-    }
-
-    @MainThread
-    fun showRationaleAlert(
-        context: Context, @StringRes messageResId: Int,
-        request: PermissionRequest
-    ) {
-        AlertDialog.Builder(context)
-            .setTitle(R.string.app_name)
-            .setMessage(messageResId)
-            .setPositiveButton("Allow") { dialog, which -> request.proceed() }
-            .setNegativeButton("Diney") { dialog, which -> request.cancel() }
             .show()
     }
 

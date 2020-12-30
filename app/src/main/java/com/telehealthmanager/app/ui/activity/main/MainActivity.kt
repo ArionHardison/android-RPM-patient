@@ -25,6 +25,7 @@ import com.telehealthmanager.app.databinding.ActivityMainBinding
 import com.telehealthmanager.app.repositary.model.ProfileResponse
 import com.telehealthmanager.app.ui.activity.profile.ProfileActivity
 import com.telehealthmanager.app.utils.ViewUtils
+import kotlinx.android.synthetic.main.list_item_doctor_image.view.*
 import java.util.*
 
 class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
@@ -154,11 +155,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
             ).plus("%")
 
             if (it.patient.profile.profile_pic != null) {
-                Glide.with(this)
-                    .load(BuildConfig.BASE_IMAGE_URL + it.patient.profile.profile_pic)
-                    .error(R.drawable.user_placeholder)
-                    .placeholder(R.drawable.user_placeholder)
-                    .into(profileImg)
+                ViewUtils.setDocViewGlide(this, profileImg, BuildConfig.BASE_IMAGE_URL + it.patient.profile.profile_pic)
             }
 
         })

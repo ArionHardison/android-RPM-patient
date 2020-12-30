@@ -9,31 +9,32 @@ import com.telehealthmanager.app.R
 import com.telehealthmanager.app.databinding.ItemServiceListBinding
 import com.telehealthmanager.app.repositary.model.Hospital
 
-class AllServiceAdapter  (val mContext : Context, val list: MutableList<Hospital.DoctorService>) :
+class AllServiceAdapter(val mContext: Context, val list: MutableList<Hospital.DoctorService>) :
     RecyclerView.Adapter<AllServiceAdapter.ViewHolder>() {
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AllServiceAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflate = DataBindingUtil.inflate<ItemServiceListBinding>(
             LayoutInflater.from(parent.context),
-            R.layout.item_service_list, parent, false)
-        return AllServiceAdapter.ViewHolder(inflate)
+            R.layout.item_service_list, parent, false
+        )
+        return ViewHolder(inflate)
     }
 
     override fun getItemCount(): Int = list.size
 
 
-    override fun onBindViewHolder(holder: AllServiceAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val mList = list[position]
-        initUI(holder,mList)
+        initUI(holder, mList)
     }
 
-    private fun initUI(holder: AllServiceAdapter.ViewHolder, item:Hospital.DoctorService) {
-        holder.mHealthFeedBinding.tvServiceName.text=item.service.name
+    private fun initUI(holder: ViewHolder, item: Hospital.DoctorService) {
+        holder.mHealthFeedBinding.tvServiceName.text = item.service.name
 
     }
 
-    class ViewHolder(view : ItemServiceListBinding) : RecyclerView.ViewHolder(view.root) {
+    class ViewHolder(view: ItemServiceListBinding) : RecyclerView.ViewHolder(view.root) {
         val mHealthFeedBinding = view
     }
 

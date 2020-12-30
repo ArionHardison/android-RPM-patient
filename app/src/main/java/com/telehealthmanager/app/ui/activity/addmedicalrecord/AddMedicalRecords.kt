@@ -4,25 +4,21 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
-import android.util.Log
-import android.widget.Toast
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionDeniedResponse
-import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.single.PermissionListener
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
+import com.telehealthmanager.app.data.Constant
 import com.telehealthmanager.app.databinding.ActivityAddMedicalRecordBinding
 import com.telehealthmanager.app.utils.CustomBackClick
+import com.telehealthmanager.app.utils.ImagePickerActivity
 import com.telehealthmanager.app.utils.ViewUtils
-import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageView
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -65,6 +61,10 @@ class AddMedicalRecords : BaseActivity<ActivityAddMedicalRecordBinding>(), Docto
 
         viewModel.toolBarTile.value = getString(R.string.add_medical_record)
         viewModel.setOnClickListener(this@AddMedicalRecords)
+        // Clearing older images from cache directory
+        // don't call this line if you want to choose multiple images in the same activity
+        // call this once the bitmap(s) usage is over
+        ImagePickerActivity.clearCache(this)
     }
 
     private fun selectDoctor() {
@@ -129,67 +129,65 @@ class AddMedicalRecords : BaseActivity<ActivityAddMedicalRecordBinding>(), Docto
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode != Activity.RESULT_CANCELED) {
-            if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE) {
-                val imageUri = CropImage.getPickImageResultUri(this, data)
-                // For API >= 23 we need to check specifically that we have permissions to read external storage.
-                if (CropImage.isReadExternalStoragePermissionsRequired(this, imageUri)) {
-                    // request permissions and handle the result in onRequestPermissionsResult()
-                    mCropImageUri = imageUri
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 0)
+            when (requestCode) {
+                Constant.REQUEST_IMAGE_PICK -> {
+                    if (resultCode == Activity.RESULT_OK) {
+                        val uri = data?.getParcelableExtra<Uri>("path")!!
+                        mDataBinding.imgPrescription.setImageURI(uri)
+                        mCropImageUri = uri
                     }
-                } else {
-                    startCropImageActivity(imageUri)
                 }
             }
-
-            if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-                val result = CropImage.getActivityResult(data)
-                if (resultCode == Activity.RESULT_OK) {
-                    mDataBinding.imgPrescription.setImageURI(result.uri)
-                    mCropImageUri = result.uri
-                } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                    Toast.makeText(this, "Cropping failed: ", Toast.LENGTH_LONG).show()
-                }
-            }
-        }
-    }
-
-    private fun startCropImageActivity(imageUri: Uri) {
-        try {
-            CropImage.activity(imageUri)
-                .setFixAspectRatio(true)
-                .setGuidelines(CropImageView.Guidelines.ON)
-                .setCropShape(CropImageView.CropShape.OVAL)
-                .setMultiTouchEnabled(true)
-                .start(this)
-        } catch (ex: Exception) {
-            Log.e("CropImage", "" + ex.message)
         }
     }
 
     private fun checkPermission() {
-        Dexter.withActivity(this@AddMedicalRecords)
-            .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            .withListener(object : PermissionListener {
-                override fun onPermissionGranted(response: PermissionGrantedResponse?) {
-                    CropImage.startPickImageActivity(this@AddMedicalRecords)
+        Dexter.withContext(this@AddMedicalRecords)
+            .withPermissions(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA
+            ).withListener(object : MultiplePermissionsListener {
+                override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
+                    report?.let {
+                        if (report.areAllPermissionsGranted()) {
+                            showImagePickerOptions()
+                        }
+                    }
                 }
 
                 override fun onPermissionRationaleShouldBeShown(
-                    permission: PermissionRequest?,
+                    permissions: List<PermissionRequest?>?,
                     token: PermissionToken?
                 ) {
-                    //close activity
                     token?.continuePermissionRequest()
                 }
+            }).withErrorListener {
+                ViewUtils.showToast(this@AddMedicalRecords, "Unable to perform this action", false)
+            }.check()
+    }
 
-                override fun onPermissionDenied(response: PermissionDeniedResponse?) {
-                    //close activity
-                    ViewUtils.showToast(applicationContext, "Unable to perform this action", false)
-                    //finish()
-                }
-            }).check()
+    private fun showImagePickerOptions() {
+        ImagePickerActivity.showImagePickerOptions(this, object : ImagePickerActivity.PickerOptionListener {
+            override fun onTakeCameraSelected() {
+                launchCameraIntent()
+            }
+
+            override fun onChooseGallerySelected() {
+                launchGalleryIntent()
+            }
+        })
+    }
+
+    private fun launchCameraIntent() {
+        val intent = Intent(this@AddMedicalRecords, ImagePickerActivity::class.java)
+        intent.putExtra(ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION, ImagePickerActivity.REQUEST_IMAGE_CAPTURE)
+        startActivityForResult(intent, Constant.REQUEST_IMAGE_PICK)
+    }
+
+    private fun launchGalleryIntent() {
+        val intent = Intent(this@AddMedicalRecords, ImagePickerActivity::class.java)
+        intent.putExtra(ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION, ImagePickerActivity.REQUEST_GALLERY_IMAGE)
+        startActivityForResult(intent, Constant.REQUEST_IMAGE_PICK)
     }
 
     override fun onDocClicked(docID: String, docName: String) {
