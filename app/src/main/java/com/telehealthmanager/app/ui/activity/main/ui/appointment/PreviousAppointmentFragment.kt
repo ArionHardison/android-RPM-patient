@@ -31,6 +31,7 @@ class PreviousAppointmentFragment : BaseFragment<FragmentPreviousAppointmentBind
     private lateinit var viewModel: AppointmentViewModel
     private lateinit var mDataBinding: FragmentPreviousAppointmentBinding
     private val ON_CHANGE_CODE = 100
+    val mAdapter = PreviousAppointmentsListAdapter(this)
 
     override fun getLayoutId(): Int = R.layout.fragment_previous_appointment
 
@@ -60,9 +61,8 @@ class PreviousAppointmentFragment : BaseFragment<FragmentPreviousAppointmentBind
     }
 
     private fun initAdapter() {
-        val mAdapter = PreviousAppointmentsListAdapter(this)
+
         mDataBinding.rvPreviousAppointments.addItemDecoration(DividerItemDecoration(requireActivity(), DividerItemDecoration.VERTICAL))
-        mDataBinding.rvPreviousAppointments.layoutManager = LinearLayoutManager(requireActivity())
         mDataBinding.rvPreviousAppointments.adapter = mAdapter
         viewModel.mResponsePrevious.observe(this, {
             viewModel.previousProgress.value = false

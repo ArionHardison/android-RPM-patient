@@ -1,6 +1,5 @@
 package com.telehealthmanager.app.ui.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -8,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.databinding.UpcomingListItemBinding
 import com.telehealthmanager.app.repositary.model.Appointment
-import com.telehealthmanager.app.repositary.model.DoctorListResponse
 import com.telehealthmanager.app.utils.ViewUtils
 
 class UpcomingAppointmentsListAdapter(
@@ -17,7 +15,10 @@ class UpcomingAppointmentsListAdapter(
 
     private val items: MutableList<Appointment> = mutableListOf()
 
+    private var position: Int = 0
+
     override fun onBindViewHolder(holder: UpcomingAppointmentsViewHolder, position: Int) {
+        holder.setIsRecyclable(false)
         val item = items[position]
         holder.itemBinding.upcomingDate.text = ViewUtils.getDayFormat(item.scheduled_at!!)
         holder.itemBinding.upcomingTime.text = ViewUtils.getTimeFormat(item.scheduled_at)
@@ -42,9 +43,12 @@ class UpcomingAppointmentsListAdapter(
         }
 
         holder.itemView.setOnClickListener {
+            setPosition(this@UpcomingAppointmentsListAdapter, position)
             listener.onItemClick(item)
         }
+
         holder.itemBinding.textView28.setOnClickListener {
+            setPosition(this@UpcomingAppointmentsListAdapter, position)
             listener.onCancelClick(item)
         }
     }
@@ -64,6 +68,21 @@ class UpcomingAppointmentsListAdapter(
     fun addItem(list: MutableList<Appointment>) {
         items.addAll(list)
         notifyDataSetChanged()
+    }
+
+    fun removeItem() {
+        items.removeAt(getPosition())
+        notifyDataSetChanged()
+    }
+
+    private fun getPosition(): Int {
+        return position
+    }
+
+    companion object {
+        fun setPosition(adapter: UpcomingAppointmentsListAdapter, position: Int) {
+            adapter.position = position
+        }
     }
 }
 

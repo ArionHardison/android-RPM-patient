@@ -1,5 +1,6 @@
 package com.telehealthmanager.app.ui.activity.findDoctors
 
+import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -13,17 +14,15 @@ import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
 import com.telehealthmanager.app.data.PreferenceHelper
 import com.telehealthmanager.app.databinding.ActivityFindDoctorCategoriesBinding
+import com.telehealthmanager.app.repositary.WebApiConstants
 import com.telehealthmanager.app.repositary.model.CategoryResponse
+import com.telehealthmanager.app.ui.activity.searchDoctor.SearchDoctorActivity
 import com.telehealthmanager.app.ui.adapter.CategoriesListAdapter
 import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ViewUtils
 
 class FindDoctorCategoriesActivity : BaseActivity<ActivityFindDoctorCategoriesBinding>(), FindDoctorsNavigator, CustomBackClick {
 
-    val categories: ArrayList<String> = ArrayList()
-
-    private lateinit var appBarConfiguration: AppBarConfiguration
-    private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
     private lateinit var viewModel: FindDoctorsViewModel
     private lateinit var mDataBinding: ActivityFindDoctorCategoriesBinding
     private var mCategoriesAdapter: CategoriesListAdapter? = null
@@ -52,7 +51,8 @@ class FindDoctorCategoriesActivity : BaseActivity<ActivityFindDoctorCategoriesBi
     }
 
     private fun observeResponse() {
-        viewModel.mCategoryResponse.observe(this, Observer<CategoryResponse> {
+        viewModel.mCategoryResponse.observe(this, {
+            loadingObservable.value = false
             viewModel.mCategoryList = it.category as MutableList<CategoryResponse.Category>?
             if (viewModel.mCategoryList!!.size > 0) {
                 mDataBinding.tvNotFound.visibility = View.GONE
@@ -62,9 +62,9 @@ class FindDoctorCategoriesActivity : BaseActivity<ActivityFindDoctorCategoriesBi
             mCategoriesAdapter = CategoriesListAdapter(viewModel.mCategoryList!!, this)
             mDataBinding.adapter = mCategoriesAdapter
             mCategoriesAdapter!!.notifyDataSetChanged()
-            loadingObservable.value = false
         })
-        viewModel.getErrorObservable().observe(this, Observer<String> { message ->
+
+        viewModel.getErrorObservable().observe(this, { message ->
             loadingObservable.value = false
             ViewUtils.showToast(this@FindDoctorCategoriesActivity, message, false)
         })
@@ -94,5 +94,10 @@ class FindDoctorCategoriesActivity : BaseActivity<ActivityFindDoctorCategoriesBi
                 }
             }
         })
+    }
+
+    override fun openSearchDoctors() {
+        val intent = Intent(applicationContext, SearchDoctorActivity::class.java)
+        startActivity(intent);
     }
 }

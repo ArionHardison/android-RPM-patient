@@ -99,7 +99,7 @@ class AddReminderActivity : BaseActivity<ActivityAddReminderBinding>(), AddRemin
                 fromCalendar.set(Calendar.MONTH, monthOfYear)
                 fromCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
                 val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                mViewModel.fromTime.value = sdf.format(fromCalendar.time)
+                mViewModel.fromDate.value = sdf.format(fromCalendar.time)
                 //scheduleDate.setText(schedule_date);
                 val fmtOut = SimpleDateFormat("dd/MM/yy", Locale.getDefault())
                 mViewModel.displayFromDate.set(fmtOut.format(fromCalendar.time))

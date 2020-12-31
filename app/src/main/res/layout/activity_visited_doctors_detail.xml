@@ -31,6 +31,10 @@
             name="isVideo"
             type="java.lang.Boolean" />
 
+        <variable
+            name="statusColor"
+            type="java.lang.Integer" />
+
     </data>
 
     <ScrollView
@@ -163,12 +167,12 @@
                     android:layout_height="0dp"
                     android:onClick="@{()->viewmodel.onClickVideo()}"
                     android:padding="@dimen/_10sdp"
-                    android:tint="@color/colorPrimary"
                     android:visibility="@{isVideo? View.VISIBLE : View.GONE, default=gone}"
                     app:layout_constraintBottom_toBottomOf="@+id/textView34"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/textView34"
-                    app:srcCompat="@drawable/twillio_ic_video_call" />
+                    app:srcCompat="@drawable/twillio_ic_video_call"
+                    app:tint="@color/colorPrimary" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
@@ -229,8 +233,8 @@
                     android:paddingEnd="@dimen/_8sdp"
                     android:paddingBottom="@dimen/_12sdp"
                     android:text="@{viewmodel.status}"
-                    android:textAllCaps="false"
-                    android:textColor="@color/colorGreen"
+                    android:textAllCaps="true"
+                    android:textColor="@{statusColor ,default=@color/green}"
                     android:textSize="@dimen/_12sdp"
                     app:layout_constraintEnd_toEndOf="@+id/textView37"
                     app:layout_constraintStart_toStartOf="@+id/textView37"
@@ -387,7 +391,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/statusLayout"
-                tools:visibility="gone"/>
+                tools:visibility="gone" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

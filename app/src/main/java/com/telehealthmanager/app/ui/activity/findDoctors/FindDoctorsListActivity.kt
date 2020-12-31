@@ -36,7 +36,7 @@ import java.io.Serializable
 
 
 class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
-    FindDoctorsNavigator, IDoctorListener, CustomBackClick {
+    IDoctorListener, CustomBackClick {
 
     private val TAG = "FindDoctorsListActivity"
     private lateinit var viewModel: FindDoctorsViewModel
@@ -51,7 +51,6 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
         mDataBinding = mViewDataBinding as ActivityFindDoctorsListBinding
         viewModel = ViewModelProvider(this).get(FindDoctorsViewModel::class.java)
         mDataBinding.viewmodel = viewModel
-        viewModel.navigator = this
         viewModel.mCategoryId.set(intent.getIntExtra(WebApiConstants.IntentPass.ID, 1))
 
         mAdapter = FindDoctorListAdapter(this@FindDoctorsListActivity, this)

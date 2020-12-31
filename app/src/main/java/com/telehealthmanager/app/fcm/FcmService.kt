@@ -101,6 +101,10 @@ class FcmService : FirebaseMessagingService() {
                     // MISSED CALL
                     showMissedCallNotification(pushResponse)
                 }
+            }else if (Objects.requireNonNull(notificationMap["message"]) == "video_call_cancelled") {
+                if (isMyServiceRunning()) {
+                    stopCallReceiveService()
+                }
             } else {
                 val intent = Intent(this, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)

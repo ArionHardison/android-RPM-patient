@@ -31,39 +31,6 @@
         android:usesCleartextTraffic="true"
         tools:ignore="ExtraText,GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name="com.telehealthmanager.app.ui.activity.searchDoctor.SearchDoctorScheduleActivity" />
-        <activity android:name="com.telehealthmanager.app.ui.activity.searchGlobal.SearchGlobalActivity" />
-        <activity android:name="com.telehealthmanager.app.ui.activity.searchDoctor.SearchDoctorDetailActivity" />
-        <activity android:name="com.telehealthmanager.app.ui.activity.addreminder.AddReminderActivity" />
-
-        <activity android:name="com.telehealthmanager.app.ui.activity.searchDoctor.SearchDoctorActivity" />
-        <activity android:name="com.telehealthmanager.app.ui.activity.pubnub.PubnubChatActivity" />
-        <activity android:name="com.telehealthmanager.app.ui.activity.chat.ChatSummaryActivity" />
-        <activity android:name="com.telehealthmanager.app.ui.activity.chat.ChatProblemAreaActivity" />
-        <activity
-            android:name="com.telehealthmanager.app.ui.activity.chat.ChatActivity"
-            android:label="@string/title_activity_chat"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.telehealthmanager.app.ui.activity.success.SuccessActivity" />
-        <activity android:name="com.telehealthmanager.app.ui.activity.payment.PaymentActivity" />
-        <activity android:name="com.telehealthmanager.app.ui.activity.patientDetail.PatientDetailsActivity" />
-        <activity android:name="com.telehealthmanager.app.ui.activity.findDoctors.FindDoctorBookingActivity" />
-        <activity android:name="com.telehealthmanager.app.ui.activity.findDoctors.FindDoctorsListActivity" />
-        <activity android:name="com.telehealthmanager.app.ui.activity.findDoctors.FindDoctorCategoriesActivity" />
-        <activity android:name="com.telehealthmanager.app.ui.activity.thankyou.ThankyouActivity" />
-        <activity android:name="com.telehealthmanager.app.ui.activity.visitedDoctor.VisitedDoctorsDetailActivity" />
-        <activity android:name="com.telehealthmanager.app.ui.activity.visitedDoctor.VisitedDoctorsActivity" />
-        <activity android:name="com.telehealthmanager.app.ui.activity.profile.ProfileActivity" />
-        <activity
-            android:name="com.telehealthmanager.app.ui.activity.main.MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.telehealthmanager.app.ui.activity.register.RegisterFinalActivity" />
-        <activity android:name="com.telehealthmanager.app.ui.activity.register.RegisterGenderActivity" />
-        <activity android:name="com.telehealthmanager.app.ui.activity.register.RegisterEmailActivity" />
-        <activity android:name="com.telehealthmanager.app.ui.activity.register.RegisterNameActivity" />
-        <activity android:name="com.telehealthmanager.app.ui.activity.login.LoginActivity" />
-        <activity android:name="com.telehealthmanager.app.ui.activity.allservice.AllServiceActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -72,6 +39,17 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <!-- cache directory file provider paths -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
 
         <!-- Firebase Notifications -->
         <meta-data
@@ -91,7 +69,7 @@
             android:value="false" />
 
         <service
-            android:name="com.telehealthmanager.app.fcm.FcmService"
+            android:name=".fcm.FcmService"
             android:enabled="true"
             android:exported="false"
             android:permission="android.permission.FOREGROUND_SERVICE">
@@ -99,34 +77,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <service
-            android:foregroundServiceType="mediaProjection"
-            android:name=".ui.twilio.CallReceiveService"
-            android:enabled="true"
-            android:exported="false" />
-
-        <receiver
-            android:name=".ui.twilio.CallDeclineReceiver"
-            android:enabled="true"
-            android:exported="false"/>
-
-        <service android:name=".ui.twilio.TwilioCallService"
-            android:enabled="true"
-            android:exported="false"
-            android:foregroundServiceType="mediaProjection"
-            android:permission="android.permission.FOREGROUND_SERVICE" />
-
-        <activity android:name=".ui.twilio.TwilloVideoActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:noHistory="true"
-            android:excludeFromRecents="true"
-            android:configChanges="orientation|screenSize"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
-
-        <activity android:name="com.telehealthmanager.app.ui.activity.healthfeeddetails.HealthFeedDetailsActivity" />
 
         <activity
             android:name="com.telehealthmanager.app.ui.activity.splash.SplashActivity"
@@ -137,14 +87,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.telehealthmanager.app.ui.activity.otp.OTPActivity" />
 
-
+        <activity android:name=".ui.activity.login.LoginActivity" />
+        <activity android:name=".ui.activity.allservice.AllServiceActivity" />
+        <activity android:name=".ui.activity.searchDoctor.SearchDoctorScheduleActivity" />
+        <activity android:name=".ui.activity.searchGlobal.SearchGlobalActivity" />
+        <activity android:name=".ui.activity.searchDoctor.SearchDoctorDetailActivity" />
+        <activity android:name=".ui.activity.addreminder.AddReminderActivity" />
+        <activity android:name=".ui.activity.searchDoctor.SearchDoctorActivity" />
+        <activity android:name=".ui.activity.pubnub.PubnubChatActivity" />
+        <activity android:name=".ui.activity.chat.ChatSummaryActivity" />
+        <activity android:name=".ui.activity.chat.ChatProblemAreaActivity" />
+        <activity android:name=".ui.activity.success.SuccessActivity" />
+        <activity android:name=".ui.activity.payment.PaymentActivity" />
+        <activity android:name=".ui.activity.patientDetail.PatientDetailsActivity" />
+        <activity android:name=".ui.activity.findDoctors.FindDoctorBookingActivity" />
+        <activity android:name=".ui.activity.findDoctors.FindDoctorsListActivity" />
+        <activity android:name=".ui.activity.findDoctors.FindDoctorCategoriesActivity" />
+        <activity android:name=".ui.activity.thankyou.ThankyouActivity" />
+        <activity android:name=".ui.activity.visitedDoctor.VisitedDoctorsDetailActivity" />
+        <activity android:name=".ui.activity.visitedDoctor.VisitedDoctorsActivity" />
+        <activity android:name=".ui.activity.profile.ProfileActivity" />
+        <activity android:name=".ui.activity.healthfeeddetails.HealthFeedDetailsActivity" />
+        <activity android:name=".ui.activity.otp.OTPActivity" />
         <activity android:name=".ui.activity.allergies.AllergiesActivity" />
-        <activity android:name=".ui.activity.allergies.AddAllergiesActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.MyApp"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity android:name=".ui.activity.addmoney.AddCardActivity" />
         <activity android:name=".ui.activity.addmoney.AddMoneyActivity" />
         <activity android:name=".ui.activity.changepassword.ChangePasswordActivity" />
@@ -152,15 +118,64 @@
         <activity android:name=".ui.activity.addmedicalrecord.DoctorMedicalRecords" />
         <activity android:name=".ui.activity.addmedicalrecord.MedicalRecordDetails" />
         <activity android:name=".ui.activity.addmedicalrecord.RecordImageFile" />
+        <activity android:name=".ui.activity.payment.PaymentTypeActivity" />
+        <activity android:name=".ui.activity.visitedDoctor.InvoiceActivity" />
+        <activity android:name=".ui.activity.register.RegisterFinalActivity" />
+        <activity android:name=".ui.activity.register.RegisterGenderActivity" />
+        <activity android:name=".ui.activity.register.RegisterEmailActivity" />
+        <activity android:name=".ui.activity.register.RegisterNameActivity" />
+
+
+        <activity
+            android:name=".ui.activity.main.MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".ui.activity.chat.ChatActivity"
+            android:label="@string/title_activity_chat"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <service
+            android:name=".ui.twilio.CallReceiveService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="mediaProjection" />
+
+        <receiver
+            android:name=".ui.twilio.CallDeclineReceiver"
+            android:enabled="true"
+            android:exported="false" />
+
+        <service
+            android:name=".ui.twilio.TwilioCallService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="mediaProjection"
+            android:permission="android.permission.FOREGROUND_SERVICE" />
+
+        <activity
+            android:name=".ui.twilio.TwilloVideoActivity"
+            android:configChanges="orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".ui.activity.allergies.AddAllergiesActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MyApp"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
 
         <activity
             android:name=".ui.activity.searchDoctor.VideoViewActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
             android:label="Chat Video"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.activity.payment.PaymentTypeActivity" />
-        <activity android:name=".ui.activity.visitedDoctor.InvoiceActivity" />
-
 
         <activity android:name=".utils.ImagePickerActivity" />
 
@@ -169,17 +184,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/Base.Theme.AppCompat"
             android:windowSoftInputMode="stateAlwaysHidden" />
-
-        <!-- cache directory file provider paths -->
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
 
     </application>
 

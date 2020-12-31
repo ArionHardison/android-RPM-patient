@@ -2,6 +2,7 @@ package com.telehealthmanager.app.ui.activity.visitedDoctor
 
 import android.app.Activity
 import android.content.Intent
+import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -126,12 +127,15 @@ class VisitedDoctorsDetailActivity : BaseActivity<ActivityVisitedDoctorsDetailBi
             when {
                 mAppointment.status.equals("CANCELLED", true) -> {
                     viewModel.status.set(mAppointment.status ?: "")
+                    mDataBinding.statusColor= ContextCompat.getColor(applicationContext, R.color.colorRed)
                 }
                 mAppointment.status.equals("CHECKEDOUT", true) -> {
                     viewModel.status.set("CONSULTED")
+                    mDataBinding.statusColor= ContextCompat.getColor(applicationContext, R.color.colorGreen)
                 }
                 else -> {
                     viewModel.status.set(mAppointment.status ?: "")
+                    mDataBinding.statusColor= ContextCompat.getColor(applicationContext, R.color.colorGreen)
                 }
             }
         }

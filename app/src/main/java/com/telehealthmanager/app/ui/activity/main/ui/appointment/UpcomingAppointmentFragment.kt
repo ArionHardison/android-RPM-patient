@@ -34,6 +34,7 @@ class UpcomingAppointmentFragment : BaseFragment<FragmentUpcomingAppointmentBind
     private lateinit var viewModel: AppointmentViewModel
     private lateinit var mDataBinding: FragmentUpcomingAppointmentBinding
     private val ON_REQUEST_CANCEL = 100
+    val mAdapter = UpcomingAppointmentsListAdapter(this)
 
     override fun getLayoutId(): Int = R.layout.fragment_upcoming_appointment
 
@@ -63,7 +64,6 @@ class UpcomingAppointmentFragment : BaseFragment<FragmentUpcomingAppointmentBind
     }
 
     private fun initAdapter() {
-        val mAdapter = UpcomingAppointmentsListAdapter(this)
         mDataBinding.rvUpcomingAppointments.addItemDecoration(DividerItemDecoration(requireActivity(), DividerItemDecoration.VERTICAL))
         mDataBinding.rvUpcomingAppointments.layoutManager = LinearLayoutManager(requireActivity())
         mDataBinding.rvUpcomingAppointments.adapter = mAdapter
@@ -77,6 +77,16 @@ class UpcomingAppointmentFragment : BaseFragment<FragmentUpcomingAppointmentBind
             }
         })
 
+        viewModel.mCancelResponse.observe(this, {
+            viewModel.loadingProgress.value = false
+            if (it.status)
+                ViewUtils.showToast(requireActivity(), it.message, true)
+            mAdapter.removeItem()
+            if (mAdapter.itemCount == 0) {
+                mDataBinding.tvNotFound.visibility = View.VISIBLE
+            }
+        })
+
     }
 
     private fun observeResponse() {
@@ -84,13 +94,6 @@ class UpcomingAppointmentFragment : BaseFragment<FragmentUpcomingAppointmentBind
         viewModel.getErrorObservable().observe(this, { message ->
             viewModel.loadingProgress.value = false
             ViewUtils.showToast(requireActivity(), message, false)
-        })
-
-        viewModel.mCancelResponse.observe(this, {
-            viewModel.loadingProgress.value = false
-            if (it.status)
-                ViewUtils.showToast(requireActivity(), it.message, true)
-            initApiCal()
         })
 
         viewModel.loadingProgress.observe(this, {
@@ -116,7 +119,10 @@ class UpcomingAppointmentFragment : BaseFragment<FragmentUpcomingAppointmentBind
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == ON_REQUEST_CANCEL) {
             if (resultCode != Activity.RESULT_CANCELED) {
-                initApiCal()
+                mAdapter.removeItem()
+                if (mAdapter.itemCount == 0) {
+                    mDataBinding.tvNotFound.visibility = View.VISIBLE
+                }
             }
         }
     }

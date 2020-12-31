@@ -27,8 +27,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class FindDoctorBookingActivity : BaseActivity<ActivityFindDoctorBookingBinding>(),
-    FindDoctorsNavigator, TimePickerDialog.OnTimeSetListener, CustomBackClick {
+class FindDoctorBookingActivity : BaseActivity<ActivityFindDoctorBookingBinding>(), TimePickerDialog.OnTimeSetListener, CustomBackClick {
 
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
     private lateinit var viewModel: FindDoctorsViewModel
@@ -42,7 +41,6 @@ class FindDoctorBookingActivity : BaseActivity<ActivityFindDoctorBookingBinding>
         mDataBinding = mViewDataBinding as ActivityFindDoctorBookingBinding
         viewModel = ViewModelProvider(this).get(FindDoctorsViewModel::class.java)
         mDataBinding.viewmodel = viewModel
-        viewModel.navigator = this
         observeResponse()
 
         mDataBinding.searchDocName.text = preferenceHelper.getValue(PreferenceKey.SELECTED_DOC_NAME, "").toString()
@@ -114,7 +112,7 @@ class FindDoctorBookingActivity : BaseActivity<ActivityFindDoctorBookingBinding>
             preferenceHelper.setValue(PreferenceKey.BOOKED_FOR, "follow_up")
         } else {
             preferenceHelper.setValue(PreferenceKey.VISIT_PURPOSE, mDataBinding.radioButton2.text.toString())
-            preferenceHelper.setValue(PreferenceKey.BOOKED_FOR,"consultation")
+            preferenceHelper.setValue(PreferenceKey.BOOKED_FOR, "consultation")
         }
         perFormClick()
     }

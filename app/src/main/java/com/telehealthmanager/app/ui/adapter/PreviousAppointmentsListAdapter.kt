@@ -14,9 +14,10 @@ class PreviousAppointmentsListAdapter(
     val listener: IAppointmentListener
 ) : RecyclerView.Adapter<PreviousAppointmentsViewHolder>() {
 
-    private val items: MutableList<Appointment> = mutableListOf()
+    private var items: MutableList<Appointment> = mutableListOf()
 
     override fun onBindViewHolder(holder: PreviousAppointmentsViewHolder, position: Int) {
+        holder.setIsRecyclable(false)
         val item: Appointment = items[position]
         holder.itemBinding.upcomingDate.text = ViewUtils.getDayFormat(item.scheduled_at!!)
         holder.itemBinding.upcomingTime.text = ViewUtils.getTimeFormat(item.scheduled_at)
@@ -68,7 +69,7 @@ class PreviousAppointmentsListAdapter(
     }
 
     fun addItem(list: MutableList<Appointment>) {
-        items.addAll(list)
+        items = list
         notifyDataSetChanged()
     }
 

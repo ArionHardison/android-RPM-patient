@@ -2,7 +2,6 @@ package com.telehealthmanager.app.ui.calander_view;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -25,7 +24,7 @@ class BookingCalanderAdapter extends RecyclerView.Adapter<BookingCalanderAdapter
     private Context mCtx;
     private BookingCalanderView.OnCalendarListener onCalendarListener;
     private int selectedPosition = 0;
-    private ArrayList<String> currentDate=new ArrayList<>();
+    private ArrayList<String> currentDate = new ArrayList<>();
 
     public void setOnCalendarListener(BookingCalanderView.OnCalendarListener onCalendarListener) {
         this.onCalendarListener = onCalendarListener;
@@ -79,25 +78,16 @@ class BookingCalanderAdapter extends RecyclerView.Adapter<BookingCalanderAdapter
         }
 
         if (model.getStatus() == 0) {
-            holder.date.setTextColor(ContextCompat.getColor(holder.itemView.getContext(),R.color.colorButton));
-            holder.month.setTextColor(ContextCompat.getColor(holder.itemView.getContext(),R.color.colorButton));
-            holder.day.setTextColor(ContextCompat.getColor(holder.itemView.getContext(),R.color.colorButton));
-            holder.parent.setBackgroundResource(R.drawable.calander_unselecte);
+            setUpdatedViewSelect(holder);
         } else {
-            holder.date.setTextColor(ContextCompat.getColor(holder.itemView.getContext(),R.color.colorWhite));
-            holder.month.setTextColor(ContextCompat.getColor(holder.itemView.getContext(),R.color.colorWhite));
-            holder.day.setTextColor(ContextCompat.getColor(holder.itemView.getContext(),R.color.colorWhite));
-            holder.parent.setBackgroundResource(R.drawable.calander_select);
+            setUpdatedViewUnSelect(holder);
             selectedPosition = position;
         }
 
         holder.parent.setOnClickListener(view -> {
             list.get(selectedPosition).setStatus(0);
             list.get(position).setStatus(1);
-            holder.date.setTextColor(ContextCompat.getColor(holder.itemView.getContext(),R.color.colorWhite));
-            holder.month.setTextColor(ContextCompat.getColor(holder.itemView.getContext(),R.color.colorWhite));
-            holder.day.setTextColor(ContextCompat.getColor(holder.itemView.getContext(),R.color.colorWhite));
-            holder.parent.setBackgroundResource(R.drawable.calander_select);
+            setUpdatedViewUnSelect(holder);
             notifyDataSetChanged();
 
             Calendar cal = Calendar.getInstance();
@@ -106,6 +96,20 @@ class BookingCalanderAdapter extends RecyclerView.Adapter<BookingCalanderAdapter
                     Integer.parseInt(sdf1.format(model.getTimeinmilli()).split("-")[2]));
             onCalendarListener.onDateSelected(cal, sdf1.format(model.getTimeinmilli()));
         });
+    }
+
+    private void setUpdatedViewSelect(MyViewHolder holder) {
+        holder.date.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.colorButton));
+        holder.month.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.colorButton));
+        holder.day.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.colorButton));
+        holder.parent.setBackgroundResource(R.drawable.calander_unselecte);
+    }
+
+    private void setUpdatedViewUnSelect(MyViewHolder holder) {
+        holder.date.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.colorWhite));
+        holder.month.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.colorWhite));
+        holder.day.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.colorWhite));
+        holder.parent.setBackgroundResource(R.drawable.calander_select);
     }
 
     @Override

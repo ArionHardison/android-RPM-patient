@@ -55,4 +55,8 @@ class FindDoctorsViewModel : BaseViewModel<FindDoctorsNavigator>() {
             }
         }
     }
+
+    fun clickSearchDoctors() {
+        navigator.openSearchDoctors()
+    }
 }

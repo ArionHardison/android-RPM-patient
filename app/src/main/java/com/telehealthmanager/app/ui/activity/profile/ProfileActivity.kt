@@ -368,27 +368,20 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode != Activity.RESULT_CANCELED) {
             when (requestCode) {
-
                 Constant.REQUEST_AUTOCOMPLETE -> {
-                    if (resultCode == Activity.RESULT_OK) {
-                        val place: Place = Autocomplete.getPlaceFromIntent(data!!)
-                        viewModel.location.set(place.name.toString().plus(", ").plus(place.address.toString()))
-                    }
+                    val place: Place = Autocomplete.getPlaceFromIntent(data!!)
+                    viewModel.location.set(place.name.toString().plus(", ").plus(place.address.toString()))
                 }
 
                 Constant.REQUEST_CODE_ALLERGIES -> {
-                    if (resultCode == Activity.RESULT_OK) {
-                        val allergies = data!!.getStringExtra("select_allergies") as String
-                        viewModel.allergies.set(allergies)
-                    }
+                    val allergies = data!!.getStringExtra("select_allergies") as String
+                    viewModel.allergies.set(allergies)
                 }
 
                 Constant.REQUEST_IMAGE_PICK -> {
-                    if (resultCode == Activity.RESULT_OK) {
-                        val uri = data?.getParcelableExtra<Uri>("path")!!
-                        mDataBinding.layoutProfilePersonal.imgProf.setImageURI(uri)
-                        mCropImageUri = uri
-                    }
+                    val uri = data?.getParcelableExtra<Uri>("path")!!
+                    mDataBinding.layoutProfilePersonal.imgProf.setImageURI(uri)
+                    mCropImageUri = uri
                 }
             }
         }
