@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name='Telehealthmanager_android_patient'
+rootProject.name='telehealthmanager_android_patient'

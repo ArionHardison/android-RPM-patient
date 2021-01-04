@@ -380,7 +380,12 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
 
                 Constant.REQUEST_IMAGE_PICK -> {
                     val uri = data?.getParcelableExtra<Uri>("path")!!
-                    mDataBinding.layoutProfilePersonal.imgProf.setImageURI(uri)
+                    Glide.with(applicationContext)
+                        .load(uri)
+                        .thumbnail(0.5f)
+                        .error(R.drawable.user_placeholder)
+                        .placeholder(R.drawable.user_placeholder)
+                        .into(mDataBinding.layoutProfilePersonal.imgProf)
                     mCropImageUri = uri
                 }
             }
