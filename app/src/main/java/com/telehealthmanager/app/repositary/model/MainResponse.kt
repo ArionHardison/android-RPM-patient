@@ -10,7 +10,7 @@ data class MainResponse(
 
     data class Doctor(
         val id: Int,
-        val hospital: Hospital,
+        val hospital: Hospital?=null,
         val hospital_id: Int,
         val patient_id: Int
     ): Serializable

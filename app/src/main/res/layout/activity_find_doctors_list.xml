@@ -10,9 +10,6 @@
             name="viewmodel"
             type="com.telehealthmanager.app.ui.activity.findDoctors.FindDoctorsViewModel" />
 
-        <variable
-            name="adapter"
-            type="com.telehealthmanager.app.ui.adapter.FindDoctorListAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -96,13 +93,14 @@
                         android:orientation="horizontal"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent">
+
                         <ImageView
                             android:id="@+id/imageView17"
                             android:layout_width="@dimen/_30sdp"
                             android:layout_height="@dimen/_30sdp"
+                            android:layout_marginEnd="@dimen/_5sdp"
                             android:background="@drawable/search_bg"
-                            app:srcCompat="@drawable/ic_filter"
-                            android:layout_marginEnd="@dimen/_5sdp"/>
+                            app:srcCompat="@drawable/ic_filter" />
 
                         <ImageView
                             android:layout_width="@dimen/_25sdp"
@@ -119,10 +117,10 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:text="New York"
-                            android:visibility="gone"
                             android:textColor="@color/colorWhite"
                             android:textSize="@dimen/_12sdp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:visibility="gone" />
 
                         <ImageView
                             android:layout_width="@dimen/_25sdp"
@@ -145,8 +143,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
             android:background="@color/colorWhite"
-            app:layout_constraintEnd_toEndOf="parent"
             android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBar">
 
@@ -161,9 +159,9 @@
                 android:ems="10"
                 android:focusable="true"
                 android:hint="Search"
-                android:visibility="gone"
                 android:inputType="textPersonName"
                 android:padding="@dimen/_8sdp"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -180,6 +178,20 @@
             app:layout_constraintStart_toStartOf="@+id/search_layout"
             app:layout_constraintTop_toBottomOf="@+id/search_layout"
             tools:listitem="@layout/find_doctor_list_item" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvFilterView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/search_layout"
+            app:layout_constraintStart_toStartOf="@+id/search_layout"
+            app:layout_constraintTop_toBottomOf="@+id/search_layout"
+            tools:listitem="@layout/find_doctor_list_item" />
+
 
         <TextView
             android:id="@+id/tvNotFound"

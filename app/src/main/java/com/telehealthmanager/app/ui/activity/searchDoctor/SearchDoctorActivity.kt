@@ -8,6 +8,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
@@ -66,10 +67,10 @@ class SearchDoctorActivity : BaseActivity<ActivitySearchDoctorBinding>(), Custom
     }
 
     private fun initPagination() {
-
+        loadingObservable.value = true
+        doctorsAdapter.registerAdapterDataObserver(adapterObserver)
         mDataBinding.rvDoctors.layoutManager = LinearLayoutManager(this)
         mDataBinding.rvDoctors.setHasFixedSize(true)
-
         mDataBinding.rvSerachDoctors.layoutManager = LinearLayoutManager(this)
         mDataBinding.rvSerachDoctors.setHasFixedSize(true)
         mDataBinding.editText13.addTextChangedListener(object : TextWatcher {
@@ -119,6 +120,22 @@ class SearchDoctorActivity : BaseActivity<ActivitySearchDoctorBinding>(), Custom
         })
 
     }
+
+    private val adapterObserver = object : RecyclerView.AdapterDataObserver() {
+        override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+            val count = doctorsAdapter.itemCount
+            if (itemCount == 0 && count == 0) {
+                loadingObservable.value = false
+                mDataBinding.rvDoctors.visibility = View.GONE
+                mDataBinding.tvNotFound.visibility = View.VISIBLE
+            } else {
+                loadingObservable.value = false
+                mDataBinding.rvDoctors.visibility = View.VISIBLE
+                mDataBinding.tvNotFound.visibility = View.GONE
+            }
+        }
+    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

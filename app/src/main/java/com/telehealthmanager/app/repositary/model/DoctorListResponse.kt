@@ -26,7 +26,7 @@ data class DoctorListResponse(
             val deleted_at: Any,
             val doctor_id: Int,
             val experience: String,
-            val fees: Int,
+            val fees: Int?=null,
             val gender: String,
             val hospital: List<Hospital>,
             val id: Int,
@@ -35,11 +35,11 @@ data class DoctorListResponse(
             val medical_school: Any,
             val postal_code: Any,
             val profile_description: Any,
-            val profile_pic: String,
+            val profile_pic: String?=null,
             val profile_video: String,
             val residency: Any,
             val specialities: Int,
-            val speciality:Speciality,
+            val speciality:Speciality?=null,
             val updated_at: String
         ) : Serializable{
             data class Speciality(

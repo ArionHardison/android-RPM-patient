@@ -15,19 +15,16 @@ import com.telehealthmanager.app.data.PreferenceKey
 import com.telehealthmanager.app.data.getValue
 import com.telehealthmanager.app.databinding.FindDoctorListItemBinding
 import com.telehealthmanager.app.repositary.model.DoctorListResponse
+import com.telehealthmanager.app.utils.ViewCallBack
 import com.telehealthmanager.app.utils.ViewUtils
 
-class FindDoctorListAdapter(
+class FindFilterDoctorListAdapter(
     val context: Context,
-    val listener: IDoctorListener
+    val listener: ViewCallBack.IDoctorListener
 ) :
     RecyclerView.Adapter<FindDoctorViewHolder>() {
 
-    private val items: MutableList<DoctorListResponse.specialities.DoctorProfile> = mutableListOf()
-
-    private var isSearchRequest = false
-
-    private val holdingItems = mutableListOf<DoctorListResponse.specialities.DoctorProfile>()
+    private var items: MutableList<DoctorListResponse.specialities.DoctorProfile> = mutableListOf()
 
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
 
@@ -36,17 +33,17 @@ class FindDoctorListAdapter(
         val item: DoctorListResponse.specialities.DoctorProfile = items[position]
         if (!item.hospital.isNullOrEmpty()) {
             holder.itemBinding.textView47.text = (item.hospital[0].first_name ?: "").plus(" ").plus(item.hospital[0].last_name ?: "")
-            if (item.hospital[0].clinic != null) {
-                val clinic = item.hospital[0].clinic
-                if (clinic?.name != null && clinic?.address != null) {
-                    holder.itemBinding.textView52.text = (item.hospital[0].clinic?.name ?: "").plus(" , ").plus(item.hospital[0].clinic?.address ?: "")
+
+            item.hospital[0].clinic?.let { clinic ->
+                if (clinic.name != null && clinic.address != null) {
+                    holder.itemBinding.textView52.text = (item.hospital[0].clinic?.name ?: "No Clinic").plus(" , ").plus(item.hospital[0].clinic?.address ?: "No address")
                 } else {
-                    holder.itemBinding.textView52.text = "No Location"
-                    if (clinic?.name != null) {
+                    holder.itemBinding.textView52.text = "No Address"
+                    if (clinic.name != null) {
                         holder.itemBinding.textView52.text = clinic.name
                     }
 
-                    if (clinic?.address != null) {
+                    if (clinic.address != null) {
                         holder.itemBinding.textView52.text = clinic.address
                     }
                 }
@@ -100,26 +97,8 @@ class FindDoctorListAdapter(
     }
 
     fun addItems(list: MutableList<DoctorListResponse.specialities.DoctorProfile>) {
-        items.addAll(list)
-        if (!isSearchRequest)
-            holdingItems.addAll(list)
-        notifyItemRangeInserted(items.size - 1, list.size)
-    }
-
-    fun onSearchCleared() {
-        isSearchRequest = false
-        items.addAll(holdingItems)
+        items=list
         notifyDataSetChanged()
-    }
-
-    fun onSearchRequest() {
-        isSearchRequest = true
-        items.clear()
-        notifyDataSetChanged()
-    }
-
-    fun getItem(index: Int): DoctorListResponse.specialities.DoctorProfile {
-        return items[index]
     }
 
     // Gets the number of animals in the list
@@ -127,12 +106,6 @@ class FindDoctorListAdapter(
         return items.size
     }
 
-}
-
-interface IDoctorListener {
-    fun onBookClick(selectedItem: DoctorListResponse.specialities.DoctorProfile)
-    fun onItemClick(selectedItem: DoctorListResponse.specialities.DoctorProfile)
-    fun onCallClick(phone: String)
 }
 
 class FindDoctorViewHolder(view: FindDoctorListItemBinding) : RecyclerView.ViewHolder(view.root) {

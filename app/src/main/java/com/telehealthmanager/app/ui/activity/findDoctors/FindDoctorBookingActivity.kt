@@ -70,9 +70,7 @@ class FindDoctorBookingActivity : BaseActivity<ActivityFindDoctorBookingBinding>
         mDataBinding.calanderView.setUpCalendar(startTime.timeInMillis, endTime.timeInMillis, datesToBeColored) { date, strDate ->
             viewModel.mSelectedScheduleDate.set(strDate)
             viewModel.selectedDate = date
-            Log.e("mSelectedSchedul==>", "" + viewModel.mSelectedScheduleDate.get().toString())
         }
-        Log.e("mSelectedSchedul==>", "" + viewModel.mSelectedScheduleDate.get().toString())
 
         mDataBinding.button17.setOnClickListener {
             var hour: Int = 0

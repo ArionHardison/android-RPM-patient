@@ -7,6 +7,7 @@ import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.provider.MediaStore
+import android.text.format.DateUtils
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.MainThread
@@ -23,6 +24,8 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.math.abs
+
 
 object ViewUtils {
 
@@ -98,7 +101,27 @@ object ViewUtils {
             .show()
     }
 
+
     fun getTimeAgoFormat(str: String): String {
+        val sdf =
+            SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        var dateObj: Date? = null
+        try {
+            dateObj = sdf.parse(str)
+            val niceDateStr: String = DateUtils.getRelativeTimeSpanString(
+                dateObj.time,
+                Calendar.getInstance().timeInMillis,
+                DateUtils.MINUTE_IN_MILLIS
+            ) as String
+            return niceDateStr
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return ""
+    }
+
+    /*fun getTimeAgoFormat(str: String): String {
+
         val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         val past = format.parse(str)
         val now = Date()
@@ -106,8 +129,11 @@ object ViewUtils {
         val minutes: Long = TimeUnit.MILLISECONDS.toMinutes(now.time - past.time)
         val hours: Long = TimeUnit.MILLISECONDS.toHours(now.time - past.time)
         val days: Long = TimeUnit.MILLISECONDS.toDays(now.time - past.time)
+
+        val difference: Long = abs(now.time - past.time)
+
         return when {
-            seconds < 60 -> {
+            difference > DateUtils.WEEK_IN_MILLIS -> {
                 "$seconds seconds ago"
             }
             minutes < 60 -> {
@@ -120,8 +146,9 @@ object ViewUtils {
                 "$days days ago"
             }
         }
-    }
 
+    }
+*/
 
     fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
         val bytes = ByteArrayOutputStream()
@@ -208,7 +235,7 @@ object ViewUtils {
 
     fun getChatTimeFormat(str: String): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-        var dateObj: Date? = null
+        val dateObj: Date?
         try {
             dateObj = sdf.parse(str)
             val time = SimpleDateFormat("h:mm a", Locale.getDefault()).format(dateObj)
@@ -228,8 +255,7 @@ object ViewUtils {
             dateObj = sdf.parse(str)
             val time =
                 SimpleDateFormat("h:mm a", Locale.getDefault()).format(dateObj)
-            val fmtOutFull =
-                SimpleDateFormat("d MMM yyyy, EEE", Locale.getDefault())
+            val fmtOutFull = SimpleDateFormat("d MMM yyyy, EEE", Locale.getDefault())
             return String.format("%s %s", fmtOutFull.format(dateObj!!.time), time)
         } catch (e: ParseException) {
             e.printStackTrace()

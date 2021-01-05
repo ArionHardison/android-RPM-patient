@@ -3,9 +3,9 @@ package com.telehealthmanager.app.repositary.model
 import java.io.Serializable
 
 data class Hospital(
-    val availability: String,
+    val availability: String?=null,
     val added_by: Any,
-    val clinic: Clinic,
+    val clinic: Clinic? = null,
     val clinic_id: Int,
     val country_code: Any,
     val created_at: String,
@@ -17,7 +17,7 @@ data class Hospital(
     val email_token: String,
     val email_verified: Int,
     val email_verified_at: Any,
-    val first_name: String,
+    val first_name: String? = null,
     val gender: String,
     val id: Int,
     val is_administrative: Int,
@@ -25,7 +25,7 @@ data class Hospital(
     val is_receptionist: Int,
     val is_staff: Int,
     var is_favourite: String,
-    val last_name: String,
+    val last_name: String? = null,
     val medical_id: String,
     val mobile: String,
     val otp: Int,
@@ -37,9 +37,9 @@ data class Hospital(
     val timing: List<Timing>,
     val tax_id: String,
     val updated_at: String
-): Serializable {
+) : Serializable {
     data class Clinic(
-        val address: String,
+        val address: String? = null,
         val country_code: Any,
         val created_at: String,
         val deleted_at: Any,
@@ -49,13 +49,13 @@ data class Hospital(
         val latitude: Double,
         val longitude: Double,
         val mobile: Any,
-        val name: String,
+        val name: String? = "",
         val phone: String,
         val postal_code: String,
-        val static_map: String ,
-        val clinic_photo:List<photos>,
+        val static_map: String,
+        val clinic_photo: List<photos>,
         val updated_at: String
-    ): Serializable {
+    ) : Serializable {
         data class photos(
             val id: Int,
             val image: String,
@@ -68,7 +68,7 @@ data class Hospital(
         val address: Any,
         val affiliations: Any,
         val awards: Any,
-        val certification: String,
+        val certification: String? = null,
         val city: Any,
         val country: Any,
         val created_at: String,
@@ -84,19 +84,20 @@ data class Hospital(
         val postal_code: Any,
         val profile_description: Any,
         val profile_pic: String,
-        val profile_video:String,
+        val profile_video: String,
         val residency: Any,
         val specialities: Int,
-        val speciality: Speciality,
+        val speciality: Speciality? = null,
         val updated_at: String
-    ): Serializable {
+    ) : Serializable {
         data class Speciality(
             val id: Int,
             val image: Any,
-            val name: String,
+            val name: String? = null,
             val status: Int
         ) : Serializable
     }
+
     data class DoctorService(
         val hospital_id: Int,
         val id: Int,
@@ -107,8 +108,9 @@ data class Hospital(
             val id: Int,
             val name: String,
             val status: Int
-        ): Serializable
+        ) : Serializable
     }
+
     data class Feedback(
         val comments: String,
         val created_at: String,

@@ -3,11 +3,16 @@ package com.telehealthmanager.app.ui.activity.findDoctors
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
 import com.telehealthmanager.app.base.BaseViewModel
 import com.telehealthmanager.app.repositary.AppRepository
 import com.telehealthmanager.app.repositary.model.BookedResponse
 import com.telehealthmanager.app.repositary.model.CategoryResponse
 import com.telehealthmanager.app.repositary.model.DoctorListResponse
+import com.telehealthmanager.app.repositary.pagination.FindDoctorSource
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -40,23 +45,12 @@ class FindDoctorsViewModel : BaseViewModel<FindDoctorsNavigator>() {
         getCompositeDisposable().add(appRepository.getFiltersDoctors(this, mCategoryId.get()!!.toInt(), hashMap))
     }
 
-    private val VISIBLE_THRESHOLD = 5
-
-    fun listScrolled(visibleItemCount: Int, lastVisibleItem: Int, totalItemCount: Int, item: DoctorListResponse.specialities.DoctorProfile) {
-        if ((visibleItemCount + lastVisibleItem + VISIBLE_THRESHOLD >= totalItemCount)) {
-            Log.d(TAG, "listScrolled: True $totalItemCount LAST ITEM $lastVisibleItem VISIBLE COUNT $visibleItemCount DOCTOR ID ${item.id}")
-            val hashMap: HashMap<String, Any> = HashMap()
-            hashMap["page"] = item.id
-            if (queryLiveData.value.toString() != "") {
-                hashMap.put("search", queryLiveData.value.toString())
-                getDoctorByCategorys(mCategoryId.get()!!.toInt(), hashMap)
-            } else {
-                getDoctorByCategorys(mCategoryId.get()!!.toInt(), hashMap)
-            }
-        }
-    }
 
     fun clickSearchDoctors() {
         navigator.openSearchDoctors()
     }
+
+    val doctorsList = Pager(PagingConfig(pageSize = 10)) {
+        FindDoctorSource(appRepository,  this)
+    }.flow.cachedIn(viewModelScope)
 }

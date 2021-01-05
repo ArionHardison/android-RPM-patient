@@ -28,7 +28,7 @@ class AvailabilityAdapter(val items: MutableList<Hospital.Timing>, val context: 
 
     // Gets the number of animals in the list
     override fun getItemCount(): Int {
-        return items.size
+        return 1
     }
 }
 

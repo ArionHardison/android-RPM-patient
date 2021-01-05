@@ -5,7 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.RadioButton
@@ -13,6 +12,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,22 +28,27 @@ import com.telehealthmanager.app.databinding.ActivityFindDoctorsListBinding
 import com.telehealthmanager.app.repositary.WebApiConstants
 import com.telehealthmanager.app.repositary.model.DoctorListResponse
 import com.telehealthmanager.app.ui.activity.searchDoctor.SearchDoctorDetailActivity
-import com.telehealthmanager.app.ui.adapter.FindDoctorListAdapter
-import com.telehealthmanager.app.ui.adapter.IDoctorListener
+import com.telehealthmanager.app.ui.adapter.FindDoctorsAdapter
+import com.telehealthmanager.app.ui.adapter.FindFilterDoctorListAdapter
+import com.telehealthmanager.app.ui.adapter.PassengersLoadStateAdapter
 import com.telehealthmanager.app.utils.CustomBackClick
+import com.telehealthmanager.app.utils.ViewCallBack
 import com.telehealthmanager.app.utils.ViewUtils
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import java.io.Serializable
 
 
 class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
-    IDoctorListener, CustomBackClick {
+    ViewCallBack.IDoctorListener, CustomBackClick {
 
     private val TAG = "FindDoctorsListActivity"
     private lateinit var viewModel: FindDoctorsViewModel
     private lateinit var mDataBinding: ActivityFindDoctorsListBinding
     private lateinit var filterdialog: AlertDialog.Builder
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
-    private lateinit var mAdapter: FindDoctorListAdapter
+    private lateinit var mAdapter: FindFilterDoctorListAdapter
+    private val mFindDoctorsAdapter: FindDoctorsAdapter = FindDoctorsAdapter(this)
 
     override fun getLayoutId(): Int = R.layout.activity_find_doctors_list
 
@@ -52,20 +57,20 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
         viewModel = ViewModelProvider(this).get(FindDoctorsViewModel::class.java)
         mDataBinding.viewmodel = viewModel
         viewModel.mCategoryId.set(intent.getIntExtra(WebApiConstants.IntentPass.ID, 1))
+        mAdapter = FindFilterDoctorListAdapter(this@FindDoctorsListActivity, this)
+        mDataBinding.rvFilterView.adapter = mAdapter
+        mDataBinding.rvFilterView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        mDataBinding.rvFilterView.itemAnimator = DefaultItemAnimator()
+        viewModel.setOnClickListener(this@FindDoctorsListActivity)
+        mDataBinding.imageView17.setOnClickListener {
+            showFilterDialog(this@FindDoctorsListActivity)
+        }
 
-        mAdapter = FindDoctorListAdapter(this@FindDoctorsListActivity, this)
-        mDataBinding.rvFinddoctorsList.adapter = mAdapter
-        mDataBinding.rvFinddoctorsList.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-        mDataBinding.rvFinddoctorsList.itemAnimator = DefaultItemAnimator()
         setupScrollListener()
         initApiCal()
         observeResponse()
         filterdialog = AlertDialog.Builder(this)
 
-        viewModel.setOnClickListener(this@FindDoctorsListActivity)
-        mDataBinding.imageView17.setOnClickListener {
-            showFilterDialog(this@FindDoctorsListActivity)
-        }
         mDataBinding.editText9.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
 
@@ -77,12 +82,9 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 viewModel.queryLiveData.postValue(s.toString())
                 if (s!!.isNotEmpty()) {
-                    mAdapter.onSearchRequest()
                     val hashMap: HashMap<String, Any> = HashMap()
                     hashMap["search"] = viewModel.queryLiveData.value.toString()
                     viewModel.getDoctorByCategorys(viewModel.mCategoryId.get()!!.toInt(), hashMap)
-                } else {
-                    mAdapter.onSearchCleared()
                 }
             }
         })
@@ -90,19 +92,37 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
     }
 
     private fun setupScrollListener() {
-        val layoutManager = mDataBinding.rvFinddoctorsList.layoutManager as LinearLayoutManager
-        mDataBinding.rvFinddoctorsList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val totalItemCount = layoutManager.itemCount
-                val visibleItemCount = layoutManager.childCount
-                val lastVisibleItem = layoutManager.findLastVisibleItemPosition()
-                if (mAdapter.itemCount != 0) {
-                    viewModel.listScrolled(visibleItemCount, lastVisibleItem, totalItemCount, mAdapter.getItem(mAdapter.itemCount - 1))
-                }
+        mFindDoctorsAdapter.registerAdapterDataObserver(adapterObserver)
+        mDataBinding.rvFinddoctorsList.layoutManager = LinearLayoutManager(this)
+        mDataBinding.rvFinddoctorsList.setHasFixedSize(true)
+
+        mDataBinding.rvFinddoctorsList.adapter = mFindDoctorsAdapter.withLoadStateHeaderAndFooter(
+            header = PassengersLoadStateAdapter { mFindDoctorsAdapter.retry() },
+            footer = PassengersLoadStateAdapter { mFindDoctorsAdapter.retry() }
+        )
+
+        lifecycleScope.launch {
+            viewModel.doctorsList.collectLatest { pagedData ->
+                mFindDoctorsAdapter.submitData(pagedData)
             }
-        })
+        }
     }
+
+    private val adapterObserver = object : RecyclerView.AdapterDataObserver() {
+        override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+            val count = mFindDoctorsAdapter.itemCount
+            if (itemCount == 0 && count == 0) {
+                loadingObservable.value = false
+                mDataBinding.rvFinddoctorsList.visibility = View.GONE
+                mDataBinding.tvNotFound.visibility = View.VISIBLE
+            } else {
+                loadingObservable.value = false
+                mDataBinding.rvFinddoctorsList.visibility = View.VISIBLE
+                mDataBinding.tvNotFound.visibility = View.GONE
+            }
+        }
+    }
+
 
     override fun clickBackPress() {
         finish()
@@ -110,24 +130,21 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
 
     private fun initApiCal() {
         loadingObservable.value = true
-        viewModel.getDoctorByCategorys(viewModel.mCategoryId.get()!!.toInt(), HashMap())
     }
 
     private fun observeResponse() {
         viewModel.mDoctorResponse.observe(this, {
-            viewModel.mDoctorList = it.Specialities.doctor_profile as MutableList<DoctorListResponse.specialities.DoctorProfile>?
-            Log.d(TAG, "observeResponse: ${it.Specialities.doctor_profile.size}")
-            if (it.Specialities.doctor_profile.toMutableList().size > 0) {
-                mDataBinding.tvNotFound.visibility = View.GONE
-                mAdapter.addItems(it.Specialities.doctor_profile.toMutableList())
-            } else {
-                if (mAdapter.itemCount > 0) {
-                    mDataBinding.tvNotFound.visibility = View.GONE
-                } else {
-                    mDataBinding.tvNotFound.visibility = View.VISIBLE
-                }
-            }
             loadingObservable.value = false
+            mDataBinding.rvFinddoctorsList.visibility = View.GONE
+            mDataBinding.rvFilterView.visibility = View.VISIBLE
+            viewModel.mDoctorList = it.Specialities.doctor_profile as MutableList<DoctorListResponse.specialities.DoctorProfile>?
+            if (it.Specialities.doctor_profile.toMutableList().size > 0) {
+                mAdapter.addItems(it.Specialities.doctor_profile.toMutableList())
+                mDataBinding.tvNotFound.visibility = View.GONE
+            } else {
+                mDataBinding.rvFilterView.visibility = View.GONE
+                mDataBinding.tvNotFound.visibility = View.VISIBLE
+            }
         })
 
         viewModel.getErrorObservable().observe(this, { message ->
@@ -178,8 +195,21 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
                     hashMap["fees"] = "30"
                 }
             }
-            loadingObservable.value = true
-            viewModel.getDoctorFilterCategories(hashMap)
+
+            if (hashMap.isNotEmpty()) {
+                loadingObservable.value = true
+                viewModel.getDoctorFilterCategories(hashMap)
+            } else {
+                mDataBinding.rvFilterView.visibility = View.GONE
+                val count = mFindDoctorsAdapter.itemCount
+                if (count == 0) {
+                    mDataBinding.rvFinddoctorsList.visibility = View.GONE
+                    mDataBinding.tvNotFound.visibility = View.VISIBLE
+                } else {
+                    mDataBinding.rvFinddoctorsList.visibility = View.VISIBLE
+                    mDataBinding.tvNotFound.visibility = View.GONE
+                }
+            }
             ad.dismiss()
         }
         tvCancel.setOnClickListener {
@@ -192,7 +222,10 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
         preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_ID, selectedItem.doctor_id.toString())
         if (!CollectionUtils.isEmpty(selectedItem.hospital)) {
             preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_NAME, selectedItem.hospital[0].first_name.plus(" ").plus(selectedItem.hospital[0].last_name))
-            preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_ADDRESS, selectedItem.hospital[0].clinic?.name.plus(" , ").plus(selectedItem.hospital[0].clinic?.address))
+            preferenceHelper.setValue(
+                PreferenceKey.SELECTED_DOC_ADDRESS, selectedItem.hospital[0].clinic?.name ?: "No Clinic"
+                    .plus(" , ").plus(selectedItem.hospital[0].clinic?.address ?: "No address")
+            )
         }
         preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_Special, selectedItem.speciality?.name ?: "")
         preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_SPECIALITY_ID, selectedItem.speciality?.id.toString())

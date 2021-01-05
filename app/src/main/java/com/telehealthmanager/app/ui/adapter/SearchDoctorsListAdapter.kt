@@ -25,8 +25,8 @@ class SearchDoctorsListAdapter(val iDoctorsSelectListener: IDoctorsSelectListene
         holder.itemBinding.textView90.text = item.first_name.plus(" ").plus(item.last_name)
         holder.itemBinding.textView91.text = item.doctor_profile.certification
 
-        if (item.doctor_profile?.speciality?.name != null) {
-            holder.itemBinding.textView92.text = item.doctor_profile?.speciality?.name
+        if (item.doctor_profile.speciality?.name != null) {
+            holder.itemBinding.textView92.text = item.doctor_profile.speciality.name
             holder.itemBinding.textView92.visibility = View.VISIBLE
         } else
             holder.itemBinding.textView92.visibility = View.GONE

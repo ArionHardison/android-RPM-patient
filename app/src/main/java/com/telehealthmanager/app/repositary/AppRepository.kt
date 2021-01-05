@@ -10,6 +10,7 @@ import com.telehealthmanager.app.BuildConfig
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.repositary.pagination.DoctorDataSource
 import com.telehealthmanager.app.repositary.pagination.DoctorSearchDataSource
+import com.telehealthmanager.app.repositary.pagination.FindDoctorSource
 import com.telehealthmanager.app.ui.activity.addmedicalrecord.DoctorMedicalRecordsViewModel
 import com.telehealthmanager.app.ui.activity.addmoney.AddMoneyViewModel
 import com.telehealthmanager.app.ui.activity.addreminder.AddReminderViewModel
@@ -603,13 +604,9 @@ class AppRepository : BaseRepository() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
-                if (viewModel is RemainderViewModel) {
-                    viewModel.mReminderResponse.value = it
-                }
+                viewModel.mReminderResponse.value = it
             }, {
-                if (viewModel is RemainderViewModel) {
-                    viewModel.getErrorObservable().value = getErrorMessage(it)
-                }
+                viewModel.getErrorObservable().value = getErrorMessage(it)
             })
     }
 
@@ -720,6 +717,10 @@ class AppRepository : BaseRepository() {
 
     fun getSearchResults(query: String, searchViewModel: SearchViewModel) = Pager(PagingConfig(pageSize = 10),
         pagingSourceFactory = { DoctorSearchDataSource(this, query, searchViewModel) }
+    ).liveData
+
+    fun getFindDoc(query: String, searchViewModel: FindDoctorsViewModel) = Pager(PagingConfig(pageSize = 10),
+        pagingSourceFactory = { FindDoctorSource(this,  searchViewModel) }
     ).liveData
 
 

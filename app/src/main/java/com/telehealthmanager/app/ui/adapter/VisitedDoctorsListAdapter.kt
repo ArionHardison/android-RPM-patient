@@ -20,18 +20,18 @@ class VisitedDoctorsListAdapter(val items: MutableList<Appointment>, val context
         holder.itemBinding.upcomingTime.text = ViewUtils.getTimeFormat(item.scheduled_at)
         holder.itemBinding.textView28.text = item.status?.toLowerCase()!!.capitalize()
         if (item.hospital != null) {
-            holder.itemBinding.upcomingDoctorName.text = item.hospital?.first_name.plus(" ").plus(item.hospital?.last_name)
+            holder.itemBinding.upcomingDoctorName.text = item.hospital.first_name.plus(" ").plus(item.hospital.last_name)
             if (item.hospital.clinic != null) {
                 val clinic = item.hospital.clinic
-                if (clinic?.name != null && clinic?.address != null) {
+                if (clinic.name != null && clinic.address != null) {
                     holder.itemBinding.upcomingHospitalName.text = clinic.name.plus(",").plus(clinic.address)
                 } else {
                     holder.itemBinding.upcomingHospitalName.text = "No Location"
-                    if (clinic?.name != null) {
+                    if (clinic.name != null) {
                         holder.itemBinding.upcomingHospitalName.text = clinic.name
                     }
 
-                    if (clinic?.address != null) {
+                    if (clinic.address != null) {
                         holder.itemBinding.upcomingHospitalName.text = clinic.address
                     }
                 }

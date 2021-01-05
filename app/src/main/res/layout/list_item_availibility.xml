@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
 
@@ -7,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_5sdp"
-        android:gravity="start"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
@@ -16,7 +17,15 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/_5sdp"
             android:textColor="@color/colorBlack"
-            tools:text="MON" />
+            tools:text="MON"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_16sdp"
+            android:textColor="@color/colorBlack"
+            tools:text="MON"
+            app:srcCompat="@drawable/sunset_icon"/>
 
         <TextView
             android:layout_width="wrap_content"

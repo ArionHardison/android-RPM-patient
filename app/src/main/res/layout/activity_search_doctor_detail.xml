@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.activity.searchDoctor.SearchDoctorDetailActivity">
 
     <data>
@@ -45,8 +45,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:fitsSystemWindows="true"
-            app:layout_constraintTop_toTopOf="parent"
             android:theme="@style/AppTheme.AppBarOverlay"
+            app:layout_constraintTop_toTopOf="parent"
             app:titleTextColor="@color/colorWhite">
 
             <androidx.appcompat.widget.Toolbar
@@ -120,29 +120,29 @@
                             android:layout_width="@dimen/_35sdp"
                             android:layout_height="?attr/actionBarSize"
                             android:contentDescription="@string/app_name"
+                            android:onClick="@{()->viewmodel.clickShareClick()}"
                             android:padding="@dimen/_10sdp"
                             android:tint="@color/colorWhite"
                             android:visibility="gone"
-                            android:onClick="@{()->viewmodel.clickShareClick()}"
-                            app:srcCompat="@drawable/ic_doctor_share"/>
+                            app:srcCompat="@drawable/ic_doctor_share" />
 
                         <ImageView
                             android:layout_width="@dimen/_35sdp"
                             android:layout_height="?attr/actionBarSize"
                             android:contentDescription="@string/app_name"
+                            android:onClick="@{()->viewmodel.clickVideo()}"
                             android:padding="@dimen/_10sdp"
                             android:visibility="@{isVideoVisible ? View.VISIBLE : View.GONE,default=gone}"
-                            android:onClick="@{()->viewmodel.clickVideo()}"
-                            app:srcCompat="@drawable/ic_doctor_video"/>
+                            app:srcCompat="@drawable/ic_doctor_video" />
 
                         <ImageView
                             android:layout_width="@dimen/_35sdp"
                             android:layout_height="?attr/actionBarSize"
+                            android:onClick="@{()->viewmodel.clickInfoClick()}"
                             android:padding="@dimen/_10sdp"
                             android:tint="@color/colorWhite"
                             android:visibility="gone"
-                            android:onClick="@{()->viewmodel.clickInfoClick()}"
-                            app:srcCompat="@drawable/twillio_ic_video_call"/>
+                            app:srcCompat="@drawable/twillio_ic_video_call" />
                     </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -150,7 +150,6 @@
             </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
-
 
 
         <ScrollView
@@ -195,29 +194,29 @@
                         android:layout_marginTop="8dp"
                         android:text="@{viewmodel.name}"
                         android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="@+id/imageView25"
                         app:layout_constraintTop_toBottomOf="@+id/imageView25"
-                        tools:text="Dr.Stephen"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/_12sdp"/>
+                        tools:text="Dr.Stephen" />
 
                     <TextView
                         android:id="@+id/textView49"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5sdp"
                         android:layout_marginEnd="8dp"
                         android:background="@drawable/doctor_specialist_name"
+                        android:gravity="center"
                         android:padding="@dimen/_2sdp"
                         android:singleLine="true"
                         android:text="Allopath"
-                        android:textSize="@dimen/_8sdp"
-                        android:gravity="center"
-                        android:visibility="gone"
                         android:textColor="@color/colorBlack"
-                        android:layout_marginStart="@dimen/_5sdp"
+                        android:textSize="@dimen/_8sdp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView93"
                         app:layout_constraintStart_toEndOf="@+id/textView93"
-                        app:layout_constraintTop_toTopOf="@+id/textView93"
-                        app:layout_constraintBottom_toBottomOf="@+id/textView93"/>
+                        app:layout_constraintTop_toTopOf="@+id/textView93" />
 
                     <TextView
                         android:id="@+id/textView94"
@@ -242,11 +241,11 @@
                         android:layout_marginEnd="8dp"
                         android:text="@{viewmodel.degreeSpecialities}"
                         android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/_10sdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/textView93"
                         app:layout_constraintTop_toBottomOf="@+id/textView93"
-                        tools:text="MBBS,MRCP(UK) - "
-                        android:textSize="@dimen/_10sdp"/>
+                        tools:text="MBBS,MRCP(UK) - " />
 
                     <TextView
                         android:id="@+id/textView96"
@@ -256,9 +255,9 @@
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/_10sdp"
                         android:visibility="gone"
+                        app:layout_constraintEnd_toStartOf="@+id/textView98"
                         app:layout_constraintStart_toEndOf="@+id/textView95"
                         app:layout_constraintTop_toTopOf="@+id/textView95"
-                        app:layout_constraintEnd_toStartOf="@+id/textView98"
                         tools:text="Diabetologist" />
 
                     <TextView
@@ -283,15 +282,15 @@
                         android:id="@+id/textView98"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@+id/textView95"
                         android:text="@{@string/_years_of_exp(viewmodel.experience)}"
                         android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/_10sdp"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="@+id/textView97"
                         app:layout_constraintStart_toEndOf="@+id/textView96"
                         app:layout_constraintTop_toBottomOf="@+id/textView97"
-                        tools:text="18 yrs of overall exp"
-                        android:textSize="@dimen/_10sdp"
-                        android:visibility="gone"/>
+                        app:layout_constraintTop_toTopOf="@+id/textView95"
+                        tools:text="18 yrs of overall exp" />
 
                     <ImageView
                         android:id="@+id/imageView26"
@@ -370,7 +369,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="Mon"
-                    android:textColor="@color/colorRed"
+                    android:textColor="@color/colorBlack"
                     app:layout_constraintStart_toStartOf="@+id/textView101"
                     app:layout_constraintTop_toBottomOf="@+id/textView101" />
 
@@ -380,7 +379,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="Tue"
-                    android:textColor="@color/colorRed"
+                    android:textColor="@color/colorBlack"
                     app:layout_constraintBottom_toBottomOf="@+id/textViewMon"
                     app:layout_constraintStart_toEndOf="@+id/textViewMon"
                     app:layout_constraintTop_toTopOf="@+id/textViewMon" />
@@ -391,7 +390,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="Wed"
-                    android:textColor="@color/colorRed"
+                    android:textColor="@color/colorBlack"
                     app:layout_constraintBottom_toBottomOf="@+id/textViewTue"
                     app:layout_constraintStart_toEndOf="@+id/textViewTue"
                     app:layout_constraintTop_toTopOf="@+id/textViewTue" />
@@ -402,7 +401,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="Thu"
-                    android:textColor="@color/colorRed"
+                    android:textColor="@color/colorBlack"
                     app:layout_constraintBottom_toBottomOf="@+id/textViewWed"
                     app:layout_constraintStart_toEndOf="@+id/textViewWed"
                     app:layout_constraintTop_toTopOf="@+id/textViewWed" />
@@ -413,7 +412,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="Fri"
-                    android:textColor="@color/colorRed"
+                    android:textColor="@color/colorBlack"
                     app:layout_constraintBottom_toBottomOf="@+id/textViewThur"
                     app:layout_constraintStart_toEndOf="@+id/textViewThur"
                     app:layout_constraintTop_toTopOf="@+id/textViewThur" />
@@ -424,7 +423,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="Sat"
-                    android:textColor="@color/colorRed"
+                    android:textColor="@color/colorBlack"
                     app:layout_constraintBottom_toBottomOf="@+id/textViewFri"
                     app:layout_constraintStart_toEndOf="@+id/textViewFri"
                     app:layout_constraintTop_toTopOf="@+id/textViewFri" />
@@ -435,7 +434,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="Sun"
-                    android:textColor="@color/colorRed"
+                    android:textColor="@color/colorBlack"
                     app:layout_constraintBottom_toBottomOf="@+id/textViewSat"
                     app:layout_constraintStart_toEndOf="@+id/textViewSat"
                     app:layout_constraintTop_toTopOf="@+id/textViewSat" />
@@ -447,11 +446,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_4sdp"
                     android:layout_marginTop="8dp"
-                    tools:itemCount="7"
                     android:adapter="@{availibilityAdapter}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintStart_toStartOf="@+id/textViewMon"
                     app:layout_constraintTop_toBottomOf="@+id/textViewMon"
+                    tools:itemCount="1"
                     tools:listitem="@layout/list_item_availibility" />
 
                 <TextView
@@ -498,8 +497,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/textView111"
                     app:layout_constraintTop_toBottomOf="@+id/textView111"
-                    tools:listitem="@layout/item_service_list"
-                    tools:itemCount="3"/>
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_service_list" />
 
                 <TextView
                     android:id="@+id/serviceViewAll"
@@ -558,62 +557,71 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView116" />
 
-                <TextView
-                    android:id="@+id/locations"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="Location"
-                    android:textColor="@color/grey_700"
-                    android:textSize="@dimen/_14sdp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/divider14" />
-
-                <TextView
-                    android:id="@+id/textView117"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="Hospital Name"
-                    android:textColor="@color/colorBlack"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/locations"
-                    tools:text="@{viewmodel.clinic}" />
-
-                <TextView
-                    android:id="@+id/textView118"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@{viewmodel.clinicAddress}"
-                    app:layout_constraintStart_toStartOf="@+id/textView117"
-                    app:layout_constraintTop_toBottomOf="@+id/textView117"
-                    tools:text="Hospital Address Name" />
-
-                <ImageView
-                    android:id="@+id/imageView27"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_100sdp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/textView118"
-                    app:layout_constraintTop_toBottomOf="@+id/textView118"
-                    app:srcCompat="@drawable/leader_board" />
-
-                <View
-                    android:id="@+id/divider15"
-                    android:layout_width="409dp"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="16dp"
-                    android:background="?android:attr/listDivider"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/locationView"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView27" />
+                    app:layout_constraintTop_toBottomOf="@+id/divider14">
+
+                    <TextView
+                        android:id="@+id/locations"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="Location"
+                        android:textColor="@color/grey_700"
+                        android:textSize="@dimen/_14sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/textView117"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="Hospital Name"
+                        android:textColor="@color/colorBlack"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/locations"
+                        tools:text="@{viewmodel.clinic}" />
+
+                    <TextView
+                        android:id="@+id/textView118"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@{viewmodel.clinicAddress}"
+                        app:layout_constraintStart_toStartOf="@+id/textView117"
+                        app:layout_constraintTop_toBottomOf="@+id/textView117"
+                        tools:text="Hospital Address Name" />
+
+                    <ImageView
+                        android:id="@+id/imageView27"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_100sdp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/textView118"
+                        app:layout_constraintTop_toBottomOf="@+id/textView118"
+                        app:srcCompat="@drawable/leader_board" />
+
+                    <View
+                        android:id="@+id/divider15"
+                        android:layout_width="409dp"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:background="?android:attr/listDivider"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView27" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
                     android:id="@+id/textView119"
@@ -625,7 +633,7 @@
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_14sdp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/divider15" />
+                    app:layout_constraintTop_toBottomOf="@+id/locationView" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView6"
@@ -657,9 +665,9 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:adapter="@{feedbackadapter}"
+                    android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:orientation="horizontal"
                     app:layout_constraintStart_toStartOf="@+id/textView120"
                     app:layout_constraintTop_toBottomOf="@+id/textView120"
                     tools:listitem="@layout/search_doctor_detail_list_item" />
@@ -677,8 +685,8 @@
             android:onClick="@{()->viewmodel.shareClick()}"
             android:text="Share Experience"
             android:textAllCaps="false"
-            android:visibility="gone"
             android:textColor="@color/colorButton"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button28"
             app:layout_constraintHorizontal_weight="1"
