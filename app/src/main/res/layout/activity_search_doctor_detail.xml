@@ -214,6 +214,7 @@
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/_8sdp"
                         android:visibility="gone"
+                        app:layout_constraintEnd_toStartOf="@+id/textView97"
                         app:layout_constraintBottom_toBottomOf="@+id/textView93"
                         app:layout_constraintStart_toEndOf="@+id/textView93"
                         app:layout_constraintTop_toTopOf="@+id/textView93" />
@@ -228,10 +229,29 @@
                         android:paddingEnd="@dimen/_3sdp"
                         android:text="@{viewmodel.branch}"
                         android:visibility="gone"
+                        app:layout_constraintEnd_toStartOf="@+id/textView97"
                         app:layout_constraintBottom_toBottomOf="@+id/textView93"
                         app:layout_constraintStart_toEndOf="@+id/textView93"
                         app:layout_constraintTop_toTopOf="@+id/textView93"
                         tools:text="Allopath" />
+
+
+                    <TextView
+                        android:id="@+id/textView97"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="8dp"
+                        android:drawableStart="@drawable/ic_like_doctor"
+                        android:drawablePadding="@dimen/_3sdp"
+                        android:drawableTint="@color/colorWhite"
+                        android:gravity="center"
+                        android:text="@{viewmodel.percentage}"
+                        android:textColor="@color/colorWhite"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView94"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintTop_toTopOf="@+id/textView94"
+                        tools:text="100%" />
 
                     <TextView
                         android:id="@+id/textView95"
@@ -247,6 +267,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/textView93"
                         tools:text="MBBS,MRCP(UK) - " />
 
+
                     <TextView
                         android:id="@+id/textView96"
                         android:layout_width="0dp"
@@ -259,24 +280,6 @@
                         app:layout_constraintStart_toEndOf="@+id/textView95"
                         app:layout_constraintTop_toTopOf="@+id/textView95"
                         tools:text="Diabetologist" />
-
-                    <TextView
-                        android:id="@+id/textView97"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:drawableStart="@drawable/ic_like_doctor"
-                        android:drawablePadding="@dimen/_3sdp"
-                        android:drawableTint="@color/colorWhite"
-                        android:gravity="center"
-                        android:text="@{viewmodel.percentage}"
-                        android:textColor="@color/colorWhite"
-                        app:layout_constraintBottom_toBottomOf="@+id/textView94"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toEndOf="@+id/textView94"
-                        app:layout_constraintTop_toTopOf="@+id/textView94"
-                        tools:text="0%" />
 
                     <TextView
                         android:id="@+id/textView98"

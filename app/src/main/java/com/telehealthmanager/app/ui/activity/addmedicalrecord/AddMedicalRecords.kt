@@ -28,6 +28,7 @@ class AddMedicalRecords : BaseActivity<ActivityAddMedicalRecordBinding>(), Docto
 
     private lateinit var viewModel: DoctorMedicalRecordsViewModel
     private lateinit var mDataBinding: ActivityAddMedicalRecordBinding
+
     private var mCropImageUri: Uri? = null
 
     override fun getLayoutId(): Int = R.layout.activity_add_medical_record

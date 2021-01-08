@@ -24,10 +24,11 @@ class FindFilterDoctorListAdapter(
 ) :
     RecyclerView.Adapter<FindDoctorViewHolder>() {
 
-    private var items: MutableList<DoctorListResponse.specialities.DoctorProfile> = mutableListOf()
+    var items: MutableList<DoctorListResponse.specialities.DoctorProfile> = mutableListOf()
 
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
 
+    private var position: Int = 0
 
     override fun onBindViewHolder(holder: FindDoctorViewHolder, position: Int) {
         val item: DoctorListResponse.specialities.DoctorProfile = items[position]
@@ -84,6 +85,7 @@ class FindFilterDoctorListAdapter(
         }
 
         holder.itemView.setOnClickListener {
+            setPosition(this@FindFilterDoctorListAdapter, position)
             listener.onItemClick(item)
         }
     }
@@ -105,6 +107,25 @@ class FindFilterDoctorListAdapter(
     override fun getItemCount(): Int {
         return items.size
     }
+
+
+    fun changeFavState(isFavorite: String) {
+        items[position].let {
+            it.hospital[0].is_favourite = isFavorite
+        }
+        notifyItemChanged(getPosition())
+    }
+
+    private fun getPosition(): Int {
+        return position
+    }
+
+    companion object {
+        fun setPosition(doctorsAdapter: FindFilterDoctorListAdapter, position: Int) {
+            doctorsAdapter.position = position
+        }
+    }
+
 
 }
 

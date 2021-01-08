@@ -106,7 +106,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
 
                     if (it.hospital.isNotEmpty()) {
                         it.hospital[0].let { hospital ->
-                            viewModel.percentage.set(hospital.feedback_percentage.emptyToNull() ?: "0".plus("%"))
+                            viewModel.percentage.set((hospital.feedback_percentage.emptyToNull() ?: "0").plus("%"))
                             viewModel.favourite.set(hospital.is_favourite.emptyToNull() ?: "false")
                             viewModel.name.set(hospital.first_name ?: "".plus(" ").plus(hospital.last_name ?: ""))
                             viewModel.mfeedbacklist = hospital.feedback as MutableList<Hospital.Feedback>?
@@ -143,7 +143,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
                     viewModel.id.set(it.id)
                     viewModel.name.set(it.first_name ?: "".plus(" ").plus(it.last_name ?: ""))
                     viewModel.favourite.set(it.is_favourite.emptyToNull() ?: "false")
-                    viewModel.percentage.set(it.feedback_percentage.emptyToNull() ?: "0".plus("%"))
+                    viewModel.percentage.set((it.feedback_percentage.emptyToNull() ?: "0").plus("%"))
                     viewModel.mfeedbacklist = it.feedback as MutableList<Hospital.Feedback>?
                     viewModel.mservcielist = it.doctor_service as MutableList<Hospital.DoctorService>?
                     viewModel.mTimingList = it.timing as MutableList<Hospital.Timing>?
@@ -200,7 +200,7 @@ class SearchDoctorDetailActivity : BaseActivity<ActivitySearchDoctorDetailBindin
                     viewModel.id.set(it.id)
                     viewModel.name.set(it.first_name ?: "".plus(" ").plus(it.last_name ?: ""))
                     viewModel.favourite.set(it.is_favourite.emptyToNull() ?: "false")
-                    viewModel.percentage.set(it.feedback_percentage.emptyToNull() ?: "".plus("%"))
+                    viewModel.percentage.set((it.feedback_percentage.emptyToNull() ?: "0").plus("%"))
                     viewModel.mfeedbacklist = it.feedback as MutableList<Hospital.Feedback>?
                     viewModel.mservcielist = it.doctor_service as MutableList<Hospital.DoctorService>?
                     viewModel.mTimingList = it.timing as MutableList<Hospital.Timing>?

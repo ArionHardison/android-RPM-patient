@@ -21,6 +21,7 @@ import com.google.android.gms.common.util.CollectionUtils
 import com.telehealthmanager.app.BaseApplication
 import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseActivity
+import com.telehealthmanager.app.data.Constant
 import com.telehealthmanager.app.data.PreferenceHelper
 import com.telehealthmanager.app.data.PreferenceKey
 import com.telehealthmanager.app.data.setValue
@@ -238,7 +239,21 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
     override fun onItemClick(selectedItem: DoctorListResponse.specialities.DoctorProfile) {
         val intent = Intent(this@FindDoctorsListActivity, SearchDoctorDetailActivity::class.java)
         intent.putExtra(WebApiConstants.IntentPass.DoctorProfile, selectedItem as Serializable)
-        startActivity(intent);
+        startActivityForResult(intent, Constant.DOCTORS_ACTIVITY);
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode != RESULT_CANCELED) {
+            if (requestCode == Constant.DOCTORS_ACTIVITY) {
+                val isFavourite: String = data?.getStringExtra("is_favourite") as String
+                if (mDataBinding.rvFinddoctorsList.visibility == View.VISIBLE) {
+                    mFindDoctorsAdapter.changeFavState(isFavourite)
+                } else if (mDataBinding.rvFilterView.visibility == View.VISIBLE) {
+                    mAdapter.changeFavState(isFavourite)
+                }
+            }
+        }
     }
 
     override fun onCallClick(phone: String) {

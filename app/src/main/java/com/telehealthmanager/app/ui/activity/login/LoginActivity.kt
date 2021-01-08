@@ -33,7 +33,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(), LoginNavigator {
         mDataBinding.viewmodel = viewModel
         viewModel.navigator = this
         observeResponse()
-        Register_Map.put(WebApiConstants.SignIn.COUNTRY_CODE, mDataBinding.mobile.text.toString())
+        register_Map.put(WebApiConstants.SignIn.COUNTRY_CODE, mDataBinding.mobile.text.toString())
         mDataBinding.countryCodePicker.selectedCountryCodeWithPlus
 
         mDataBinding.termsCondition.setOnClickListener {

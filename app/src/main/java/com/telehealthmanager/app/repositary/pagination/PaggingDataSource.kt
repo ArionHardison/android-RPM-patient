@@ -36,6 +36,7 @@ class DoctorSearchDataSource(
     private val searchViewModel: SearchViewModel
 ) : PagingSource<Int, Hospital>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Hospital> {
+
         return try {
             val nextPageNumber = params.key ?: 0
             val response = apiRepository.createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java).apiGetDoctorsList(nextPageNumber, query)
@@ -49,6 +50,7 @@ class DoctorSearchDataSource(
             LoadResult.Error(e)
         }
     }
+
 }
 
 class FindDoctorSource(

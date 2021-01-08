@@ -32,7 +32,7 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
     private var baseLiveDataLoading = MutableLiveData<Boolean>()
     private var mViewDataBinding: T? = null
     private var mCustomLoader: CustomLoaderDialog? = null
-    val Register_Map: HashMap<String, Any> = HashMap()
+    val register_Map: HashMap<String, Any> = HashMap()
     private lateinit var mNoInternetDialog: Dialog
 
     var languages = arrayOf<CharSequence>("English", "Chinese")
@@ -129,21 +129,21 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
 
     //Language choosing
     public fun LanguageChooseDialog() {
-        AlertDialog.Builder(this!!)
+        AlertDialog.Builder(this)
             .setSingleChoiceItems(languages, defaultLang, null)
             .setPositiveButton("Change", DialogInterface.OnClickListener { dialog, whichButton ->
                 dialog.dismiss()
                 val selectedPosition = (dialog as AlertDialog).listView.checkedItemPosition
                 if (selectedPosition == 1) {
-                    LocaleUtils.setNewLocale(this!!, "zh")
-                    PreferenceHelper(this!!).setValue("language_key", "zh")
+                    LocaleUtils.setNewLocale(this, "zh")
+                    PreferenceHelper(this).setValue("language_key", "zh")
                 } else {
-                    PreferenceHelper(this!!).setValue("language_key", "en")
-                    LocaleUtils.setNewLocale(this!!, "en")
+                    PreferenceHelper(this).setValue("language_key", "en")
+                    LocaleUtils.setNewLocale(this, "en")
                 }
                 // Do something useful withe the position of the selected radio button
                 //Toast.LENGTH_LONG
-                val newIntent = Intent(this!!, SplashActivity::class.java)
+                val newIntent = Intent(this, SplashActivity::class.java)
                 newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(newIntent)
             })
