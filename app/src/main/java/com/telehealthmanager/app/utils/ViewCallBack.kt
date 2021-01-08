@@ -15,4 +15,8 @@ interface ViewCallBack {
         fun onItemClick(selectedItem: DoctorListResponse.specialities.DoctorProfile)
         fun onCallClick(phone: String)
     }
+
+    interface IItemClick {
+        fun alertItemClick(strItem:String)
+    }
 }

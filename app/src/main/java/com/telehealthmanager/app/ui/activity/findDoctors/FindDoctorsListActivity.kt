@@ -186,10 +186,10 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
 
             when {
                 view.findViewById<RadioButton>(R.id.radioOne).isChecked -> {
-                    hashMap["fees"] = "10"
+                    hashMap["fees"] = "1-10"
                 }
                 view.findViewById<RadioButton>(R.id.radioTwo).isChecked -> {
-                    hashMap["fees"] = "20"
+                    hashMap["fees"] = "20-30"
                 }
                 view.findViewById<RadioButton>(R.id.radioThree).isChecked -> {
                     hashMap["fees"] = "30"
@@ -231,6 +231,7 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
         preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_SPECIALITY_ID, selectedItem.speciality?.id.toString())
         preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_IMAGE, selectedItem.profile_pic ?: "")
         val intent = Intent(this@FindDoctorsListActivity, FindDoctorBookingActivity::class.java)
+        intent.putExtra(WebApiConstants.IntentPass.DoctorProfile, selectedItem as Serializable)
         startActivity(intent);
     }
 

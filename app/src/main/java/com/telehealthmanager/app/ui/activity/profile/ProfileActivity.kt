@@ -31,11 +31,10 @@ import com.telehealthmanager.app.data.*
 import com.telehealthmanager.app.databinding.ActivityProfileBinding
 import com.telehealthmanager.app.ui.activity.allergies.AllergiesActivity
 import com.telehealthmanager.app.ui.activity.main.MainActivity
-import com.telehealthmanager.app.utils.CustomBackClick
-import com.telehealthmanager.app.utils.ImagePickerActivity
+import com.telehealthmanager.app.utils.*
 import com.telehealthmanager.app.utils.ImagePickerActivity.PickerOptionListener
-import com.telehealthmanager.app.utils.ValidationUtils
-import com.telehealthmanager.app.utils.ViewUtils
+import com.telehealthmanager.app.utils.ViewUtils.selectGender
+import com.telehealthmanager.app.utils.ViewUtils.selectMarital
 import kotlinx.android.synthetic.main.activity_profile.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -548,42 +547,18 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
     }
 
     override fun onClickGender() {
-        selectChoice("GENDER")
+        selectGender(this, "Select Gender", object : ViewCallBack.IItemClick {
+            override fun alertItemClick(strItem: String) {
+                viewModel.gender.set(strItem)
+            }
+        })
     }
 
     override fun onClickMartial() {
-        selectChoice("MARITAL")
+        selectMarital(this, "Select Marital", object : ViewCallBack.IItemClick {
+            override fun alertItemClick(strItem: String) {
+                viewModel.marital.set(strItem)
+            }
+        })
     }
-
-    private fun selectChoice(choiceType: String) {
-        var types: Array<String> = arrayOf()
-        var title = ""
-        when (choiceType) {
-            "GENDER" -> {
-                types = arrayOf("MALE", "FEMALE")
-                title = getString(R.string.select_gender)
-            }
-            "MARITAL" -> {
-                types = arrayOf("Single", "Married", "Others")
-                title = getString(R.string.select_mertial)
-            }
-        }
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder.setTitle(title)
-        builder.setIcon(R.drawable.app_logo)
-        val adapter: ArrayAdapter<String> = ArrayAdapter(this, android.R.layout.simple_list_item_1, types)
-        builder.setAdapter(adapter) { dialog, which ->
-            when (choiceType) {
-                "GENDER" -> {
-                    viewModel.gender.set(adapter.getItem(which).toString())
-                }
-                "MARITAL" -> {
-                    viewModel.marital.set(adapter.getItem(which).toString())
-                }
-            }
-            dialog.dismiss()
-        }
-        builder.show()
-    }
-
 }

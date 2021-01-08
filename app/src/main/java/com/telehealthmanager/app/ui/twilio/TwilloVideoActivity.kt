@@ -464,10 +464,10 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
             hashMap["hospital_id"] = hospital_id.toString()
             hashMap["patient_id"] = id.toString()
             hashMap["push_to"] = "hospital"
-            call = appRepository.createApiClient(ApiInterface::class.java).getCallRequest(hashMap)
+            call = appRepository.createApiClient(ApiInterface::class.java).apiCallRequest(hashMap)
         } else {
             hashMap["video"] = "1"
-            call = appRepository.createApiClient(ApiInterface::class.java).getTwilloVideoToken(hashMap)
+            call = appRepository.createApiClient(ApiInterface::class.java).apiTwilloVideoToken(hashMap)
         }
         call.enqueue(object : Callback<AccessToken> {
             override fun onResponse(call: Call<AccessToken>, response: Response<AccessToken>) {
@@ -492,7 +492,7 @@ class TwilloVideoActivity : AppCompatActivity(), View.OnClickListener, Room.List
         hashMap["hospital_id"] = hospital_id.toString()
         hashMap["patient_id"] = id.toString()
         hashMap["push_to"] = "hospital"
-        val call = appRepository.createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java).cancelVideoCall(hashMap)
+        val call = appRepository.createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java).apiCancelVideoCall(hashMap)
         call!!.enqueue(
             object : Callback<VideoCallCancelResponse?> {
                 override fun onResponse(call: Call<VideoCallCancelResponse?>, response: Response<VideoCallCancelResponse?>) {

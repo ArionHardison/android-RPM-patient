@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.braintreepayments.cardform.utils.CardType
 import com.stripe.android.Stripe
 import com.stripe.android.TokenCallback
 import com.stripe.android.model.Card
@@ -18,13 +19,19 @@ import com.telehealthmanager.app.databinding.ActivityAddCardBinding
 import com.telehealthmanager.app.utils.CustomBackClick
 import com.telehealthmanager.app.utils.ViewUtils
 
+
 class AddCardActivity : BaseActivity<ActivityAddCardBinding>(), AddMoneyNavigator, CustomBackClick {
 
     private var TAG: String = "AddCardActivity"
     lateinit var mDataBinding: ActivityAddCardBinding
     lateinit var mViewModel: AddMoneyViewModel
+    private val SUPPORTED_CARD_TYPES = arrayOf(
+        CardType.VISA, CardType.MASTERCARD, CardType.DISCOVER,
+        CardType.AMEX, CardType.DINERS_CLUB, CardType.JCB, CardType.MAESTRO, CardType.UNIONPAY
+    )
 
     private val preferenceHelper = PreferenceHelper(BaseApplication.baseApplication)
+
 
     override fun getLayoutId(): Int = R.layout.activity_add_card
 
@@ -36,6 +43,7 @@ class AddCardActivity : BaseActivity<ActivityAddCardBinding>(), AddMoneyNavigato
 
         observeShowLoading()
         observeSuccessResponse()
+        mDataBinding.supportedCardTypes.setSupportedCardTypes(*SUPPORTED_CARD_TYPES)
         mDataBinding.cardForm.cardRequired(true)
             .expirationRequired(true)
             .cvvRequired(true)

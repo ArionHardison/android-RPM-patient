@@ -31,7 +31,7 @@ class CallDeclineReceiver : BroadcastReceiver() {
                     hashMap["hospital_id"] = data.receiver_id.toString()
                     hashMap["patient_id"] = data.sender_id.toString()
                     hashMap["push_to"] = "hospital"
-                    appRepository.retrofit.create(ApiInterface::class.java).cancelVideoCall(hashMap)
+                    appRepository.retrofit.create(ApiInterface::class.java).apiCancelVideoCall(hashMap)
                 } catch (e: Exception) {
                     Log.e(TAG, "onReceive: ${e.message}")
                 }

@@ -22,12 +22,20 @@
             app:layout_constraintTop_toTopOf="parent"
             bind:baseViewModel="@{((BaseViewModel)viewmodel)}" />
 
+        <com.braintreepayments.cardform.view.SupportedCardTypesView
+            android:id="@+id/supported_card_types"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarBase"/>
+
         <com.braintreepayments.cardform.view.CardForm
             android:id="@+id/card_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            app:layout_constraintTop_toBottomOf="@+id/toolbarBase"
+            app:layout_constraintTop_toBottomOf="@+id/supported_card_types"
             app:theme="@style/NavigationDrawerStyle" />
 
         <Button

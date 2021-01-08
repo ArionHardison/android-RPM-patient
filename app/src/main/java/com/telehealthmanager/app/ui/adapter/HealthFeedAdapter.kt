@@ -40,7 +40,7 @@ class HealthFeedAdapter(val mContext: Context, val list: MutableList<ArticleResp
         }
         holder.mHealthFeedBinding.tvFeedTitle.text = item.name
         holder.mHealthFeedBinding.tvFeedDescription.text = item.description
-        holder.mHealthFeedBinding.tvFeedDay.text = ViewUtils.getTimeAgoFormat(item.createdAt)
+        holder.mHealthFeedBinding.tvFeedDay.text = ViewUtils.getTimeAgoFormat(item.updatedAt)
         if (item.coverPhoto != null && item.coverPhoto != "") {
             ViewUtils.setMapViewGlide(holder.itemView.context, holder.mHealthFeedBinding.imgFeed, BuildConfig.BASE_IMAGE_URL + item.coverPhoto)
         }

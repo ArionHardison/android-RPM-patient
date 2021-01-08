@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.provider.MediaStore
 import android.text.format.DateUtils
+import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.MainThread
@@ -23,8 +24,6 @@ import java.io.ByteArrayOutputStream
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.TimeUnit
-import kotlin.math.abs
 
 
 object ViewUtils {
@@ -45,62 +44,9 @@ object ViewUtils {
             Toasty.error(context, messageResId!!, Toast.LENGTH_SHORT).show()
     }
 
-    @MainThread
-    fun showNormalToast(context: Context, message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-    }
-
-    @MainThread
-    fun showTransportAlert(
-        context: Context, @StringRes messageResId: Int,
-        callBack: ViewCallBack.Alert
-    ) {
-        AlertDialog.Builder(context, R.style.AppTheme)
-            .setTitle(R.string.app_name)
-            .setMessage(messageResId)
-            .setPositiveButton(android.R.string.yes) { dialog, which ->
-                callBack.onPositiveButtonClick(
-                    dialog
-                )
-            }
-            .setNegativeButton(android.R.string.no) { dialog, which ->
-                callBack.onNegativeButtonClick(
-                    dialog
-                )
-            }
-            .show()
-    }
-
     fun convertRequestBody(data: String): RequestBody {
         return data.toRequestBody("text/plain".toMediaTypeOrNull())
     }
-
-    fun showAlert(context: Context, @StringRes messageResId: Int, callBack: ViewCallBack.Alert) {
-        AlertDialog.Builder(context)
-            .setTitle(R.string.app_name)
-            .setMessage(messageResId)
-            .setPositiveButton(android.R.string.yes) { dialog, which ->
-                callBack.onPositiveButtonClick(
-                    dialog
-                )
-            }
-            .setNegativeButton(android.R.string.no) { dialog, which ->
-                callBack.onNegativeButtonClick(
-                    dialog
-                )
-            }
-            .show()
-    }
-
-    @MainThread
-    fun showAlert(context: Context, @StringRes messageResId: Int) {
-        AlertDialog.Builder(context)
-            .setTitle(R.string.app_name)
-            .setMessage(messageResId)
-            .setPositiveButton(android.R.string.yes) { dialog, which -> dialog.dismiss() }
-            .show()
-    }
-
 
     fun getTimeAgoFormat(str: String): String {
         val sdf =
@@ -118,6 +64,34 @@ object ViewUtils {
             e.printStackTrace()
         }
         return ""
+    }
+
+    @MainThread
+    fun selectGender(context: Context, title: String, callBack: ViewCallBack.IItemClick) {
+        val types: Array<String> = arrayOf("MALE", "FEMALE")
+        val builder: androidx.appcompat.app.AlertDialog.Builder = androidx.appcompat.app.AlertDialog.Builder(context)
+        builder.setTitle(title)
+        builder.setIcon(R.drawable.app_logo)
+        val adapter: ArrayAdapter<String> = ArrayAdapter(context, android.R.layout.simple_list_item_1, types)
+        builder.setAdapter(adapter) { dialog, which ->
+            callBack.alertItemClick(adapter.getItem(which).toString())
+            dialog.dismiss()
+        }
+        builder.show()
+    }
+
+    @MainThread
+    fun selectMarital(context: Context, title: String, callBack: ViewCallBack.IItemClick) {
+        val types: Array<String> = arrayOf("Single", "Married", "Others")
+        val builder: androidx.appcompat.app.AlertDialog.Builder = androidx.appcompat.app.AlertDialog.Builder(context)
+        builder.setTitle(title)
+        builder.setIcon(R.drawable.app_logo)
+        val adapter: ArrayAdapter<String> = ArrayAdapter(context, android.R.layout.simple_list_item_1, types)
+        builder.setAdapter(adapter) { dialog, which ->
+            callBack.alertItemClick(adapter.getItem(which).toString())
+            dialog.dismiss()
+        }
+        builder.show()
     }
 
     /*fun getTimeAgoFormat(str: String): String {
@@ -302,6 +276,29 @@ object ViewUtils {
         val today = Date()
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
         return sdf.format(today)
+    }
+
+    fun getRailWaytoNormal(dateRailWay: String): String {
+        val sdf = SimpleDateFormat("HH:mm", Locale.ENGLISH)
+        val sdf1 = SimpleDateFormat("hh:mm a", Locale.ENGLISH)
+        val date = sdf.parse(dateRailWay)
+        return sdf1.format(date!!)
+    }
+
+    fun getTime(date: Date): String {
+        val sdf = SimpleDateFormat("HH:mm", Locale.ENGLISH)
+        return sdf.format(date)
+    }
+
+    fun getDateFormat(str: Date): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        try {
+            val date = sdf.format(str)
+            return date
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return ""
     }
 
 }

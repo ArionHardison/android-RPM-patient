@@ -23,12 +23,12 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:paddingEnd="@dimen/_10sdp"
-            android:tint="@color/colorLightBlue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.037"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_back" />
+            app:srcCompat="@drawable/ic_back"
+            app:tint="@color/white" />
 
 
         <LinearLayout
@@ -67,9 +67,9 @@
                 android:layout_marginRight="@dimen/_25sdp"
                 android:gravity="start"
                 android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:textSize="@dimen/_10sdp"
                 tools:text="We just send 4 digit code to +917418382236" />
 
             <TextView
@@ -79,8 +79,8 @@
                 android:layout_marginRight="@dimen/_25sdp"
                 android:gravity="start"
                 android:text="Please verify"
-                android:textSize="@dimen/_10sdp"
                 android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 

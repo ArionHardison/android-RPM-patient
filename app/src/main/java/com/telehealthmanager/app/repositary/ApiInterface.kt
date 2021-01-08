@@ -17,197 +17,188 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @POST("api/patient/signup")
-    fun signup(@FieldMap hashMap: HashMap<String, Any>): Observable<RegisterResponse>
+    fun apiSignUp(@FieldMap hashMap: HashMap<String, Any>): Observable<RegisterResponse>
 
     @FormUrlEncoded
     @POST("api/patient/verify_otp")
-    fun signIn(@FieldMap hashMap: HashMap<String, Any>): Observable<LoginResponse>
-
+    fun apiSignIn(@FieldMap hashMap: HashMap<String, Any>): Observable<LoginResponse>
 
     @FormUrlEncoded
     @POST("api/patient/otp")
-    fun Sendotp(@FieldMap hashMap: HashMap<String, Any>): Observable<OtpResponse>
+    fun apiSendOtp(@FieldMap hashMap: HashMap<String, Any>): Observable<OtpResponse>
 
     @FormUrlEncoded
     @POST("api/patient/verify_otp")
-    fun verifyotp(@FieldMap hashMap: HashMap<String, Any>): Observable<LoginResponse>
+    fun apiVerifyOtp(@FieldMap hashMap: HashMap<String, Any>): Observable<LoginResponse>
 
     @FormUrlEncoded
     @POST("api/patient/change_password")
-    fun updatePassword(@FieldMap hashMap: HashMap<String, Any>): Observable<Objects>
+    fun apiUpdatePassword(@FieldMap hashMap: HashMap<String, Any>): Observable<Objects>
 
     @FormUrlEncoded
     @POST("api/patient/booking")
-    fun bookdoctor(@FieldMap hashMap: HashMap<String, Any>): Observable<BookedResponse>
+    fun apiBookDoctor(@FieldMap hashMap: HashMap<String, Any>): Observable<BookedResponse>
 
     @FormUrlEncoded
     @POST("api/patient/logout")
-    fun logout(@FieldMap hashMap: HashMap<String, Any>): Observable<Response>
+    fun apiLogOut(@FieldMap hashMap: HashMap<String, Any>): Observable<Response>
 
     @GET("api/patient/profile")
-    fun getProfile(): Observable<ProfileResponse>
+    fun apiGetProfile(): Observable<ProfileResponse>
 
     /*home*/
     @GET("api/patient/search_doctor")
-    fun getHome(@QueryMap hashMap: HashMap<String, Any>): Observable<MainResponse>
+    fun apiGetHome(@QueryMap hashMap: HashMap<String, Any>): Observable<MainResponse>
 
     @GET("api/patient/search_doctor")
-    suspend fun getDoctorsList(@Query("page") page: Int): MainResponse
+    suspend fun apiGetDoctorsList(@Query("page") page: Int): MainResponse
 
     @GET("api/patient/search_doctor")
-    suspend fun getDoctorsList(@Query("page") page: Int, @Query("search") search: String): MainResponse
+    suspend fun apiGetDoctorsList(@Query("page") page: Int, @Query("search") search: String): MainResponse
 
     /*  doctor*/
     @GET("api/patient/doctor_catagory")
-    fun getCategorys(): Observable<CategoryResponse>
+    fun apiDoctorsCategories(): Observable<CategoryResponse>
 
     @GET("api/patient/doctor_catagory/{id}")
-    fun getDoctorByCategorys(@Path("id") id: Int?, @QueryMap hashMap: HashMap<String, Any>): Observable<DoctorListResponse>
+    fun apiDoctorByCategories(@Path("id") id: Int?, @QueryMap hashMap: HashMap<String, Any>): Observable<DoctorListResponse>
 
     @GET("api/patient/doctor_catagory/{id}")
-    suspend fun getDoctorByCategorys(@Path("id") id: Int, @Query("page") page: Int): DoctorListResponse
+    suspend fun apiDoctorByCategories(@Path("id") id: Int, @Query("page") page: Int): DoctorListResponse
 
     @GET("api/patient/doctor_catagory/{id}")
-    fun getDoctorFilterByCategories(@Path("id") id: Int?, @QueryMap hashMap: HashMap<String, Any>): Observable<DoctorListResponse>
+    fun apiDoctorFilterByCategories(@Path("id") id: Int?, @QueryMap hashMap: HashMap<String, Any>): Observable<DoctorListResponse>
 
     /* Appointment*/
     @GET("api/patient/appointment")
-    fun getAppointment(): Observable<AppointmentResponse>
+    fun apiAppointments(): Observable<AppointmentResponse>
 
     @GET("api/patient/visited_doctors")
-    fun getVisitedDoc(): Observable<VisitedAppointmentDoc>
+    fun apVisitedDoctors(): Observable<VisitedAppointmentDoc>
 
     @FormUrlEncoded
     @POST("api/patient/cancel_appointment")
-    fun cancelAppointment(@FieldMap hashMap: HashMap<String, Any>): Observable<Response>
+    fun apiCancelAppointment(@FieldMap hashMap: HashMap<String, Any>): Observable<Response>
 
     /*visted details*/
     @FormUrlEncoded
     @POST("api/patient/feedback")
-    fun postfeedback(@FieldMap hashMap: HashMap<String, Any>): Observable<FeedbackResponse>
+    fun apiPostFeedback(@FieldMap hashMap: HashMap<String, Any>): Observable<FeedbackResponse>
 
     /*doctor profile*/
     @FormUrlEncoded
     @POST("api/patient/favourite_doctor")
-    fun addfav(@FieldMap hashMap: HashMap<String, Any>): Observable<Response>
+    fun apiAddFav(@FieldMap hashMap: HashMap<String, Any>): Observable<Response>
 
     /* TODO Medical Record*/
     @GET("api/patient/records_list")
-    fun getMedicalRecord(): Observable<MedicalRecord>
+    fun apiMedicalRecord(): Observable<MedicalRecord>
 
     @Multipart
     @POST("api/patient/medical_records")
-    fun addMedicalRecords(@PartMap params: HashMap<String, RequestBody>, @Part image: MultipartBody.Part): Observable<ResponsePrescription>
+    fun apiAddMedicalRecords(@PartMap params: HashMap<String, RequestBody>, @Part image: MultipartBody.Part): Observable<ResponsePrescription>
 
     @GET("api/patient/doctor")
-    fun getAllDoctors(): Observable<ResponseDoctors>
+    fun apiAllDoctors(): Observable<ResponseDoctors>
 
     @GET("api/patient/records_details/{record_id}")
-    fun getRecordsList(@Path("record_id") id: String?): Observable<ResponseMedicalDetails>
+    fun apiRecordsList(@Path("record_id") id: String?): Observable<ResponseMedicalDetails>
 
     @GET("api/patient/articles")
-    fun getArticles(): Observable<ArticleResponse>
+    fun apiArticles(): Observable<ArticleResponse>
 
     @FormUrlEncoded
     @POST("api/patient/profile")
-    fun editPatient(
-        @FieldMap hashMap: HashMap<String, Any>
-    ): Observable<ProfileResponse>
+    fun apiEditPatient(@FieldMap hashMap: HashMap<String, Any>): Observable<ProfileResponse>
 
 
     /*TODO RELATIVE*/
     @GET("api/patient/relative/list")
-    fun getRelativeList(@QueryMap hashMap: HashMap<String, Any>): Observable<RelativeResponse>
+    fun apiRelativeList(@QueryMap hashMap: HashMap<String, Any>): Observable<RelativeResponse>
 
     @GET("api/patient/relative/{id}")
-    fun getSingleRelative(@Path("id") id: String?): Observable<RelativeResponse>
+    fun apiSingleRelative(@Path("id") id: String?): Observable<RelativeResponse>
 
     @Multipart
     @POST("api/patient/relative")
-    fun addPatientRelative(@PartMap params: HashMap<String, RequestBody>, @Part image: MultipartBody.Part): Observable<AddUpdateRelative>
+    fun apiAddPatientRelative(@PartMap params: HashMap<String, RequestBody>, @Part image: MultipartBody.Part): Observable<AddUpdateRelative>
 
     @FormUrlEncoded
     @POST("api/patient/relative")
-    fun addPatientRelative(@FieldMap params: HashMap<String, Any>): Observable<AddUpdateRelative>
+    fun apiAddPatientRelative(@FieldMap params: HashMap<String, Any>): Observable<AddUpdateRelative>
 
     @Multipart
     @POST("api/patient/relative/{id}")
-    fun updateRelativePatient(@Path("id") id: String?, @PartMap params: HashMap<String, RequestBody>, @Part image: MultipartBody.Part): Observable<AddUpdateRelative>
+    fun apiUpdateRelativePatient(@Path("id") id: String?, @PartMap params: HashMap<String, RequestBody>, @Part image: MultipartBody.Part): Observable<AddUpdateRelative>
 
     @FormUrlEncoded
     @POST("api/patient/relative/{id}")
-    fun updateRelativePatient(@Path("id") id: String?, @FieldMap params: HashMap<String, Any>): Observable<AddUpdateRelative>
+    fun apiUpdateRelativePatient(@Path("id") id: String?, @FieldMap params: HashMap<String, Any>): Observable<AddUpdateRelative>
 
     @Multipart
     @POST("api/patient/profile")
-    fun editPatientWithImage(
-        @PartMap hashMap: HashMap<String, RequestBody>,
-        @Part image: MultipartBody.Part?
-    ): Observable<ProfileResponse>
+    fun apiEditPatientWithImage(@PartMap hashMap: HashMap<String, RequestBody>, @Part image: MultipartBody.Part?): Observable<ProfileResponse>
 
     /*TODO CHAT*/
     @GET("api/patient/chat/history")
-    fun getChat(): Observable<ChatListResponse>
+    fun apiChat(): Observable<ChatListResponse>
 
     @GET("api/patient/chat/status/{id}")
-    fun getChatStatus(@Path("id") int: Int): Observable<ChatStatusResponse>
+    fun apiChatStatus(@Path("id") int: Int): Observable<ChatStatusResponse>
 
     @GET("api/patient/chat_push")
-    fun postChat(@QueryMap hashMap: HashMap<String, String>): Call<Object>
+    fun apiPostChat(@QueryMap hashMap: HashMap<String, String>): Call<Object>
 
     /*TODO SEARCH*/
     @GET("api/patient/home_search")
-    fun getGlobalSearchApp(@QueryMap hashMap: HashMap<String, Any>): Observable<SearchResponse>
-
+    fun apiGlobalSearchApp(@QueryMap hashMap: HashMap<String, Any>): Observable<SearchResponse>
 
     @FormUrlEncoded
     @POST("api/patient/reminder")
-    fun addRemainder(@FieldMap hashMap: HashMap<String, Any>): Observable<AddRemainderResponse>
-
+    fun apiAddRemainder(@FieldMap hashMap: HashMap<String, Any>): Observable<AddRemainderResponse>
 
     @GET("api/patient/reminder_list")
-    fun getReminders(): Observable<ReminderResponse>
+    fun apiReminders(): Observable<ReminderResponse>
 
     @FormUrlEncoded
     @POST("api/patient/chat/promocode")
-    fun addChatPromoCode(@FieldMap hashMap: HashMap<String, Any>): Observable<ChatPromoSuccess>
+    fun apiAddChatPromoCode(@FieldMap hashMap: HashMap<String, Any>): Observable<ChatPromoSuccess>
 
     @FormUrlEncoded
     @POST("api/patient/payment")
-    fun payForChatRequest(@FieldMap hashMap: HashMap<String, Any>): Observable<MessageResponse>
+    fun apiPayForChatRequest(@FieldMap hashMap: HashMap<String, Any>): Observable<MessageResponse>
 
 
     @GET("api/patient/video/call/check")
-    fun videoCheckStatusAPI(): Observable<VideoStatusCheck>
+    fun apiVideoCheckStatusAPI(): Observable<VideoStatusCheck>
 
     /* TODO TWILIO CALL */
     @GET("api/patient/video/cancel")
-    fun cancelVideoCall(@QueryMap hashMap: HashMap<String, Any>): Call<VideoCallCancelResponse>?
+    fun apiCancelVideoCall(@QueryMap hashMap: HashMap<String, Any>): Call<VideoCallCancelResponse>?
 
     @GET("api/patient/video/call/token")
-    fun getTwilloVideoToken(@QueryMap hashMap: HashMap<String, Any>): Call<AccessToken>
+    fun apiTwilloVideoToken(@QueryMap hashMap: HashMap<String, Any>): Call<AccessToken>
 
     @GET("api/patient/video/call")
-    fun getCallRequest(@QueryMap hashMap: HashMap<String, Any>): Call<AccessToken>
+    fun apiCallRequest(@QueryMap hashMap: HashMap<String, Any>): Call<AccessToken>
 
 
     /* TODO CARD */
     @GET("api/patient/card?user_type=patient")
-    fun getCards(): Observable<List<CardList>>
+    fun apiCards(): Observable<List<CardList>>
 
     @FormUrlEncoded
     @POST("api/patient/card")
-    fun addCardDetails(@FieldMap hashMap: HashMap<String, Any>): Observable<CardSuccessMessage>
+    fun apiAddCardDetails(@FieldMap hashMap: HashMap<String, Any>): Observable<CardSuccessMessage>
 
     @FormUrlEncoded
     @POST("api/patient/delete/card")
-    fun deleteCardDetails(@FieldMap hashMap: HashMap<String, Any>): Observable<CardSuccessMessage>
+    fun apiDeleteCardDetails(@FieldMap hashMap: HashMap<String, Any>): Observable<CardSuccessMessage>
 
     @FormUrlEncoded
     @POST("api/patient/add_money")
-    fun addMoney(@FieldMap hashMap: HashMap<String, Any>): Observable<WalletAddSuccess>
-
+    fun apiAddMoney(@FieldMap hashMap: HashMap<String, Any>): Observable<WalletAddSuccess>
 
     @GET("api/patient/faq")
-    fun getFaqList(): Observable<FaqResponse>
+    fun apiFaqList(): Observable<FaqResponse>
 }

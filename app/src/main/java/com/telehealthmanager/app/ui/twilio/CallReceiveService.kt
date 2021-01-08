@@ -26,10 +26,7 @@ class CallReceiveService : Service() {
     }
 
     private var mNotificationManager: NotificationManager? = null
-
-
     private var mVibratePattern = longArrayOf(0, 400, 400, 400, 400, 400, 400, 400)
-
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         var data: ReceiverPushResponse? = null
@@ -72,7 +69,6 @@ class CallReceiveService : Service() {
         val declineCallPendingIntent = PendingIntent.getBroadcast(this, 0, cancelCallAction, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val notification: Notification
-        //  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
             createNotificationChannel()

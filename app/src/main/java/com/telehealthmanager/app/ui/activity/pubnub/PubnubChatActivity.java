@@ -29,7 +29,6 @@ import com.pubnub.api.enums.PNStatusCategory;
 import com.pubnub.api.models.consumer.PNPublishResult;
 import com.pubnub.api.models.consumer.PNStatus;
 import com.pubnub.api.models.consumer.history.PNHistoryItemResult;
-import com.pubnub.api.models.consumer.history.PNHistoryResult;
 import com.pubnub.api.models.consumer.objects_api.channel.PNChannelMetadataResult;
 import com.pubnub.api.models.consumer.objects_api.membership.PNMembershipResult;
 import com.pubnub.api.models.consumer.objects_api.uuid.PNUUIDMetadataResult;
@@ -52,7 +51,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -304,7 +302,7 @@ public class PubnubChatActivity extends AppCompatActivity {
         HashMap<String, String> map = new HashMap<>();
         map.put("doctor_id", chat_provider_id);
         map.put("message", messageStr);
-        Call<Object> pushChatApi = appRepository.createApiClient(BuildConfig.BASE_URL, ApiInterface.class).postChat(map);
+        Call<Object> pushChatApi = appRepository.createApiClient(BuildConfig.BASE_URL, ApiInterface.class).apiPostChat(map);
         pushChatApi.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {

@@ -17,7 +17,7 @@ class DoctorDataSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Hospital> {
         return try {
             val nextPageNumber = params.key ?: default
-            val response = apiRepository.createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java).getDoctorsList(nextPageNumber)
+            val response = apiRepository.createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java).apiGetDoctorsList(nextPageNumber)
             searchViewModel.postCount(response.search_doctors.size)
             LoadResult.Page(
                 data = response.search_doctors,
@@ -38,7 +38,7 @@ class DoctorSearchDataSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Hospital> {
         return try {
             val nextPageNumber = params.key ?: 0
-            val response = apiRepository.createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java).getDoctorsList(nextPageNumber, query)
+            val response = apiRepository.createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java).apiGetDoctorsList(nextPageNumber, query)
             searchViewModel.postSearchCount(response.search_doctors.size)
             LoadResult.Page(
                 data = response.search_doctors,
@@ -58,11 +58,11 @@ class FindDoctorSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, DoctorListResponse.specialities.DoctorProfile> {
         return try {
             val nextPageNumber = params.key ?: 0
-            val response = apiRepository.createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java).getDoctorByCategorys(findDoctorsViewModel.mCategoryId.get()!!.toInt(),nextPageNumber)
+            val response = apiRepository.createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java).apiDoctorByCategories(findDoctorsViewModel.mCategoryId.get()!!.toInt(),nextPageNumber)
             LoadResult.Page(
                 data = response.Specialities.doctor_profile,
-                prevKey = if (nextPageNumber > 0) response.Specialities.doctor_profile[response.Specialities.doctor_profile.size - 1].id else null,
-                nextKey = if (response.Specialities.doctor_profile.isNotEmpty()) response.Specialities.doctor_profile[response.Specialities.doctor_profile.size - 1].id else null
+                prevKey = if (nextPageNumber > 0) response.Specialities.doctor_profile[response.Specialities.doctor_profile.size - 1].doctor_id else null,
+                nextKey = if (response.Specialities.doctor_profile.isNotEmpty()) response.Specialities.doctor_profile[response.Specialities.doctor_profile.size - 1].doctor_id else null
             )
         } catch (e: Exception) {
             LoadResult.Error(e)
