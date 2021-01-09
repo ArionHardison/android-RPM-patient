@@ -25,6 +25,6 @@ class ChangePasswordViewModel : BaseViewModel<ChangePasswordNavigator>() {
         hashMap[WebApiConstants.ChangePassword.CURRENTPASSWORD] = currentPassword.value!!.trim()
         hashMap[WebApiConstants.ChangePassword.PASSWORD] = newPassword.value!!.trim()
         hashMap[WebApiConstants.ChangePassword.PASSWORDCONFIRMATION] = rePassword.value!!.trim()
-        getCompositeDisposable().add(appRepository.changePassword(this, hashMap))
+        getCompositeDisposable().add(appRepository.repositoryChangePassword(this, hashMap))
     }
 }

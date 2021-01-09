@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import com.telehealthmanager.app.base.BaseViewModel
 import com.telehealthmanager.app.repositary.AppRepository
 import com.telehealthmanager.app.repositary.model.ProfileResponse
-import com.telehealthmanager.app.repositary.model.Response
 import com.telehealthmanager.app.repositary.model.VideoStatusCheck
 
 class MainViewModel : BaseViewModel<MainNavigator>(){
@@ -18,7 +17,7 @@ class MainViewModel : BaseViewModel<MainNavigator>(){
     var mVideoIncomingResponse = MutableLiveData<VideoStatusCheck>()
 
     fun getprofile() {
-        getCompositeDisposable().add(appRepository.getProfile(this))
+        getCompositeDisposable().add(appRepository.repositoryProfile(this))
     }
 
 

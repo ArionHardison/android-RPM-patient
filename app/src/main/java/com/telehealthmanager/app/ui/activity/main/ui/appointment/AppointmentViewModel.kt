@@ -3,7 +3,6 @@ package com.telehealthmanager.app.ui.activity.main.ui.appointment
 import androidx.lifecycle.MutableLiveData
 import com.telehealthmanager.app.base.BaseViewModel
 import com.telehealthmanager.app.repositary.AppRepository
-import com.telehealthmanager.app.repositary.model.Appointment
 import com.telehealthmanager.app.repositary.model.AppointmentResponse
 import com.telehealthmanager.app.repositary.model.Response
 
@@ -20,7 +19,7 @@ class AppointmentViewModel : BaseViewModel<AppointmentNavigator>() {
     private val appRepository = AppRepository.instance()
 
     fun getAppointment() {
-        getCompositeDisposable().add(appRepository.getAppointment(this))
+        getCompositeDisposable().add(appRepository.repositoryAppointment(this))
     }
 
     fun getUpcomingAppointment() {

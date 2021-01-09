@@ -11,6 +11,6 @@ class FavouriteDoctorViewModel : BaseViewModel<FavouriteDoctorNavigator>(){
     private val appRepository = AppRepository.instance()
 
     fun gethome(hashMap: HashMap<String, Any>) {
-        getCompositeDisposable().add(appRepository.getHome(this,hashMap))
+        getCompositeDisposable().add(appRepository.repositoryHome(this,hashMap))
     }
 }

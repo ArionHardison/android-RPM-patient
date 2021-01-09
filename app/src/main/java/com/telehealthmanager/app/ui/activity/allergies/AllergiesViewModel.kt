@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import com.telehealthmanager.app.base.BaseViewModel
 import com.telehealthmanager.app.repositary.AppRepository
 import com.telehealthmanager.app.repositary.model.ProfileResponse
-import com.telehealthmanager.app.repositary.model.RelativeList
 
 class AllergiesViewModel :BaseViewModel<AllergiesNavigator>() {
     private val appRepository = AppRepository.instance()
@@ -12,7 +11,7 @@ class AllergiesViewModel :BaseViewModel<AllergiesNavigator>() {
     var mAllergiesList: MutableList<ProfileResponse.Allergies>? = arrayListOf()
 
     fun getProfile() {
-        getCompositeDisposable().add(appRepository.getProfile(this))
+        getCompositeDisposable().add(appRepository.repositoryProfile(this))
     }
 
     fun clickAddAllergies(){

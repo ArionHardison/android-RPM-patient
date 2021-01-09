@@ -20,7 +20,7 @@ class LoginViewModel : BaseViewModel<LoginNavigator>() {
     fun SendOTP(){
         val hashMap: HashMap<String, Any> = HashMap()
         hashMap[WebApiConstants.SignIn.MOBILE] = countryCode.value!!.trim().plus(mobile.value!!.trim())
-        getCompositeDisposable().add(appRepository.sendOtp(this, hashMap))
+        getCompositeDisposable().add(appRepository.repositorySendOtp(this, hashMap))
     }
 
 }

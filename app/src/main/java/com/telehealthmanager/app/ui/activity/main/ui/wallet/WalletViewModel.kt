@@ -1,13 +1,10 @@
 package com.telehealthmanager.app.ui.activity.main.ui.wallet
 
 import androidx.databinding.ObservableField
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.telehealthmanager.app.base.BaseViewModel
 import com.telehealthmanager.app.repositary.AppRepository
-import com.telehealthmanager.app.repositary.WebApiConstants
 import com.telehealthmanager.app.repositary.model.ProfileResponse
-import com.telehealthmanager.app.repositary.model.WalletResponse
 
 class WalletViewModel : BaseViewModel<WalletNavigator>() {
 
@@ -19,7 +16,7 @@ class WalletViewModel : BaseViewModel<WalletNavigator>() {
 
     fun getProfile() {
         loadingProgress.value=true
-        getCompositeDisposable().add(appRepository.getProfile(this))
+        getCompositeDisposable().add(appRepository.repositoryProfile(this))
     }
 
     fun onAddMoneyClicked(){

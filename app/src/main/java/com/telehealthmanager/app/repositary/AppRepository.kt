@@ -62,7 +62,7 @@ class AppRepository : BaseRepository() {
 
 
     /*TODO singup*/
-    fun signUp(viewModel: RegisterViewModel, params: HashMap<String, Any>): Disposable {
+    fun repositorySignUp(viewModel: RegisterViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiSignUp(params)
             .observeOn(AndroidSchedulers.mainThread())
@@ -74,7 +74,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun sendOtp(viewModel: LoginViewModel, params: HashMap<String, Any>): Disposable {
+    fun repositorySendOtp(viewModel: LoginViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiSendOtp(params)
             .observeOn(AndroidSchedulers.mainThread())
@@ -86,7 +86,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun verifiyOtp(viewModel: OTPViewModel, params: HashMap<String, Any>): Disposable {
+    fun repositoryVerifyOtp(viewModel: OTPViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiVerifyOtp(params)
             .observeOn(AndroidSchedulers.mainThread())
@@ -98,7 +98,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun postSignIn(viewModel: OTPViewModel, params: HashMap<String, Any>): Disposable {
+    fun repositoryPostSignIn(viewModel: OTPViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiSignIn(params)
             .observeOn(AndroidSchedulers.mainThread())
@@ -110,7 +110,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun logout(viewModel: SettingViewModel, params: HashMap<String, Any>): Disposable {
+    fun repositoryLogOut(viewModel: SettingViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiLogOut(params)
             .observeOn(AndroidSchedulers.mainThread())
@@ -123,7 +123,7 @@ class AppRepository : BaseRepository() {
     }
 
     /*TODO home*/
-    fun getHome(viewModel: ViewModel, params: HashMap<String, Any>): Disposable {
+    fun repositoryHome(viewModel: ViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiGetHome(params)
             .observeOn(AndroidSchedulers.mainThread())
@@ -145,7 +145,7 @@ class AppRepository : BaseRepository() {
 
 
     /*TODO profile*/
-    fun getProfile(viewModel: ViewModel): Disposable {
+    fun repositoryProfile(viewModel: ViewModel): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiGetProfile()
             .observeOn(AndroidSchedulers.mainThread())
@@ -174,7 +174,7 @@ class AppRepository : BaseRepository() {
     }
 
     /*TODO  changePassword*/
-    fun changePassword(changePasswordViewModel: ChangePasswordViewModel, hashMap: java.util.HashMap<String, Any>): Disposable {
+    fun repositoryChangePassword(changePasswordViewModel: ChangePasswordViewModel, hashMap: java.util.HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiUpdatePassword(hashMap)
             .observeOn(AndroidSchedulers.mainThread())
@@ -187,7 +187,7 @@ class AppRepository : BaseRepository() {
     }
 
     /*TODO Category*/
-    fun getCategorys(viewModel: ViewModel): Disposable {
+    fun repositoryCategories(viewModel: ViewModel): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiDoctorsCategories()
             .observeOn(AndroidSchedulers.mainThread())
@@ -203,7 +203,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun bookDoctor(viewModel: ViewModel, params: HashMap<String, Any>): Disposable {
+    fun repositoryBookDoctor(viewModel: ViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiBookDoctor(params)
             .observeOn(AndroidSchedulers.mainThread())
@@ -225,7 +225,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun getDoctorByCategorys(viewModel: ViewModel, id: Int, hashMap: HashMap<String, Any>): Disposable {
+    fun repositoryDoctorByCategories(viewModel: ViewModel, id: Int, hashMap: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiDoctorByCategories(id, hashMap)
             .observeOn(AndroidSchedulers.mainThread())
@@ -241,7 +241,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun getFiltersDoctors(viewModel: ViewModel, id: Int, hashMap: HashMap<String, Any>): Disposable {
+    fun repositoryFiltersDoctors(viewModel: ViewModel, id: Int, hashMap: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiDoctorFilterByCategories(id, hashMap)
             .observeOn(AndroidSchedulers.mainThread())
@@ -258,7 +258,7 @@ class AppRepository : BaseRepository() {
     }
 
     /*TODO Appointments*/
-    fun getAppointment(viewModel: AppointmentViewModel): Disposable {
+    fun repositoryAppointment(viewModel: AppointmentViewModel): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiAppointments()
             .observeOn(AndroidSchedulers.mainThread())

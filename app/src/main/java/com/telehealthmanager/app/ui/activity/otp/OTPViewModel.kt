@@ -45,7 +45,7 @@ class OTPViewModel : BaseViewModel<OTPNavigator>() {
         val hashMap : HashMap<String,Any> = HashMap()
         hashMap[WebApiConstants.SignIn.OTP] = otp.value!!.trim()
         hashMap[WebApiConstants.SignIn.MOBILE] =  countryCode.get()!!.trim().plus(mobile.get()!!.trim())
-        getCompositeDisposable().add(appRepository.verifiyOtp(this,hashMap))
+        getCompositeDisposable().add(appRepository.repositoryVerifyOtp(this,hashMap))
     }
     fun signIn() {
 
@@ -61,7 +61,7 @@ class OTPViewModel : BaseViewModel<OTPNavigator>() {
         hashMap[WebApiConstants.SocialLogin.DEVICE_ID] = BaseApplication.getCustomPreference!!.getString(PreferenceKey.DEVICE_ID, "111") as String
         hashMap[WebApiConstants.SignIn.CLIENT_ID] = BuildConfig.CLIENT_ID
         hashMap[WebApiConstants.SignIn.CLIENT_SECRET] = BuildConfig.CLIENT_SECRET
-        getCompositeDisposable().add(appRepository.postSignIn(this, hashMap))
+        getCompositeDisposable().add(appRepository.repositoryPostSignIn(this, hashMap))
 
 
 

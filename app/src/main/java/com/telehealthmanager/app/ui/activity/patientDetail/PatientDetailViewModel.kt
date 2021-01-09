@@ -15,7 +15,7 @@ class PatientDetailViewModel : BaseViewModel<PatientDetailNavigator>(){
 
 
     fun bookDoctor(hashMap: HashMap<String, Any>) {
-        getCompositeDisposable().add(appRepository.bookDoctor(this, hashMap))
+        getCompositeDisposable().add(appRepository.repositoryBookDoctor(this, hashMap))
     }
 
 }

@@ -18,6 +18,6 @@ class SettingViewModel : BaseViewModel<SettingNavigator>(){
     }
 
     fun logout(hashMap: HashMap<String, Any>) {
-        getCompositeDisposable().add(appRepository.logout(this,hashMap))
+        getCompositeDisposable().add(appRepository.repositoryLogOut(this,hashMap))
     }
 }

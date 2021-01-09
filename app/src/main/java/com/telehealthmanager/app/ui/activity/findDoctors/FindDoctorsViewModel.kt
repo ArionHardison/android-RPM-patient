@@ -1,6 +1,5 @@
 package com.telehealthmanager.app.ui.activity.findDoctors
 
-import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -34,15 +33,15 @@ class FindDoctorsViewModel : BaseViewModel<FindDoctorsNavigator>() {
     var mBookedResponse = MutableLiveData<BookedResponse>()
 
     fun getCategorys() {
-        getCompositeDisposable().add(appRepository.getCategorys(this))
+        getCompositeDisposable().add(appRepository.repositoryCategories(this))
     }
 
     fun getDoctorByCategorys(id: Int, hashMap: HashMap<String, Any>) {
-        getCompositeDisposable().add(appRepository.getDoctorByCategorys(this, id, hashMap))
+        getCompositeDisposable().add(appRepository.repositoryDoctorByCategories(this, id, hashMap))
     }
 
     fun getDoctorFilterCategories(hashMap: HashMap<String, Any>) {
-        getCompositeDisposable().add(appRepository.getFiltersDoctors(this, mCategoryId.get()!!.toInt(), hashMap))
+        getCompositeDisposable().add(appRepository.repositoryFiltersDoctors(this, mCategoryId.get()!!.toInt(), hashMap))
     }
 
 

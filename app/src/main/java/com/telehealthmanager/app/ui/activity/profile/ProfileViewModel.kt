@@ -7,7 +7,6 @@ import com.telehealthmanager.app.repositary.AppRepository
 import com.telehealthmanager.app.repositary.WebApiConstants
 import com.telehealthmanager.app.repositary.model.AddUpdateRelative
 import com.telehealthmanager.app.repositary.model.ProfileResponse
-import com.telehealthmanager.app.repositary.model.RelativeList
 import com.telehealthmanager.app.repositary.model.RelativeResponse
 import com.telehealthmanager.app.utils.ViewUtils
 import okhttp3.MultipartBody
@@ -53,7 +52,7 @@ class ProfileViewModel : BaseViewModel<ProfileNavigator>() {
     var updateText: ObservableField<String> = ObservableField("")
 
     fun getProfile() {
-        getCompositeDisposable().add(appRepository.getProfile(this))
+        getCompositeDisposable().add(appRepository.repositoryProfile(this))
     }
 
     fun openAllergies() {

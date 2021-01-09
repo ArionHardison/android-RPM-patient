@@ -68,7 +68,7 @@ class CategoriesListAdapter(val items: MutableList<CategoryResponse.Category>, v
                     searchList = filteredList
                 }
 
-                val filterResults = Filter.FilterResults()
+                val filterResults = FilterResults()
                 filterResults.values = searchList
                 return filterResults
             }

@@ -47,6 +47,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -193,10 +194,6 @@ public class PubnubChatActivity extends AppCompatActivity {
                     // This event happens when radio / connectivity is lost
                 } else if (status.getCategory() == PNStatusCategory.PNConnectedCategory) {
 
-                    // Connect event. You can do stuff like publish, and know you'll get it.
-                    // Or just use the connected event to confirm you are subscribed for
-                    // UI / internal notifications, etc
-
                 } else if (status.getCategory() == PNStatusCategory.PNReconnectedCategory) {
                     // Happens as part of our regular operation. This event happens when
                     // radio / connectivity is lost, then regained.
@@ -215,6 +212,12 @@ public class PubnubChatActivity extends AppCompatActivity {
                         String mess = message.getMessage().toString();
                         Log.e(TAG, "message: mess" + mess);
                         final MessageModel messageObject = gson.fromJson(mess, MessageModel.class);
+                        long timetoken = message.getTimetoken() / 10_000L;
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTimeInMillis(timetoken);
+                        String localDateTime = sdf.format(calendar.getTimeInMillis());
+                        Log.e(TAG, "message: MyMessage1" + localDateTime);
                         Log.e(TAG, "message: MyMessage" + messageObject);
                         addToAdapter(messageObject);
                     } catch (@NonNull IllegalStateException | JsonSyntaxException exception) {
@@ -274,7 +277,6 @@ public class PubnubChatActivity extends AppCompatActivity {
             }
             return handled;
         });
-
 
     }
 

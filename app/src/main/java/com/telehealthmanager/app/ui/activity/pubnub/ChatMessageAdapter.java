@@ -31,7 +31,7 @@ public class ChatMessageAdapter extends ArrayAdapter<MessageModel> {
     private static final int MY_MESSAGE = 0, OTHER_MESSAGE = 1;
 
     @androidx.annotation.NonNull
-    PreferenceHelper preferenceHelper=new PreferenceHelper(BaseApplication.baseApplication);
+    PreferenceHelper preferenceHelper = new PreferenceHelper(BaseApplication.baseApplication);
 
     ChatMessageAdapter(@androidx.annotation.NonNull Context activity, @androidx.annotation.NonNull List<MessageModel> data) {
         super(activity, R.layout.item_mine_message, data);
@@ -45,8 +45,8 @@ public class ChatMessageAdapter extends ArrayAdapter<MessageModel> {
     @Override
     public int getItemViewType(int position) {
         MessageModel item = getItem(position);
-        String str= String.valueOf(preferenceHelper.mPref.getInt(PreferenceKey.PATIENT_ID,0));
-        if (item!=null&&item.senderId!=null&&item.getSenderId().equals(str)) {
+        String str = String.valueOf(preferenceHelper.mPref.getInt(PreferenceKey.PATIENT_ID, 0));
+        if (item != null && item.senderId != null && item.getSenderId().equals(str)) {
             return MY_MESSAGE;
         } else
             return OTHER_MESSAGE;
@@ -66,7 +66,7 @@ public class ChatMessageAdapter extends ArrayAdapter<MessageModel> {
                 textView.setText(chat.getMessage());
             }
             TextView timestamp = convertView.findViewById(R.id.timestamp);
-            if (chat != null&& chat.getTime()!=null&&!chat.getTime().isEmpty()) {
+            if (chat != null && chat.getTime() != null && !chat.getTime().isEmpty()) {
                 String today = chat.getTime();
                 DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Date date = null;
@@ -76,9 +76,9 @@ public class ChatMessageAdapter extends ArrayAdapter<MessageModel> {
                     e.printStackTrace();
                 }
                 //date null check
-                if(date!=null) {
+                if (date != null) {
                     long dateInLong = date.getTime();
-                    timestamp.setText(String.valueOf(getDisplayableTime(dateInLong)));
+                    timestamp.setText(getDisplayableTime(dateInLong));
                 }
             }
 
@@ -89,7 +89,7 @@ public class ChatMessageAdapter extends ArrayAdapter<MessageModel> {
                 textView.setText(chat.getMessage());
             }
             TextView timestamp = convertView.findViewById(R.id.timestamp);
-            if (chat != null&& chat.getTime()!=null&&!chat.getTime().isEmpty()) {
+            if (chat != null && chat.getTime() != null && !chat.getTime().isEmpty()) {
                 String today = chat.getTime();
                 DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Date date = null;
