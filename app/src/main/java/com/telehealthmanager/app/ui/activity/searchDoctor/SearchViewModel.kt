@@ -86,7 +86,7 @@ class SearchViewModel : BaseViewModel<SearchNavigator>() {
     }
 
     fun addFav(hashMap: HashMap<String, Any>) {
-        getCompositeDisposable().add(appRepository.addFav(this, hashMap))
+        getCompositeDisposable().add(appRepository.repositoryAddFav(this, hashMap))
     }
 
     fun searchRepo(queryString: String) {

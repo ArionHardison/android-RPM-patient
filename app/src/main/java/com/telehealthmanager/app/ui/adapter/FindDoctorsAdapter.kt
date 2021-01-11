@@ -93,16 +93,16 @@ class FindDoctorsAdapter(val iDoctorsClick: ViewCallBack.IDoctorListener) :
             textView54.text = preferenceHelper.getValue(PreferenceKey.CURRENCY, "$").toString().plus(item.fees ?: "0")
 
             button16.setOnClickListener {
-                iDoctorsClick.onBookClick(item)
+                iDoctorsClick.onBookClick(item, imageView18)
             }
 
             itemView.setOnClickListener {
-                iDoctorsClick.onItemClick(item)
+                iDoctorsClick.onItemClick(item, imageView18)
             }
 
             itemView.setOnClickListener {
                 setPosition(this@FindDoctorsAdapter, position)
-                iDoctorsClick.onItemClick(item)
+                iDoctorsClick.onItemClick(item, imageView18)
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.telehealthmanager.app.utils
 
 import android.content.DialogInterface
+import android.widget.ImageView
 import com.telehealthmanager.app.repositary.model.DoctorListResponse
 
 interface ViewCallBack {
@@ -11,12 +12,12 @@ interface ViewCallBack {
     }
 
     interface IDoctorListener {
-        fun onBookClick(selectedItem: DoctorListResponse.specialities.DoctorProfile)
-        fun onItemClick(selectedItem: DoctorListResponse.specialities.DoctorProfile)
+        fun onBookClick(selectedItem: DoctorListResponse.specialities.DoctorProfile, profileImage: ImageView)
+        fun onItemClick(selectedItem: DoctorListResponse.specialities.DoctorProfile, profileImage: ImageView)
         fun onCallClick(phone: String)
     }
 
     interface IItemClick {
-        fun alertItemClick(strItem:String)
+        fun alertItemClick(strItem: String)
     }
 }

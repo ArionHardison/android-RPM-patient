@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.activity.searchDoctor.SearchDoctorDetailActivity">
 
@@ -122,9 +121,9 @@
                             android:contentDescription="@string/app_name"
                             android:onClick="@{()->viewmodel.clickShareClick()}"
                             android:padding="@dimen/_10sdp"
-                            android:tint="@color/colorWhite"
                             android:visibility="gone"
-                            app:srcCompat="@drawable/ic_doctor_share" />
+                            app:srcCompat="@drawable/ic_doctor_share"
+                            app:tint="@color/colorWhite" />
 
                         <ImageView
                             android:layout_width="@dimen/_35sdp"
@@ -140,9 +139,9 @@
                             android:layout_height="?attr/actionBarSize"
                             android:onClick="@{()->viewmodel.clickInfoClick()}"
                             android:padding="@dimen/_10sdp"
-                            android:tint="@color/colorWhite"
                             android:visibility="gone"
-                            app:srcCompat="@drawable/twillio_ic_video_call" />
+                            app:srcCompat="@drawable/twillio_ic_video_call"
+                            app:tint="@color/colorWhite" />
                     </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -166,10 +165,16 @@
                 android:paddingBottom="@dimen/_100sdp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:background="@drawable/doc_cover_image"
+                    app:layout_constraintBottom_toBottomOf="@+id/top_layer"
+                    app:layout_constraintTop_toTopOf="@+id/top_layer" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/top_layer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorPrimary"
                     android:paddingBottom="@dimen/_20sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -183,6 +188,7 @@
                         android:layout_marginTop="16dp"
                         app:civ_border_color="@color/colorWhite"
                         app:civ_border_width="1dp"
+                        android:transitionName="picture"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/doc_place_holder" />
@@ -214,8 +220,8 @@
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/_8sdp"
                         android:visibility="gone"
-                        app:layout_constraintEnd_toStartOf="@+id/textView97"
                         app:layout_constraintBottom_toBottomOf="@+id/textView93"
+                        app:layout_constraintEnd_toStartOf="@+id/textView97"
                         app:layout_constraintStart_toEndOf="@+id/textView93"
                         app:layout_constraintTop_toTopOf="@+id/textView93" />
 
@@ -229,8 +235,8 @@
                         android:paddingEnd="@dimen/_3sdp"
                         android:text="@{viewmodel.branch}"
                         android:visibility="gone"
-                        app:layout_constraintEnd_toStartOf="@+id/textView97"
                         app:layout_constraintBottom_toBottomOf="@+id/textView93"
+                        app:layout_constraintEnd_toStartOf="@+id/textView97"
                         app:layout_constraintStart_toEndOf="@+id/textView93"
                         app:layout_constraintTop_toTopOf="@+id/textView93"
                         tools:text="Allopath" />
@@ -561,9 +567,9 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView116" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/locationView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/locationView"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider14">
 
@@ -577,7 +583,7 @@
                         android:textColor="@color/grey_700"
                         android:textSize="@dimen/_14sdp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/textView117"

@@ -2,13 +2,9 @@ package com.telehealthmanager.app.ui.activity.main.ui.faq
 
 import androidx.lifecycle.MutableLiveData
 import com.telehealthmanager.app.base.BaseViewModel
-import com.telehealthmanager.app.data.PreferenceKey
-import com.telehealthmanager.app.data.getValue
 import com.telehealthmanager.app.repositary.AppRepository
 import com.telehealthmanager.app.repositary.model.FaqList
 import com.telehealthmanager.app.repositary.model.FaqResponse
-import com.telehealthmanager.app.repositary.model.RelativeList
-import com.telehealthmanager.app.repositary.model.RelativeResponse
 
 class FaqViewModel : BaseViewModel<FaqNavigator>(){
     private val appRepository = AppRepository.instance()
@@ -18,6 +14,6 @@ class FaqViewModel : BaseViewModel<FaqNavigator>(){
 
     fun initApi() {
         loadingProgress.value = true
-        appRepository.getFaqCall(this)
+        appRepository.repositoryFaq(this)
     }
 }

@@ -1,6 +1,5 @@
 package com.telehealthmanager.app.ui.activity.chat
 
-import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.telehealthmanager.app.base.BaseViewModel
 import com.telehealthmanager.app.repositary.AppRepository
@@ -13,6 +12,6 @@ class ChatSummaryViewModel : BaseViewModel<ChatNavigator>() {
 
 
     fun addPromoCode(hashMap: HashMap<String, Any>) {
-        getCompositeDisposable().add(appRepository.addChatPromoCode(this, hashMap))
+        getCompositeDisposable().add(appRepository.repositoryAddChatPromoCode(this, hashMap))
     }
 }

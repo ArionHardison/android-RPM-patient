@@ -7,7 +7,6 @@ import com.telehealthmanager.app.data.PreferenceHelper
 import com.telehealthmanager.app.data.PreferenceKey
 import com.telehealthmanager.app.data.getValue
 import com.telehealthmanager.app.repositary.AppRepository
-import com.telehealthmanager.app.repositary.model.Appointment
 import com.telehealthmanager.app.repositary.model.RelativeList
 import com.telehealthmanager.app.repositary.model.RelativeResponse
 
@@ -27,7 +26,7 @@ class RelativeMgmtViewModel : BaseViewModel<RelativeMgmtNavigator>() {
         loadingProgress.value = true
         val hashMap: HashMap<String, Any> = HashMap()
         hashMap["patient_id"] = preferenceHelper.getValue(PreferenceKey.PATIENT_ID, 1).toString()
-        appRepository.getRelativeLists(this, hashMap)
+        appRepository.repositoryRelativeLists(this, hashMap)
     }
 
 }

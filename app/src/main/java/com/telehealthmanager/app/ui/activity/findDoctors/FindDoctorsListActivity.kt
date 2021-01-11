@@ -7,9 +7,12 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.view.ViewCompat
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -197,8 +200,11 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
                 }
             }
 
+
+
             if (hashMap.isNotEmpty()) {
                 loadingObservable.value = true
+                hashMap["page"] = "0"
                 viewModel.getDoctorFilterCategories(hashMap)
             } else {
                 mDataBinding.rvFilterView.visibility = View.GONE
@@ -219,7 +225,7 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
         ad.show()
     }
 
-    override fun onBookClick(selectedItem: DoctorListResponse.specialities.DoctorProfile) {
+    override fun onBookClick(selectedItem: DoctorListResponse.specialities.DoctorProfile, profileImage: ImageView) {
         preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_ID, selectedItem.doctor_id.toString())
         if (!CollectionUtils.isEmpty(selectedItem.hospital)) {
             preferenceHelper.setValue(PreferenceKey.SELECTED_DOC_NAME, selectedItem.hospital[0].first_name.plus(" ").plus(selectedItem.hospital[0].last_name))
@@ -236,10 +242,11 @@ class FindDoctorsListActivity : BaseActivity<ActivityFindDoctorsListBinding>(),
         startActivity(intent);
     }
 
-    override fun onItemClick(selectedItem: DoctorListResponse.specialities.DoctorProfile) {
+    override fun onItemClick(selectedItem: DoctorListResponse.specialities.DoctorProfile, profileImage: ImageView) {
         val intent = Intent(this@FindDoctorsListActivity, SearchDoctorDetailActivity::class.java)
         intent.putExtra(WebApiConstants.IntentPass.DoctorProfile, selectedItem as Serializable)
-        startActivityForResult(intent, Constant.DOCTORS_ACTIVITY);
+        val options: ActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, profileImage, ViewCompat.getTransitionName(profileImage)!!)
+        startActivityForResult(intent, Constant.DOCTORS_ACTIVITY, options.toBundle());
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

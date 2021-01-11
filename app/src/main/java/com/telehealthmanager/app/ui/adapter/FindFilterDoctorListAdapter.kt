@@ -81,12 +81,12 @@ class FindFilterDoctorListAdapter(
         holder.itemBinding.textView54.text = preferenceHelper.getValue(PreferenceKey.CURRENCY, "$").toString().plus(item.fees ?: "0")
 
         holder.itemBinding.button16.setOnClickListener {
-            listener.onBookClick(item)
+            listener.onBookClick(item, holder.itemBinding.imageView18)
         }
 
         holder.itemView.setOnClickListener {
             setPosition(this@FindFilterDoctorListAdapter, position)
-            listener.onItemClick(item)
+            listener.onItemClick(item, holder.itemBinding.imageView18)
         }
     }
 
@@ -99,7 +99,7 @@ class FindFilterDoctorListAdapter(
     }
 
     fun addItems(list: MutableList<DoctorListResponse.specialities.DoctorProfile>) {
-        items=list
+        items = list
         notifyDataSetChanged()
     }
 
@@ -125,8 +125,6 @@ class FindFilterDoctorListAdapter(
             doctorsAdapter.position = position
         }
     }
-
-
 }
 
 class FindDoctorViewHolder(view: FindDoctorListItemBinding) : RecyclerView.ViewHolder(view.root) {

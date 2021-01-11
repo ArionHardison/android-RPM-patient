@@ -44,14 +44,14 @@ class DoctorMedicalRecordsViewModel : BaseViewModel<DoctorMedicalRecordsNavigato
         hashMap["title"] = ViewUtils.convertRequestBody(mTestTitle.get().toString().trim())
         hashMap["instruction"] = ViewUtils.convertRequestBody(mTestDescription.get().toString().trim())
         hashMap["date"] = ViewUtils.convertRequestBody(ViewUtils.getCurrentDateTime())
-        appRepository.addMedicalRecord(this, hashMap, fileBody)
+        appRepository.repositoryAddMedicalRecord(this, hashMap, fileBody)
     }
 
     fun getDoctorsList() {
-        appRepository.getAllDoc(this)
+        appRepository.repositoryAllDoctors(this)
     }
 
     fun getRecordsList(recordID: String) {
-        appRepository.getMedicalRecordsList(this, recordID)
+        appRepository.repositoryMedicalRecords(this, recordID)
     }
 }

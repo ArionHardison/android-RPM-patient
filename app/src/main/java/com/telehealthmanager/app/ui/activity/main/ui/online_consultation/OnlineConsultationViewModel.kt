@@ -15,11 +15,11 @@ class OnlineConsultationViewModel : BaseViewModel<OnlineConsultationNavigator>()
 
     fun getChats() {
         loadingProgress.value = true
-        getCompositeDisposable().add(appRepository.getChatsAPI(this))
+        getCompositeDisposable().add(appRepository.repositoryChats(this))
     }
 
     fun getChatStatus(id:Int) {
         loadingProgress.value = true
-        getCompositeDisposable().add(appRepository.getChatStatusAPI(this,id))
+        getCompositeDisposable().add(appRepository.repositoryChatStatus(this,id))
     }
 }

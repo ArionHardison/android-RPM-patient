@@ -61,4 +61,10 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(), SettingNavigat
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NO_ANIMATION)
         startActivity(intent);
     }
+
+    override fun aboutClick() {
+        val i = Intent(Intent.ACTION_VIEW)
+        i.data = Uri.parse(BuildConfig.BASE_URL)
+        startActivity(i)
+    }
 }

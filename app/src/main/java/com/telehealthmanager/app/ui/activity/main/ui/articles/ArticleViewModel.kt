@@ -14,6 +14,6 @@ class ArticleViewModel : BaseViewModel<ArticleNavigator>(){
 
     fun getArticles() {
         loadingProgress.value = true
-        getCompositeDisposable().add(appRepository.getArticles(this))
+        getCompositeDisposable().add(appRepository.repositoryArticles(this))
     }
 }

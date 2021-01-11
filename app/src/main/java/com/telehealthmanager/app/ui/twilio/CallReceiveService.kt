@@ -82,7 +82,7 @@ class CallReceiveService : Service() {
             .setContentText(data.name)
             .setSmallIcon(android.R.drawable.sym_action_call)
             .setColor(ContextCompat.getColor(this, R.color.colorPrimary))
-            .setCategory(NotificationCompat.CATEGORY_CALL)
+            //.setCategory(NotificationCompat.Ca)
             .setContentIntent(contentPendingIntent)
             .addAction(android.R.drawable.sym_action_call, "Answer", receiveCallPendingIntent)
             .addAction(R.drawable.twillio_ic_call_end, "Decline", declineCallPendingIntent)

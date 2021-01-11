@@ -13,7 +13,6 @@ import com.telehealthmanager.app.repositary.model.CategoryResponse
 import com.telehealthmanager.app.repositary.model.DoctorListResponse
 import com.telehealthmanager.app.repositary.pagination.FindDoctorSource
 import java.util.*
-import kotlin.collections.HashMap
 
 class FindDoctorsViewModel : BaseViewModel<FindDoctorsNavigator>() {
     private val TAG = "FindDoctorsViewModel"
@@ -50,6 +49,6 @@ class FindDoctorsViewModel : BaseViewModel<FindDoctorsNavigator>() {
     }
 
     val doctorsList = Pager(PagingConfig(pageSize = 10)) {
-        FindDoctorSource(appRepository,  this)
+        FindDoctorSource(appRepository, this)
     }.flow.cachedIn(viewModelScope)
 }

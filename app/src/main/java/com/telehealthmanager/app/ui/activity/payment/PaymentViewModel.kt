@@ -25,6 +25,6 @@ class PaymentViewModel : BaseViewModel<PaymentNavigator>() {
 
     fun payForChatRequest(hashMap: HashMap<String, Any>) {
         loadingProgress.value = true
-        getCompositeDisposable().add(appRepository.payForChatRequest(this, hashMap))
+        getCompositeDisposable().add(appRepository.repositoryPayChatRequest(this, hashMap))
     }
 }

@@ -73,16 +73,16 @@ class ProfileViewModel : BaseViewModel<ProfileNavigator>() {
     }
 
     fun updatePatient() {
-        getCompositeDisposable().add(appRepository.editPatientApi(this, requestWithOutImage()))
+        getCompositeDisposable().add(appRepository.repositoryEditPatient(this, requestWithOutImage()))
     }
 
     fun updatePatientWithImage(fileBody: MultipartBody.Part) {
-        getCompositeDisposable().add(appRepository.editPatientWithImageApi(id.get()!!, this, requestWithImage(), fileBody))
+        getCompositeDisposable().add(appRepository.repositoryEditPatientWithImage(id.get()!!, this, requestWithImage(), fileBody))
     }
 
 
     fun getRelateProfile() {
-        getCompositeDisposable().add(appRepository.getRelativePatientApi(this, relativeId.get().toString()))
+        getCompositeDisposable().add(appRepository.repositoryRelatives(this, relativeId.get().toString()))
     }
 
 
@@ -90,7 +90,7 @@ class ProfileViewModel : BaseViewModel<ProfileNavigator>() {
         val hashMap: HashMap<String, Any> = requestWithOutImage()
         hashMap["patient_id"] = patientId.get().toString()
         getCompositeDisposable().add(
-            appRepository.addRelativePatientApi(
+            appRepository.reposotoryAddRelatives(
                 this,
                 hashMap
             )
@@ -101,7 +101,7 @@ class ProfileViewModel : BaseViewModel<ProfileNavigator>() {
         val hashMap: HashMap<String, RequestBody> = requestWithImage()
         hashMap["patient_id"] = ViewUtils.convertRequestBody(patientId.get().toString())
         getCompositeDisposable().add(
-            appRepository.addRelativePatientApi(
+            appRepository.reposotoryAddRelatives(
                 this,
                 hashMap,
                 fileBody!!
@@ -112,7 +112,7 @@ class ProfileViewModel : BaseViewModel<ProfileNavigator>() {
 
     fun updateRelative() {
         getCompositeDisposable().add(
-            appRepository.updateRelativePatientApi(
+            appRepository.repositoryUpdateRelatives(
                 this,
                 relativeId.get()!!.toString(),
                 requestWithOutImage()
@@ -122,7 +122,7 @@ class ProfileViewModel : BaseViewModel<ProfileNavigator>() {
 
     fun updateRelativeWithImage(fileBody: MultipartBody.Part?) {
         getCompositeDisposable().add(
-            appRepository.updateRelativePatientApi(
+            appRepository.repositoryUpdateRelatives(
                 this,
                 relativeId.get()!!.toString(),
                 requestWithImage(),

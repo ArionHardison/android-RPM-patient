@@ -1,5 +1,6 @@
 package com.telehealthmanager.app.ui.activity.main.ui.settings
 
+import android.content.Intent
 import androidx.lifecycle.MutableLiveData
 import com.telehealthmanager.app.base.BaseViewModel
 import com.telehealthmanager.app.repositary.AppRepository
@@ -15,6 +16,10 @@ class SettingViewModel : BaseViewModel<SettingNavigator>(){
 
     fun performShare(){
         navigator.ratingClick()
+    }
+
+    fun performAbout(){
+        navigator.aboutClick()
     }
 
     fun logout(hashMap: HashMap<String, Any>) {

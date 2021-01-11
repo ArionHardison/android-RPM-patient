@@ -27,6 +27,6 @@ class AppointmentViewModel : BaseViewModel<AppointmentNavigator>() {
     }
 
     fun cancelAppointment(hashMap: HashMap<String, Any>) {
-        getCompositeDisposable().add(appRepository.cancelAppointment(this, hashMap))
+        getCompositeDisposable().add(appRepository.repositoryCancelAppointment(this, hashMap))
     }
 }

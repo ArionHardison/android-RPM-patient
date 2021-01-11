@@ -26,6 +26,6 @@ class RemainderViewModel : BaseViewModel<RemainderNavigator>() {
     fun getReminders() {
 
         loadingProgress.value = true
-        getCompositeDisposable().add(appRepository.getReminders(this))
+        getCompositeDisposable().add(appRepository.repositoryReminders(this))
     }
 }

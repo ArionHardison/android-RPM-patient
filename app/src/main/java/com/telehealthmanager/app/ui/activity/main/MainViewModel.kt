@@ -22,6 +22,6 @@ class MainViewModel : BaseViewModel<MainNavigator>(){
 
 
     fun callCheckVideoAPI() {
-        getCompositeDisposable().add(appRepository.videoCheckStatusAPI(this))
+        getCompositeDisposable().add(appRepository.repositryVideoCheckStatus(this))
     }
 }

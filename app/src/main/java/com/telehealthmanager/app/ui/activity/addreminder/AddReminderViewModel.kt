@@ -41,7 +41,7 @@ class AddReminderViewModel : BaseViewModel<AddReminderNavigator>(){
         hashMap[WebApiConstants.AddRemainder.ALARM] = alarmValue.get()!!
         hashMap[WebApiConstants.AddRemainder.NOTIFY_ME] = notifymeValue.get()!!
         loadingProgress.value = true
-        getCompositeDisposable().add(appRepository.addRemainder(this, hashMap))
+        getCompositeDisposable().add(appRepository.repositoryAddRemainder(this, hashMap))
     }
 
     fun onFromTimeClicked() {

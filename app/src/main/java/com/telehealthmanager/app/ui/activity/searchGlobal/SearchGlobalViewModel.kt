@@ -16,6 +16,6 @@ class SearchGlobalViewModel : BaseViewModel<SearchGlobalNavigator>() {
     var search: ObservableField<String> = ObservableField("")
 
     fun getGlobalSearch(hashMap: HashMap<String, Any>) {
-        getCompositeDisposable().add(appRepository.getGlobalSearch(this, hashMap))
+        getCompositeDisposable().add(appRepository.repositoryGlobalSearch(this, hashMap))
     }
 }

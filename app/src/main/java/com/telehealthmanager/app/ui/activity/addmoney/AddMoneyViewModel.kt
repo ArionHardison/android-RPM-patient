@@ -2,15 +2,11 @@ package com.telehealthmanager.app.ui.activity.addmoney
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
-import com.telehealthmanager.app.R
 import com.telehealthmanager.app.base.BaseViewModel
 import com.telehealthmanager.app.repositary.AppRepository
 import com.telehealthmanager.app.repositary.model.CardList
 import com.telehealthmanager.app.repositary.model.CardSuccessMessage
 import com.telehealthmanager.app.repositary.model.WalletAddSuccess
-import com.telehealthmanager.app.repositary.model.WalletResponse
-import com.telehealthmanager.app.utils.ViewUtils
-import java.util.*
 import kotlin.collections.HashMap
 
 class AddMoneyViewModel : BaseViewModel<AddMoneyNavigator>() {
@@ -36,21 +32,21 @@ class AddMoneyViewModel : BaseViewModel<AddMoneyNavigator>() {
         hashMap["payment_type"] = "stripe"
         hashMap["user_type"] = "patient"
         loadingProgress.value = true
-        getCompositeDisposable().add(appRepository.goToAddMoney(this, hashMap))
+        getCompositeDisposable().add(appRepository.repositoryAddMoney(this, hashMap))
     }
 
     fun getCards() {
-        getCompositeDisposable().add(appRepository.getCardList(this))
+        getCompositeDisposable().add(appRepository.repositoryCards(this))
     }
 
     fun addCard(hashMap: HashMap<String,Any>){
         loadingProgress.value = true
-        getCompositeDisposable().add(appRepository.goToAddAddCard(this, hashMap))
+        getCompositeDisposable().add(appRepository.repositoryAddCard(this, hashMap))
     }
 
     fun deleteCard(hashMap: HashMap<String,Any>){
         loadingProgress.value = true
-        getCompositeDisposable().add(appRepository.goToDeleteCard(this, hashMap))
+        getCompositeDisposable().add(appRepository.repositoryDeleteCard(this, hashMap))
     }
 
 }

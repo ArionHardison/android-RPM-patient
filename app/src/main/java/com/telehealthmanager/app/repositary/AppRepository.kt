@@ -299,7 +299,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun cancelAppointment(viewModel: ViewModel, params: HashMap<String, Any>): Disposable {
+    fun repositoryCancelAppointment(viewModel: ViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiCancelAppointment(params)
             .observeOn(AndroidSchedulers.mainThread())
@@ -322,7 +322,7 @@ class AppRepository : BaseRepository() {
     }
 
 
-    fun postFeedback(viewModel: VisitedDoctorsViewModel, params: HashMap<String, Any>): Disposable {
+    fun repositoryPostFeedback(viewModel: VisitedDoctorsViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiPostFeedback(params)
             .observeOn(AndroidSchedulers.mainThread())
@@ -335,7 +335,7 @@ class AppRepository : BaseRepository() {
     }
 
     /*TODO ADD FAV*/
-    fun addFav(viewModel: SearchViewModel, params: HashMap<String, Any>): Disposable {
+    fun repositoryAddFav(viewModel: SearchViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiAddFav(params)
             .observeOn(AndroidSchedulers.mainThread())
@@ -347,7 +347,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun getArticles(viewModel: ArticleViewModel): Disposable {
+    fun repositoryArticles(viewModel: ArticleViewModel): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiArticles()
             .observeOn(AndroidSchedulers.mainThread())
@@ -359,7 +359,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun editPatientApi(
+    fun repositoryEditPatient(
         editPatientViewModel: ProfileViewModel,
         hashMap: HashMap<String, Any>
     ): Disposable {
@@ -376,7 +376,7 @@ class AppRepository : BaseRepository() {
     }
 
     /*TODO Relativies*/
-    fun getRelativeLists(
+    fun repositoryRelativeLists(
         editPatientViewModel: RelativeMgmtViewModel,
         hashMap: HashMap<String, Any>
     ): Disposable {
@@ -393,7 +393,7 @@ class AppRepository : BaseRepository() {
     }
 
 
-    fun addRelativePatientApi(
+    fun reposotoryAddRelatives(
         editPatientViewModel: ProfileViewModel,
         hashMap: HashMap<String, RequestBody>,
         @Part image: MultipartBody.Part
@@ -409,7 +409,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun addRelativePatientApi(
+    fun reposotoryAddRelatives(
         editPatientViewModel: ProfileViewModel,
         hashMap: HashMap<String, Any>
     ): Disposable {
@@ -426,7 +426,7 @@ class AppRepository : BaseRepository() {
     }
 
 
-    fun updateRelativePatientApi(
+    fun repositoryUpdateRelatives(
         editPatientViewModel: ProfileViewModel,
         relativeID: String,
         hashMap: HashMap<String, RequestBody>,
@@ -443,7 +443,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun updateRelativePatientApi(
+    fun repositoryUpdateRelatives(
         editPatientViewModel: ProfileViewModel,
         relativeID: String,
         hashMap: HashMap<String, Any>
@@ -459,7 +459,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun getRelativePatientApi(
+    fun repositoryRelatives(
         editPatientViewModel: ProfileViewModel,
         relativeID: String
     ): Disposable {
@@ -476,7 +476,7 @@ class AppRepository : BaseRepository() {
     }
 
 
-    fun getChatsAPI(
+    fun repositoryChats(
         onlineConsultationViewModel: OnlineConsultationViewModel
     ): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
@@ -491,7 +491,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun getChatStatusAPI(
+    fun repositoryChatStatus(
         onlineConsultationViewModel: OnlineConsultationViewModel, id: Int
     ): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
@@ -506,7 +506,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun editPatientWithImageApi(
+    fun repositoryEditPatientWithImage(
         id: Int,
         editPatientViewModel: ProfileViewModel,
         hashMap: HashMap<String, RequestBody>,
@@ -525,7 +525,7 @@ class AppRepository : BaseRepository() {
     }
 
     /*TODO Medical Records*/
-    fun getMedicalRecord(viewModel: MedicalRecordsViewModel): Disposable {
+    fun repositoryMedicalRecords(viewModel: MedicalRecordsViewModel): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiMedicalRecord()
             .observeOn(AndroidSchedulers.mainThread())
@@ -537,7 +537,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun getAllDoc(viewModel: DoctorMedicalRecordsViewModel): Disposable {
+    fun repositoryAllDoctors(viewModel: DoctorMedicalRecordsViewModel): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiAllDoctors()
             .observeOn(AndroidSchedulers.mainThread())
@@ -549,7 +549,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun addMedicalRecord(viewModel: DoctorMedicalRecordsViewModel, hashMap: HashMap<String, RequestBody>, @Part image: MultipartBody.Part): Disposable {
+    fun repositoryAddMedicalRecord(viewModel: DoctorMedicalRecordsViewModel, hashMap: HashMap<String, RequestBody>, @Part image: MultipartBody.Part): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiAddMedicalRecords(hashMap, image)
             .observeOn(AndroidSchedulers.mainThread())
@@ -561,7 +561,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun getMedicalRecordsList(viewModel: DoctorMedicalRecordsViewModel, medicalId: String): Disposable {
+    fun repositoryMedicalRecords(viewModel: DoctorMedicalRecordsViewModel, medicalId: String): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiRecordsList(medicalId)
             .observeOn(AndroidSchedulers.mainThread())
@@ -574,7 +574,7 @@ class AppRepository : BaseRepository() {
     }
 
     /*TODO Search*/
-    fun getGlobalSearch(viewModel: SearchGlobalViewModel, params: HashMap<String, Any>): Disposable {
+    fun repositoryGlobalSearch(viewModel: SearchGlobalViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiGlobalSearchApp(params)
             .observeOn(AndroidSchedulers.mainThread())
@@ -586,7 +586,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun addRemainder(addRemainderViewModel: AddReminderViewModel, params: HashMap<String, Any>): Disposable {
+    fun repositoryAddRemainder(addRemainderViewModel: AddReminderViewModel, params: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiAddRemainder(params)
             .observeOn(AndroidSchedulers.mainThread())
@@ -599,7 +599,7 @@ class AppRepository : BaseRepository() {
     }
 
 
-    fun getReminders(viewModel: RemainderViewModel): Disposable {
+    fun repositoryReminders(viewModel: RemainderViewModel): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiReminders()
             .observeOn(AndroidSchedulers.mainThread())
@@ -611,7 +611,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun addChatPromoCode(chatViewModel: ChatSummaryViewModel, hashMap: java.util.HashMap<String, Any>): Disposable {
+    fun repositoryAddChatPromoCode(chatViewModel: ChatSummaryViewModel, hashMap: java.util.HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiAddChatPromoCode(hashMap)
             .observeOn(AndroidSchedulers.mainThread())
@@ -623,7 +623,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun payForChatRequest(viewmodel: PaymentViewModel, hashMap: java.util.HashMap<String, Any>): Disposable {
+    fun repositoryPayChatRequest(viewmodel: PaymentViewModel, hashMap: java.util.HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiPayForChatRequest(hashMap)
             .observeOn(AndroidSchedulers.mainThread())
@@ -635,24 +635,20 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun videoCheckStatusAPI(viewModel: MainViewModel): Disposable {
+    fun repositryVideoCheckStatus(viewModel: MainViewModel): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiVideoCheckStatusAPI()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
-                if (viewModel is MainViewModel) {
-                    viewModel.mVideoIncomingResponse.value = it
-                }
+                viewModel.mVideoIncomingResponse.value = it
             }, {
-                if (viewModel is MainViewModel) {
-                    viewModel.getErrorObservable().value = getErrorMessage(it)
-                }
+                viewModel.getErrorObservable().value = getErrorMessage(it)
             })
     }
 
     /*TODO CARDS*/
-    fun getCardList(viewModel: AddMoneyViewModel): Disposable {
+    fun repositoryCards(viewModel: AddMoneyViewModel): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiCards()
             .observeOn(AndroidSchedulers.mainThread())
@@ -664,7 +660,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun goToAddAddCard(viewModel: AddMoneyViewModel, hashMap: HashMap<String, Any>): Disposable {
+    fun repositoryAddCard(viewModel: AddMoneyViewModel, hashMap: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiAddCardDetails(hashMap)
             .observeOn(AndroidSchedulers.mainThread())
@@ -676,7 +672,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun goToDeleteCard(viewModel: AddMoneyViewModel, hashMap: HashMap<String, Any>): Disposable {
+    fun repositoryDeleteCard(viewModel: AddMoneyViewModel, hashMap: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiDeleteCardDetails(hashMap)
             .observeOn(AndroidSchedulers.mainThread())
@@ -688,7 +684,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun goToAddMoney(viewModel: AddMoneyViewModel, hashMap: HashMap<String, Any>): Disposable {
+    fun repositoryAddMoney(viewModel: AddMoneyViewModel, hashMap: HashMap<String, Any>): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiAddMoney(hashMap)
             .observeOn(AndroidSchedulers.mainThread())
@@ -700,7 +696,7 @@ class AppRepository : BaseRepository() {
             })
     }
 
-    fun getFaqCall(viewModel: FaqViewModel): Disposable {
+    fun repositoryFaq(viewModel: FaqViewModel): Disposable {
         return BaseRepository().createApiClient(BuildConfig.BASE_URL, ApiInterface::class.java)
             .apiFaqList()
             .observeOn(AndroidSchedulers.mainThread())
