@@ -1,7 +1,7 @@
 <vector android:height="22.6695dp" android:viewportHeight="120.904"
     android:viewportWidth="128" android:width="24dp"
     xmlns:aapt="http://schemas.android.com/aapt" xmlns:android="http://schemas.android.com/apk/res/android">
-    <path android:fillColor="#2891fb" android:pathData="M113.37,7.2L14.631,7.2a5.026,5.026 0,0 0,-5.024 5.024L9.607,115.88a5.026,5.026 0,0 0,5.024 5.024h98.74a5.026,5.026 0,0 0,5.024 -5.024L118.395,12.224A5.025,5.025 0,0 0,113.37 7.2Z"/>
+    <path android:fillColor="@color/colorSecondary" android:pathData="M113.37,7.2L14.631,7.2a5.026,5.026 0,0 0,-5.024 5.024L9.607,115.88a5.026,5.026 0,0 0,5.024 5.024h98.74a5.026,5.026 0,0 0,5.024 -5.024L118.395,12.224A5.025,5.025 0,0 0,113.37 7.2Z"/>
     <path android:pathData="M113.368,120.904L14.631,120.904a5.024,5.024 0,0 1,-5.024 -5.024L9.607,105.331L118.392,105.331v10.549A5.024,5.024 0,0 1,113.368 120.904Z">
         <aapt:attr name="android:fillColor">
             <gradient android:endX="59.21296" android:endY="22.233484"

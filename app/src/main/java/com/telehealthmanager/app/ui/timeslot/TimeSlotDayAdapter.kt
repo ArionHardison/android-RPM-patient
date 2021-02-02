@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.telehealthmanager.app.R
@@ -26,8 +27,8 @@ class TimeSlotDayAdapter(
             holder.itemBinding.tvDate.setTextColor(Color.parseColor("#FFFFFF"))
         } else {
             holder.itemBinding.consDay.setBackgroundResource(R.drawable.circle_percentage)
-            holder.itemBinding.tvDay.setTextColor(Color.parseColor("#2891fb"))
-            holder.itemBinding.tvDate.setTextColor(Color.parseColor("#2891fb"))
+            holder.itemBinding.tvDay.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.colorSecondary))
+            holder.itemBinding.tvDate.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.colorSecondary))
         }
 
         holder.itemBinding.tvDate.text = item.date

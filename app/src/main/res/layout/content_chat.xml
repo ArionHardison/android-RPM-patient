@@ -129,7 +129,7 @@
                     android:paddingTop="@dimen/_6sdp"
                     android:paddingEnd="@dimen/_6sdp"
                     android:paddingBottom="@dimen/_1sdp"
-                    android:textColor="@color/colorButton"
+                    android:textColor="@color/colorSecondary"
                     android:textSize="@dimen/_12sdp" />
 
                 <LinearLayout
@@ -146,7 +146,7 @@
                         android:paddingTop="@dimen/_1sdp"
                         android:paddingEnd="@dimen/_6sdp"
                         android:paddingBottom="@dimen/_6sdp"
-                        android:textColor="@color/colorButton"
+                        android:textColor="@color/colorSecondary"
                         android:textSize="@dimen/_13sdp"
                         android:visibility="gone" />
 
@@ -158,7 +158,7 @@
                         android:paddingTop="@dimen/_1sdp"
                         android:paddingEnd="@dimen/_6sdp"
                         android:paddingBottom="@dimen/_6sdp"
-                        android:textColor="@color/colorButton"
+                        android:textColor="@color/colorSecondary"
                         android:textSize="@dimen/_13sdp" />
                 </LinearLayout>
             </LinearLayout>
@@ -205,7 +205,7 @@
             android:id="@+id/buttonContinue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorButton"
+            android:background="@color/colorSecondary"
             android:text="Continue"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"

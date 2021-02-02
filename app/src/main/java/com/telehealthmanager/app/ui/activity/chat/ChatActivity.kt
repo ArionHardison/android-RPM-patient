@@ -66,9 +66,9 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(), ChatNavigator, IChatCa
             if (seeAllSelectedCategory != null) {
                 category = seeAllSelectedCategory
                 mDataBinding.contentChat.llSelectedCategory.background = ContextCompat.getDrawable(this, R.drawable.bg_color_primary_border)
-                mDataBinding.contentChat.tvSelectedPrice.setTextColor(ContextCompat.getColor(this, R.color.colorButton))
-                mDataBinding.contentChat.tvSelectedName.setTextColor(ContextCompat.getColor(this, R.color.colorButton))
-                mDataBinding.contentChat.tvSelectedStrikePrice.setTextColor(ContextCompat.getColor(this, R.color.colorButton))
+                mDataBinding.contentChat.tvSelectedPrice.setTextColor(ContextCompat.getColor(this, R.color.colorSecondary))
+                mDataBinding.contentChat.tvSelectedName.setTextColor(ContextCompat.getColor(this, R.color.colorSecondary))
+                mDataBinding.contentChat.tvSelectedStrikePrice.setTextColor(ContextCompat.getColor(this, R.color.colorSecondary))
                 initAdapter()
             }
         }
@@ -103,8 +103,8 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(), ChatNavigator, IChatCa
                     }
                     mDataBinding.contentChat.tvCategoryTitle.text = category?.name
                     mDataBinding.contentChat.see_all_specialist.background = ContextCompat.getDrawable(this, R.drawable.bg_color_primary_border)
-                    mDataBinding.contentChat.tvCategoryTitle.setTextColor(ContextCompat.getColor(this, R.color.colorButton))
-                    mDataBinding.contentChat.arrowIcon.setColorFilter(ContextCompat.getColor(this, R.color.colorButton), android.graphics.PorterDuff.Mode.MULTIPLY)
+                    mDataBinding.contentChat.tvCategoryTitle.setTextColor(ContextCompat.getColor(this, R.color.colorSecondary))
+                    mDataBinding.contentChat.arrowIcon.setColorFilter(ContextCompat.getColor(this, R.color.colorSecondary), android.graphics.PorterDuff.Mode.MULTIPLY)
                     initAdapter()
                 }
             }

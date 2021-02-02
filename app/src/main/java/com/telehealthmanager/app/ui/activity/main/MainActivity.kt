@@ -88,7 +88,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
                 R.id.nav_relative_mgmt,
                 R.id.nav_faq,
                 R.id.nav_settings
-            ), drawerLayout,
+            ),
+            drawerLayout,
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)

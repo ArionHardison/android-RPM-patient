@@ -22,7 +22,7 @@
             android:layout_marginBottom="8dp"
             android:src="@drawable/user_placeholder"
             android:padding="@dimen/_5sdp"
-            app:civ_border_color="@color/colorButton"
+            app:civ_border_color="@color/colorSecondary"
             app:civ_border_width="@dimen/_1sdp"
             app:civ_circle_background_color="@color/colorWhite"
             app:layout_constraintBottom_toBottomOf="parent"

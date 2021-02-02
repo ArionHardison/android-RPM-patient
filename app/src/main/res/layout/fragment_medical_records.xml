@@ -60,7 +60,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/_10sdp"
             android:onClick="@{()->viewmodel.clickMedicalRecord()}"
-            app:backgroundTint="@color/colorButton"
+            app:backgroundTint="@color/colorSecondary"
             app:maxImageSize="40dp"
             app:srcCompat="@drawable/ic_add_white"
             tools:ignore="ContentDescription" />

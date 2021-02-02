@@ -211,7 +211,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:text="$0"
-                    android:textColor="@color/colorButton"
+                    android:textColor="@color/colorSecondary"
                     android:textSize="@dimen/_10sdp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -226,10 +226,10 @@
                 android:layout_weight="1"
                 android:background="@drawable/call_btn_bg"
                 android:drawableStart="@drawable/ic_call"
-                android:drawableTint="@color/colorButton"
+                android:drawableTint="@color/colorSecondary"
                 android:text="Call"
                 android:textSize="@dimen/_10sdp"
-                android:textColor="@color/colorButton" />
+                android:textColor="@color/colorSecondary" />
 
             <Button
                 android:id="@+id/button16"

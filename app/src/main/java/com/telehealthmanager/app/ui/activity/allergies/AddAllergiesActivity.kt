@@ -153,8 +153,8 @@ class AddAllergiesActivity : BaseActivity<ActivityAddAllergiesBinding>(), Allerg
             val tagName: String = allergiesList[index].name!!
             val chip: Chip = layoutInflater.inflate(R.layout.single_chip_layout, chipGroup, false) as Chip
             chip.chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorWhite))
-            chip.chipStrokeColor = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorButton))
-            chip.setTextColor(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorButton)))
+            chip.chipStrokeColor = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorSecondary))
+            chip.setTextColor(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorSecondary)))
             chip.chipCornerRadius = 10f
             chip.chipStrokeWidth = 1f
             chip.text = tagName

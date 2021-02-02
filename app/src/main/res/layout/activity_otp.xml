@@ -155,7 +155,7 @@
                 android:onClick="@{()->viewmodel.LoginMailClick()}"
                 android:text="@string/login_using_mail"
                 android:textAllCaps="false"
-                android:textColor="@color/colorButton"
+                android:textColor="@color/colorSecondary"
                 android:textSize="@dimen/_14sdp"
                 android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -191,7 +191,7 @@
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:text="@string/terms"
                 android:textAllCaps="false"
-                android:textColor="@color/colorButton"
+                android:textColor="@color/colorSecondary"
                 android:textSize="@dimen/_12sdp" />
         </LinearLayout>
 

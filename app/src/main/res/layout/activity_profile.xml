@@ -136,7 +136,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:background="@color/colorButton"
+                    android:background="@color/colorSecondary"
                     android:text="Personal"
                     android:textColor="@color/colorWhite"
                     app:layout_constraintEnd_toStartOf="@+id/button12"

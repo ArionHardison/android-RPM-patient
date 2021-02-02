@@ -160,7 +160,7 @@
                 android:paddingTop="@dimen/_1sdp"
                 android:paddingEnd="@dimen/_6sdp"
                 android:paddingBottom="@dimen/_5sdp"
-                android:textColor="@color/colorButton"
+                android:textColor="@color/colorSecondary"
                 android:textSize="@dimen/_9sdp"
                 tools:text="(30% off)" />
         </LinearLayout>
@@ -194,7 +194,7 @@
             android:padding="@dimen/_8sdp"
             android:text="Apply"
             android:textStyle="bold"
-            android:textColor="@color/colorButton"
+            android:textColor="@color/colorSecondary"
             app:layout_constraintBottom_toBottomOf="@+id/editTextPromoValue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/editTextPromoValue" />
@@ -247,7 +247,7 @@
             android:layout_marginEnd="@dimen/_5sdp"
             android:padding="@dimen/_6sdp"
             android:text="Change"
-            android:textColor="@color/colorButton"
+            android:textColor="@color/colorSecondary"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/paymentType"
             app:layout_constraintEnd_toEndOf="parent"

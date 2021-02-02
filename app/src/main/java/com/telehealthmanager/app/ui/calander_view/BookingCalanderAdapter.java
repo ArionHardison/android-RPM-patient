@@ -99,9 +99,9 @@ class BookingCalanderAdapter extends RecyclerView.Adapter<BookingCalanderAdapter
     }
 
     private void setUpdatedViewSelect(MyViewHolder holder) {
-        holder.date.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.colorButton));
-        holder.month.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.colorButton));
-        holder.day.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.colorButton));
+        holder.date.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.colorSecondary));
+        holder.month.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.colorSecondary));
+        holder.day.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.colorSecondary));
         holder.parent.setBackgroundResource(R.drawable.calander_unselecte);
     }
 

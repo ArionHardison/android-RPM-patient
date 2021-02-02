@@ -76,7 +76,7 @@
                         android:id="@+id/textView89"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorButton"
+                        android:textColor="@color/colorSecondary"
                         app:layout_constraintBottom_toBottomOf="@+id/textView88"
                         app:layout_constraintStart_toEndOf="@+id/textView88"
                         app:layout_constraintTop_toTopOf="@+id/textView88"

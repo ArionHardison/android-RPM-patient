@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
-                android:background="@color/colorButton"
+                android:background="@color/colorSecondary"
                 android:text="Proceed to pay"
                 android:textAllCaps="false"
                 android:textColor="@color/colorWhite"

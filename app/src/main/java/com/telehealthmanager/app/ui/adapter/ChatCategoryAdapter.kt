@@ -52,9 +52,9 @@ class ChatCategoryAdapter(val items: MutableList<CategoryResponse.Category>, val
 
         if (selectedIndex != null && position == selectedIndex) {
             holder.itemView.background = ContextCompat.getDrawable(context, R.drawable.bg_color_primary_border)
-            holder.itemBinding.tvPrice.setTextColor(ContextCompat.getColor(context, R.color.colorButton))
-            holder.itemBinding.tvName.setTextColor(ContextCompat.getColor(context, R.color.colorButton))
-            holder.itemBinding.tvStrikePrice.setTextColor(ContextCompat.getColor(context, R.color.colorButton))
+            holder.itemBinding.tvPrice.setTextColor(ContextCompat.getColor(context, R.color.colorSecondary))
+            holder.itemBinding.tvName.setTextColor(ContextCompat.getColor(context, R.color.colorSecondary))
+            holder.itemBinding.tvStrikePrice.setTextColor(ContextCompat.getColor(context, R.color.colorSecondary))
         } else {
             holder.itemView.background = ContextCompat.getDrawable(context, R.drawable.bg_color_grey_border)
             holder.itemBinding.tvPrice.setTextColor(ContextCompat.getColor(context, R.color.colorBlack))

@@ -94,7 +94,7 @@
             android:paddingStart="@dimen/_8sdp"
             android:paddingEnd="@dimen/_8sdp"
             android:text="@string/add_new_card_plus"
-            android:textColor="@color/colorButton"
+            android:textColor="@color/colorSecondary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rvCardList" />

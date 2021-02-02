@@ -8,7 +8,6 @@ import android.net.Uri
 import android.text.InputType
 import android.view.View
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
@@ -526,7 +525,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), ProfileNavigator
     }
 
     private fun customColorButton(button: Button) {
-        button.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.colorButton))
+        button.setBackgroundColor(ContextCompat.getColor(applicationContext, R.color.colorSecondary))
         button.setTextColor(ContextCompat.getColor(applicationContext, R.color.colorWhite))
     }
 

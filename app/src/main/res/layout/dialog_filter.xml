@@ -161,7 +161,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/call_btn_bg"
                 android:text="@string/cancel"
-                android:textColor="@color/colorButton"
+                android:textColor="@color/colorSecondary"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:layout_editor_absoluteY="0dp" />
 

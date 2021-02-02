@@ -23,7 +23,7 @@
                 android:id="@+id/tv_day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorButton"
+                android:textColor="@color/colorSecondary"
                 android:textSize="@dimen/_8sdp"
                 tools:text="MON" />
 
@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="12 OCT"
-                android:textColor="@color/colorButton"
+                android:textColor="@color/colorSecondary"
                 android:textSize="@dimen/_8sdp" />
         </LinearLayout>
     </RelativeLayout>

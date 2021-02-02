@@ -190,7 +190,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="8dp"
                         android:src="@drawable/doc_place_holder"
-                        app:civ_border_color="@color/colorButton"
+                        app:civ_border_color="@color/colorSecondary"
                         app:civ_border_width="1dp" />
 
                     <LinearLayout
@@ -255,7 +255,7 @@
                     android:layout_marginEnd="@dimen/_5sdp"
                     android:padding="@dimen/_6sdp"
                     android:text="Change"
-                    android:textColor="@color/colorButton"
+                    android:textColor="@color/colorSecondary"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/paymentType"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -296,7 +296,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="8dp"
-            android:background="@color/colorButton"
+            android:background="@color/colorSecondary"
             android:text="Confirm"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
