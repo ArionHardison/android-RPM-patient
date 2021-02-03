@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TeleHealth Manager Patient</string>
+    <string name="app_name">DietManager - Patient</string>
     <string name="welcome_login">Login</string>
 
     <string name="sample_address">Opposite to Khalifa Stadium, AL Waab Street</string>
